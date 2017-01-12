@@ -1,42 +1,29 @@
 'use strict';
 
 import Router from 'koa-router';
-import passport from 'koa-passport';
-
+// import AccountModel from '../models/account';
 const router = new Router();
+import passport from 'koa-passport';
+import _ from 'lodash';
 
-router.get('/login', async (ctx, next) => {
-    ctx.body = {
-        "status" : "login page"
-    }   
+router.post('/login', async(ctx, next) => {
+    await passport.authenticate('local',async(user, info) => {
+        await ctx.login(user);
+        let token = await ctx.req.session.create({user: user});
+        ctx.body = {status: 'ok',token: token};
+    })(ctx, next)
+});
+
+router.post('/logout', async(ctx, next) => {
+    await ctx.logout();
+    await ctx.req.session.destroy();
+    ctx.body = {status: 'ok'};
+});
+
+router.post('/check', async(ctx, next) => {
+    let passport = await ctx.req.session.reload();
+    ctx.body = _.extend({status: 'ok'},passport);
 })
 
-
-router.post('/login', async (ctx, next) => {
-    let middleware = passport.authenticate('local', async(user, info) => {
-        if (user === false) {
-            ctx.body = {
-                'status' : 400
-            }
-        } else {
-            await ctx.login(user)
-            ctx.body = {
-                user: user
-            }
-        }
-    })
-    await middleware.call(this, ctx, next)
-})
-
-router.get('/logout', async (ctx, newt) => {
-    ctx.logout()
-    ctx.redirect('/')
-})
-
-router.get('/status', async (ctx, next) => {
-    ctx.body = {
-        "isLogin" : ctx.isAuthenticated()
-    }
-})
 
 export default router;

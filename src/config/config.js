@@ -14,16 +14,21 @@ let base = {
 let specific = {
     development: {
         app: {
-            port: 5000,
-            name: "koa2-boilerplate - Dev",
-            excluded : "excluded_path"
+            port: 3002,
+            name: "cmdb auth",
+            excluded : "excluded_path",
+            secret: "123456"
         },
         mysql: {
             host: 'localhost',
             port : 3306,
-            user : 'test',
-            password : 'test',
+            user : 'root',
+            password : 'root',
             database : 'test'
+        },
+        redis: {
+            host: 'localhost',
+            port: 6379
         }
     }, 
     production: {

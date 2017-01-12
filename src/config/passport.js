@@ -2,13 +2,14 @@
 
 import passport from 'koa-passport';
 import AccountModel from '../models/account';
+import _ from 'lodash';
 
 passport.serializeUser(function(user, done) {
-    done(null, user.id)
+    done(null, _.pick(user, ['userid','alias','lang','name','surname']));
 })
 
-passport.deserializeUser(function(id, done) {
-    AccountModel.findOne(id, function(err, user) {
+passport.deserializeUser(function(user, done) {
+    AccountModel.findOne(user.userid, function(err, user) {
         done(err, user)
     })
 })

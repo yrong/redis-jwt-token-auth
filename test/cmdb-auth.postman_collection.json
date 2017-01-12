@@ -1,0 +1,70 @@
+{
+	"id": "392b910a-967e-7174-6120-0023fc49a7a6",
+	"name": "cmdb-auth",
+	"description": "",
+	"order": [
+		"540eddfe-c0c6-c326-da61-d5873e3884a6",
+		"232a0e38-2438-7d56-b0e6-023bb02efbc9",
+		"627774ff-2fac-9b94-379d-8389d4448b9d"
+	],
+	"folders": [],
+	"timestamp": 1484115506163,
+	"owner": "1388965",
+	"public": false,
+	"requests": [
+		{
+			"id": "232a0e38-2438-7d56-b0e6-023bb02efbc9",
+			"headers": "Content-Type: application/json\n",
+			"url": "{{url}}/auth/check",
+			"preRequestScript": null,
+			"pathVariables": {},
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"tests": "\n",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1484229272808,
+			"name": "check",
+			"description": "",
+			"collectionId": "392b910a-967e-7174-6120-0023fc49a7a6",
+			"rawModeData": "{\n  \"token\":\"{{token}}\"\n}"
+		},
+		{
+			"id": "540eddfe-c0c6-c326-da61-d5873e3884a6",
+			"headers": "Content-Type: application/json\n",
+			"url": "{{url}}/auth/login",
+			"preRequestScript": null,
+			"pathVariables": {},
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"token found\"] = jsonData.token;\npostman.setGlobalVariable(\"token\", jsonData.token);\n",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1484229249030,
+			"name": "login",
+			"description": "",
+			"collectionId": "392b910a-967e-7174-6120-0023fc49a7a6",
+			"rawModeData": "{\n  \"username\":\"test\",\n  \"password\":\"test\"\n}"
+		},
+		{
+			"id": "627774ff-2fac-9b94-379d-8389d4448b9d",
+			"headers": "Content-Type: application/json\n",
+			"url": "{{url}}/auth/logout",
+			"preRequestScript": null,
+			"pathVariables": {},
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"tests": "\n",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1484216895956,
+			"name": "logout",
+			"description": "",
+			"collectionId": "392b910a-967e-7174-6120-0023fc49a7a6",
+			"rawModeData": "{\n  \"token\":\"{{token}}\"\n}"
+		}
+	]
+}

@@ -2,6 +2,7 @@
 
 import db from '../lib/db';
 import log4js from 'log4js';
+import md5 from 'md5';
 
 const Account = {}
 const LOG = log4js.getLogger('file');
@@ -22,23 +23,18 @@ Account.findOne = function (id, cb) {
 
 Account.verify = async function(username, password) {
 
-    //let account = await db.query('select * from t_account where email = ?', [username])
-
-    LOG.warn(JSON.stringify({
-        'username' : username,
-        'password' : password
-    }))
+    let account = await db.query(`SELECT * FROM users where name='${username}'`);
 
     //Mock Scripts
-    let account = [{"id": 1, "username" : "test", "password" : "test"}]
+    // let account = [{"id": 1, "username" : "test", "password" : "test"}]
 
     if(account == null || account.length != 1) {
-        return null;
+        throw new Error(`user with name ${username}　not exist!`)
     } else{
-        if((account[0].password == password) && (account[0].username == username)) {
+        if(md5(password) !== account[0].passwd){
+            throw new Error("user password not match!");
+        }else {
             return account[0];
-        } else {
-            return null;
         }
     }
 }

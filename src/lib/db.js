@@ -1,15 +1,17 @@
 'use strict';
 
 import mysql from 'mysql';
+import config from '../config/config';
 
 const db = {}
 
-const mysqlPool  = mysql.createPool({
-  connectionLimit : 10,
-  host            : 'localhost',
-  user            : 'test',
-  password        : 'test',
-  database        : 'test'
+const mysqlPool = mysql.createPool({
+    connectionLimit: 10,
+    host: config.mysql.host,
+    port: config.mysql.port,
+    user: config.mysql.user,
+    password: config.mysql.password,
+    database: config.mysql.database
 });
 
 db.pool = mysqlPool;
