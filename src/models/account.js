@@ -21,22 +21,20 @@ Account.findOne = function (id, cb) {
 
 }
 
-Account.verify = async function(username, password) {
-
-    let account = await db.query(`SELECT * FROM users where name='${username}'`);
-
+Account.verify = function(username, password) {
     //Mock Scripts
     // let account = [{"id": 1, "username" : "test", "password" : "test"}]
-
-    if(account == null || account.length != 1) {
-        throw new Error(`user with name ${username}　not exist!`)
-    } else{
-        if(md5(password) !== account[0].passwd){
-            throw new Error("user password not match!");
-        }else {
-            return account[0];
+    return db.query(`SELECT * FROM users where name=?`,[`${username}`]).then((account)=>{
+        if(account == null || account.length != 1) {
+            throw new Error(`user with name ${username} not exist!`)
+        } else{
+            if(md5(password) !== account[0].passwd){
+                throw new Error("user password not match!");
+            }else {
+                return account[0];
+            }
         }
-    }
+    });
 }
 
 export default Account;

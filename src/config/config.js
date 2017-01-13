@@ -5,19 +5,19 @@ const _ = require("lodash");
 let env = process.env.NODE_ENV = process.env.NODE_ENV || "development";
 
 let base = {
-  app: {
-    root: path.normalize(path.join(__dirname, "/..")),
-    env: env,
-  },
+    app: {
+        root: path.normalize(path.join(__dirname, "/..")),
+        env: env,
+        excluded : "excluded_path",
+        name: "CmdbAuth",
+        secret: "123456"
+    },
 };
 
 let specific = {
     development: {
         app: {
-            port: 3002,
-            name: "cmdb auth",
-            excluded : "excluded_path",
-            secret: "123456"
+            port: 3002
         },
         mysql: {
             host: 'localhost',
@@ -33,9 +33,7 @@ let specific = {
     }, 
     production: {
         app: {
-            port: process.env.PORT || 5000,
-            name: "koa2-boilerplate",
-            excluded : "excluded_path"
+            port: process.env.PORT || 5000
         },
         mysql: {
             host: 'localhost',

@@ -11,11 +11,6 @@ import views from 'koa-views';
 import _ from './passport';
 import passport from 'koa-passport';
 import log4js from 'log4js';
-import jwt_token from '../middleware/token';
-import Redis from 'ioredis';
-import config from './config'
-
-var redis = new Redis(config.redis.port, config.redis.host,{ dropBufferSupport: true });
 
 export default function middleware(app) {
 
@@ -24,7 +19,7 @@ export default function middleware(app) {
     log4js.configure({
         appenders: [
             { type: 'console' },
-            { type: 'dateFile', filename: __dirname + '/../tmp/boilerplate.log' , "pattern":"-yyyy-MM-dd-hh.log","alwaysIncludePattern":false, category: 'file' }
+            { type: 'dateFile', filename: __dirname + '/../../tmp/boilerplate.log' , "pattern":"-yyyy-MM-dd-hh.log","alwaysIncludePattern":false, category: 'file' }
         ],
         replaceConsole: true
     });
@@ -33,24 +28,19 @@ export default function middleware(app) {
         try {
             await next();
         } catch (error) {
-            ctx.body = error.message;
-            ctx.status = 500;
+            ctx.body = {status: 'error',message: error.message};
+            ctx.status = error.status|500;
         }
     })
 
-    app.use(cors({ credentials: true }));
+    app.use(cors({ credentials: true }))
     app.use(convert(Logger()))
     app.use(bodyParser())
-    app.use(mount("/", convert(Serve(__dirname + '/../public/'))));
-    app.keys = ['superalsrk-session-key'];
+    app.use(mount("/", convert(Serve(__dirname + '/../public/'))))
+    app.keys = ['cmdb-auth']
     app.use(convert(session()))
     app.use(passport.initialize())
     app.use(passport.session())
     app.use(views(__dirname + '/../views', {extension: 'swig'}))
-
-    app.use(jwt_token({
-        client: redis,
-        secret: config.app.secret
-    }));
 
 }

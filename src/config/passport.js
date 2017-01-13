@@ -19,11 +19,11 @@ var LocalStrategy = require('passport-local').Strategy
 passport.use(new LocalStrategy(function(username, password, done) {
   
   AccountModel.verify(username, password)
-    .then(function(result) {
-        if(result != null) {
-            done(null, result)
+    .then(function(user) {
+        if(user != null) {
+            done(null, user)
         }  else {
             done(null, false)
         }
-    })
+    }).catch(done)
 }))
