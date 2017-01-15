@@ -168,3 +168,4 @@ mochawesome-reports
 将删除 test/
 将删除 webpack.config.js
 将删除 webpack.prod.config.js
+/dump.rdb

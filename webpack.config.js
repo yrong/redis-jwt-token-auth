@@ -23,7 +23,8 @@ module.exports = {
   output: {
     publicPath: "http://0.0.0.0:9000/assets/",
     path: path.join(__dirname, 'src/public/assets'),
-    filename: '[name].js'
+    filename: '[name].js',
+      crossOriginLoading:true
   },
   plugins: [
     
