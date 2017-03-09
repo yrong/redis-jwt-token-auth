@@ -1,0 +1,53 @@
+[
+  {
+    "name": "check valid token",
+    "method": "POST",
+    "url": "http://localhost:3002/auth/check",
+    "body": {
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIzNDdmMjBjYi04NWI2LTRkOTItYTc0MC02NTY0NTQ3MDY5NDMiLCJ1c2VyIjp7ImlkIjoyNjIsImF1dG9sb2dpbiI6MSwidGVzdCI6ImZ1Y2siLCJhdHRlbXB0X2Nsb2NrIjoxNDU2ODU0MjkyLCJyZWZyZXNoIjozMCwiYXR0ZW1wdF9mYWlsZWQiOjAsInR5cGUiOjMsImF0dGVtcHRfaXAiOiIxMC41MC4xMy42OSIsInVzZXJpZCI6MSwidXVpZCI6MSwidXJsIjoiIiwicm93c19wZXJfcGFnZSI6NTAsInBhc3N3ZCI6IjA5OGY2YmNkNDYyMWQzNzNjYWRlNGU4MzI2MjdiNGY2Iiwic3VybmFtZSI6IndlcnEiLCJhdXRvbG9nb3V0IjowLCJuYW1lIjoidGVzdCIsImFsaWFzIjoibmVyZHMiLCJ0aGVtZSI6ImRlZmF1bHQiLCJsYW5nIjoiZW5fR0IifSwiaWF0IjoxNDg5MDU1ODgyfQ.7CYU4yYPKY1b9i62eQBr6ZOVFe4vIjEidXQZ0pTzo8k"
+    }
+  },
+  {
+    "name": "login",
+    "method": "POST",
+    "url": "http://localhost:3002/auth/login",
+    "body": {
+      "username": "nerds",
+      "password": "test"
+    }
+  },
+  {
+    "name": "logout",
+    "method": "POST",
+    "url": "http://localhost:3002/auth/logout",
+    "body": {
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIzNDdmMjBjYi04NWI2LTRkOTItYTc0MC02NTY0NTQ3MDY5NDMiLCJ1c2VyIjp7ImlkIjoyNjIsImF1dG9sb2dpbiI6MSwidGVzdCI6ImZ1Y2siLCJhdHRlbXB0X2Nsb2NrIjoxNDU2ODU0MjkyLCJyZWZyZXNoIjozMCwiYXR0ZW1wdF9mYWlsZWQiOjAsInR5cGUiOjMsImF0dGVtcHRfaXAiOiIxMC41MC4xMy42OSIsInVzZXJpZCI6MSwidXVpZCI6MSwidXJsIjoiIiwicm93c19wZXJfcGFnZSI6NTAsInBhc3N3ZCI6IjA5OGY2YmNkNDYyMWQzNzNjYWRlNGU4MzI2MjdiNGY2Iiwic3VybmFtZSI6IndlcnEiLCJhdXRvbG9nb3V0IjowLCJuYW1lIjoidGVzdCIsImFsaWFzIjoibmVyZHMiLCJ0aGVtZSI6ImRlZmF1bHQiLCJsYW5nIjoiZW5fR0IifSwiaWF0IjoxNDg5MDU1ODgyfQ.7CYU4yYPKY1b9i62eQBr6ZOVFe4vIjEidXQZ0pTzo8k"
+    }
+  },
+  {
+    "name": "login with wrong passwd",
+    "method": "POST",
+    "url": "http://localhost:3002/auth/login",
+    "body": {
+      "username": "nerds",
+      "password": "test1"
+    }
+  },
+  {
+    "name": "check invalid token",
+    "method": "POST",
+    "url": "http://localhost:3002/auth/check",
+    "body": {
+      "token": "hello"
+    }
+  },
+  {
+    "name": "login with user not exist",
+    "method": "POST",
+    "url": "http://localhost:3002/auth/login",
+    "body": {
+      "username": "test1",
+      "password": "test"
+    }
+  }
+]

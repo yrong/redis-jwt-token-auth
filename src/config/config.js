@@ -12,29 +12,32 @@ let base = {
         name: "CmdbAuth",
         secret: "123456"
     },
+    mysql: {
+        host: 'localhost',
+        port : 3306,
+        user : 'root',
+        password : 'root',
+        database : 'test'
+    },
+    redis: {
+        host: 'localhost',
+        port: 6379
+    },
+    neo4j: {
+        host: "localhost",
+        port: 7687,
+        user: "neo4j",
+        password: "neo4j"
+    },
 };
 
 let specific = {
     development: {
         app: {
             port: 3002
-        },
-        mysql: {
-            host: 'localhost',
-            port : 3306,
-            user : 'root',
-            password : 'root',
-            database : 'test'
-        },
-        redis: {
-            host: 'localhost',
-            port: 6379
         }
     }, 
     production: {
-        app: {
-            port: process.env.PORT || 5000
-        },
         mysql: {
             host: 'localhost',
             port : 3306,
@@ -42,7 +45,7 @@ let specific = {
             password : 'test',
             database : 'test'
         }
-    },
+    }
 };
 
 module.exports = _.merge(base, specific[env]);
