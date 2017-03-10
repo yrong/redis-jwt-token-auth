@@ -5,7 +5,6 @@ import baseconfig from './config/base';
 import middleware from './middleware';
 import routes from './routes';
 import config from './config/config';
-import log4js from 'log4js';
 const app = new Koa();
 import logger from './logger'
 

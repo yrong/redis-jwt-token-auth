@@ -13,7 +13,7 @@
     "url": "http://localhost:3002/auth/login",
     "body": {
       "username": "nerds",
-      "password": "test"
+      "password": "{{passwd}}"
     }
   },
   {
@@ -34,11 +34,29 @@
     }
   },
   {
+    "name": "modify passwd",
+    "method": "PUT",
+    "url": "http://localhost:3002/auth/changepwd/1",
+    "body": {
+      "oldpwd": "{{passwd}}",
+      "newpwd": "{{passwd}}"
+    }
+  },
+  {
     "name": "check invalid token",
     "method": "POST",
     "url": "http://localhost:3002/auth/check",
     "body": {
       "token": "hello"
+    }
+  },
+  {
+    "name": "modify user info",
+    "method": "PUT",
+    "url": "http://localhost:3002/auth/userinfo/1",
+    "body": {
+      "avatar": "/upload/avatar/ca92d560-05a6-11e7-98ba-e1d08df9a25f",
+      "per_page": 30
     }
   },
   {

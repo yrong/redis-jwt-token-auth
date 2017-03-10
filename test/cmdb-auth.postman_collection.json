@@ -1,8 +1,4 @@
 {
-	"owner": "1388965",
-	"lastUpdatedBy": "1388965",
-	"lastRevision": 968178697,
-	"team": null,
 	"id": "392b910a-967e-7174-6120-0023fc49a7a6",
 	"name": "cmdb-auth",
 	"description": "",
@@ -12,8 +8,14 @@
 		"6beeca5d-95e7-694f-7e8d-9aae8ca754b2",
 		"232a0e38-2438-7d56-b0e6-023bb02efbc9",
 		"a165d1a4-5a19-4f54-4f6d-f39d0cc42c8b",
-		"627774ff-2fac-9b94-379d-8389d4448b9d"
+		"928dab35-b021-31df-4783-d24e9e63d728",
+		"627774ff-2fac-9b94-379d-8389d4448b9d",
+		"b67ff063-fb97-b8c3-aef8-c81b571f8f63"
 	],
+	"folders": [],
+	"timestamp": 0,
+	"owner": "1388965",
+	"public": false,
 	"requests": [
 		{
 			"folder": null,
@@ -38,19 +40,19 @@
 			"id": "540eddfe-c0c6-c326-da61-d5873e3884a6",
 			"headers": "Content-Type: application/json\n",
 			"url": "{{url}}/auth/login",
-			"preRequestScript": null,
+			"preRequestScript": "var hash = CryptoJS.MD5('test').toString();\npostman.setEnvironmentVariable('passwd', hash);",
 			"pathVariables": {},
 			"method": "POST",
 			"data": [],
 			"dataMode": "raw",
-			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"token found\"] = jsonData.token;\npostman.setGlobalVariable(\"token\", jsonData.token);\n",
+			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"token found\"] = jsonData.data.token;\npostman.setGlobalVariable(\"token\", jsonData.data.token);\n",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1489055864796,
+			"time": 1489159236870,
 			"name": "login",
 			"description": "",
 			"collectionId": "392b910a-967e-7174-6120-0023fc49a7a6",
-			"rawModeData": "{\n  \"username\":\"nerds\",\n  \"password\":\"test\"\n}"
+			"rawModeData": "{\n  \"username\":\"nerds\",\n  \"password\":\"{{passwd}}\"\n}"
 		},
 		{
 			"folder": null,
@@ -90,6 +92,24 @@
 			"rawModeData": "{\n  \"username\":\"nerds\",\n  \"password\":\"test1\"\n}"
 		},
 		{
+			"id": "928dab35-b021-31df-4783-d24e9e63d728",
+			"headers": "Content-Type: application/json\n",
+			"url": "{{url}}/auth/changepwd/1",
+			"preRequestScript": "var hash = CryptoJS.MD5('test').toString();\npostman.setEnvironmentVariable('passwd', hash);",
+			"pathVariables": {},
+			"method": "PUT",
+			"data": [],
+			"dataMode": "raw",
+			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"passwd modified\"] = jsonData.status === 'ok';\n",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1489157962559,
+			"name": "modify passwd",
+			"description": "",
+			"collectionId": "392b910a-967e-7174-6120-0023fc49a7a6",
+			"rawModeData": "{\n  \"oldpwd\":\"{{passwd}}\",\n  \"newpwd\":\"{{passwd}}\"\n}"
+		},
+		{
 			"folder": null,
 			"id": "a165d1a4-5a19-4f54-4f6d-f39d0cc42c8b",
 			"name": "check invalid token",
@@ -107,6 +127,24 @@
 			"helperAttributes": {},
 			"collectionId": "392b910a-967e-7174-6120-0023fc49a7a6",
 			"rawModeData": "{\n  \"token\":\"hello\"\n}"
+		},
+		{
+			"id": "b67ff063-fb97-b8c3-aef8-c81b571f8f63",
+			"headers": "Content-Type: application/json\n",
+			"url": "{{url}}/auth/userinfo/1",
+			"preRequestScript": "var hash = CryptoJS.MD5('test').toString();\npostman.setEnvironmentVariable('passwd', hash);",
+			"pathVariables": {},
+			"method": "PUT",
+			"data": [],
+			"dataMode": "raw",
+			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"passwd modified\"] = jsonData.status === 'ok';\n",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1489159979857,
+			"name": "modify user info",
+			"description": "",
+			"collectionId": "392b910a-967e-7174-6120-0023fc49a7a6",
+			"rawModeData": "{\n  \"avatar\":\"/upload/avatar/ca92d560-05a6-11e7-98ba-e1d08df9a25f\",\n  \"per_page\":30\n}"
 		},
 		{
 			"folder": null,

@@ -29,6 +29,15 @@ let base = {
         user: "neo4j",
         password: "neo4j"
     },
+    upload: {
+        avatar: {
+            url: "/upload/avatar",
+            storeDir: "avatar",
+            provider: "local",
+            folder: "src/public/upload",
+            mimetypes: ['image/png','image/bmp','image/gif','image/jpeg']
+        }
+    }
 };
 
 let specific = {
