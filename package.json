@@ -52,10 +52,11 @@
     "swig": "^1.4.2"
   },
   "devDependencies": {
-    "babel-cli": "^6.10.1",
+    "babel-cli": "^6.24.0",
     "babel-core": "^6.10.4",
     "babel-loader": "^6.2.4",
     "babel-polyfill": "^6.9.1",
+    "babel-preset-env": "^1.2.2",
     "babel-preset-es2015": "^6.9.0",
     "babel-preset-stage-0": "^6.5.0",
     "jquery": "^3.1.0",
@@ -64,6 +65,7 @@
     "newman": "^3.4.2",
     "nodemon": "^1.10.0",
     "postman_simplify": "^1.0.3",
-    "supertest": "^2.0.0"
+    "supertest": "^2.0.0",
+    "webpack": "^2.2.1"
   }
 }

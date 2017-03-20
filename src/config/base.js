@@ -34,8 +34,8 @@ export default function middleware(app) {
             const start = new Date()
             await next();
             const ms = new Date() - start
-            if(ctx.type === 'application/json')
-                ctx.body = {status: 'ok',data:ctx.body}
+            if(ctx.type === 'application/json' || ctx.jsonBody == true)
+                ctx.body = {status: 'ok',data:ctx.body||{}}
             logger.info('%s %s - %s ms', ctx.method,ctx.url, ms)
         } catch (error) {
             ctx.body = {

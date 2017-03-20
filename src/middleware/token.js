@@ -52,9 +52,13 @@ export default function jwt_token(options) {
             req[options.requestKey].jwt = token;
             // Update the TTL
             req[options.requestKey].touch(_.noop);
+            req.jsonBody = true
             await next();
 		}else{
-            await next();
+		    if(ctx.path.includes('/auth/login')||ctx.path.indexOf('.html') >= 0)
+                await next()
+            else
+                ctx.throw('token not found!',401);
 		}
     };
 };

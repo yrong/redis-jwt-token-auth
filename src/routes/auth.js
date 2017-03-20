@@ -3,7 +3,6 @@
 import Router from 'koa-router';
 const router = new Router();
 import passport from 'koa-passport';
-import _ from 'lodash';
 import Account from '../models/account'
 
 router.post('/login', async(ctx, next) => {
@@ -16,7 +15,8 @@ router.post('/login', async(ctx, next) => {
 
 router.post('/logout', async(ctx, next) => {
     await ctx.logout();
-    ctx.body = await ctx.req.session.destroy();
+    await ctx.req.session.destroy();
+    ctx.body = {}
 });
 
 router.post('/check', async(ctx, next) => {
@@ -24,11 +24,13 @@ router.post('/check', async(ctx, next) => {
 })
 
 router.put('/changepwd/:uuid', async(ctx, next) => {
-    ctx.body = await Account.updatePassword({...ctx.params, ...ctx.request.body})
+    await Account.updatePassword({...ctx.params, ...ctx.request.body})
+    ctx.body = {}
 })
 
 router.put('/userinfo/:uuid',async(ctx,next)=>{
-    ctx.body = await Account.updateInfo({...ctx.params, ...ctx.request.body})
+    await Account.updateInfo({...ctx.params, ...ctx.request.body})
+    ctx.body = {}
 })
 
 export default router;

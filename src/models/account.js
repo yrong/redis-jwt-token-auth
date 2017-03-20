@@ -26,7 +26,9 @@ Account.verify = function(username, password) {
 }
 
 Account.updatePassword = async (params)=>{
-    let account = await db.queryCql(`MATCH (u:User{uuid:${params.uuid},passwd:'${params.oldpwd}'}) return u`)
+    let cql = `MATCH (u:User{uuid:${params.uuid},passwd:'${params.oldpwd}'}) return u`
+    logger.info('update password find user:' + cql)
+    let account = await db.queryCql(cql)
     if(account == null || account.length != 1) {
         throw new Error(`user with id ${params.uuid} and password ${params.oldpwd} not exist!`)
     }
@@ -35,7 +37,10 @@ Account.updatePassword = async (params)=>{
 }
 
 Account.updateInfo = async (params)=>{
-    let account = await db.queryCql(`MATCH (u:User{uuid:${params.uuid}}) return u`)
+    params.uuid = _.isString(params.uuid)?parseInt(params.uuid):params.uuid
+    let cql = `MATCH (u:User{uuid:${params.uuid}}) return u`
+    logger.info('update info find user:' + cql)
+    let account = await db.queryCql(cql)
     if(account == null || account.length != 1) {
         throw new Error(`user with id ${params.uuid} not exist!`)
     }
