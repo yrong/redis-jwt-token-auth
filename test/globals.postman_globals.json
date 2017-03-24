@@ -1,0 +1,33 @@
+{
+  "id": "1816c4de-87d2-815e-468f-fa89b6a422a2",
+  "name": "Postman Globals",
+  "values": [
+    {
+      "enabled": true,
+      "key": "token",
+      "type": "text",
+      "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI1ZjEwODRkZS1iNzM2LTQ1ZGUtOGE2YS1kZGE0MDZiMDNhN2IiLCJ1c2VyIjp7ImlkIjo2NzcsInBhc3N3ZCI6IjA5OGY2YmNkNDYyMWQzNzNjYWRlNGU4MzI2MjdiNGY2IiwiY3JlYXRlZCI6MTQ5MDM2MzYwNDMxNiwic3VybmFtZSI6IiIsIm5hbWUiOiJuZXJkcyIsImFsaWFzIjoibmVyZHMiLCJ0aGVtZSI6ImRlZmF1bHQiLCJsYW5nIjoiZW5fR0IiLCJ0eXBlIjoxLCJjYXRlZ29yeSI6IlVzZXIiLCJhdHRlbXB0X2lwIjoiMTAuNTAuMTMuNjkiLCJ1c2VyaWQiOjEsInV1aWQiOjZ9LCJpYXQiOjE0OTAzNjM2MDR9.gSwc8TE_o4QoEb2uFegNFoPTfTJ7C1UvxIUW6cyVAes"
+    },
+    {
+      "key": "username",
+      "value": "nerds",
+      "type": "text",
+      "enabled": true
+    },
+    {
+      "key": "passwd",
+      "value": "test",
+      "type": "text",
+      "enabled": true
+    },
+    {
+      "key": "auth_url",
+      "value": "http://localhost:3002",
+      "type": "text",
+      "enabled": true
+    }
+  ],
+  "_postman_variable_scope": "globals",
+  "_postman_exported_at": "2017-03-24T14:06:13.791Z",
+  "_postman_exported_using": "Postman/4.10.4"
+}

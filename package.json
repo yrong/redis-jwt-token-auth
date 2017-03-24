@@ -6,10 +6,10 @@
   "scripts": {
     "dev": "nodemon start.js",
     "start": "node start.js",
-    "test": "node ./test/postman.js",
+    "test": "node ./test/index.js",
     "report": "mocha --compilers js:babel-core/register --require babel-polyfill --reporter mochawesome",
     "sync": "node sync.js",
-    "generate_simplified_postman_collection": "postman_simplify ./test/cmdb-auth.postman_collection.json ./test/cmdb-auth.postman_environment_all.json"
+    "generate_simplified_postman_collection": "postman_simplify ./test/cmdb-auth.postman_collection.json ./test/cmdb-auth.postman_environment.json"
   },
   "keywords": [
     "koa2-boilerplate",

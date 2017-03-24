@@ -10,7 +10,8 @@ let base = {
         env: env,
         excluded : "excluded_path",
         name: "CmdbAuth",
-        secret: "123456"
+        secret: "123456",
+        port: 3002
     },
     mysql: {
         host: 'localhost',
