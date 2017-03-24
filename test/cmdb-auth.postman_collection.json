@@ -40,7 +40,7 @@
 			"id": "540eddfe-c0c6-c326-da61-d5873e3884a6",
 			"headers": "Content-Type: application/json\n",
 			"url": "{{url}}/auth/login",
-			"preRequestScript": "var hash = CryptoJS.MD5('test').toString();\npostman.setEnvironmentVariable('passwd', hash);",
+			"preRequestScript": "var passwd = globals['passwd']\nvar hash = CryptoJS.MD5(passwd).toString();\npostman.setGlobalVariable('password', hash);",
 			"pathVariables": {},
 			"method": "POST",
 			"data": [],
@@ -48,11 +48,11 @@
 			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"token found\"] = jsonData.data.token;\npostman.setGlobalVariable(\"token\", jsonData.data.token);\n",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1489159236870,
+			"time": 1490365845660,
 			"name": "login",
 			"description": "",
 			"collectionId": "392b910a-967e-7174-6120-0023fc49a7a6",
-			"rawModeData": "{\n  \"username\":\"nerds\",\n  \"password\":\"{{passwd}}\"\n}"
+			"rawModeData": "{\n  \"username\":\"{{username}}\",\n  \"password\":\"{{password}}\"\n}"
 		},
 		{
 			"folder": null,
@@ -95,7 +95,7 @@
 			"id": "928dab35-b021-31df-4783-d24e9e63d728",
 			"headers": "Content-Type: application/json\n",
 			"url": "{{url}}/auth/changepwd/1",
-			"preRequestScript": "var hash = CryptoJS.MD5('test').toString();\npostman.setEnvironmentVariable('passwd', hash);",
+			"preRequestScript": "",
 			"pathVariables": {},
 			"method": "PUT",
 			"data": [],
@@ -103,11 +103,11 @@
 			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"passwd modified\"] = jsonData.status === 'ok';\n",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1490016208896,
+			"time": 1490364806170,
 			"name": "modify passwd",
 			"description": "",
 			"collectionId": "392b910a-967e-7174-6120-0023fc49a7a6",
-			"rawModeData": "{\n  \"token\":\"{{token}}\",\n  \"oldpwd\":\"{{passwd}}\",\n  \"newpwd\":\"{{passwd}}\"\n}"
+			"rawModeData": "{\n  \"token\":\"{{token}}\",\n  \"oldpwd\":\"{{password}}\",\n  \"newpwd\":\"{{password}}\"\n}"
 		},
 		{
 			"folder": null,
