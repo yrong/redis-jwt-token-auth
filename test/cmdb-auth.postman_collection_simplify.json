@@ -4,7 +4,7 @@
     "method": "POST",
     "url": "http://localhost:3002/auth/check",
     "body": {
-      "token": "{{token}}"
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIxYWJkYzRkYy02YjZhLTQ4YTItOGIyNC1iNDY3ZTg4NTAwMmIiLCJ1c2VyIjp7ImlkIjoxMDA1LCJwYXNzd2QiOiIwOThmNmJjZDQ2MjFkMzczY2FkZTRlODMyNjI3YjRmNiIsImNyZWF0ZWQiOjE0OTA1MTI3NzU4MDIsInN1cm5hbWUiOiIiLCJuYW1lIjoibmVyZHMiLCJhbGlhcyI6Im5lcmRzIiwidGhlbWUiOiJkZWZhdWx0IiwibGFuZyI6ImVuX0dCIiwidHlwZSI6MSwiY2F0ZWdvcnkiOiJVc2VyIiwiYXR0ZW1wdF9pcCI6IjEwLjUwLjEzLjY5IiwidXNlcmlkIjoxLCJ1dWlkIjoxfSwiaWF0IjoxNDkwNTE1OTg0fQ.XbmKsebpa18slBMY7U2MoWzVTGLxIUJl8JiUTyzjY2s"
     }
   },
   {
@@ -13,7 +13,7 @@
     "url": "http://localhost:3002/auth/login",
     "body": {
       "username": "nerds",
-      "password": "{{passwd}}"
+      "password": "098f6bcd4621d373cade4e832627b4f6"
     }
   },
   {
@@ -21,7 +21,7 @@
     "method": "POST",
     "url": "http://localhost:3002/auth/logout",
     "body": {
-      "token": "{{token}}"
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIxYWJkYzRkYy02YjZhLTQ4YTItOGIyNC1iNDY3ZTg4NTAwMmIiLCJ1c2VyIjp7ImlkIjoxMDA1LCJwYXNzd2QiOiIwOThmNmJjZDQ2MjFkMzczY2FkZTRlODMyNjI3YjRmNiIsImNyZWF0ZWQiOjE0OTA1MTI3NzU4MDIsInN1cm5hbWUiOiIiLCJuYW1lIjoibmVyZHMiLCJhbGlhcyI6Im5lcmRzIiwidGhlbWUiOiJkZWZhdWx0IiwibGFuZyI6ImVuX0dCIiwidHlwZSI6MSwiY2F0ZWdvcnkiOiJVc2VyIiwiYXR0ZW1wdF9pcCI6IjEwLjUwLjEzLjY5IiwidXNlcmlkIjoxLCJ1dWlkIjoxfSwiaWF0IjoxNDkwNTE1OTg0fQ.XbmKsebpa18slBMY7U2MoWzVTGLxIUJl8JiUTyzjY2s"
     }
   },
   {
@@ -38,9 +38,9 @@
     "method": "PUT",
     "url": "http://localhost:3002/auth/changepwd/1",
     "body": {
-      "token": "{{token}}",
-      "oldpwd": "{{passwd}}",
-      "newpwd": "{{passwd}}"
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIxYWJkYzRkYy02YjZhLTQ4YTItOGIyNC1iNDY3ZTg4NTAwMmIiLCJ1c2VyIjp7ImlkIjoxMDA1LCJwYXNzd2QiOiIwOThmNmJjZDQ2MjFkMzczY2FkZTRlODMyNjI3YjRmNiIsImNyZWF0ZWQiOjE0OTA1MTI3NzU4MDIsInN1cm5hbWUiOiIiLCJuYW1lIjoibmVyZHMiLCJhbGlhcyI6Im5lcmRzIiwidGhlbWUiOiJkZWZhdWx0IiwibGFuZyI6ImVuX0dCIiwidHlwZSI6MSwiY2F0ZWdvcnkiOiJVc2VyIiwiYXR0ZW1wdF9pcCI6IjEwLjUwLjEzLjY5IiwidXNlcmlkIjoxLCJ1dWlkIjoxfSwiaWF0IjoxNDkwNTE1OTg0fQ.XbmKsebpa18slBMY7U2MoWzVTGLxIUJl8JiUTyzjY2s",
+      "oldpwd": "098f6bcd4621d373cade4e832627b4f6",
+      "newpwd": "098f6bcd4621d373cade4e832627b4f6"
     }
   },
   {
@@ -56,7 +56,7 @@
     "method": "PUT",
     "url": "http://localhost:3002/auth/userinfo/1",
     "body": {
-      "token": "{{token}}",
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIxYWJkYzRkYy02YjZhLTQ4YTItOGIyNC1iNDY3ZTg4NTAwMmIiLCJ1c2VyIjp7ImlkIjoxMDA1LCJwYXNzd2QiOiIwOThmNmJjZDQ2MjFkMzczY2FkZTRlODMyNjI3YjRmNiIsImNyZWF0ZWQiOjE0OTA1MTI3NzU4MDIsInN1cm5hbWUiOiIiLCJuYW1lIjoibmVyZHMiLCJhbGlhcyI6Im5lcmRzIiwidGhlbWUiOiJkZWZhdWx0IiwibGFuZyI6ImVuX0dCIiwidHlwZSI6MSwiY2F0ZWdvcnkiOiJVc2VyIiwiYXR0ZW1wdF9pcCI6IjEwLjUwLjEzLjY5IiwidXNlcmlkIjoxLCJ1dWlkIjoxfSwiaWF0IjoxNDkwNTE1OTg0fQ.XbmKsebpa18slBMY7U2MoWzVTGLxIUJl8JiUTyzjY2s",
       "avatar": "/upload/avatar/ca92d560-05a6-11e7-98ba-e1d08df9a25f",
       "per_page": 30
     }
