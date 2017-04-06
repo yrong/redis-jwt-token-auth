@@ -3,15 +3,15 @@
 import passport from 'koa-passport';
 import AccountModel from '../models/account';
 import _ from 'lodash';
+import LdapStrategy from 'passport-ldapauth';
+import config from './config';
 
 passport.serializeUser(function(user, done) {
-    done(null, _.pick(user, ['userid','alias','lang','name','surname']));
+    done(null, _.omit(user,['password','passwd','id']));
 })
 
 passport.deserializeUser(function(user, done) {
-    AccountModel.findOne(user.userid, function(err, user) {
-        done(err, user)
-    })
+    done(user)
 })
 
 var LocalStrategy = require('passport-local').Strategy
@@ -27,3 +27,7 @@ passport.use(new LocalStrategy(function(username, password, done) {
         }
     }).catch(done)
 }))
+
+passport.use(new LdapStrategy(config.ldap));
+
+

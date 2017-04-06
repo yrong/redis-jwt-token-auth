@@ -10,7 +10,8 @@
 		"a165d1a4-5a19-4f54-4f6d-f39d0cc42c8b",
 		"928dab35-b021-31df-4783-d24e9e63d728",
 		"b67ff063-fb97-b8c3-aef8-c81b571f8f63",
-		"627774ff-2fac-9b94-379d-8389d4448b9d"
+		"627774ff-2fac-9b94-379d-8389d4448b9d",
+		"59bb3482-699d-4554-c26c-4a650c381bfb"
 	],
 	"folders": [],
 	"timestamp": 0,
@@ -53,6 +54,24 @@
 			"description": "",
 			"collectionId": "392b910a-967e-7174-6120-0023fc49a7a6",
 			"rawModeData": "{\n  \"username\":\"{{username}}\",\n  \"password\":\"{{password}}\"\n}"
+		},
+		{
+			"id": "59bb3482-699d-4554-c26c-4a650c381bfb",
+			"headers": "Content-Type: application/json\n",
+			"url": "{{url}}/auth/login-ldap",
+			"preRequestScript": "var passwd = globals['passwd']\nvar hash = CryptoJS.MD5(passwd).toString();\npostman.setGlobalVariable('password', hash);",
+			"pathVariables": {},
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"token found\"] = jsonData.data.token;\npostman.setEnvironmentVariable(\"token\", jsonData.data.token);\n",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1491456182605,
+			"name": "login-ldap",
+			"description": "",
+			"collectionId": "392b910a-967e-7174-6120-0023fc49a7a6",
+			"rawModeData": "{\n  \"username\":\"test\",\n  \"password\":\"test\"\n}"
 		},
 		{
 			"folder": null,

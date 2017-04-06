@@ -13,6 +13,19 @@ router.post('/login', async(ctx, next) => {
     })(ctx, next)
 });
 
+
+router.post('/login-ldap', async (ctx, next) => {
+    await passport.authenticate('ldapauth',{session: false},async (user,info) => {
+        if(user){
+            await ctx.login(user);
+            let token = await ctx.req.session.create({user: user});
+            ctx.body = {token: token};
+        }else{
+            throw new Error(info.message)
+        }
+    })(ctx, next)
+});
+
 router.post('/logout', async(ctx, next) => {
     await ctx.logout();
     await ctx.req.session.destroy();

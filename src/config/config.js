@@ -38,6 +38,13 @@ let base = {
             folder: "src/public/upload",
             mimetypes: ['image/png','image/bmp','image/gif','image/jpeg']
         }
+    },
+    ldap:{
+        server: {
+            url: 'ldap://localhost:389',
+            searchBase: 'ou=users,dc=test,dc=com',
+            searchFilter: "(sn={{username}})"
+        }
     }
 };
 

@@ -17,6 +17,15 @@
     }
   },
   {
+    "name": "login-ldap",
+    "method": "POST",
+    "url": "http://localhost:3002/auth/login-ldap",
+    "body": {
+      "username": "test",
+      "password": "test"
+    }
+  },
+  {
     "name": "logout",
     "method": "POST",
     "url": "http://localhost:3002/auth/logout",
