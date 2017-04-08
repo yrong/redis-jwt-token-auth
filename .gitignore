@@ -155,17 +155,6 @@ vendor.bundle.js
 
 mochawesome-reports
 
+dump.rdb
+build
 
-将删除 .babelrc
-将删除 .gitignore
-将删除 .idea/
-将删除 Dockerfile
-将删除 README.md
-将删除 app/
-将删除 package.json
-将删除 src/
-将删除 start.js
-将删除 test/
-将删除 webpack.config.js
-将删除 webpack.prod.config.js
-/dump.rdb

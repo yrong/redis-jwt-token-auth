@@ -1,5 +1,3 @@
-require("babel-core/register");
-require("babel-polyfill");
 let {sync} = require("./src/sync/index.js")
 
 console.time("migrationConsuming")
