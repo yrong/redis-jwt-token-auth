@@ -1,0 +1,56 @@
+{
+    "name": "auth-api",
+    "port":3002,
+    "secret": "WEvHL/pbqX6qpqrcORwHQYWmNWnguxiaMEHd7eWnZB1toHzO",
+    "logger":{
+      "appenders": [
+        {
+          "type": "console"
+        },
+        {
+          "type": "file",
+          "filename": "auth-api.log",
+          "maxLogSize": 20480,
+          "numBackups": 5,
+          "category": "auth-api"
+        }
+      ],
+      "replaceConsole": true,
+      "defaultLevel":"INFO",
+      "defaultCategory":"auth-api"
+    },
+    "neo4j": {
+      "host": "localhost",
+      "port": 7687,
+      "http_port":7474,
+      "user": "neo4j",
+      "password": "neo4j"
+    },
+    "mysql": {
+      "host": "localhost",
+      "port" : 3306,
+      "user" : "root",
+      "password" : "root",
+      "database" : "test"
+    },
+    "redis": {
+      "host": "localhost",
+      "port": 6379
+    },
+    "ldap":{
+      "server": {
+        "url": "ldap://localhost:389",
+        "searchBase": "ou=users,dc=test,dc=com",
+        "searchFilter": "(sn={{username}})"
+      }
+    },
+    "upload": {
+      "avatar": {
+        "url": "/upload/avatar",
+        "storeDir": "avatar",
+        "provider": "local",
+        "folder": "public/upload",
+        "mimetypes": ["image/png","image/bmp","image/gif","image/jpeg"]
+      }
+    }
+}

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>upload-demo</title>
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.3.8/css/fileinput.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css" rel="stylesheet" type="text/css" />
+    <style>
+        body {font-family: "FontAwesome"}
+        [data-notify="progressbar"] {
+            margin-bottom: 0px;
+            position: absolute;
+            bottom: 0px;
+            left: 0px;
+            width: 100%;
+            height: 5px;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.3.8/js/plugins/canvas-to-blob.min.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.3.8/js/plugins/sortable.min.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.3.8/js/plugins/purify.min.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.3.8/js/fileinput.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.3.8/themes/fa/theme.js"></script>
+  </head>
+
+  <body class="pace-top bg-white">
+    <div class="container">
+        <div class="row form-group">
+            <div class="col col-md-6">
+                <input type="file" id="avatar" name="avatar" />
+            </div>
+        </div>
+        <div class="row form-group">
+            <div class="col col-md-4">
+                <div class="form-group">
+                    <h4><label class="label label-default">FileName:</label></h4>
+                    <span id="uploaded_fileName" class="label label-success"></span>
+                </div>
+                <div class="form-group">
+                    <h4><label class="label label-default">FileUrl:</label></h4>
+                    <span id="uploaded_fileUrl" class="label label-success"></span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <script src="assets/main.js"></script>
+  </body>
+</html>
