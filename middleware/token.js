@@ -25,7 +25,6 @@ module.exports = function jwt_token(options) {
 		req[options.requestKey] = new SessionUtils();
 		var token = ctx.req.headers[options.requestHeader]
 			|| ctx.query[options.requestArg]
-			|| ctx.cookies.get(options.requestArg)
 			|| (ctx.request.body && ctx.request.body[options.requestArg]);
 		if(token){
 			var decoded,session;
