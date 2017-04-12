@@ -4,7 +4,7 @@ const Koa = require('koa')
 const baseconfig = require('./base/index')
 const middleware = require('./middleware')
 const routes = require('./routes')
-const config = require('./base/config')
+const config = require('config')
 const app = new Koa()
 const logger = require('./logger')
 
@@ -18,7 +18,7 @@ app.use(middleware())
 //configure custom routes
 app.use(routes())
 
-app.listen(config.app.port);
-logger.info("Server started, listening on port: " + config.app.port);
+app.listen(config.get('port'));
+logger.info("Server started, listening on port: " + config.get('port'));
 
 module.exports = app
