@@ -1,4 +1,4 @@
-let {sync} = require("./src/sync/index.js")
+let {sync} = require("./sync/index.js")
 
 console.time("migrationConsuming")
 sync().then((result)=>{
