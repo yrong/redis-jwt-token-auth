@@ -54,11 +54,10 @@ module.exports = function jwt_token(options) {
             req.jsonBody = true
             await next();
 		}else{
-            // if(ctx.path.includes('/auth/login')||ctx.path.indexOf('.html') >= 0)
-            //     await next()
-            // else
-            //     ctx.throw('token not found!',401);
-            await next()
+            if(ctx.path.includes('/auth/login')||ctx.path.includes('/auth/register')||ctx.path.includes('/auth/hidden/clean')||ctx.path.indexOf('.html') >= 0)
+                await next()
+            else
+                ctx.throw('token not found!',401);
 		}
     };
 };

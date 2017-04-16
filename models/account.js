@@ -6,9 +6,36 @@ const _ = require('lodash')
 
 const Account = {}
 
-Account.findOne = function (id, cb) {
-    const account = {"id": 1, "username" : "test", "password" : "test"}
-    cb(null, account)
+Account.findOne = async function (uuid) {
+    let account = await db.queryCql(`MATCH (u:User{uuid:${uuid}}) return u`);
+    if(account == null || account.length != 1) {
+        throw new Error(`user with name ${uuid} not exist!`)
+    }
+    return account[0]
+}
+
+Account.findAll = async function () {
+    let account = await db.queryCql(`MATCH (u:User) return u`);
+    return account
+}
+
+Account.add = async function(params) {
+    params.uuid = params.userid
+    let cypher_params = {uuid:params.userid,fields:params}
+    let cypher = `MERGE (n:User {uuid: {uuid}})
+    ON CREATE SET n = {fields}
+    ON MATCH SET n = {fields}`
+    return await db.queryCql(cypher,cypher_params);
+}
+
+Account.destory = function(uuid) {
+    let cypher = `MATCH (n:User) WHERE n.uuid = ${uuid} DETACH DELETE n`
+    return db.queryCql(cypher);
+}
+
+Account.destoryAll = function() {
+    let cypher = `MATCH (n:User) DETACH DELETE n`
+    return db.queryCql(cypher);
 }
 
 Account.verify = function(username, password) {
@@ -24,6 +51,8 @@ Account.verify = function(username, password) {
         }
     });
 }
+
+
 
 Account.updatePassword = async (params)=>{
     let cql = `MATCH (u:User{uuid:${params.uuid},passwd:'${params.oldpwd}'}) return u`
