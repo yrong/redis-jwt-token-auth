@@ -10,6 +10,7 @@ module.exports = async function sync(){
             row = _.merge({},result[0],row)
         }
         row.uuid = row.userid
+        row.category = 'User'
         cypher = `MERGE (u:User{uuid:${row.userid}}) ON CREATE SET u = {row} ON MATCH SET u = {row}`
         result = await db.queryCql(cypher,{row:row})
     }

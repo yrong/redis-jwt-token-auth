@@ -2,12 +2,10 @@
   "name": "cmdb-auth",
   "version": "1.0.0",
   "description": "",
-  "main": "start.js",
   "scripts": {
-    "start": "node server.js",
+    "start": "node --harmony app.js",
     "test": "node ./test/index.js",
-    "report": "mocha --compilers js:babel-core/register --require babel-polyfill --reporter mochawesome",
-    "sync": "node sync.js",
+    "sync": "node --harmony sync.js",
     "generate_simplified_postman_collection": "postman_simplify ./test/cmdb-auth.postman_collection.json ./test/cmdb-auth.postman_environment.json"
   },
   "keywords": [

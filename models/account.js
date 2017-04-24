@@ -21,6 +21,7 @@ Account.findAll = async function () {
 
 Account.add = async function(params) {
     params.uuid = params.userid
+    params.category = 'User'
     let cypher_params = {uuid:params.userid,fields:params}
     let cypher = `MERGE (n:User {uuid: {uuid}})
     ON CREATE SET n = {fields}
