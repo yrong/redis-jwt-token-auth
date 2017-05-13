@@ -10,16 +10,28 @@ features including:
 
 ### Usage
 
-sync user from mysql to neo4j
+1. webpack build
+
+```
+webpack&&cd build
+```
+
+2. sync user from mysql to neo4j
 
 ```
 node sync.js
 ```
 
-usage by running postman test cases
+3. start server
 
 ```
-node ./test/index.js
+node server.js
+```
+
+4. running postman test cases
+
+```
+node ../test/index.js
 ```
 
 including:
