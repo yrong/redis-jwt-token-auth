@@ -4,6 +4,34 @@ const Router = require('koa-router')
 const router = new Router();
 const passport = require('koa-passport')
 const Account = require('../models/account')
+const _ = require('lodash')
+
+
+router.post('/hidden/clean', async(ctx, next) => {
+    await Account.destoryAll()
+    ctx.body = {}
+});
+
+router.get('/userinfo', async(ctx, next) => {
+    let users = await Account.findAll()
+    ctx.body = users
+});
+
+router.get('/userinfo/:uuid',async(ctx,next)=>{
+    let user = await Account.findOne(ctx.params.uuid)
+    ctx.body = user
+})
+
+router.post('/register', async(ctx, next) => {
+    let params = ctx.request.body
+    await Account.add(params)
+    ctx.body = {}
+});
+
+router.post('/unregister/:uuid', async(ctx, next) => {
+    await Account.destory(ctx.params.uuid)
+    ctx.body = {}
+});
 
 router.post('/login', async(ctx, next) => {
     await passport.authenticate('local',async(user, info) => {
@@ -47,5 +75,6 @@ router.put('/userinfo/:uuid',async(ctx,next)=>{
     await Account.updateInfo(params)
     ctx.body = {}
 })
+
 
 module.exports = router;

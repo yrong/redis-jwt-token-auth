@@ -4,7 +4,7 @@ const passport = require('koa-passport')
 const AccountModel = require('../models/account')
 const _ = require('lodash');
 const LdapStrategy = require('passport-ldapauth')
-const config = require('./config')
+const config = require('config')
 const passport_local = require('passport-local')
 const LocalStrategy = passport_local.Strategy
 
@@ -27,6 +27,6 @@ passport.use(new LocalStrategy(function(username, password, done) {
     }).catch(done)
 }))
 
-passport.use(new LdapStrategy(config.ldap));
+passport.use(new LdapStrategy(config.get('ldap')));
 
 

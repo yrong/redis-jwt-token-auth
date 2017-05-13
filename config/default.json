@@ -40,8 +40,10 @@
     "ldap":{
       "server": {
         "url": "ldap://localhost:389",
+        "bindDn": "cn=admin,dc=test,dc=com",
+        "bindCredentials": "admin",
         "searchBase": "ou=users,dc=test,dc=com",
-        "searchFilter": "(sn={{username}})"
+        "searchFilter": "(cn={{username}})"
       }
     },
     "upload": {
