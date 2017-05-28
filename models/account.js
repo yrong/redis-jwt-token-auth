@@ -3,6 +3,7 @@
 const db = require('../lib/db')
 const logger = require('../logger')
 const _ = require('lodash')
+const ldap = require('../lib/ldap')
 
 const Account = {}
 
@@ -53,30 +54,47 @@ Account.verify = function(username, password) {
     });
 }
 
-
-
 Account.updatePassword = async (params)=>{
     let cql = `MATCH (u:User{uuid:${params.uuid},passwd:'${params.oldpwd}'}) return u`
-    logger.info('update password find user:' + cql)
     let account = await db.queryCql(cql)
     if(account == null || account.length != 1) {
         throw new Error(`user with id ${params.uuid} and password ${params.oldpwd} not exist!`)
     }
-    logger.info('update password find account:' + JSON.stringify(account[0]))
     return await db.queryCql(`MATCH (u:User{uuid:${params.uuid}}) SET u.passwd = '${params.newpwd}'`)
 }
 
-Account.updateInfo = async (params)=>{
-    params.uuid = _.isString(params.uuid)?parseInt(params.uuid):params.uuid
+const getUser = async(params)=>{
     let cql = `MATCH (u:User{uuid:${params.uuid}}) return u`
-    logger.info('update info find user:' + cql)
     let account = await db.queryCql(cql)
     if(account == null || account.length != 1) {
         throw new Error(`user with id ${params.uuid} not exist!`)
     }
-    account = _.merge(account[0],params)
-    logger.info('update userinfo find account:' + JSON.stringify(account[0]))
+    return account[0]
+}
+
+Account.updateInfo = async (params)=>{
+    let account = await getUser(params)
+    account = _.merge(account,_.omit(params,['token','uuid']))
     return await db.queryCql(`MATCH (u:User{uuid:${params.uuid}}) SET u={account}`,{account})
+}
+
+Account.updateAssoc = async (params)=>{
+    let account = await getUser(params)
+    if(!params.ldap_user){
+        throw new Error(`missing param ldap_user!`)
+    }
+    let ldap_user = await ldap.searchUser(params.ldap_user)
+    let cql = `MERGE (n:LdapUser {cn: "${ldap_user.cn}"})
+                                    ON CREATE SET n = {ldap_user}
+                                    ON MATCH SET n = {ldap_user}`
+    await db.queryCql(cql,{ldap_user})
+    let delRelsExistInUser_cypher = `MATCH (u:User{uuid: ${params.uuid}})-[r:Assoc]-()
+                                    DELETE r`
+    await db.queryCql(delRelsExistInUser_cypher)
+    let addUser2LdapUserRel_cypher = `MATCH (u:User{uuid:${params.uuid}})
+                                    MATCH (l:LdapUser {cn:"${ldap_user.cn}"})
+                                    CREATE (u)-[r:Assoc]->(l)`
+    await db.queryCql(addUser2LdapUserRel_cypher)
 }
 
 module.exports = Account;
