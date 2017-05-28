@@ -76,5 +76,10 @@ router.put('/userinfo/:uuid',async(ctx,next)=>{
     ctx.body = {}
 })
 
+router.put('/assoc/:uuid', async(ctx, next) => {
+    let params = _.merge({},ctx.params,ctx.request.body)
+    await Account.updateAssoc(params)
+    ctx.body = {}
+})
 
 module.exports = router;

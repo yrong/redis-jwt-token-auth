@@ -1,10 +1,24 @@
 [
   {
+    "name": "query User",
+    "method": "GET",
+    "url": "http://localhost:3002/auth/userinfo?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI5NmUxNTc2Zi0zN2Y5LTQzZDktYjk4OC02NDc4MWRkYWI2ZmMiLCJ1c2VyIjp7ImlkIjo2MDAsInBhc3N3ZCI6Im5lcmRzIiwic3VybmFtZSI6IiIsIm5hbWUiOiJuZXJkcyIsImFsaWFzIjoibmVyZHMiLCJ0aGVtZSI6ImRlZmF1bHQiLCJ0eXBlIjoxLCJsYW5nIjoiZW5fR0IiLCJjYXRlZ29yeSI6IlVzZXIiLCJhdHRlbXB0X2lwIjoiMTAuNTAuMTMuNjkiLCJ1c2VyaWQiOjEsInV1aWQiOjF9LCJpYXQiOjE0OTU5NDM0MzN9.-vZx-5EAx6JF0dxecHJf9UuWdyiuhucXiPU0xR9iB8U"
+  },
+  {
+    "name": "assoc with ldap",
+    "method": "PUT",
+    "url": "http://localhost:3002/auth/assoc/1",
+    "body": {
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI5NmUxNTc2Zi0zN2Y5LTQzZDktYjk4OC02NDc4MWRkYWI2ZmMiLCJ1c2VyIjp7ImlkIjo2MDAsInBhc3N3ZCI6Im5lcmRzIiwic3VybmFtZSI6IiIsIm5hbWUiOiJuZXJkcyIsImFsaWFzIjoibmVyZHMiLCJ0aGVtZSI6ImRlZmF1bHQiLCJ0eXBlIjoxLCJsYW5nIjoiZW5fR0IiLCJjYXRlZ29yeSI6IlVzZXIiLCJhdHRlbXB0X2lwIjoiMTAuNTAuMTMuNjkiLCJ1c2VyaWQiOjEsInV1aWQiOjF9LCJpYXQiOjE0OTU5NDM0MzN9.-vZx-5EAx6JF0dxecHJf9UuWdyiuhucXiPU0xR9iB8U",
+      "ldap_user": "test test"
+    }
+  },
+  {
     "name": "check valid token",
     "method": "POST",
     "url": "http://localhost:3002/auth/check",
     "body": {
-      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIxYWJkYzRkYy02YjZhLTQ4YTItOGIyNC1iNDY3ZTg4NTAwMmIiLCJ1c2VyIjp7ImlkIjoxMDA1LCJwYXNzd2QiOiIwOThmNmJjZDQ2MjFkMzczY2FkZTRlODMyNjI3YjRmNiIsImNyZWF0ZWQiOjE0OTA1MTI3NzU4MDIsInN1cm5hbWUiOiIiLCJuYW1lIjoibmVyZHMiLCJhbGlhcyI6Im5lcmRzIiwidGhlbWUiOiJkZWZhdWx0IiwibGFuZyI6ImVuX0dCIiwidHlwZSI6MSwiY2F0ZWdvcnkiOiJVc2VyIiwiYXR0ZW1wdF9pcCI6IjEwLjUwLjEzLjY5IiwidXNlcmlkIjoxLCJ1dWlkIjoxfSwiaWF0IjoxNDkwNTE1OTg0fQ.XbmKsebpa18slBMY7U2MoWzVTGLxIUJl8JiUTyzjY2s"
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI5NmUxNTc2Zi0zN2Y5LTQzZDktYjk4OC02NDc4MWRkYWI2ZmMiLCJ1c2VyIjp7ImlkIjo2MDAsInBhc3N3ZCI6Im5lcmRzIiwic3VybmFtZSI6IiIsIm5hbWUiOiJuZXJkcyIsImFsaWFzIjoibmVyZHMiLCJ0aGVtZSI6ImRlZmF1bHQiLCJ0eXBlIjoxLCJsYW5nIjoiZW5fR0IiLCJjYXRlZ29yeSI6IlVzZXIiLCJhdHRlbXB0X2lwIjoiMTAuNTAuMTMuNjkiLCJ1c2VyaWQiOjEsInV1aWQiOjF9LCJpYXQiOjE0OTU5NDM0MzN9.-vZx-5EAx6JF0dxecHJf9UuWdyiuhucXiPU0xR9iB8U"
     }
   },
   {
@@ -13,7 +27,7 @@
     "url": "http://localhost:3002/auth/login",
     "body": {
       "username": "nerds",
-      "password": "098f6bcd4621d373cade4e832627b4f6"
+      "password": "nerds"
     }
   },
   {
@@ -21,7 +35,7 @@
     "method": "POST",
     "url": "http://localhost:3002/auth/login-ldap",
     "body": {
-      "username": "test",
+      "username": "test test",
       "password": "test"
     }
   },
@@ -30,7 +44,23 @@
     "method": "POST",
     "url": "http://localhost:3002/auth/logout",
     "body": {
-      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIxYWJkYzRkYy02YjZhLTQ4YTItOGIyNC1iNDY3ZTg4NTAwMmIiLCJ1c2VyIjp7ImlkIjoxMDA1LCJwYXNzd2QiOiIwOThmNmJjZDQ2MjFkMzczY2FkZTRlODMyNjI3YjRmNiIsImNyZWF0ZWQiOjE0OTA1MTI3NzU4MDIsInN1cm5hbWUiOiIiLCJuYW1lIjoibmVyZHMiLCJhbGlhcyI6Im5lcmRzIiwidGhlbWUiOiJkZWZhdWx0IiwibGFuZyI6ImVuX0dCIiwidHlwZSI6MSwiY2F0ZWdvcnkiOiJVc2VyIiwiYXR0ZW1wdF9pcCI6IjEwLjUwLjEzLjY5IiwidXNlcmlkIjoxLCJ1dWlkIjoxfSwiaWF0IjoxNDkwNTE1OTg0fQ.XbmKsebpa18slBMY7U2MoWzVTGLxIUJl8JiUTyzjY2s"
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI5NmUxNTc2Zi0zN2Y5LTQzZDktYjk4OC02NDc4MWRkYWI2ZmMiLCJ1c2VyIjp7ImlkIjo2MDAsInBhc3N3ZCI6Im5lcmRzIiwic3VybmFtZSI6IiIsIm5hbWUiOiJuZXJkcyIsImFsaWFzIjoibmVyZHMiLCJ0aGVtZSI6ImRlZmF1bHQiLCJ0eXBlIjoxLCJsYW5nIjoiZW5fR0IiLCJjYXRlZ29yeSI6IlVzZXIiLCJhdHRlbXB0X2lwIjoiMTAuNTAuMTMuNjkiLCJ1c2VyaWQiOjEsInV1aWQiOjF9LCJpYXQiOjE0OTU5NDM0MzN9.-vZx-5EAx6JF0dxecHJf9UuWdyiuhucXiPU0xR9iB8U"
+    }
+  },
+  {
+    "name": "add user",
+    "method": "POST",
+    "url": "http://localhost:3002/auth/register",
+    "body": {
+      "type": 1,
+      "attempt_ip": "10.50.13.69",
+      "userid": 1,
+      "passwd": "nerds",
+      "surname": "",
+      "name": "nerds",
+      "alias": "nerds",
+      "theme": "default",
+      "lang": "en_GB"
     }
   },
   {
@@ -43,13 +73,18 @@
     }
   },
   {
+    "name": "clean",
+    "method": "POST",
+    "url": "http://localhost:3002/auth/hidden/clean"
+  },
+  {
     "name": "modify passwd",
     "method": "PUT",
     "url": "http://localhost:3002/auth/changepwd/1",
     "body": {
-      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIxYWJkYzRkYy02YjZhLTQ4YTItOGIyNC1iNDY3ZTg4NTAwMmIiLCJ1c2VyIjp7ImlkIjoxMDA1LCJwYXNzd2QiOiIwOThmNmJjZDQ2MjFkMzczY2FkZTRlODMyNjI3YjRmNiIsImNyZWF0ZWQiOjE0OTA1MTI3NzU4MDIsInN1cm5hbWUiOiIiLCJuYW1lIjoibmVyZHMiLCJhbGlhcyI6Im5lcmRzIiwidGhlbWUiOiJkZWZhdWx0IiwibGFuZyI6ImVuX0dCIiwidHlwZSI6MSwiY2F0ZWdvcnkiOiJVc2VyIiwiYXR0ZW1wdF9pcCI6IjEwLjUwLjEzLjY5IiwidXNlcmlkIjoxLCJ1dWlkIjoxfSwiaWF0IjoxNDkwNTE1OTg0fQ.XbmKsebpa18slBMY7U2MoWzVTGLxIUJl8JiUTyzjY2s",
-      "oldpwd": "098f6bcd4621d373cade4e832627b4f6",
-      "newpwd": "098f6bcd4621d373cade4e832627b4f6"
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI5NmUxNTc2Zi0zN2Y5LTQzZDktYjk4OC02NDc4MWRkYWI2ZmMiLCJ1c2VyIjp7ImlkIjo2MDAsInBhc3N3ZCI6Im5lcmRzIiwic3VybmFtZSI6IiIsIm5hbWUiOiJuZXJkcyIsImFsaWFzIjoibmVyZHMiLCJ0aGVtZSI6ImRlZmF1bHQiLCJ0eXBlIjoxLCJsYW5nIjoiZW5fR0IiLCJjYXRlZ29yeSI6IlVzZXIiLCJhdHRlbXB0X2lwIjoiMTAuNTAuMTMuNjkiLCJ1c2VyaWQiOjEsInV1aWQiOjF9LCJpYXQiOjE0OTU5NDM0MzN9.-vZx-5EAx6JF0dxecHJf9UuWdyiuhucXiPU0xR9iB8U",
+      "oldpwd": "nerds",
+      "newpwd": "nerds"
     }
   },
   {
@@ -61,14 +96,35 @@
     }
   },
   {
+    "name": "add user root",
+    "method": "POST",
+    "url": "http://localhost:3002/auth/register",
+    "body": {
+      "type": 1,
+      "attempt_ip": "10.50.13.69",
+      "userid": 2,
+      "passwd": "root",
+      "surname": "",
+      "name": "root",
+      "alias": "root",
+      "theme": "default",
+      "lang": "en_GB"
+    }
+  },
+  {
     "name": "modify user info",
     "method": "PUT",
     "url": "http://localhost:3002/auth/userinfo/1",
     "body": {
-      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIxYWJkYzRkYy02YjZhLTQ4YTItOGIyNC1iNDY3ZTg4NTAwMmIiLCJ1c2VyIjp7ImlkIjoxMDA1LCJwYXNzd2QiOiIwOThmNmJjZDQ2MjFkMzczY2FkZTRlODMyNjI3YjRmNiIsImNyZWF0ZWQiOjE0OTA1MTI3NzU4MDIsInN1cm5hbWUiOiIiLCJuYW1lIjoibmVyZHMiLCJhbGlhcyI6Im5lcmRzIiwidGhlbWUiOiJkZWZhdWx0IiwibGFuZyI6ImVuX0dCIiwidHlwZSI6MSwiY2F0ZWdvcnkiOiJVc2VyIiwiYXR0ZW1wdF9pcCI6IjEwLjUwLjEzLjY5IiwidXNlcmlkIjoxLCJ1dWlkIjoxfSwiaWF0IjoxNDkwNTE1OTg0fQ.XbmKsebpa18slBMY7U2MoWzVTGLxIUJl8JiUTyzjY2s",
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI5NmUxNTc2Zi0zN2Y5LTQzZDktYjk4OC02NDc4MWRkYWI2ZmMiLCJ1c2VyIjp7ImlkIjo2MDAsInBhc3N3ZCI6Im5lcmRzIiwic3VybmFtZSI6IiIsIm5hbWUiOiJuZXJkcyIsImFsaWFzIjoibmVyZHMiLCJ0aGVtZSI6ImRlZmF1bHQiLCJ0eXBlIjoxLCJsYW5nIjoiZW5fR0IiLCJjYXRlZ29yeSI6IlVzZXIiLCJhdHRlbXB0X2lwIjoiMTAuNTAuMTMuNjkiLCJ1c2VyaWQiOjEsInV1aWQiOjF9LCJpYXQiOjE0OTU5NDM0MzN9.-vZx-5EAx6JF0dxecHJf9UuWdyiuhucXiPU0xR9iB8U",
       "avatar": "/upload/avatar/ca92d560-05a6-11e7-98ba-e1d08df9a25f",
       "per_page": 30
     }
+  },
+  {
+    "name": "query User By userid",
+    "method": "GET",
+    "url": "http://localhost:3002/auth/userinfo/1?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI5NmUxNTc2Zi0zN2Y5LTQzZDktYjk4OC02NDc4MWRkYWI2ZmMiLCJ1c2VyIjp7ImlkIjo2MDAsInBhc3N3ZCI6Im5lcmRzIiwic3VybmFtZSI6IiIsIm5hbWUiOiJuZXJkcyIsImFsaWFzIjoibmVyZHMiLCJ0aGVtZSI6ImRlZmF1bHQiLCJ0eXBlIjoxLCJsYW5nIjoiZW5fR0IiLCJjYXRlZ29yeSI6IlVzZXIiLCJhdHRlbXB0X2lwIjoiMTAuNTAuMTMuNjkiLCJ1c2VyaWQiOjEsInV1aWQiOjF9LCJpYXQiOjE0OTU5NDM0MzN9.-vZx-5EAx6JF0dxecHJf9UuWdyiuhucXiPU0xR9iB8U"
   },
   {
     "name": "login with user not exist",
@@ -77,6 +133,14 @@
     "body": {
       "username": "test1",
       "password": "test"
+    }
+  },
+  {
+    "name": "remove user",
+    "method": "POST",
+    "url": "http://localhost:3002/auth/unregister/2",
+    "body": {
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI5NmUxNTc2Zi0zN2Y5LTQzZDktYjk4OC02NDc4MWRkYWI2ZmMiLCJ1c2VyIjp7ImlkIjo2MDAsInBhc3N3ZCI6Im5lcmRzIiwic3VybmFtZSI6IiIsIm5hbWUiOiJuZXJkcyIsImFsaWFzIjoibmVyZHMiLCJ0aGVtZSI6ImRlZmF1bHQiLCJ0eXBlIjoxLCJsYW5nIjoiZW5fR0IiLCJjYXRlZ29yeSI6IlVzZXIiLCJhdHRlbXB0X2lwIjoiMTAuNTAuMTMuNjkiLCJ1c2VyaWQiOjEsInV1aWQiOjF9LCJpYXQiOjE0OTU5NDM0MzN9.-vZx-5EAx6JF0dxecHJf9UuWdyiuhucXiPU0xR9iB8U"
     }
   }
 ]

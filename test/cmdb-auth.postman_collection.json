@@ -16,6 +16,7 @@
 		"a165d1a4-5a19-4f54-4f6d-f39d0cc42c8b",
 		"928dab35-b021-31df-4783-d24e9e63d728",
 		"b67ff063-fb97-b8c3-aef8-c81b571f8f63",
+		"174654e3-49c4-0ee2-d73d-0e2c4de677c8",
 		"627774ff-2fac-9b94-379d-8389d4448b9d",
 		"f8667b6f-9cce-1f3a-48ee-7b804db73322"
 	],
@@ -40,6 +41,24 @@
 			"name": "query User",
 			"description": "",
 			"collectionId": "392b910a-967e-7174-6120-0023fc49a7a6"
+		},
+		{
+			"id": "174654e3-49c4-0ee2-d73d-0e2c4de677c8",
+			"headers": "Content-Type: application/json\n",
+			"url": "{{url}}/auth/assoc/1",
+			"preRequestScript": "var hash = CryptoJS.MD5('test').toString();\npostman.setEnvironmentVariable('passwd', hash);",
+			"pathVariables": {},
+			"method": "PUT",
+			"data": [],
+			"dataMode": "raw",
+			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"passwd modified\"] = jsonData.status === 'ok';\n",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1495936989027,
+			"name": "assoc with ldap",
+			"description": "",
+			"collectionId": "392b910a-967e-7174-6120-0023fc49a7a6",
+			"rawModeData": "{\n   \"token\":\"{{token}}\",\n   \"ldap_user\":\"test test\"\n}"
 		},
 		{
 			"folder": null,
@@ -75,11 +94,11 @@
 			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"token found\"] = jsonData.data.token;\npostman.setEnvironmentVariable(\"token\", jsonData.data.token);\n",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1492338213345,
+			"time": 1495943377200,
 			"name": "login",
 			"description": "",
 			"collectionId": "392b910a-967e-7174-6120-0023fc49a7a6",
-			"rawModeData": "{\n  \"username\":\"{{username}}\",\n  \"password\":\"{{password}}\"\n}"
+			"rawModeData": "{\n  \"username\":\"nerds\",\n  \"password\":\"nerds\"\n}"
 		},
 		{
 			"folder": null,
@@ -137,11 +156,11 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1492338093786,
+			"time": 1495943327915,
 			"name": "add user",
 			"description": "",
 			"collectionId": "392b910a-967e-7174-6120-0023fc49a7a6",
-			"rawModeData": "{\n      \"type\":1,\n      \"attempt_ip\":\"10.50.13.69\",\n      \"userid\":1,\n      \"passwd\":\"{{password}}\",\n      \"surname\":\"\",\n      \"name\":\"{{username}}\",\n      \"alias\":\"{{username}}\",\n      \"theme\":\"default\",\n      \"lang\":\"en_GB\"\n}"
+			"rawModeData": "{\n      \"type\":1,\n      \"attempt_ip\":\"10.50.13.69\",\n      \"userid\":1,\n      \"passwd\":\"nerds\",\n      \"surname\":\"\",\n      \"name\":\"nerds\",\n      \"alias\":\"nerds\",\n      \"theme\":\"default\",\n      \"lang\":\"en_GB\"\n}"
 		},
 		{
 			"folder": null,
@@ -184,26 +203,22 @@
 			"rawModeData": ""
 		},
 		{
-			"folder": null,
 			"id": "928dab35-b021-31df-4783-d24e9e63d728",
-			"name": "modify passwd",
-			"dataMode": "raw",
-			"data": [],
-			"descriptionFormat": null,
-			"description": "",
 			"headers": "Content-Type: application/json\n",
-			"method": "PUT",
-			"pathVariables": {},
 			"url": "{{url}}/auth/changepwd/1",
 			"preRequestScript": "",
+			"pathVariables": {},
+			"method": "PUT",
+			"data": [],
+			"dataMode": "raw",
 			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"passwd modified\"] = jsonData.status === 'ok';\n",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"queryParams": null,
-			"headerData": null,
-			"pathVariableData": null,
+			"time": 1495943680163,
+			"name": "modify passwd",
+			"description": "",
 			"collectionId": "392b910a-967e-7174-6120-0023fc49a7a6",
-			"rawModeData": "{\n  \"token\":\"{{token}}\",\n  \"oldpwd\":\"{{password}}\",\n  \"newpwd\":\"{{password}}\"\n}"
+			"rawModeData": "{\n  \"token\":\"{{token}}\",\n  \"oldpwd\":\"nerds\",\n  \"newpwd\":\"nerds\"\n}"
 		},
 		{
 			"folder": null,

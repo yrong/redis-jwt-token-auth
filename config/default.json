@@ -43,7 +43,8 @@
         "bindDn": "cn=admin,dc=test,dc=com",
         "bindCredentials": "admin",
         "searchBase": "ou=users,dc=test,dc=com",
-        "searchFilter": "(cn={{username}})"
+        "searchFilter": "(cn={{username}})",
+        "reconnect": true
       }
     },
     "upload": {

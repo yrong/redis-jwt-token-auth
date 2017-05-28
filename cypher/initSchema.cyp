@@ -1,0 +1,4 @@
+begin
+CREATE CONSTRAINT ON (n:User) ASSERT n.alias IS UNIQUE;
+CREATE CONSTRAINT ON (n:LdapUser) ASSERT n.cn IS UNIQUE;
+commit

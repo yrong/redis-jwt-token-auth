@@ -6,6 +6,7 @@
     "start": "node --harmony app.js",
     "test": "node ./test/index.js",
     "sync": "node --harmony sync.js",
+    "init": "/bin/bash ./script/init.sh",
     "generate_simplified_postman_collection": "postman_simplify ./test/cmdb-auth.postman_collection.json ./test/cmdb-auth.postman_environment.json"
   },
   "keywords": [
