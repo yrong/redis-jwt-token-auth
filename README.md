@@ -5,6 +5,9 @@ features including:
 
 + Koa2 integrated with mysql and neo4j
 + generate jwt token stored in Redis as koa2 middleware
++ local authentication by neo4j
++ ldap authentication
++ ldap account binding with local account
 + webpack wrapper
 
 
