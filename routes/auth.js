@@ -37,7 +37,7 @@ router.post('/login', async(ctx, next) => {
     await passport.authenticate('local',async(user, info) => {
         await ctx.login(user);
         let token = await ctx.req.session.create({user: user});
-        ctx.body = {token: token};
+        ctx.body = {token: token,local:_.omit(user,['passwd'])};
     })(ctx, next)
 });
 
@@ -47,7 +47,8 @@ router.post('/login-ldap', async (ctx, next) => {
         if(user){
             await ctx.login(user);
             let token = await ctx.req.session.create({user: user});
-            ctx.body = {token: token};
+            let local_user = await Account.getLocalByLdap(user)
+            ctx.body = {token: token,local:_.omit(local_user,['passwd']),ldap:_.omit(user,['userPassword'])};
         }else{
             throw new Error(info.message)
         }
@@ -78,7 +79,12 @@ router.put('/userinfo/:uuid',async(ctx,next)=>{
 
 router.put('/assoc/:uuid', async(ctx, next) => {
     let params = _.merge({},ctx.params,ctx.request.body)
-    await Account.updateAssoc(params)
+    await Account.updateLocal2LdapAssoc(params)
+    ctx.body = {}
+})
+
+router.put('/unassoc/:uuid', async(ctx, next) => {
+    await Account.unAssocLocal(ctx.params)
     ctx.body = {}
 })
 

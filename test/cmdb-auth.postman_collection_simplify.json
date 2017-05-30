@@ -5,12 +5,20 @@
     "url": "http://localhost:3002/auth/userinfo?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI5NmUxNTc2Zi0zN2Y5LTQzZDktYjk4OC02NDc4MWRkYWI2ZmMiLCJ1c2VyIjp7ImlkIjo2MDAsInBhc3N3ZCI6Im5lcmRzIiwic3VybmFtZSI6IiIsIm5hbWUiOiJuZXJkcyIsImFsaWFzIjoibmVyZHMiLCJ0aGVtZSI6ImRlZmF1bHQiLCJ0eXBlIjoxLCJsYW5nIjoiZW5fR0IiLCJjYXRlZ29yeSI6IlVzZXIiLCJhdHRlbXB0X2lwIjoiMTAuNTAuMTMuNjkiLCJ1c2VyaWQiOjEsInV1aWQiOjF9LCJpYXQiOjE0OTU5NDM0MzN9.-vZx-5EAx6JF0dxecHJf9UuWdyiuhucXiPU0xR9iB8U"
   },
   {
+    "name": "unassoc",
+    "method": "PUT",
+    "url": "http://localhost:3002/auth/unassoc/1",
+    "body": {
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI5NmUxNTc2Zi0zN2Y5LTQzZDktYjk4OC02NDc4MWRkYWI2ZmMiLCJ1c2VyIjp7ImlkIjo2MDAsInBhc3N3ZCI6Im5lcmRzIiwic3VybmFtZSI6IiIsIm5hbWUiOiJuZXJkcyIsImFsaWFzIjoibmVyZHMiLCJ0aGVtZSI6ImRlZmF1bHQiLCJ0eXBlIjoxLCJsYW5nIjoiZW5fR0IiLCJjYXRlZ29yeSI6IlVzZXIiLCJhdHRlbXB0X2lwIjoiMTAuNTAuMTMuNjkiLCJ1c2VyaWQiOjEsInV1aWQiOjF9LCJpYXQiOjE0OTU5NDM0MzN9.-vZx-5EAx6JF0dxecHJf9UuWdyiuhucXiPU0xR9iB8U"
+    }
+  },
+  {
     "name": "assoc with ldap",
     "method": "PUT",
     "url": "http://localhost:3002/auth/assoc/1",
     "body": {
       "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI5NmUxNTc2Zi0zN2Y5LTQzZDktYjk4OC02NDc4MWRkYWI2ZmMiLCJ1c2VyIjp7ImlkIjo2MDAsInBhc3N3ZCI6Im5lcmRzIiwic3VybmFtZSI6IiIsIm5hbWUiOiJuZXJkcyIsImFsaWFzIjoibmVyZHMiLCJ0aGVtZSI6ImRlZmF1bHQiLCJ0eXBlIjoxLCJsYW5nIjoiZW5fR0IiLCJjYXRlZ29yeSI6IlVzZXIiLCJhdHRlbXB0X2lwIjoiMTAuNTAuMTMuNjkiLCJ1c2VyaWQiOjEsInV1aWQiOjF9LCJpYXQiOjE0OTU5NDM0MzN9.-vZx-5EAx6JF0dxecHJf9UuWdyiuhucXiPU0xR9iB8U",
-      "ldap_user": "test test"
+      "ldap_cn": "test test"
     }
   },
   {
@@ -118,7 +126,7 @@
     "body": {
       "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI5NmUxNTc2Zi0zN2Y5LTQzZDktYjk4OC02NDc4MWRkYWI2ZmMiLCJ1c2VyIjp7ImlkIjo2MDAsInBhc3N3ZCI6Im5lcmRzIiwic3VybmFtZSI6IiIsIm5hbWUiOiJuZXJkcyIsImFsaWFzIjoibmVyZHMiLCJ0aGVtZSI6ImRlZmF1bHQiLCJ0eXBlIjoxLCJsYW5nIjoiZW5fR0IiLCJjYXRlZ29yeSI6IlVzZXIiLCJhdHRlbXB0X2lwIjoiMTAuNTAuMTMuNjkiLCJ1c2VyaWQiOjEsInV1aWQiOjF9LCJpYXQiOjE0OTU5NDM0MzN9.-vZx-5EAx6JF0dxecHJf9UuWdyiuhucXiPU0xR9iB8U",
       "avatar": "/upload/avatar/ca92d560-05a6-11e7-98ba-e1d08df9a25f",
-      "per_page": 30
+      "per_page": 90
     }
   },
   {
