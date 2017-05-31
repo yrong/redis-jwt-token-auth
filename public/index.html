@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <title>upload-demo</title>
-    
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -27,29 +27,32 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.3.8/js/fileinput.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.3.8/themes/fa/theme.js"></script>
-  </head>
+</head>
 
-  <body class="pace-top bg-white">
-    <div class="container">
-        <div class="row form-group">
-            <div class="col col-md-6">
-                <input type="file" id="avatar" name="avatar" />
-            </div>
-        </div>
-        <div class="row form-group">
-            <div class="col col-md-4">
-                <div class="form-group">
-                    <h4><label class="label label-default">FileName:</label></h4>
-                    <span id="uploaded_fileName" class="label label-success"></span>
-                </div>
-                <div class="form-group">
-                    <h4><label class="label label-default">FileUrl:</label></h4>
-                    <span id="uploaded_fileUrl" class="label label-success"></span>
-                </div>
-            </div>
-        </div>
+<body class="pace-top bg-white">
+<div class="container">
 
+    <div class="row form-group">
+        <div class="col col-md-6">
+            <input type="file" id="avatar" name="avatar" />
+        </div>
     </div>
-    <script src="assets/main.js"></script>
-  </body>
+    <div class="row form-group">
+        <div class="col col-md-4">
+            <div class="form-group">
+                <h4><label class="label label-default">FileName:</label></h4>
+                <span id="uploaded_fileName" class="label label-success"></span>
+            </div>
+            <div class="form-group">
+                <h4><label class="label label-default">FileUrl:</label></h4>
+                <span id="uploaded_fileUrl" class="label label-success"></span>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <a href="http://localhost:8089/index.php?token=###">NextCloud</a>
+    </div>
+</div>
+<script src="assets/main.js"></script>
+</body>
 </html>

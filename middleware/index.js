@@ -14,8 +14,7 @@ module.exports = function middleware() {
             jwt_token({
                 client: redis,
                 secret: config.get('secret')
-            }),
-            checkauth()
+            })
         ]
     )
 }

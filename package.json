@@ -5,7 +5,8 @@
   "scripts": {
     "start": "node --harmony app.js",
     "test": "node ./test/index.js",
-    "sync": "node --harmony sync.js",
+    "sync-mysql": "SYNC_TYPE=mysql node --harmony sync.js",
+    "sync-nextcloud": "SYNC_TYPE=nextcloud node --harmony sync.js",
     "init": "/bin/bash ./script/init.sh",
     "generate_simplified_postman_collection": "postman_simplify ./test/cmdb-auth.postman_collection.json ./test/cmdb-auth.postman_environment.json"
   },
@@ -20,8 +21,8 @@
   "author": "SRK.Lyu <superalsrk@gmail.com> (http://stackbox.org)",
   "license": "MIT",
   "dependencies": {
-    "config": "^1.24.0",
     "bcryptjs": "^2.3.0",
+    "config": "^1.24.0",
     "hashids": "^1.1.0",
     "ioredis": "^2.5.0",
     "jsonwebtoken": "^7.2.1",
@@ -38,7 +39,6 @@
     "koa-redis": "^2.1.1",
     "koa-router": "^7.0.1",
     "koa-static": "^2.0.0",
-    "koa-views": "^5.0.2",
     "koa2-file-upload-local": "^1.0.0",
     "lodash": "^4.14.1",
     "log4js": "^0.6.38",
@@ -49,6 +49,7 @@
     "passport-local": "^1.0.0",
     "path": "^0.12.7",
     "request": "^2.73.0",
+    "request-promise": "^4.2.1",
     "swig": "^1.4.2"
   },
   "devDependencies": {
