@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>upload-demo</title>
+    <title>auth-demo</title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
@@ -27,32 +27,86 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.3.8/js/fileinput.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.3.8/themes/fa/theme.js"></script>
+    <script type="text/javascript" src="assets/main.js"></script>
 </head>
-
-<body class="pace-top bg-white">
+<body>
 <div class="container">
-
-    <div class="row form-group">
-        <div class="col col-md-6">
-            <input type="file" id="avatar" name="avatar" />
-        </div>
-    </div>
-    <div class="row form-group">
-        <div class="col col-md-4">
-            <div class="form-group">
-                <h4><label class="label label-default">FileName:</label></h4>
-                <span id="uploaded_fileName" class="label label-success"></span>
+    <ul class="nav nav-tabs">
+        <li class="active">
+            <a href="#user_avatar_upload_component" role="tab" data-toggle="tab">avatar upload</a>
+        </li>
+        <li>
+            <a href="#embednc_component" role="tab" data-toggle="tab">nc embed</a>
+        </li>
+    </ul>
+    <div class="tab-content clearfix">
+        <div class="tab-pane active" id="user_avatar_upload_component">
+            <div class="row form-group">
+                <div class="col col-md-6">
+                    <input type="file" id="avatar" name="avatar" />
+                </div>
             </div>
-            <div class="form-group">
-                <h4><label class="label label-default">FileUrl:</label></h4>
-                <span id="uploaded_fileUrl" class="label label-success"></span>
+            <div class="row form-group">
+                <div class="col col-md-4">
+                    <div class="form-group">
+                        <h4><label class="label label-default">FileName:</label></h4>
+                        <span id="uploaded_fileName" class="label label-success"></span>
+                    </div>
+                    <div class="form-group">
+                        <h4><label class="label label-default">FileUrl:</label></h4>
+                        <span id="uploaded_fileUrl" class="label label-success"></span>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="row">
-        <a href="http://localhost:8089/index.php?token=###">NextCloud</a>
+        <div class="tab-pane" id="embednc_component">
+            <div class="row form-group">
+                <form class="form-horizontal" role="form"">
+                    <div class="row">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-6">
+                            <h2>Please Login</h2>
+                            <hr>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-6">
+                            <div class="form-group has-danger">
+                                <label class="sr-only" for="username">Name</label>
+                                <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                                    <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-user"></i></div>
+                                    <input type="text" name="username" class="form-control" id="username"
+                                           placeholder="" required autofocus>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="sr-only" for="password">Password</label>
+                                <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                                    <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-key"></i></div>
+                                    <input type="password" name="password" class="form-control" id="password"
+                                           placeholder="Password" required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <button id="login" class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
-<script src="assets/main.js"></script>
 </body>
 </html>
