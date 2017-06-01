@@ -31,7 +31,7 @@ const sync2NextCloud = async function() {
                 XDEBUG_SESSION_START: 'PHPSTORM',
                 format: 'json'
             },
-            headers: {Authorization: auth}
+            headers: {Authorization: auth,"OCS-APIREQUEST":true}
         },
         result, results = [], errors = []
     for(let row of rows){
