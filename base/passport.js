@@ -9,7 +9,7 @@ const passport_local = require('passport-local')
 const LocalStrategy = passport_local.Strategy
 
 passport.serializeUser(function(user, done) {
-    done(null, _.omit(user,['password','passwd','id']));
+    done(null, user);
 })
 
 passport.deserializeUser(function(user, done) {

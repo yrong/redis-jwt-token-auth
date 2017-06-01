@@ -62,7 +62,13 @@ router.post('/logout', async(ctx, next) => {
 });
 
 router.post('/check', async(ctx, next) => {
-    ctx.body = await ctx.req.session.reload()
+    let user_passport = await ctx.req.session.reload(),local_user,token=ctx.request.body.token
+    if(user_passport&&user_passport.passport&&user_passport.passport.user&&user_passport.passport.user.cn){
+        local_user = await Account.getLocalByLdap(user_passport.passport.user)
+        ctx.body = {token: token,local:local_user,ldap:user_passport.passport.user}
+    }else{
+        ctx.body = {token:token,local:user_passport.passport.user}
+    }
 })
 
 router.put('/changepwd/:uuid', async(ctx, next) => {
