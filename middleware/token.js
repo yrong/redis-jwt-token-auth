@@ -34,9 +34,18 @@ module.exports = function jwt_token(options) {
                 ctx.throw(err);
             }
             try{
-                session = await options.client.get(options.keyspace + decoded.jti);
+                let promise = new Promise((resolve, reject) => {
+                    options.client.get(options.keyspace + decoded.jti, function (error,session) {
+                        if(error){
+                            reject(error);
+                        }else{
+                            resolve(session);
+                        }
+                    });
+                });
+                session = await Promise.resolve(promise);
             } catch(err) {
-                ctx.throw(err);
+                ctx.throw('redis read error:' + String(err));
             }
             try{
                 session = JSON.parse(session);

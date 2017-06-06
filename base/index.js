@@ -34,6 +34,7 @@ module.exports = function middleware(app) {
             if(ctx.type === 'application/json' || ctx.jsonBody == true)
                 ctx.body = {status: 'ok',data:ctx.body||{}}
             logger.info('%s %s - %s ms', ctx.method,ctx.url, ms)
+            logger.info(JSON.stringify(ctx.body))
         } catch (error) {
             ctx.body = {
                 status:"error",
