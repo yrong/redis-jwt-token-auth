@@ -4,19 +4,23 @@ const config = require('config')
 const rp = require('request-promise')
 
 const syncWithMysql = async function() {
-    let rows = await db.querySql("SELECT * FROM users"),cypher,result
+    let rows = await db.querySql("SELECT * FROM users"),cypher,result,errors = []
     for(let row of rows){
-        cypher = `MATCH (u:User{uuid:${row.userid}}) return u`
-        result = await db.queryCql(cypher)
-        if(result&&result.length){
-            row = _.merge({},result[0],row)
+        try {
+            cypher = `MATCH (u:User{uuid:${row.userid}}) return u`
+            result = await db.queryCql(cypher)
+            if (result && result.length) {
+                row = _.merge({}, result[0], row)
+            }
+            row.uuid = row.userid
+            row.category = 'User'
+            cypher = `MERGE (u:User{uuid:${row.userid}}) ON CREATE SET u = {row} ON MATCH SET u = {row}`
+            result = await db.queryCql(cypher, {row: row})
+        }catch(error){
+            errors.push(String(error))
         }
-        row.uuid = row.userid
-        row.category = 'User'
-        cypher = `MERGE (u:User{uuid:${row.userid}}) ON CREATE SET u = {row} ON MATCH SET u = {row}`
-        result = await db.queryCql(cypher,{row:row})
     }
-    return rows
+    return {results:rows,errors}
 }
 
 const sync2NextCloud = async function() {
@@ -28,7 +32,6 @@ const sync2NextCloud = async function() {
             uri: nextcloud.host + user_provison_path,
             json: true,
             qs: {
-                XDEBUG_SESSION_START: 'PHPSTORM',
                 format: 'json'
             },
             headers: {Authorization: auth,"OCS-APIREQUEST":true}

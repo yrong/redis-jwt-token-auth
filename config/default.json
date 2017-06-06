@@ -57,7 +57,7 @@
       }
     },
    "nextcloud":{
-     "host":"http://localhost:8089",
+     "host":"http://localhost:8089/FileStore",
      "adminuser":"admin",
      "password":"admin"
    }
