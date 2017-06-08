@@ -40,7 +40,7 @@
     "ldap":{
       "server": {
         "url": "ldap://localhost:389",
-        "bindDn": "cn=admin,dc=test,dc=com",
+        "bindDn": "cn=admin,ou=users,dc=test,dc=com",
         "bindCredentials": "admin",
         "searchBase": "ou=users,dc=test,dc=com",
         "searchFilter": "(cn={{username}})",
@@ -59,6 +59,9 @@
    "nextcloud":{
      "host":"http://localhost:8089/FileStore",
      "adminuser":"admin",
-     "password":"admin"
+     "password":"admin",
+     "group":"share",
+     "permissions": 1,//1 = read; 2 = update; 4 = create; 8 = delete; 16 = share; 31 = all
+     "publicUpload": false //allow public upload or not
    }
 }

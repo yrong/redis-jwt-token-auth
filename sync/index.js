@@ -2,9 +2,10 @@ const _ = require('lodash')
 const db = require('../lib/db')
 const config = require('config')
 const rp = require('request-promise')
+const webdav = require("webdav");
 
 const syncWithMysql = async function() {
-    let rows = await db.querySql("SELECT * FROM users"),cypher,result,errors = []
+    let rows = await db.querySql("SELECT * FROM users"),cypher,result,errors = [],results = []
     for(let row of rows){
         try {
             cypher = `MATCH (u:User{uuid:${row.userid}}) return u`
@@ -16,11 +17,13 @@ const syncWithMysql = async function() {
             row.category = 'User'
             cypher = `MERGE (u:User{uuid:${row.userid}}) ON CREATE SET u = {row} ON MATCH SET u = {row}`
             result = await db.queryCql(cypher, {row: row})
+            results.push(result)
+            console.log(`sync user ${JSON.stringify(row)} from mysql to neo4j`)
         }catch(error){
             errors.push(String(error))
         }
     }
-    return {results:rows,errors}
+    return {results,errors}
 }
 
 const sync2NextCloud = async function() {
@@ -42,6 +45,7 @@ const sync2NextCloud = async function() {
         try {
             result = await rp(options)
             results.push(result)
+            console.log(`sync user ${JSON.stringify(row)} from neo4j to nextcloud`)
         }catch(error){
             errors.push(String(error))
         }
@@ -49,6 +53,87 @@ const sync2NextCloud = async function() {
     return {results,errors};
 }
 
-module.exports = {syncWithMysql,sync2NextCloud}
+const addPublicShare = async ()=>{
+    let nextcloud = config.get('nextcloud'),
+        auth = "Basic " + new Buffer(nextcloud.adminuser + ":" + nextcloud.password).toString("base64"),
+        group_provision_path = '/ocs/v1.php/cloud/groups',
+        user_provision_path = '/ocs/v1.php/cloud/users',
+        webdav_admin_path = `/remote.php/dav/files/${nextcloud.adminuser}`,
+        share_provision_path = '/ocs/v1.php/apps/files_sharing/api/v1/shares',
+        options = {
+            json: true,
+            qs: {
+                format: 'json'
+            },
+            headers: {Authorization: auth,"OCS-APIREQUEST":true}
+        },
+        result, results = [], errors = []
+    /**
+     * add group
+     */
+    options.method = "POST"
+    options.uri = `${nextcloud.host}${group_provision_path}`
+    options.form = {groupid:nextcloud.group}
+    try{
+        result = await rp(options)
+        console.log(`add group ${nextcloud.group}`)
+        results.push(result)
+    }catch(error){
+        errors.push(String(error))
+    }
+    /**
+     * add users to group
+     */
+    options.method = "GET"
+    options.uri = `${nextcloud.host}${user_provision_path}`
+    let rows = await rp(options)
+    //add user to public group
+    if(rows&&rows.ocs.data.users){
+        for(let user of rows.ocs.data.users){
+            options.uri = `${nextcloud.host}${user_provision_path}/${user}/groups`
+            options.form = {groupid:nextcloud.group}
+            options.method = 'POST'
+            try {
+                result = await rp(options)
+                results.push(result)
+                console.log(`add user ${user} to group ${nextcloud.group}`)
+            }catch(error){
+                errors.push(String(error))
+            }
+        }
+    }
+    /**
+     * add public folder
+     */
+    let client = webdav(
+        `${nextcloud.host}${webdav_admin_path}`,
+        nextcloud.adminuser,
+        nextcloud.password
+    );
+    try{
+        result = await client.createDirectory(`/${nextcloud.group}`)
+        console.log('create public folder for admin')
+        results.push(result.url)
+    }catch(error){
+        errors.push(String(error))
+    }
+    /**
+     * add public share
+     */
+    options.method = "POST"
+    options.uri = `${nextcloud.host}${share_provision_path}`
+    options.form = {path:`/${nextcloud.group}`,shareType:1,shareWith:nextcloud.group,
+        publicUpload:nextcloud.publicUpload,permissions:nextcloud.permissions}
+    try{
+        result = await rp(options)
+        console.log(`add public share for admin`)
+        results.push(result)
+    }catch(error){
+        errors.push(String(error))
+    }
+    return {results,errors};
+}
+
+module.exports = {syncWithMysql,sync2NextCloud,addPublicShare}
 
 

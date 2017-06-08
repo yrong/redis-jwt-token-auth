@@ -7,6 +7,7 @@
     "test": "node ./test/index.js",
     "sync-mysql": "SYNC_TYPE=mysql node --harmony sync.js",
     "sync-nextcloud": "SYNC_TYPE=nextcloud node --harmony sync.js",
+    "sync-publicshare": "SYNC_TYPE=publicshare node --harmony sync.js",
     "init": "/bin/bash ./script/init.sh",
     "generate_simplified_postman_collection": "postman_simplify ./test/cmdb-auth.postman_collection.json ./test/cmdb-auth.postman_environment.json"
   },
@@ -49,7 +50,7 @@
     "redis": "^2.7.1",
     "request": "^2.73.0",
     "request-promise": "^4.2.1",
-    "swig": "^1.4.2"
+    "webdav": "^0.9.0"
   },
   "devDependencies": {
     "babel-cli": "^6.24.0",
