@@ -1,6 +1,7 @@
 const _ = require('lodash');
 const jwt = require('jsonwebtoken');
 const utils = require('../lib/sessionUtils');
+const config = require('config');
 
 
 module.exports = function jwt_token(options) {
@@ -12,7 +13,7 @@ module.exports = function jwt_token(options) {
             secret: options.secret,
             algorithm: options.algorithm || "HS256",
             keyspace: options.keyspace || "sess:",
-            maxAge: options.maxAge || 86400,
+            maxAge: options.maxAge || config.get('expiration'),
             requestKey: options.requestKey || "session",
             requestArg: options.requestArg || "token"
         };

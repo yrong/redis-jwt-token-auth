@@ -2,6 +2,7 @@
     "name": "auth-api",
     "port":3002,
     "secret": "WEvHL/pbqX6qpqrcORwHQYWmNWnguxiaMEHd7eWnZB1toHzO",
+    "expiration": 1800,
     "logger":{
       "appenders": [
         {
@@ -11,13 +12,11 @@
           "type": "file",
           "filename": "auth-api.log",
           "maxLogSize": 20480,
-          "numBackups": 5,
-          "category": "auth-api"
+          "numBackups": 5
         }
       ],
       "replaceConsole": true,
-      "defaultLevel":"INFO",
-      "defaultCategory":"auth-api"
+      "defaultLevel":"ALL"
     },
     "neo4j": {
       "host": "localhost",
@@ -40,7 +39,7 @@
     "ldap":{
       "server": {
         "url": "ldap://localhost:389",
-        "bindDn": "cn=admin,ou=users,dc=test,dc=com",
+        "bindDn": "cn=admin,dc=test,dc=com",
         "bindCredentials": "admin",
         "searchBase": "ou=users,dc=test,dc=com",
         "searchFilter": "(cn={{username}})",

@@ -3,10 +3,11 @@
 const passport = require('koa-passport')
 const AccountModel = require('../models/account')
 const _ = require('lodash');
-const LdapStrategy = require('passport-ldapauth')
+const LdapStrategy = require('passport-ldapauth-fork')
 const config = require('config')
 const passport_local = require('passport-local')
 const LocalStrategy = passport_local.Strategy
+const log4js = require('log4js');
 
 passport.serializeUser(function(user, done) {
     done(null, user);
@@ -27,6 +28,9 @@ passport.use(new LocalStrategy(function(username, password, done) {
     }).catch(done)
 }))
 
-passport.use(new LdapStrategy(config.get('ldap')));
+let ldap_options = config.get('ldap')
+const logger = log4js.getLogger('ldapauth')
+ldap_options.server.log = logger
+passport.use(new LdapStrategy(ldap_options));
 
 

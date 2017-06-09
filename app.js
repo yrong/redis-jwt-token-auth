@@ -6,11 +6,10 @@ const middleware = require('./middleware')
 const routes = require('./routes')
 const config = require('config')
 const app = new Koa()
-const logger = require('./logger')
-
 
 //configure basic app
 baseconfig(app)
+const logger = require('./logger')
 
 //configure custom middleware
 app.use(middleware())

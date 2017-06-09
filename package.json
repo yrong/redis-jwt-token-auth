@@ -44,7 +44,7 @@
     "md5": "^2.2.1",
     "mysql": "^2.12.0",
     "mysql2": "^1.2.0",
-    "passport-ldapauth": "^1.0.0",
+    "passport-ldapauth-fork": "^1.0.1",
     "passport-local": "^1.0.0",
     "path": "^0.12.7",
     "redis": "^2.7.1",
