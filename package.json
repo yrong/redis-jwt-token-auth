@@ -81,7 +81,7 @@
     "mochawesome": "^1.5.1",
     "newman": "^3.4.2",
     "nodemon": "^1.10.0",
-    "postman_simplify": "^1.0.3",
+    "postman_simplify": "^1.0.5",
     "supertest": "^2.0.0",
     "webpack": "^2.2.1",
     "clean-webpack-plugin": "^0.1.16",
