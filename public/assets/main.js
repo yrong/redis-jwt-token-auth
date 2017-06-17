@@ -10,9 +10,9 @@ $(document).ready(function() {
     $('#avatar').on('fileuploaded', function (event, data, previewId, index) {
         var form = data.form, files = data.files, extra = data.extra,
             response = data.response, reader = data.reader;
-        var fileId = response[data.filenames[0]]
+        var filelink = response['data'][data.filenames[0]]
         $('#uploaded_fileName').text(data.filenames[0])
-        $('#uploaded_fileUrl').text('/upload/avatar/' + fileId)
+        $('#uploaded_fileUrl').text(filelink)
     });
 
     $("#login").click(function () {

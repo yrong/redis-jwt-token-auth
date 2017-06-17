@@ -49,9 +49,10 @@
     "upload": {
       "avatar": {
         "url": "/upload/avatar",
-        "storeDir": "avatar",
+        "storeDir": "/avatar",
         "provider": "local",
         "folder": "public/upload",
+        "urlPath": "/upload",
         "mimetypes": ["image/png","image/bmp","image/gif","image/jpeg"]
       }
     },
@@ -61,6 +62,6 @@
      "password":"admin",
      "group":"share",
      "permissions": 1,//1 = read; 2 = update; 4 = create; 8 = delete; 16 = share; 31 = all
-     "publicUpload": false //allow public upload or not
+     "publicUpload": true //allow public upload or not
    }
 }

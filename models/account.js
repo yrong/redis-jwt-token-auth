@@ -1,7 +1,8 @@
 'use strict';
 
 const db = require('../lib/db')
-const logger = require('../logger')
+const Log = require('log4js_wrapper')
+const logger = Log.getLogger()
 const _ = require('lodash')
 const ldap = require('../lib/ldap')
 

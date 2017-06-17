@@ -112,21 +112,33 @@ const addPublicShare = async ()=>{
     );
     try{
         result = await client.createDirectory(`/${nextcloud.group}`)
-        console.log('create public folder for admin')
+        console.log('create public folder')
         results.push(result.url)
     }catch(error){
         errors.push(String(error))
     }
     /**
-     * add public share
+     * add link share for public folder
      */
     options.method = "POST"
     options.uri = `${nextcloud.host}${share_provision_path}`
-    options.form = {path:`/${nextcloud.group}`,shareType:1,shareWith:nextcloud.group,
+    options.form = {path:`/${nextcloud.group}`,shareType:3,
         publicUpload:nextcloud.publicUpload,permissions:nextcloud.permissions}
     try{
         result = await rp(options)
-        console.log(`add public share for admin`)
+        console.log(`add link share for public folder`)
+        results.push(result)
+    }catch(error){
+        errors.push(String(error))
+    }
+    /**
+     * add group share for public folder
+     */
+    try{
+        options.form.shareType =1
+        options.form.shareWith =nextcloud.group
+        result = await rp(options)
+        console.log(`add group share for public folder`)
         results.push(result)
     }catch(error){
         errors.push(String(error))
