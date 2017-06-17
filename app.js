@@ -1,13 +1,15 @@
 'use strict';
 
+/*init logger */
+const log4js_wrapper = require('log4js_wrapper')
+const config = require('config')
+log4js_wrapper.initialize(config.get('logger'))
+
 const Koa = require('koa')
 const baseconfig = require('./base/index')
 const middleware = require('./middleware')
 const routes = require('./routes')
-const config = require('config')
 const app = new Koa()
-const logger = require('./logger')
-
 
 //configure basic app
 baseconfig(app)

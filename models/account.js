@@ -1,7 +1,8 @@
 'use strict';
 
 const db = require('../lib/db')
-const logger = require('../logger')
+const Log = require('log4js_wrapper')
+const logger = Log.getLogger()
 const _ = require('lodash')
 const ldap = require('../lib/ldap')
 
@@ -78,12 +79,12 @@ Account.updateInfo = async (params)=>{
     return await db.queryCql(`MATCH (u:User{uuid:${params.uuid}}) SET u={account}`,{account})
 }
 
-Account.updateAssoc = async (params)=>{
+Account.updateLocal2LdapAssoc = async (params)=>{
     let account = await getUser(params)
-    if(!params.ldap_user){
+    if(!params.ldap_cn){
         throw new Error(`missing param ldap_user!`)
     }
-    let ldap_user = await ldap.searchUser(params.ldap_user)
+    let ldap_user = await ldap.searchUser(params.ldap_cn)
     let cql = `MERGE (n:LdapUser {cn: "${ldap_user.cn}"})
                                     ON CREATE SET n = {ldap_user}
                                     ON MATCH SET n = {ldap_user}`
@@ -95,6 +96,23 @@ Account.updateAssoc = async (params)=>{
                                     MATCH (l:LdapUser {cn:"${ldap_user.cn}"})
                                     CREATE (u)-[r:Assoc]->(l)`
     await db.queryCql(addUser2LdapUserRel_cypher)
+}
+
+Account.unAssocLocal = async (params)=>{
+    let delRelsExistInUser_cypher = `MATCH (u:User{uuid: ${params.uuid}})-[r:Assoc]-()
+                                    DELETE r`
+    await db.queryCql(delRelsExistInUser_cypher)
+}
+
+
+Account.getLocalByLdap = async (ldap_user)=>{
+    if(!ldap_user.cn){
+        throw new Error('no cn found in ldap attributes')
+    }
+    let cypher = `MATCH (u:User)-[r:Assoc]->(l:LdapUser {cn:"${ldap_user.cn}"})
+                  RETURN u`
+    let users = await db.queryCql(cypher)
+    return users[0]
 }
 
 module.exports = Account;

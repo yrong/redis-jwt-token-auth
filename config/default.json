@@ -2,6 +2,7 @@
     "name": "auth-api",
     "port":3002,
     "secret": "WEvHL/pbqX6qpqrcORwHQYWmNWnguxiaMEHd7eWnZB1toHzO",
+    "expiration": 1800,
     "logger":{
       "appenders": [
         {
@@ -11,13 +12,11 @@
           "type": "file",
           "filename": "auth-api.log",
           "maxLogSize": 20480,
-          "numBackups": 5,
-          "category": "auth-api"
+          "numBackups": 5
         }
       ],
       "replaceConsole": true,
-      "defaultLevel":"INFO",
-      "defaultCategory":"auth-api"
+      "defaultLevel":"ALL"
     },
     "neo4j": {
       "host": "localhost",
@@ -50,10 +49,19 @@
     "upload": {
       "avatar": {
         "url": "/upload/avatar",
-        "storeDir": "avatar",
+        "storeDir": "/avatar",
         "provider": "local",
         "folder": "public/upload",
+        "urlPath": "/upload",
         "mimetypes": ["image/png","image/bmp","image/gif","image/jpeg"]
       }
-    }
+    },
+   "nextcloud":{
+     "host":"http://localhost:8089/FileStore",
+     "adminuser":"admin",
+     "password":"admin",
+     "group":"share",
+     "permissions": 1,//1 = read; 2 = update; 4 = create; 8 = delete; 16 = share; 31 = all
+     "publicUpload": true //allow public upload or not
+   }
 }

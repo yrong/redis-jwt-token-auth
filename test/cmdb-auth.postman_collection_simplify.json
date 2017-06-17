@@ -2,63 +2,71 @@
   {
     "name": "query User",
     "method": "GET",
-    "url": "http://localhost:3002/auth/userinfo?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI5NmUxNTc2Zi0zN2Y5LTQzZDktYjk4OC02NDc4MWRkYWI2ZmMiLCJ1c2VyIjp7ImlkIjo2MDAsInBhc3N3ZCI6Im5lcmRzIiwic3VybmFtZSI6IiIsIm5hbWUiOiJuZXJkcyIsImFsaWFzIjoibmVyZHMiLCJ0aGVtZSI6ImRlZmF1bHQiLCJ0eXBlIjoxLCJsYW5nIjoiZW5fR0IiLCJjYXRlZ29yeSI6IlVzZXIiLCJhdHRlbXB0X2lwIjoiMTAuNTAuMTMuNjkiLCJ1c2VyaWQiOjEsInV1aWQiOjF9LCJpYXQiOjE0OTU5NDM0MzN9.-vZx-5EAx6JF0dxecHJf9UuWdyiuhucXiPU0xR9iB8U"
+    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/userinfo?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI5NmUxNTc2Zi0zN2Y5LTQzZDktYjk4OC02NDc4MWRkYWI2ZmMiLCJ1c2VyIjp7ImlkIjo2MDAsInBhc3N3ZCI6Im5lcmRzIiwic3VybmFtZSI6IiIsIm5hbWUiOiJuZXJkcyIsImFsaWFzIjoibmVyZHMiLCJ0aGVtZSI6ImRlZmF1bHQiLCJ0eXBlIjoxLCJsYW5nIjoiZW5fR0IiLCJjYXRlZ29yeSI6IlVzZXIiLCJhdHRlbXB0X2lwIjoiMTAuNTAuMTMuNjkiLCJ1c2VyaWQiOjEsInV1aWQiOjF9LCJpYXQiOjE0OTU5NDM0MzN9.-vZx-5EAx6JF0dxecHJf9UuWdyiuhucXiPU0xR9iB8U"
+  },
+  {
+    "name": "unassoc",
+    "method": "PUT",
+    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/unassoc/{{auth_user_id}}",
+    "body": {
+      "token": "{{token}}"
+    }
   },
   {
     "name": "assoc with ldap",
     "method": "PUT",
-    "url": "http://localhost:3002/auth/assoc/1",
+    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/assoc/{{auth_user_id}}",
     "body": {
-      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI5NmUxNTc2Zi0zN2Y5LTQzZDktYjk4OC02NDc4MWRkYWI2ZmMiLCJ1c2VyIjp7ImlkIjo2MDAsInBhc3N3ZCI6Im5lcmRzIiwic3VybmFtZSI6IiIsIm5hbWUiOiJuZXJkcyIsImFsaWFzIjoibmVyZHMiLCJ0aGVtZSI6ImRlZmF1bHQiLCJ0eXBlIjoxLCJsYW5nIjoiZW5fR0IiLCJjYXRlZ29yeSI6IlVzZXIiLCJhdHRlbXB0X2lwIjoiMTAuNTAuMTMuNjkiLCJ1c2VyaWQiOjEsInV1aWQiOjF9LCJpYXQiOjE0OTU5NDM0MzN9.-vZx-5EAx6JF0dxecHJf9UuWdyiuhucXiPU0xR9iB8U",
-      "ldap_user": "test test"
+      "token": "{{token}}",
+      "ldap_cn": "{{auth_ldap_user}}"
     }
   },
   {
     "name": "check valid token",
     "method": "POST",
-    "url": "http://localhost:3002/auth/check",
+    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/check",
     "body": {
-      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI5NmUxNTc2Zi0zN2Y5LTQzZDktYjk4OC02NDc4MWRkYWI2ZmMiLCJ1c2VyIjp7ImlkIjo2MDAsInBhc3N3ZCI6Im5lcmRzIiwic3VybmFtZSI6IiIsIm5hbWUiOiJuZXJkcyIsImFsaWFzIjoibmVyZHMiLCJ0aGVtZSI6ImRlZmF1bHQiLCJ0eXBlIjoxLCJsYW5nIjoiZW5fR0IiLCJjYXRlZ29yeSI6IlVzZXIiLCJhdHRlbXB0X2lwIjoiMTAuNTAuMTMuNjkiLCJ1c2VyaWQiOjEsInV1aWQiOjF9LCJpYXQiOjE0OTU5NDM0MzN9.-vZx-5EAx6JF0dxecHJf9UuWdyiuhucXiPU0xR9iB8U"
+      "token": "{{token}}"
     }
   },
   {
     "name": "login",
     "method": "POST",
-    "url": "http://localhost:3002/auth/login",
+    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/login",
     "body": {
-      "username": "nerds",
-      "password": "nerds"
+      "username": "{{auth_user}}",
+      "password": "{{auth_passwd}}"
     }
   },
   {
     "name": "login-ldap",
     "method": "POST",
-    "url": "http://localhost:3002/auth/login-ldap",
+    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/login-ldap",
     "body": {
-      "username": "test test",
-      "password": "test"
+      "username": "{{auth_ldap_user}}",
+      "password": "{{auth_ldap_passwd}}"
     }
   },
   {
     "name": "logout",
     "method": "POST",
-    "url": "http://localhost:3002/auth/logout",
+    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/logout",
     "body": {
-      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI5NmUxNTc2Zi0zN2Y5LTQzZDktYjk4OC02NDc4MWRkYWI2ZmMiLCJ1c2VyIjp7ImlkIjo2MDAsInBhc3N3ZCI6Im5lcmRzIiwic3VybmFtZSI6IiIsIm5hbWUiOiJuZXJkcyIsImFsaWFzIjoibmVyZHMiLCJ0aGVtZSI6ImRlZmF1bHQiLCJ0eXBlIjoxLCJsYW5nIjoiZW5fR0IiLCJjYXRlZ29yeSI6IlVzZXIiLCJhdHRlbXB0X2lwIjoiMTAuNTAuMTMuNjkiLCJ1c2VyaWQiOjEsInV1aWQiOjF9LCJpYXQiOjE0OTU5NDM0MzN9.-vZx-5EAx6JF0dxecHJf9UuWdyiuhucXiPU0xR9iB8U"
+      "token": "{{token}}"
     }
   },
   {
     "name": "add user",
     "method": "POST",
-    "url": "http://localhost:3002/auth/register",
+    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/register",
     "body": {
       "type": 1,
       "attempt_ip": "10.50.13.69",
-      "userid": 1,
-      "passwd": "nerds",
+      "userid": "{{auth_user_id}}",
+      "passwd": "{{auth_passwd}}",
       "surname": "",
-      "name": "nerds",
-      "alias": "nerds",
+      "name": "{{auth_user}}",
+      "alias": "{{auth_user}}",
       "theme": "default",
       "lang": "en_GB"
     }
@@ -66,7 +74,7 @@
   {
     "name": "login with wrong passwd",
     "method": "POST",
-    "url": "http://localhost:3002/auth/login",
+    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/login",
     "body": {
       "username": "nerds",
       "password": "test1"
@@ -75,38 +83,38 @@
   {
     "name": "clean",
     "method": "POST",
-    "url": "http://localhost:3002/auth/hidden/clean"
+    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/hidden/clean"
   },
   {
     "name": "modify passwd",
     "method": "PUT",
-    "url": "http://localhost:3002/auth/changepwd/1",
+    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/changepwd/{{auth_user_id}}",
     "body": {
-      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI5NmUxNTc2Zi0zN2Y5LTQzZDktYjk4OC02NDc4MWRkYWI2ZmMiLCJ1c2VyIjp7ImlkIjo2MDAsInBhc3N3ZCI6Im5lcmRzIiwic3VybmFtZSI6IiIsIm5hbWUiOiJuZXJkcyIsImFsaWFzIjoibmVyZHMiLCJ0aGVtZSI6ImRlZmF1bHQiLCJ0eXBlIjoxLCJsYW5nIjoiZW5fR0IiLCJjYXRlZ29yeSI6IlVzZXIiLCJhdHRlbXB0X2lwIjoiMTAuNTAuMTMuNjkiLCJ1c2VyaWQiOjEsInV1aWQiOjF9LCJpYXQiOjE0OTU5NDM0MzN9.-vZx-5EAx6JF0dxecHJf9UuWdyiuhucXiPU0xR9iB8U",
-      "oldpwd": "nerds",
-      "newpwd": "nerds"
+      "token": "{{token}}",
+      "oldpwd": "{{auth_user}}",
+      "newpwd": "{{auth_passwd}}"
     }
   },
   {
     "name": "check invalid token",
     "method": "POST",
-    "url": "http://localhost:3002/auth/check",
+    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/check",
     "body": {
       "token": "hello"
     }
   },
   {
-    "name": "add user root",
+    "name": "add user 1",
     "method": "POST",
-    "url": "http://localhost:3002/auth/register",
+    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/register",
     "body": {
       "type": 1,
-      "attempt_ip": "10.50.13.69",
-      "userid": 2,
-      "passwd": "root",
+      "attempt_ip": "10.50.13.65",
+      "userid": 200,
+      "passwd": "test",
       "surname": "",
-      "name": "root",
-      "alias": "root",
+      "name": "test",
+      "alias": "test",
       "theme": "default",
       "lang": "en_GB"
     }
@@ -114,33 +122,33 @@
   {
     "name": "modify user info",
     "method": "PUT",
-    "url": "http://localhost:3002/auth/userinfo/1",
+    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/userinfo/{{auth_user_id}}",
     "body": {
-      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI5NmUxNTc2Zi0zN2Y5LTQzZDktYjk4OC02NDc4MWRkYWI2ZmMiLCJ1c2VyIjp7ImlkIjo2MDAsInBhc3N3ZCI6Im5lcmRzIiwic3VybmFtZSI6IiIsIm5hbWUiOiJuZXJkcyIsImFsaWFzIjoibmVyZHMiLCJ0aGVtZSI6ImRlZmF1bHQiLCJ0eXBlIjoxLCJsYW5nIjoiZW5fR0IiLCJjYXRlZ29yeSI6IlVzZXIiLCJhdHRlbXB0X2lwIjoiMTAuNTAuMTMuNjkiLCJ1c2VyaWQiOjEsInV1aWQiOjF9LCJpYXQiOjE0OTU5NDM0MzN9.-vZx-5EAx6JF0dxecHJf9UuWdyiuhucXiPU0xR9iB8U",
+      "token": "{{token}}",
       "avatar": "/upload/avatar/ca92d560-05a6-11e7-98ba-e1d08df9a25f",
-      "per_page": 30
+      "per_page": 90
     }
   },
   {
     "name": "query User By userid",
     "method": "GET",
-    "url": "http://localhost:3002/auth/userinfo/1?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI5NmUxNTc2Zi0zN2Y5LTQzZDktYjk4OC02NDc4MWRkYWI2ZmMiLCJ1c2VyIjp7ImlkIjo2MDAsInBhc3N3ZCI6Im5lcmRzIiwic3VybmFtZSI6IiIsIm5hbWUiOiJuZXJkcyIsImFsaWFzIjoibmVyZHMiLCJ0aGVtZSI6ImRlZmF1bHQiLCJ0eXBlIjoxLCJsYW5nIjoiZW5fR0IiLCJjYXRlZ29yeSI6IlVzZXIiLCJhdHRlbXB0X2lwIjoiMTAuNTAuMTMuNjkiLCJ1c2VyaWQiOjEsInV1aWQiOjF9LCJpYXQiOjE0OTU5NDM0MzN9.-vZx-5EAx6JF0dxecHJf9UuWdyiuhucXiPU0xR9iB8U"
+    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/userinfo/1?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI5NmUxNTc2Zi0zN2Y5LTQzZDktYjk4OC02NDc4MWRkYWI2ZmMiLCJ1c2VyIjp7ImlkIjo2MDAsInBhc3N3ZCI6Im5lcmRzIiwic3VybmFtZSI6IiIsIm5hbWUiOiJuZXJkcyIsImFsaWFzIjoibmVyZHMiLCJ0aGVtZSI6ImRlZmF1bHQiLCJ0eXBlIjoxLCJsYW5nIjoiZW5fR0IiLCJjYXRlZ29yeSI6IlVzZXIiLCJhdHRlbXB0X2lwIjoiMTAuNTAuMTMuNjkiLCJ1c2VyaWQiOjEsInV1aWQiOjF9LCJpYXQiOjE0OTU5NDM0MzN9.-vZx-5EAx6JF0dxecHJf9UuWdyiuhucXiPU0xR9iB8U"
   },
   {
     "name": "login with user not exist",
     "method": "POST",
-    "url": "http://localhost:3002/auth/login",
+    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/login",
     "body": {
       "username": "test1",
       "password": "test"
     }
   },
   {
-    "name": "remove user",
+    "name": "delete user 1",
     "method": "POST",
-    "url": "http://localhost:3002/auth/unregister/2",
+    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/unregister/200",
     "body": {
-      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI5NmUxNTc2Zi0zN2Y5LTQzZDktYjk4OC02NDc4MWRkYWI2ZmMiLCJ1c2VyIjp7ImlkIjo2MDAsInBhc3N3ZCI6Im5lcmRzIiwic3VybmFtZSI6IiIsIm5hbWUiOiJuZXJkcyIsImFsaWFzIjoibmVyZHMiLCJ0aGVtZSI6ImRlZmF1bHQiLCJ0eXBlIjoxLCJsYW5nIjoiZW5fR0IiLCJjYXRlZ29yeSI6IlVzZXIiLCJhdHRlbXB0X2lwIjoiMTAuNTAuMTMuNjkiLCJ1c2VyaWQiOjEsInV1aWQiOjF9LCJpYXQiOjE0OTU5NDM0MzN9.-vZx-5EAx6JF0dxecHJf9UuWdyiuhucXiPU0xR9iB8U"
+      "token": "{{token}}"
     }
   }
 ]

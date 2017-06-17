@@ -1,6 +1,7 @@
 const _ = require('lodash');
 const jwt = require('jsonwebtoken');
 const utils = require('../lib/sessionUtils');
+const config = require('config');
 
 
 module.exports = function jwt_token(options) {
@@ -12,7 +13,7 @@ module.exports = function jwt_token(options) {
             secret: options.secret,
             algorithm: options.algorithm || "HS256",
             keyspace: options.keyspace || "sess:",
-            maxAge: options.maxAge || 86400,
+            maxAge: options.maxAge || config.get('expiration'),
             requestKey: options.requestKey || "session",
             requestArg: options.requestArg || "token"
         };
@@ -34,9 +35,18 @@ module.exports = function jwt_token(options) {
                 ctx.throw(err);
             }
             try{
-                session = await options.client.get(options.keyspace + decoded.jti);
+                let promise = new Promise((resolve, reject) => {
+                    options.client.get(options.keyspace + decoded.jti, function (error,session) {
+                        if(error){
+                            reject(error);
+                        }else{
+                            resolve(session);
+                        }
+                    });
+                });
+                session = await Promise.resolve(promise);
             } catch(err) {
-                ctx.throw(err);
+                ctx.throw('redis read error:' + String(err));
             }
             try{
                 session = JSON.parse(session);
@@ -53,8 +63,9 @@ module.exports = function jwt_token(options) {
             req[options.requestKey].touch(_.noop);
             req.jsonBody = true
             await next();
-		}else{
-            if(ctx.path.includes('/auth/login')||ctx.path.includes('/auth/register')||ctx.path.includes('/auth/hidden/clean')||ctx.path.indexOf('.html') >= 0)
+		}else {
+            if (ctx.path.includes('/auth/login') || ctx.path.includes('/auth/register')
+                || ctx.path.includes('/auth/hidden/clean') || ctx.path.includes('.html')||ctx.path.includes('.ico'))
                 await next()
             else
                 ctx.throw('token not found!',401);
