@@ -36,7 +36,7 @@ router.post('/unregister/:uuid', async(ctx, next) => {
 router.post('/login', async(ctx, next) => {
     await passport.authenticate('local',async(user, info) => {
         await ctx.login(user);
-        let token = await ctx.req.session.create({user: user});
+        let token = await ctx.req.session.create(ctx.req.session.passport);
         ctx.body = {token: token,local:_.omit(user,['passwd'])};
     })(ctx, next)
 });
@@ -46,7 +46,7 @@ router.post('/login-ldap', async (ctx, next) => {
     await passport.authenticate('ldapauth',{session: false},async (user,info) => {
         if(user){
             await ctx.login(user);
-            let token = await ctx.req.session.create({user: user});
+            let token = await ctx.req.session.create(ctx.req.session.passport);
             let local_user = await Account.getLocalByLdap(user)
             ctx.body = {token: token,local:_.omit(local_user,['passwd']),ldap:_.omit(user,['userPassword'])};
         }else{
