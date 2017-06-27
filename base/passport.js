@@ -10,7 +10,10 @@ const LocalStrategy = passport_local.Strategy
 const log4js = require('log4js');
 
 passport.serializeUser(function(user, done) {
-    done(null, user);
+    if(user.cn)
+        done(null,_.pick(user,['cn','dn']))
+    else
+        done(null, _.pick(user,['alias','category','name','passwd','userid','uuid']))
 })
 
 passport.deserializeUser(function(user, done) {

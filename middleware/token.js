@@ -32,7 +32,7 @@ module.exports = function jwt_token(options) {
             try {
                 decoded = jwt.verify(token, options.secret);
             } catch(err) {
-                ctx.throw(err);
+                ctx.throw(err,401);
             }
             try{
                 let promise = new Promise((resolve, reject) => {
@@ -48,13 +48,9 @@ module.exports = function jwt_token(options) {
             } catch(err) {
                 ctx.throw('redis read error:' + String(err));
             }
-            try{
-                session = JSON.parse(session);
-                if(!session)
-                    ctx.throw('token expired!',401);
-            }catch(err){
-                ctx.throw(err);
-            }
+            session = JSON.parse(session);
+            if(!session)
+                ctx.throw('token expired!',401);
             _.extend(req[options.requestKey], session);
             req[options.requestKey].claims = decoded;
             req[options.requestKey].id = decoded.jti;
