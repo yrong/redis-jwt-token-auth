@@ -35,6 +35,8 @@ router.post('/unregister/:uuid', async(ctx, next) => {
 
 router.post('/login', async(ctx, next) => {
     await passport.authenticate('local',async(user, info) => {
+        if(!user)
+            ctx.throw('login failed',401)
         await ctx.login(user);
         let token = await ctx.req.session.create(ctx.req.session.passport);
         ctx.body = {token: token,local:_.omit(user,['passwd'])};
