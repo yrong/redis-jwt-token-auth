@@ -1,397 +1,34 @@
 {
-	"id": "392b910a-967e-7174-6120-0023fc49a7a6",
-	"name": "cmdb-auth",
+	"id": "b2114168-8995-24ff-4525-8f5089dfd3f2",
+	"name": "auth",
 	"description": "",
 	"order": [
-		"8827232a-38b9-8a53-319f-7811aeb8ce05",
-		"686792fb-68b8-dd37-b394-21318da04190",
-		"540eddfe-c0c6-c326-da61-d5873e3884a6",
-		"a3bb004b-d6d3-6b99-201b-2b0dc98cde7b",
-		"f8667b6f-9cce-1f3a-48ee-7b804db73322",
-		"59bb3482-699d-4554-c26c-4a650c381bfb",
-		"15fed446-4546-8474-e837-3e02a3374984",
-		"c5643923-09b6-a03e-31dc-00c0d456e922",
-		"e9ad3ea4-32fd-a6fd-f95c-ed4f188603be",
-		"6beeca5d-95e7-694f-7e8d-9aae8ca754b2",
-		"232a0e38-2438-7d56-b0e6-023bb02efbc9",
-		"a165d1a4-5a19-4f54-4f6d-f39d0cc42c8b",
-		"928dab35-b021-31df-4783-d24e9e63d728",
-		"b67ff063-fb97-b8c3-aef8-c81b571f8f63",
-		"174654e3-49c4-0ee2-d73d-0e2c4de677c8",
-		"1694f62b-c6c0-75b3-c3b3-a1557fdd4e77",
-		"627774ff-2fac-9b94-379d-8389d4448b9d"
+		"c2a419c2-0059-e332-5c79-0ee479b055e8",
+		"fbce4389-0256-4aa7-b821-5c782298f99f",
+		"eadd274e-4e3a-af91-bad0-17ebc3a02437",
+		"b20c7c85-42a8-556f-0e0a-45c67adf774a",
+		"e25d356a-cc2f-56e6-79d6-6ce3583421d3",
+		"e8f84069-a4f3-ab7b-270d-061ee72a6c43",
+		"ee8e1fc7-8f8c-288e-489c-09c5b2ee1b58",
+		"8af7792e-69fa-74f3-e786-4a1ded983f35",
+		"534f631f-18d2-e573-3161-8931c679241d",
+		"56e4396e-71de-f0d5-b36d-83fa8568cf59",
+		"cfc07ee0-822b-f2ee-3ced-75b92360c89a",
+		"20dd1a72-9f29-91ed-5418-049acbcd5b7f",
+		"50ff2906-e2cd-7d4a-fcce-7747485d7772",
+		"02f2bcde-4cf7-aab6-aadf-7dc6614ea3c3",
+		"91c3bf76-e88a-22f4-fe21-c6e594907853",
+		"a18f0342-ac4f-e681-dc6b-ca1560e0e306",
+		"0fdefe59-16c9-6733-4069-d737179ebb37",
+		"99669d68-055e-c6d7-b390-7a4a20e9d994"
 	],
 	"folders": [],
 	"timestamp": 0,
-	"owner": "1388965",
+	"owner": "2263720",
 	"public": false,
 	"requests": [
 		{
-			"id": "15fed446-4546-8474-e837-3e02a3374984",
-			"headers": "",
-			"headerData": [],
-			"url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/userinfo?token={{token}}",
-			"queryParams": [
-				{
-					"key": "token",
-					"value": "{{token}}",
-					"equals": true,
-					"description": "",
-					"enabled": true
-				}
-			],
-			"preRequestScript": null,
-			"pathVariables": {},
-			"pathVariableData": [],
-			"method": "GET",
-			"data": null,
-			"dataMode": "params",
-			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"at least one user found\"] = jsonData.data.length >=1\npostman.setEnvironmentVariable(\"user_id\", jsonData.data[0].userid);\npostman.setEnvironmentVariable(\"user_alias\", jsonData.data[0].alias);",
-			"currentHelper": "normal",
-			"helperAttributes": {},
-			"time": 1497508789364,
-			"name": "query User",
-			"description": "",
-			"collectionId": "392b910a-967e-7174-6120-0023fc49a7a6"
-		},
-		{
-			"id": "1694f62b-c6c0-75b3-c3b3-a1557fdd4e77",
-			"headers": "Content-Type: application/json\n",
-			"headerData": [
-				{
-					"key": "Content-Type",
-					"value": "application/json",
-					"description": "",
-					"enabled": true
-				}
-			],
-			"url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/unassoc/{{auth_user_id}}",
-			"queryParams": [],
-			"preRequestScript": "",
-			"pathVariables": {},
-			"pathVariableData": [],
-			"method": "PUT",
-			"data": [],
-			"dataMode": "raw",
-			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"unassoc\"] = jsonData.status === 'ok';\n",
-			"currentHelper": "normal",
-			"helperAttributes": {},
-			"time": 1497512921312,
-			"name": "unassoc",
-			"description": "",
-			"collectionId": "392b910a-967e-7174-6120-0023fc49a7a6",
-			"rawModeData": "{\n   \"token\":\"{{token}}\"\n}"
-		},
-		{
-			"id": "174654e3-49c4-0ee2-d73d-0e2c4de677c8",
-			"headers": "Content-Type: application/json\n",
-			"headerData": [
-				{
-					"key": "Content-Type",
-					"value": "application/json",
-					"description": "",
-					"enabled": true
-				}
-			],
-			"url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/assoc/{{auth_user_id}}",
-			"queryParams": [],
-			"preRequestScript": "",
-			"pathVariables": {},
-			"pathVariableData": [],
-			"method": "PUT",
-			"data": [],
-			"dataMode": "raw",
-			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"passwd modified\"] = jsonData.status === 'ok';\n",
-			"currentHelper": "normal",
-			"helperAttributes": {},
-			"time": 1497512882870,
-			"name": "assoc with ldap",
-			"description": "",
-			"collectionId": "392b910a-967e-7174-6120-0023fc49a7a6",
-			"rawModeData": "{\n   \"token\":\"{{token}}\",\n   \"ldap_cn\":\"{{auth_ldap_user}}\"\n}"
-		},
-		{
-			"id": "232a0e38-2438-7d56-b0e6-023bb02efbc9",
-			"headers": "Content-Type: application/json\n",
-			"headerData": [
-				{
-					"key": "Content-Type",
-					"value": "application/json",
-					"description": "",
-					"enabled": true
-				}
-			],
-			"url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/check",
-			"queryParams": [],
-			"preRequestScript": null,
-			"pathVariables": {},
-			"pathVariableData": [],
-			"method": "POST",
-			"data": [],
-			"dataMode": "raw",
-			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"token valid\"] = jsonData.status === 'ok';",
-			"currentHelper": "normal",
-			"helperAttributes": {},
-			"time": 1497508864034,
-			"name": "check valid token",
-			"description": "",
-			"collectionId": "392b910a-967e-7174-6120-0023fc49a7a6",
-			"rawModeData": "{\n  \"token\":\"{{token}}\"\n}"
-		},
-		{
-			"id": "540eddfe-c0c6-c326-da61-d5873e3884a6",
-			"headers": "Content-Type: application/json\n",
-			"headerData": [
-				{
-					"key": "Content-Type",
-					"value": "application/json",
-					"description": "",
-					"enabled": true
-				}
-			],
-			"url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/login",
-			"queryParams": [],
-			"preRequestScript": "",
-			"pathVariables": {},
-			"pathVariableData": [],
-			"method": "POST",
-			"data": [],
-			"dataMode": "raw",
-			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"token found\"] = jsonData.data.token;\npostman.setEnvironmentVariable(\"token\", jsonData.data.token);\n",
-			"currentHelper": "normal",
-			"helperAttributes": {},
-			"time": 1497510787825,
-			"name": "login",
-			"description": "",
-			"collectionId": "392b910a-967e-7174-6120-0023fc49a7a6",
-			"rawModeData": "{\n  \"username\":\"{{auth_user}}\",\n  \"password\":\"{{auth_passwd}}\"\n}"
-		},
-		{
-			"id": "59bb3482-699d-4554-c26c-4a650c381bfb",
-			"headers": "Content-Type: application/json\n",
-			"headerData": [
-				{
-					"key": "Content-Type",
-					"value": "application/json",
-					"description": "",
-					"enabled": true
-				}
-			],
-			"url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/login-ldap",
-			"queryParams": [],
-			"preRequestScript": "",
-			"pathVariables": {},
-			"pathVariableData": [],
-			"method": "POST",
-			"data": [],
-			"dataMode": "raw",
-			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"token found\"] = jsonData.data.token;\npostman.setEnvironmentVariable(\"token\", jsonData.data.token);\n",
-			"currentHelper": "normal",
-			"helperAttributes": {},
-			"time": 1497512496842,
-			"name": "login-ldap",
-			"description": "",
-			"collectionId": "392b910a-967e-7174-6120-0023fc49a7a6",
-			"rawModeData": "{\n  \"username\":\"{{auth_ldap_user}}\",\n  \"password\":\"{{auth_ldap_passwd}}\"\n}"
-		},
-		{
-			"id": "627774ff-2fac-9b94-379d-8389d4448b9d",
-			"headers": "Content-Type: application/json\n",
-			"headerData": [
-				{
-					"key": "Content-Type",
-					"value": "application/json",
-					"description": "",
-					"enabled": true
-				}
-			],
-			"url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/logout",
-			"queryParams": [],
-			"preRequestScript": null,
-			"pathVariables": {},
-			"pathVariableData": [],
-			"method": "POST",
-			"data": [],
-			"dataMode": "raw",
-			"tests": "\n",
-			"currentHelper": "normal",
-			"helperAttributes": {},
-			"time": 1497508905525,
-			"name": "logout",
-			"description": "",
-			"collectionId": "392b910a-967e-7174-6120-0023fc49a7a6",
-			"rawModeData": "{\n  \"token\":\"{{token}}\"\n}"
-		},
-		{
-			"id": "686792fb-68b8-dd37-b394-21318da04190",
-			"headers": "Content-Type: application/json\n",
-			"headerData": [
-				{
-					"key": "Content-Type",
-					"value": "application/json",
-					"description": "",
-					"enabled": true
-				}
-			],
-			"url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/register",
-			"queryParams": [],
-			"preRequestScript": null,
-			"pathVariables": {},
-			"pathVariableData": [],
-			"method": "POST",
-			"data": [],
-			"dataMode": "raw",
-			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"user added\"] = jsonData.status === 'ok';",
-			"currentHelper": "normal",
-			"helperAttributes": {},
-			"time": 1497513221754,
-			"name": "add user",
-			"description": "",
-			"collectionId": "392b910a-967e-7174-6120-0023fc49a7a6",
-			"rawModeData": "{\n      \"type\":1,\n      \"attempt_ip\":\"10.50.13.69\",\n      \"userid\":{{auth_user_id}},\n      \"passwd\":\"{{auth_passwd}}\",\n      \"surname\":\"\",\n      \"name\":\"{{auth_user}}\",\n      \"alias\":\"{{auth_user}}\",\n      \"theme\":\"default\",\n      \"lang\":\"en_GB\"\n}"
-		},
-		{
-			"id": "6beeca5d-95e7-694f-7e8d-9aae8ca754b2",
-			"headers": "Content-Type: application/json\n",
-			"headerData": [
-				{
-					"key": "Content-Type",
-					"value": "application/json",
-					"description": "",
-					"enabled": true
-				}
-			],
-			"url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/login",
-			"queryParams": [],
-			"preRequestScript": null,
-			"pathVariables": {},
-			"pathVariableData": [],
-			"method": "POST",
-			"data": [],
-			"dataMode": "raw",
-			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"login error\"] = jsonData.status === 'error';\n",
-			"currentHelper": "normal",
-			"helperAttributes": {},
-			"time": 1497508857171,
-			"name": "login with wrong passwd",
-			"description": "",
-			"collectionId": "392b910a-967e-7174-6120-0023fc49a7a6",
-			"rawModeData": "{\n  \"username\":\"nerds\",\n  \"password\":\"test1\"\n}"
-		},
-		{
-			"id": "8827232a-38b9-8a53-319f-7811aeb8ce05",
-			"headers": "Content-Type: application/json\n",
-			"headerData": [
-				{
-					"key": "Content-Type",
-					"value": "application/json",
-					"description": "",
-					"enabled": true
-				}
-			],
-			"url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/hidden/clean",
-			"queryParams": [],
-			"preRequestScript": null,
-			"pathVariables": {},
-			"pathVariableData": [],
-			"method": "POST",
-			"data": [],
-			"dataMode": "raw",
-			"tests": "",
-			"currentHelper": "normal",
-			"helperAttributes": {},
-			"time": 1497508651962,
-			"name": "clean",
-			"description": "",
-			"collectionId": "392b910a-967e-7174-6120-0023fc49a7a6",
-			"rawModeData": ""
-		},
-		{
-			"id": "928dab35-b021-31df-4783-d24e9e63d728",
-			"headers": "Content-Type: application/json\n",
-			"headerData": [
-				{
-					"key": "Content-Type",
-					"value": "application/json",
-					"description": "",
-					"enabled": true
-				}
-			],
-			"url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/changepwd/{{auth_user_id}}",
-			"queryParams": [],
-			"preRequestScript": "",
-			"pathVariables": {},
-			"pathVariableData": [],
-			"method": "PUT",
-			"data": [],
-			"dataMode": "raw",
-			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"passwd modified\"] = jsonData.status === 'ok';\n",
-			"currentHelper": "normal",
-			"helperAttributes": {},
-			"time": 1497512828050,
-			"name": "modify passwd",
-			"description": "",
-			"collectionId": "392b910a-967e-7174-6120-0023fc49a7a6",
-			"rawModeData": "{\n  \"token\":\"{{token}}\",\n  \"oldpwd\":\"{{auth_user}}\",\n  \"newpwd\":\"{{auth_passwd}}\"\n}"
-		},
-		{
-			"id": "a165d1a4-5a19-4f54-4f6d-f39d0cc42c8b",
-			"headers": "Content-Type: application/json\n",
-			"headerData": [
-				{
-					"key": "Content-Type",
-					"value": "application/json",
-					"description": "",
-					"enabled": true
-				}
-			],
-			"url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/check",
-			"queryParams": [],
-			"preRequestScript": null,
-			"pathVariables": {},
-			"pathVariableData": [],
-			"method": "POST",
-			"data": [],
-			"dataMode": "raw",
-			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"token invalid\"] = jsonData.status === 'error';\n",
-			"currentHelper": "normal",
-			"helperAttributes": {},
-			"time": 1497508872828,
-			"name": "check invalid token",
-			"description": "",
-			"collectionId": "392b910a-967e-7174-6120-0023fc49a7a6",
-			"rawModeData": "{\n  \"token\":\"hello\"\n}"
-		},
-		{
-			"id": "a3bb004b-d6d3-6b99-201b-2b0dc98cde7b",
-			"headers": "Content-Type: application/json\n",
-			"headerData": [
-				{
-					"key": "Content-Type",
-					"value": "application/json",
-					"description": "",
-					"enabled": true
-				}
-			],
-			"url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/register",
-			"queryParams": [],
-			"preRequestScript": null,
-			"pathVariables": {},
-			"pathVariableData": [],
-			"method": "POST",
-			"data": [],
-			"dataMode": "raw",
-			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"user added\"] = jsonData.status === 'ok';",
-			"currentHelper": "normal",
-			"helperAttributes": {},
-			"time": 1497513227929,
-			"name": "add user 1",
-			"description": "",
-			"collectionId": "392b910a-967e-7174-6120-0023fc49a7a6",
-			"rawModeData": "{\n      \"type\":1,\n      \"attempt_ip\":\"10.50.13.65\",\n      \"userid\":200,\n      \"passwd\":\"test\",\n      \"surname\":\"\",\n      \"name\":\"test\",\n      \"alias\":\"test\",\n      \"theme\":\"default\",\n      \"lang\":\"en_GB\"\n}"
-		},
-		{
-			"id": "b67ff063-fb97-b8c3-aef8-c81b571f8f63",
+			"id": "02f2bcde-4cf7-aab6-aadf-7dc6614ea3c3",
 			"headers": "Content-Type: application/json\n",
 			"headerData": [
 				{
@@ -412,17 +49,227 @@
 			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"passwd modified\"] = jsonData.status === 'ok';\n",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1497512846303,
+			"time": 1499587315858,
 			"name": "modify user info",
 			"description": "",
-			"collectionId": "392b910a-967e-7174-6120-0023fc49a7a6",
+			"collectionId": "b2114168-8995-24ff-4525-8f5089dfd3f2",
+			"responses": [],
 			"rawModeData": "{\n   \"token\":\"{{token}}\",\n  \"avatar\":\"/upload/avatar/ca92d560-05a6-11e7-98ba-e1d08df9a25f\",\n  \"per_page\":90\n}"
 		},
 		{
-			"id": "c5643923-09b6-a03e-31dc-00c0d456e922",
+			"folder": null,
+			"id": "0fdefe59-16c9-6733-4069-d737179ebb37",
+			"name": "logout",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "{\n  \"token\":\"{{token}}\"\n}",
+			"descriptionFormat": null,
+			"description": "",
+			"headers": "Content-Type: application/json\n",
+			"method": "POST",
+			"pathVariables": {},
+			"url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/logout",
+			"preRequestScript": null,
+			"tests": "\n",
+			"currentHelper": "normal",
+			"helperAttributes": "{}",
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"pathVariableData": [],
+			"responses": [],
+			"collectionId": "b2114168-8995-24ff-4525-8f5089dfd3f2"
+		},
+		{
+			"folder": null,
+			"id": "20dd1a72-9f29-91ed-5418-049acbcd5b7f",
+			"name": "check invalid token",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "{\n  \"token\":\"hello\"\n}",
+			"descriptionFormat": null,
+			"description": "",
+			"headers": "Content-Type: application/json\n",
+			"method": "POST",
+			"pathVariables": {},
+			"url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/check",
+			"preRequestScript": null,
+			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"token invalid\"] = jsonData.status === 'error';\n",
+			"currentHelper": "normal",
+			"helperAttributes": "{}",
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"pathVariableData": [],
+			"responses": [],
+			"collectionId": "b2114168-8995-24ff-4525-8f5089dfd3f2"
+		},
+		{
+			"id": "50ff2906-e2cd-7d4a-fcce-7747485d7772",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/changepwd/{{auth_user_id}}",
+			"queryParams": [],
+			"preRequestScript": "",
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "PUT",
+			"data": [],
+			"dataMode": "raw",
+			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"passwd modified\"] = jsonData.status === 'ok';\n",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1499587166888,
+			"name": "modify passwd",
+			"description": "",
+			"collectionId": "b2114168-8995-24ff-4525-8f5089dfd3f2",
+			"responses": [],
+			"rawModeData": "{\n  \"token\":\"{{token}}\",\n  \"oldpwd\":\"{{auth_passwd}}\",\n  \"newpwd\":\"{{auth_passwd}}\"\n}"
+		},
+		{
+			"folder": null,
+			"id": "534f631f-18d2-e573-3161-8931c679241d",
+			"name": "login with user not exist",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "{\n  \"username\":\"test1\",\n  \"password\":\"test\"\n}",
+			"descriptionFormat": null,
+			"description": "",
+			"headers": "Content-Type: application/json\n",
+			"method": "POST",
+			"pathVariables": {},
+			"url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/login",
+			"preRequestScript": null,
+			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"login error\"] = jsonData.status === 'error';\n",
+			"currentHelper": "normal",
+			"helperAttributes": "{}",
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"pathVariableData": [],
+			"responses": [],
+			"collectionId": "b2114168-8995-24ff-4525-8f5089dfd3f2"
+		},
+		{
+			"folder": null,
+			"id": "56e4396e-71de-f0d5-b36d-83fa8568cf59",
+			"name": "login with wrong passwd",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "{\n  \"username\":\"nerds\",\n  \"password\":\"test1\"\n}",
+			"descriptionFormat": null,
+			"description": "",
+			"headers": "Content-Type: application/json\n",
+			"method": "POST",
+			"pathVariables": {},
+			"url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/login",
+			"preRequestScript": null,
+			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"login error\"] = jsonData.status === 'error';\n",
+			"currentHelper": "normal",
+			"helperAttributes": "{}",
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"pathVariableData": [],
+			"responses": [],
+			"collectionId": "b2114168-8995-24ff-4525-8f5089dfd3f2"
+		},
+		{
+			"folder": null,
+			"id": "8af7792e-69fa-74f3-e786-4a1ded983f35",
+			"name": "query User By userid",
+			"dataMode": "params",
+			"data": null,
+			"rawModeData": null,
+			"descriptionFormat": null,
+			"description": "",
+			"headers": "",
+			"method": "GET",
+			"pathVariables": {},
+			"url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/userinfo/{{user_id}}?token={{token}}",
+			"preRequestScript": null,
+			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"one user found\"] = jsonData.status ==\"ok\"",
+			"currentHelper": "normal",
+			"helperAttributes": "{}",
+			"queryParams": [
+				{
+					"key": "token",
+					"value": "{{token}}",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				}
+			],
+			"headerData": [],
+			"pathVariableData": [],
+			"responses": [],
+			"collectionId": "b2114168-8995-24ff-4525-8f5089dfd3f2"
+		},
+		{
+			"id": "91c3bf76-e88a-22f4-fe21-c6e594907853",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/assoc/{{auth_user_id}}",
+			"queryParams": [],
+			"preRequestScript": "",
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "PUT",
+			"data": [],
+			"dataMode": "raw",
+			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"passwd modified\"] = jsonData.status === 'ok';\n",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1499587033535,
+			"name": "assoc with ldap",
+			"description": "",
+			"collectionId": "b2114168-8995-24ff-4525-8f5089dfd3f2",
+			"responses": [],
+			"rawModeData": "{\n   \"token\":\"{{token}}\",\n   \"ldap_cn\":\"{{auth_ldap_user}}\"\n}"
+		},
+		{
+			"id": "99669d68-055e-c6d7-b390-7a4a20e9d994",
 			"headers": "",
 			"headerData": [],
-			"url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/userinfo/{{user_id}}?token={{token}}",
+			"url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/active_users?token={{token}}",
 			"queryParams": [
 				{
 					"key": "token",
@@ -438,16 +285,17 @@
 			"method": "GET",
 			"data": null,
 			"dataMode": "params",
-			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"one user found\"] = jsonData.status ==\"ok\"",
+			"tests": "var jsonData = JSON.parse(responseBody);\n",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1497513168521,
-			"name": "query User By userid",
+			"time": 1499147591924,
+			"name": "query active users",
 			"description": "",
-			"collectionId": "392b910a-967e-7174-6120-0023fc49a7a6"
+			"collectionId": "b2114168-8995-24ff-4525-8f5089dfd3f2",
+			"responses": []
 		},
 		{
-			"id": "e9ad3ea4-32fd-a6fd-f95c-ed4f188603be",
+			"id": "a18f0342-ac4f-e681-dc6b-ca1560e0e306",
 			"headers": "Content-Type: application/json\n",
 			"headerData": [
 				{
@@ -457,26 +305,42 @@
 					"enabled": true
 				}
 			],
-			"url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/login",
+			"url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/unassoc/{{auth_user_id}}",
 			"queryParams": [],
-			"preRequestScript": null,
+			"preRequestScript": "",
 			"pathVariables": {},
 			"pathVariableData": [],
-			"method": "POST",
+			"method": "PUT",
 			"data": [],
 			"dataMode": "raw",
-			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"login error\"] = jsonData.status === 'error';\n",
+			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"unassoc\"] = jsonData.status === 'ok';\n",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1497508851305,
-			"name": "login with user not exist",
+			"time": 1499587038150,
+			"name": "unassoc",
 			"description": "",
-			"collectionId": "392b910a-967e-7174-6120-0023fc49a7a6",
-			"rawModeData": "{\n  \"username\":\"test1\",\n  \"password\":\"test\"\n}"
+			"collectionId": "b2114168-8995-24ff-4525-8f5089dfd3f2",
+			"responses": [],
+			"rawModeData": "{\n   \"token\":\"{{token}}\"\n}"
 		},
 		{
-			"id": "f8667b6f-9cce-1f3a-48ee-7b804db73322",
+			"folder": null,
+			"id": "b20c7c85-42a8-556f-0e0a-45c67adf774a",
+			"name": "add user 1",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "{\n      \"type\":1,\n      \"attempt_ip\":\"10.50.13.65\",\n      \"userid\":200,\n      \"passwd\":\"nerds\",\n      \"surname\":\"\",\n      \"name\":\"nerds\",\n      \"alias\":\"nerds\",\n      \"theme\":\"default\",\n      \"lang\":\"en_GB\"\n}",
+			"descriptionFormat": null,
+			"description": "",
 			"headers": "Content-Type: application/json\n",
+			"method": "POST",
+			"pathVariables": {},
+			"url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/register",
+			"preRequestScript": null,
+			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"user added\"] = jsonData.status === 'ok';",
+			"currentHelper": "normal",
+			"helperAttributes": "{}",
+			"queryParams": [],
 			"headerData": [
 				{
 					"key": "Content-Type",
@@ -485,22 +349,220 @@
 					"enabled": true
 				}
 			],
+			"pathVariableData": [],
+			"responses": [],
+			"collectionId": "b2114168-8995-24ff-4525-8f5089dfd3f2"
+		},
+		{
+			"folder": null,
+			"id": "c2a419c2-0059-e332-5c79-0ee479b055e8",
+			"name": "clean",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"descriptionFormat": null,
+			"description": "",
+			"headers": "Content-Type: application/json\n",
+			"method": "POST",
+			"pathVariables": {},
+			"url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/hidden/clean",
+			"preRequestScript": null,
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": "{}",
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"pathVariableData": [],
+			"responses": [],
+			"collectionId": "b2114168-8995-24ff-4525-8f5089dfd3f2"
+		},
+		{
+			"folder": null,
+			"id": "cfc07ee0-822b-f2ee-3ced-75b92360c89a",
+			"name": "check valid token",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "{\n  \"token\":\"{{token}}\"\n}",
+			"descriptionFormat": null,
+			"description": "",
+			"headers": "Content-Type: application/json\n",
+			"method": "POST",
+			"pathVariables": {},
+			"url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/check",
+			"preRequestScript": null,
+			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"token valid\"] = jsonData.status === 'ok';",
+			"currentHelper": "normal",
+			"helperAttributes": "{}",
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"pathVariableData": [],
+			"responses": [],
+			"collectionId": "b2114168-8995-24ff-4525-8f5089dfd3f2"
+		},
+		{
+			"folder": null,
+			"id": "e25d356a-cc2f-56e6-79d6-6ce3583421d3",
+			"name": "delete user 1",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "{\n  \"token\":\"{{token}}\"\n}",
+			"descriptionFormat": null,
+			"description": "",
+			"headers": "Content-Type: application/json\n",
+			"method": "POST",
+			"pathVariables": {},
 			"url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/unregister/200",
-			"queryParams": [],
 			"preRequestScript": null,
-			"pathVariables": {},
-			"pathVariableData": [],
-			"method": "POST",
-			"data": [],
-			"dataMode": "raw",
 			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"user deleted\"] = jsonData.status === 'ok';",
 			"currentHelper": "normal",
-			"helperAttributes": {},
-			"time": 1497513238451,
-			"name": "delete user 1",
+			"helperAttributes": "{}",
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"pathVariableData": [],
+			"responses": [],
+			"collectionId": "b2114168-8995-24ff-4525-8f5089dfd3f2"
+		},
+		{
+			"folder": null,
+			"id": "e8f84069-a4f3-ab7b-270d-061ee72a6c43",
+			"name": "login-ldap",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "{\n  \"username\":\"{{auth_ldap_user}}\",\n  \"password\":\"{{auth_ldap_passwd}}\"\n}",
+			"descriptionFormat": null,
 			"description": "",
-			"collectionId": "392b910a-967e-7174-6120-0023fc49a7a6",
-			"rawModeData": "{\n\t\"token\":\"{{token}}\"\n}"
+			"headers": "Content-Type: application/json\n",
+			"method": "POST",
+			"pathVariables": {},
+			"url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/login-ldap",
+			"preRequestScript": "",
+			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"token found\"] = jsonData.data.token;\npostman.setEnvironmentVariable(\"token\", jsonData.data.token);\n",
+			"currentHelper": "normal",
+			"helperAttributes": "{}",
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"pathVariableData": [],
+			"responses": [],
+			"collectionId": "b2114168-8995-24ff-4525-8f5089dfd3f2"
+		},
+		{
+			"folder": null,
+			"id": "eadd274e-4e3a-af91-bad0-17ebc3a02437",
+			"name": "login",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "{\n  \"username\":\"{{auth_user}}\",\n  \"password\":\"{{auth_passwd}}\"\n}",
+			"descriptionFormat": null,
+			"description": "",
+			"headers": "Content-Type: application/json\n",
+			"method": "POST",
+			"pathVariables": {},
+			"url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/login",
+			"preRequestScript": "",
+			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"token found\"] = jsonData.data.token;\npostman.setEnvironmentVariable(\"token\", jsonData.data.token);\n",
+			"currentHelper": "normal",
+			"helperAttributes": "{}",
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"pathVariableData": [],
+			"responses": [],
+			"collectionId": "b2114168-8995-24ff-4525-8f5089dfd3f2"
+		},
+		{
+			"folder": null,
+			"id": "ee8e1fc7-8f8c-288e-489c-09c5b2ee1b58",
+			"name": "query User",
+			"dataMode": "params",
+			"data": null,
+			"rawModeData": null,
+			"descriptionFormat": null,
+			"description": "",
+			"headers": "",
+			"method": "GET",
+			"pathVariables": {},
+			"url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/userinfo?token={{token}}",
+			"preRequestScript": null,
+			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"at least one user found\"] = jsonData.data.length >=1\npostman.setEnvironmentVariable(\"user_id\", jsonData.data[0].userid);\npostman.setEnvironmentVariable(\"user_alias\", jsonData.data[0].alias);",
+			"currentHelper": "normal",
+			"helperAttributes": "{}",
+			"queryParams": [
+				{
+					"key": "token",
+					"value": "{{token}}",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				}
+			],
+			"headerData": [],
+			"pathVariableData": [],
+			"responses": [],
+			"collectionId": "b2114168-8995-24ff-4525-8f5089dfd3f2"
+		},
+		{
+			"folder": null,
+			"id": "fbce4389-0256-4aa7-b821-5c782298f99f",
+			"name": "add user",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "{\n      \"type\":1,\n      \"attempt_ip\":\"10.50.13.69\",\n      \"userid\":{{auth_user_id}},\n      \"passwd\":\"{{auth_passwd}}\",\n      \"surname\":\"\",\n      \"name\":\"{{auth_user}}\",\n      \"alias\":\"{{auth_user}}\",\n      \"theme\":\"default\",\n      \"lang\":\"en_GB\"\n}",
+			"descriptionFormat": null,
+			"description": "",
+			"headers": "Content-Type: application/json\n",
+			"method": "POST",
+			"pathVariables": {},
+			"url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/register",
+			"preRequestScript": null,
+			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"user added\"] = jsonData.status === 'ok';",
+			"currentHelper": "normal",
+			"helperAttributes": "{}",
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"pathVariableData": [],
+			"responses": [],
+			"collectionId": "b2114168-8995-24ff-4525-8f5089dfd3f2"
 		}
 	]
 }

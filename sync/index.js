@@ -47,11 +47,14 @@ const sync2NextCloud = async function() {
         try {
             result = await rp(options)
             results.push(result)
-            console.log(`sync user ${JSON.stringify(row)} from neo4j to nextcloud`)
+            console.log(`sync user ${row.alias} from neo4j to nextcloud`)
         }catch(error){
             errors.push(String(error))
         }
     }
+    let publicshare_results = await addPublicShare()
+    results.push(publicshare_results.results)
+    errors.push(publicshare_results.errors)
     return {results,errors};
 }
 

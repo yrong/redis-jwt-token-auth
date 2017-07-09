@@ -10,10 +10,15 @@ const LocalStrategy = passport_local.Strategy
 const log4js = require('log4js');
 
 passport.serializeUser(function(user, done) {
-    if(user.cn)
-        done(null,_.pick(user,['cn','dn']))
-    else
-        done(null, _.pick(user,['alias','category','name','passwd','userid','uuid']))
+    if(user.cn) {
+        user = _.pick(user, ['cn', 'dn'])
+    }
+    else{
+        user = _.pick(user, ['alias','category','name','passwd','userid','uuid'])
+    }
+    user.login_date = new Date().toISOString()
+    user.expiration_date = new Date(Date.now()+config.get('expiration')*1000).toISOString()
+    done(null, user)
 })
 
 passport.deserializeUser(function(user, done) {

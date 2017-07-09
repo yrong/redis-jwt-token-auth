@@ -8,6 +8,8 @@ features including:
 + local authentication by neo4j
 + ldap authentication
 + ldap account binding with local account
++ user provisioning api(register,login,logout,destroy)
++ sync user with [nextcloud-token-auth](https://github.com/yrong/nextcloud-token-auth) and add public share folder 
 + webpack wrapper
 
 
@@ -22,10 +24,16 @@ webpack&&cd build
 2. sync user from mysql to neo4j
 
 ```
-node sync.js
+SYNC_TYPE=mysql node sync.js
 ```
 
-3. start server
+3. sync user from neo4j to nextcloud
+
+```
+SYNC_TYPE=nextcloud node sync.js
+```
+
+4. start server
 
 ```
 node server.js

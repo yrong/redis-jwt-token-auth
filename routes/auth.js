@@ -96,4 +96,11 @@ router.put('/unassoc/:uuid', async(ctx, next) => {
     ctx.body = {}
 })
 
+router.get('/active_users',async(ctx,next)=>{
+    let results = await ctx.req.session.findAll()
+    ctx.body = _.map(results,(result)=>{
+        return result.passport.user
+    })
+})
+
 module.exports = router;
