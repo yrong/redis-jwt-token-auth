@@ -8,7 +8,7 @@
     "sync-mysql": "SYNC_TYPE=mysql node --harmony sync.js",
     "sync-nextcloud": "SYNC_TYPE=nextcloud node --harmony sync.js",
     "init": "/bin/bash ./script/init.sh",
-    "generate_simplified_postman_collection": "postman_simplify ./test/cmdb-auth.postman_collection.json ./test/cmdb-auth.postman_environment.json"
+    "generate_simplified_postman_collection": "postman_simplify ./test/auth.postman_collection.json"
   },
   "keywords": [
     "koa2-boilerplate",
@@ -81,7 +81,7 @@
     "mochawesome": "^1.5.1",
     "newman": "^3.4.2",
     "nodemon": "^1.10.0",
-    "postman_simplify": "^1.0.5",
+    "postman_simplify": "1.0.0-beta.1",
     "supertest": "^2.0.0",
     "webpack": "^2.2.1",
     "clean-webpack-plugin": "^0.1.16",

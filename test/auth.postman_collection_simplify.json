@@ -18,6 +18,17 @@
     }
   },
   {
+    "name": "search ldap user",
+    "method": "POST",
+    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/ldapsearch?token={{token}}",
+    "body": {
+      "base": "ou=users,dc=test,dc=com",
+      "options": {
+        "filter": "(objectclass=posixAccount)"
+      }
+    }
+  },
+  {
     "name": "check invalid token",
     "method": "POST",
     "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/check",
@@ -28,7 +39,7 @@
   {
     "name": "modify passwd",
     "method": "PUT",
-    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/userinfo/changepwd/{{auth_user_id}}",
+    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/changepwd/{{auth_user_id}}",
     "body": {
       "token": "{{token}}",
       "oldpwd": "{{auth_passwd}}",
@@ -54,9 +65,20 @@
     }
   },
   {
+    "name": "search ldap ou",
+    "method": "POST",
+    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/ldapsearch?token={{token}}",
+    "body": {
+      "base": "dc=test,dc=com",
+      "options": {
+        "filter": "(objectclass=organizationalUnit)"
+      }
+    }
+  },
+  {
     "name": "query User By userid",
     "method": "GET",
-    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/userinfo/1?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI5NmUxNTc2Zi0zN2Y5LTQzZDktYjk4OC02NDc4MWRkYWI2ZmMiLCJ1c2VyIjp7ImlkIjo2MDAsInBhc3N3ZCI6Im5lcmRzIiwic3VybmFtZSI6IiIsIm5hbWUiOiJuZXJkcyIsImFsaWFzIjoibmVyZHMiLCJ0aGVtZSI6ImRlZmF1bHQiLCJ0eXBlIjoxLCJsYW5nIjoiZW5fR0IiLCJjYXRlZ29yeSI6IlVzZXIiLCJhdHRlbXB0X2lwIjoiMTAuNTAuMTMuNjkiLCJ1c2VyaWQiOjEsInV1aWQiOjF9LCJpYXQiOjE0OTU5NDM0MzN9.-vZx-5EAx6JF0dxecHJf9UuWdyiuhucXiPU0xR9iB8U"
+    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/userinfo/{{auth_user_id}}?token={{token}}"
   },
   {
     "name": "assoc with ldap",
@@ -70,7 +92,7 @@
   {
     "name": "query active users",
     "method": "GET",
-    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/active_users?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI5NmUxNTc2Zi0zN2Y5LTQzZDktYjk4OC02NDc4MWRkYWI2ZmMiLCJ1c2VyIjp7ImlkIjo2MDAsInBhc3N3ZCI6Im5lcmRzIiwic3VybmFtZSI6IiIsIm5hbWUiOiJuZXJkcyIsImFsaWFzIjoibmVyZHMiLCJ0aGVtZSI6ImRlZmF1bHQiLCJ0eXBlIjoxLCJsYW5nIjoiZW5fR0IiLCJjYXRlZ29yeSI6IlVzZXIiLCJhdHRlbXB0X2lwIjoiMTAuNTAuMTMuNjkiLCJ1c2VyaWQiOjEsInV1aWQiOjF9LCJpYXQiOjE0OTU5NDM0MzN9.-vZx-5EAx6JF0dxecHJf9UuWdyiuhucXiPU0xR9iB8U"
+    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/active_users?token={{token}}"
   },
   {
     "name": "unassoc",
@@ -100,6 +122,16 @@
     "name": "clean",
     "method": "POST",
     "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/hidden/clean"
+  },
+  {
+    "name": "modify user alias",
+    "method": "PUT",
+    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/userinfo/{{auth_user_id}}",
+    "body": {
+      "token": "{{token}}",
+      "avatar": "/upload/avatar/ca92d560-05a6-11e7-98ba-e1d08df9a25f",
+      "per_page": 90
+    }
   },
   {
     "name": "check valid token",
@@ -138,7 +170,7 @@
   {
     "name": "query User",
     "method": "GET",
-    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/userinfo?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI5NmUxNTc2Zi0zN2Y5LTQzZDktYjk4OC02NDc4MWRkYWI2ZmMiLCJ1c2VyIjp7ImlkIjo2MDAsInBhc3N3ZCI6Im5lcmRzIiwic3VybmFtZSI6IiIsIm5hbWUiOiJuZXJkcyIsImFsaWFzIjoibmVyZHMiLCJ0aGVtZSI6ImRlZmF1bHQiLCJ0eXBlIjoxLCJsYW5nIjoiZW5fR0IiLCJjYXRlZ29yeSI6IlVzZXIiLCJhdHRlbXB0X2lwIjoiMTAuNTAuMTMuNjkiLCJ1c2VyaWQiOjEsInV1aWQiOjF9LCJpYXQiOjE0OTU5NDM0MzN9.-vZx-5EAx6JF0dxecHJf9UuWdyiuhucXiPU0xR9iB8U"
+    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/userinfo?token={{token}}"
   },
   {
     "name": "add user",

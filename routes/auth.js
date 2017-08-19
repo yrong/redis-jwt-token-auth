@@ -6,7 +6,6 @@ const passport = require('koa-passport')
 const Account = require('../models/account')
 const _ = require('lodash')
 
-
 router.post('/hidden/clean', async(ctx, next) => {
     await Account.destoryAll()
     ctx.body = {}
@@ -101,6 +100,12 @@ router.get('/active_users',async(ctx,next)=>{
     ctx.body = _.map(results,(result)=>{
         return result.passport.user
     })
+})
+
+router.post('/ldapsearch',async(ctx)=>{
+    let params = ctx.request.body
+    let items = await Account.searchLdap(params.base,params.options)
+    ctx.body = items
 })
 
 module.exports = router;

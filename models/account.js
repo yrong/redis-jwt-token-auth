@@ -84,7 +84,7 @@ Account.updateLocal2LdapAssoc = async (params)=>{
     if(!params.ldap_cn){
         throw new Error(`missing param ldap_user!`)
     }
-    let ldap_user = await ldap.searchUser(params.ldap_cn)
+    let ldap_user = await ldap.searchByUser(params.ldap_cn)
     let cql = `MERGE (n:LdapUser {cn: "${ldap_user.cn}"})
                                     ON CREATE SET n = {ldap_user}
                                     ON MATCH SET n = {ldap_user}`
@@ -113,6 +113,13 @@ Account.getLocalByLdap = async (ldap_user)=>{
                   RETURN u`
     let users = await db.queryCql(cypher)
     return users[0]
+}
+
+Account.searchLdap = async(base,options)=>{
+    options = options||{}
+    options.scope = options.scope || 'sub'
+    let items = await ldap.searchByFilter(base,options)
+    return items
 }
 
 module.exports = Account;
