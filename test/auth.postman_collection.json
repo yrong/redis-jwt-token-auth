@@ -276,12 +276,12 @@
 			"tests": "var jsonData = JSON.parse(responseBody);\n",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1503155646343,
+			"time": 1503416602268,
 			"name": "search ldap ou",
 			"description": "",
 			"collectionId": "b2114168-8995-24ff-4525-8f5089dfd3f2",
 			"responses": [],
-			"rawModeData": "{\n\t\"base\":\"dc=test,dc=com\",\n\t\"options\":{\n\t\t\"filter\": \"(objectclass=organizationalUnit)\"\n\t}\n}"
+			"rawModeData": "{\n\t\"base\":\"dc=test,dc=com\",\n\t\"options\":{\n\t\t\"filter\": \"(objectclass=posixGroup)\",\n\t\t\"paged\": {\n\t\t    \"pageSize\": 5,\n\t\t    \"page\":2\n\t\t  }\n\t}\n}"
 		},
 		{
 			"id": "8af7792e-69fa-74f3-e786-4a1ded983f35",

@@ -71,7 +71,11 @@
     "body": {
       "base": "dc=test,dc=com",
       "options": {
-        "filter": "(objectclass=organizationalUnit)"
+        "filter": "(objectclass=posixGroup)",
+        "paged": {
+          "pageSize": 5,
+          "page": 2
+        }
       }
     }
   },
