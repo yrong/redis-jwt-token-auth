@@ -8,7 +8,8 @@
     "sync-mysql": "SYNC_TYPE=mysql node --harmony sync.js",
     "sync-nextcloud": "SYNC_TYPE=nextcloud node --harmony sync.js",
     "init": "/bin/bash ./script/init.sh",
-    "generate_simplified_postman_collection": "postman_simplify ./test/auth.postman_collection.json"
+    "generate_simplified_postman_collection": "postman_simplify ./test/auth.postman_collection.json",
+    "build": "webpack"
   },
   "keywords": [
     "koa2-boilerplate",
