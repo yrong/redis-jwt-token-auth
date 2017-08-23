@@ -5,6 +5,8 @@ if(sync_type === 'mysql'){
     promise = sync.syncWithMysql()
 }else if(sync_type === 'nextcloud'){
     promise = sync.sync2NextCloud()
+}else if(sync_type === 'ldap'){
+    promise = sync.syncWithLdap()
 }
 promise.then((result)=>{
     console.timeEnd("migrationConsuming")

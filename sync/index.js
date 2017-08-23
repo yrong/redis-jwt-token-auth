@@ -2,7 +2,8 @@ const _ = require('lodash')
 const db = require('../lib/db')
 const config = require('config')
 const rp = require('request-promise')
-const webdav = require("webdav");
+const webdav = require("webdav")
+const Account = require('../models/account')
 
 const syncWithMysql = async function() {
     let rows = await db.querySql("SELECT * FROM users"),cypher,result,errors = [],results = []
@@ -151,6 +152,21 @@ const addPublicShare = async ()=>{
     return {results,errors};
 }
 
-module.exports = {syncWithMysql,sync2NextCloud,addPublicShare}
+const syncWithLdap = async function() {
+    let cypher = `MATCH (u:LdapUser) return u`
+    let result = await db.queryCql(cypher)
+    let user,ldap_user,results = []
+    for(user of result){
+        ldap_user = await Account.searchLdap(user.dn,{})
+        if(ldap_user&&ldap_user.length){
+            cypher = `MERGE (u:LdapUser{dn:'${user.dn}'}) ON CREATE SET u = {row} ON MATCH SET u = {row}`
+            result = await db.queryCql(cypher, {row: ldap_user[0]})
+            results.push(ldap_user[0])
+        }
+    }
+    return results
+}
+
+module.exports = {syncWithMysql,sync2NextCloud,syncWithLdap}
 
 
