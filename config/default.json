@@ -3,6 +3,7 @@
     "port":3002,
     "secret": "WEvHL/pbqX6qpqrcORwHQYWmNWnguxiaMEHd7eWnZB1toHzO",
     "expiration": 1800,
+    "perPageSize":1000,
     "logger":{
       "appenders": [
         {
@@ -42,6 +43,11 @@
         "bindDn": "cn=admin,dc=test,dc=com",
         "bindCredentials": "admin",
         "searchBase": "ou=users,dc=test,dc=com",
+        "departmentSearchBase": "dc=test,dc=com",
+        "userClass": "posixAccount",
+        "userAttributes":["dn","cn","uidNumber"],
+        "departmentClass":"posixGroup",
+        "departmentAttributes":["dn","cn","gidNumber"],
         "searchFilter": "(cn={{username}})",
         "reconnect": true
       }

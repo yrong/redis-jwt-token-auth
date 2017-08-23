@@ -5,6 +5,7 @@ const Log = require('log4js_wrapper')
 const logger = Log.getLogger()
 const _ = require('lodash')
 const ldap = require('../lib/ldap')
+const config = require('config')
 
 const Account = {}
 
@@ -119,6 +120,18 @@ Account.searchLdap = async(base,options)=>{
     options = options||{}
     options.scope = options.scope || 'sub'
     let items = await ldap.searchByFilter(base,options)
+    return items
+}
+
+Account.searchLdapPagination = async(base,objectclass,page_params,attributes)=>{
+    let options = {filter:`(objectclass=${objectclass})`,paged:{pageSize:config.get('perPageSize'),page:1}}
+    if(page_params.page)
+        options.paged.page = parseInt(page_params.page)
+    if(page_params.per_page)
+        options.paged.pageSize = parseInt(page_params.per_page)
+    if(attributes)
+        options.attributes = attributes
+    let items = await Account.searchLdap(base,options)
     return items
 }
 

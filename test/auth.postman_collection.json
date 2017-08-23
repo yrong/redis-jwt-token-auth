@@ -22,7 +22,9 @@
 		"a18f0342-ac4f-e681-dc6b-ca1560e0e306",
 		"0fdefe59-16c9-6733-4069-d737179ebb37",
 		"99669d68-055e-c6d7-b390-7a4a20e9d994",
+		"a953b4e6-bf51-a9b2-1104-6a5eb4a6d494",
 		"1aaef885-466d-5469-aae7-ae50c7f2ae22",
+		"bb259f97-2937-4a21-a65d-33983f4f0d9f",
 		"5ad868c2-3575-2b3b-b2ab-436da91f7a09"
 	],
 	"folders": [],
@@ -121,7 +123,7 @@
 			"currentHelper": "normal",
 			"helperAttributes": {},
 			"time": 1503155651635,
-			"name": "search ldap user",
+			"name": "search ldap user advanced",
 			"description": "",
 			"collectionId": "b2114168-8995-24ff-4525-8f5089dfd3f2",
 			"responses": [],
@@ -277,7 +279,7 @@
 			"currentHelper": "normal",
 			"helperAttributes": {},
 			"time": 1503416602268,
-			"name": "search ldap ou",
+			"name": "search ldap department advanced",
 			"description": "",
 			"collectionId": "b2114168-8995-24ff-4525-8f5089dfd3f2",
 			"responses": [],
@@ -400,6 +402,56 @@
 			"rawModeData": "{\n   \"token\":\"{{token}}\"\n}"
 		},
 		{
+			"id": "a953b4e6-bf51-a9b2-1104-6a5eb4a6d494",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/enterprise/users?token={{token}}&page=1&per_page=5",
+			"queryParams": [
+				{
+					"key": "token",
+					"value": "{{token}}",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "page",
+					"value": "1",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "per_page",
+					"value": "5",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				}
+			],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "GET",
+			"data": [],
+			"dataMode": "params",
+			"tests": "var jsonData = JSON.parse(responseBody);\n",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1503477685240,
+			"name": "search ldap user",
+			"description": "",
+			"collectionId": "b2114168-8995-24ff-4525-8f5089dfd3f2",
+			"responses": []
+		},
+		{
 			"folder": null,
 			"id": "b20c7c85-42a8-556f-0e0a-45c67adf774a",
 			"name": "add user 1",
@@ -428,6 +480,57 @@
 			"pathVariableData": [],
 			"responses": [],
 			"collectionId": "b2114168-8995-24ff-4525-8f5089dfd3f2"
+		},
+		{
+			"id": "bb259f97-2937-4a21-a65d-33983f4f0d9f",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/enterprise/departments?token={{token}}&page=1&per_page=5",
+			"queryParams": [
+				{
+					"key": "token",
+					"value": "{{token}}",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "page",
+					"value": "1",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "per_page",
+					"value": "5",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				}
+			],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "GET",
+			"data": [],
+			"dataMode": "raw",
+			"tests": "var jsonData = JSON.parse(responseBody);\n",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1503477667564,
+			"name": "search ldap department",
+			"description": "",
+			"collectionId": "b2114168-8995-24ff-4525-8f5089dfd3f2",
+			"responses": [],
+			"rawModeData": "{\n\t\"base\":\"dc=test,dc=com\",\n\t\"options\":{\n\t\t\"filter\": \"(objectclass=posixGroup)\",\n\t\t\"paged\": {\n\t\t    \"pageSize\": 5,\n\t\t    \"page\":2\n\t\t  }\n\t}\n}"
 		},
 		{
 			"folder": null,

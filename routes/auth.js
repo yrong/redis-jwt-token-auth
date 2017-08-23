@@ -5,6 +5,8 @@ const router = new Router();
 const passport = require('koa-passport')
 const Account = require('../models/account')
 const _ = require('lodash')
+const config = require('config')
+const ldap_config = config.get('ldap.server')
 
 router.post('/hidden/clean', async(ctx, next) => {
     await Account.destoryAll()
@@ -105,6 +107,18 @@ router.get('/active_users',async(ctx,next)=>{
 router.post('/ldapsearch',async(ctx)=>{
     let params = ctx.request.body
     let items = await Account.searchLdap(params.base,params.options)
+    ctx.body = items
+})
+
+router.get('/enterprise/users',async(ctx)=>{
+    let paged_params = _.assign({},ctx.params,ctx.query,ctx.request.body)
+    let items = await Account.searchLdapPagination(ldap_config.searchBase,ldap_config.userClass,paged_params,ldap_config.userAttributes)
+    ctx.body = items
+})
+
+router.get('/enterprise/departments',async(ctx)=>{
+    let paged_params = _.assign({},ctx.params,ctx.query,ctx.request.body)
+    let items = await Account.searchLdapPagination(ldap_config.departmentSearchBase,ldap_config.departmentClass,paged_params,ldap_config.departmentAttributes)
     ctx.body = items
 })
 

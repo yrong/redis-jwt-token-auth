@@ -18,7 +18,7 @@
     }
   },
   {
-    "name": "search ldap user",
+    "name": "search ldap user advanced",
     "method": "POST",
     "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/ldapsearch?token={{token}}",
     "body": {
@@ -65,7 +65,7 @@
     }
   },
   {
-    "name": "search ldap ou",
+    "name": "search ldap department advanced",
     "method": "POST",
     "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/ldapsearch?token={{token}}",
     "body": {
@@ -107,6 +107,11 @@
     }
   },
   {
+    "name": "search ldap user",
+    "method": "GET",
+    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/enterprise/users?token={{token}}&page=1&per_page=5"
+  },
+  {
     "name": "add user 1",
     "method": "POST",
     "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/register",
@@ -120,6 +125,21 @@
       "alias": "nerds",
       "theme": "default",
       "lang": "en_GB"
+    }
+  },
+  {
+    "name": "search ldap department",
+    "method": "GET",
+    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/enterprise/departments?token={{token}}&page=1&per_page=5",
+    "body": {
+      "base": "dc=test,dc=com",
+      "options": {
+        "filter": "(objectclass=posixGroup)",
+        "paged": {
+          "pageSize": 5,
+          "page": 2
+        }
+      }
     }
   },
   {
