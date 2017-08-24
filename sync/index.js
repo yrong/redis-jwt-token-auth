@@ -153,13 +153,14 @@ const addPublicShare = async ()=>{
 }
 
 const syncWithLdap = async function() {
+    let uuid_type = config.get('ldap.server.uuid_type')
     let cypher = `MATCH (u:LdapUser) return u`
     let result = await db.queryCql(cypher)
     let user,ldap_user,results = []
     for(user of result){
-        ldap_user = await Account.searchLdap(user.dn,{})
+        ldap_user = await Account.searchLdap(user[uuid_type],{})
         if(ldap_user&&ldap_user.length){
-            cypher = `MERGE (u:LdapUser{dn:'${user.dn}'}) ON CREATE SET u = {row} ON MATCH SET u = {row}`
+            cypher = `MERGE (u:LdapUser{${uuid_type}:'${user[uuid_type]}'}) ON CREATE SET u = {row} ON MATCH SET u = {row}`
             result = await db.queryCql(cypher, {row: ldap_user[0]})
             results.push(ldap_user[0])
         }

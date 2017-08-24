@@ -48,6 +48,7 @@
         "userAttributes":["dn","cn","uidNumber"],
         "departmentClass":"posixGroup",
         "departmentAttributes":["dn","cn","gidNumber"],
+        "uuid_type":"dn",
         "searchFilter": "(cn={{username}})",
         "reconnect": true
       }
