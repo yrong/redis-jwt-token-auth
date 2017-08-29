@@ -6,7 +6,7 @@ const logger = Log.getLogger()
 const _ = require('lodash')
 const ldap = require('../lib/ldap')
 const config = require('config')
-
+const acl = require('../lib/acl')
 const Account = {}
 
 Account.findOne = async function (uuid) {
@@ -81,7 +81,6 @@ Account.updateInfo = async (params)=>{
 }
 
 Account.updateLocal2LdapAssoc = async (params)=>{
-    let account = await getUser(params)
     if(!params.ldap_cn){
         throw new Error(`missing param ldap_user!`)
     }
@@ -95,7 +94,7 @@ Account.updateLocal2LdapAssoc = async (params)=>{
     await db.queryCql(delRelsExistInUser_cypher)
     let addUser2LdapUserRel_cypher = `MATCH (u:User{uuid:${params.uuid}})
                                     MATCH (l:LdapUser {cn:"${ldap_user.cn}"})
-                                    CREATE (u)-[r:Assoc]->(l)`
+                                    CREATE (u)-[:Assoc]->(l)`
     await db.queryCql(addUser2LdapUserRel_cypher)
 }
 

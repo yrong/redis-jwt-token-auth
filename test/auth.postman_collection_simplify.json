@@ -10,6 +10,30 @@
     }
   },
   {
+    "name": "add role member",
+    "method": "POST",
+    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/role?token={{token}}",
+    "body": {
+      "name": "member",
+      "allows": [
+        {
+          "resources": "own",
+          "permissions": [
+            "UPDATE",
+            "DELETE"
+          ]
+        },
+        {
+          "resources": "*",
+          "permissions": [
+            "CREATE",
+            "READ"
+          ]
+        }
+      ]
+    }
+  },
+  {
     "name": "logout",
     "method": "POST",
     "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/logout",
@@ -37,6 +61,11 @@
     }
   },
   {
+    "name": "delete role already used failed",
+    "method": "DELETE",
+    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/role/member?token={{token}}"
+  },
+  {
     "name": "modify passwd",
     "method": "PUT",
     "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/changepwd/{{auth_user_id}}",
@@ -54,6 +83,11 @@
       "username": "test1",
       "password": "test"
     }
+  },
+  {
+    "name": "query role",
+    "method": "GET",
+    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/role/member?token={{token}}"
   },
   {
     "name": "login with wrong passwd",
@@ -94,6 +128,16 @@
     }
   },
   {
+    "name": "bind role to user",
+    "method": "PUT",
+    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/assocRole/{{auth_user_id}}?token={{token}}",
+    "body": {
+      "roles": [
+        "member"
+      ]
+    }
+  },
+  {
     "name": "query active users",
     "method": "GET",
     "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/active_users?token={{token}}"
@@ -112,17 +156,22 @@
     "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/enterprise/users?token={{token}}&page=1&per_page=5"
   },
   {
-    "name": "add user 1",
+    "name": "query roles",
+    "method": "GET",
+    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/role?token={{token}}"
+  },
+  {
+    "name": "add user superadmin",
     "method": "POST",
     "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/register",
     "body": {
       "type": 1,
       "attempt_ip": "10.50.13.65",
       "userid": 200,
-      "passwd": "nerds",
+      "passwd": "alibaba",
       "surname": "",
-      "name": "nerds",
-      "alias": "nerds",
+      "name": "superadmin",
+      "alias": "superadmin",
       "theme": "default",
       "lang": "en_GB"
     }
@@ -166,11 +215,17 @@
     }
   },
   {
-    "name": "delete user 1",
+    "name": "add role admin",
     "method": "POST",
-    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/unregister/200",
+    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/role?token={{token}}",
     "body": {
-      "token": "{{token}}"
+      "name": "admin",
+      "allows": [
+        {
+          "resources": "*",
+          "permissions": "*"
+        }
+      ]
     }
   },
   {
@@ -210,6 +265,22 @@
       "alias": "{{auth_user}}",
       "theme": "default",
       "lang": "en_GB"
+    }
+  },
+  {
+    "name": "add role guest",
+    "method": "POST",
+    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/role?token={{token}}",
+    "body": {
+      "name": "guest",
+      "allows": [
+        {
+          "resources": "*",
+          "permissions": [
+            "read"
+          ]
+        }
+      ]
     }
   }
 ]

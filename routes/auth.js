@@ -7,6 +7,7 @@ const Account = require('../models/account')
 const _ = require('lodash')
 const config = require('config')
 const ldap_config = config.get('ldap.server')
+const Role = require('../models/role')
 
 router.post('/hidden/clean', async(ctx, next) => {
     await Account.destoryAll()
@@ -65,13 +66,14 @@ router.post('/logout', async(ctx, next) => {
 });
 
 router.post('/check', async(ctx, next) => {
-    let user_passport = await ctx.req.session.reload(),local_user,token=ctx.request.body.token
+    let user_passport = await ctx.req.session.reload(),local_user,token=ctx.request.body.token,url=ctx.request.body.url,result
     if(user_passport&&user_passport.passport&&user_passport.passport.user&&user_passport.passport.user.cn){
         local_user = await Account.getLocalByLdap(user_passport.passport.user)
-        ctx.body = {token: token,local:local_user,ldap:user_passport.passport.user}
+        result = {token: token,local:local_user,ldap:user_passport.passport.user}
     }else{
-        ctx.body = {token:token,local:user_passport.passport.user}
+        result = {token:token,local:user_passport.passport.user}
     }
+    ctx.body = result
 })
 
 router.put('/changepwd/:uuid', async(ctx, next) => {
@@ -120,6 +122,25 @@ router.get('/enterprise/departments',async(ctx)=>{
     let paged_params = _.assign({},ctx.params,ctx.query,ctx.request.body)
     let items = await Account.searchLdapPagination(ldap_config.departmentSearchBase,ldap_config.departmentClass,paged_params,ldap_config.departmentAttributes)
     ctx.body = items
+})
+
+router.post('/role', async(ctx, next) => {
+    let params = ctx.request.body
+    await Role.addOrUpdate(params)
+    ctx.body = {}
+})
+
+router.get('/role/:name', async(ctx, next) => {
+    ctx.body = await Role.findOne(ctx.params.name)
+})
+
+router.get('/role', async(ctx, next) => {
+    ctx.body = await Role.findAll()
+})
+
+router.del('/role/:name', async(ctx, next) => {
+    await Role.destory(ctx.params.name)
+    ctx.body = {}
 })
 
 module.exports = router;

@@ -6,8 +6,14 @@
 		"c2a419c2-0059-e332-5c79-0ee479b055e8",
 		"fbce4389-0256-4aa7-b821-5c782298f99f",
 		"eadd274e-4e3a-af91-bad0-17ebc3a02437",
+		"fee74662-72e1-e774-697a-11f4e26b5979",
+		"0d833e8e-874d-c569-750c-2694fd64aa01",
+		"da613e93-d39d-2d65-6218-d751f9dc3afc",
+		"94c84808-de13-5510-507c-8fccc1d03eee",
+		"555318b6-2d9d-e267-1039-4f373baad5ee",
+		"ae2d0733-55da-3f9d-d2ce-0ad7202b3c80",
+		"219cd54a-4e37-1331-a692-b5cf755a25f3",
 		"b20c7c85-42a8-556f-0e0a-45c67adf774a",
-		"e25d356a-cc2f-56e6-79d6-6ce3583421d3",
 		"e8f84069-a4f3-ab7b-270d-061ee72a6c43",
 		"ee8e1fc7-8f8c-288e-489c-09c5b2ee1b58",
 		"8af7792e-69fa-74f3-e786-4a1ded983f35",
@@ -61,6 +67,43 @@
 			"collectionId": "b2114168-8995-24ff-4525-8f5089dfd3f2",
 			"responses": [],
 			"rawModeData": "{\n   \"token\":\"{{token}}\",\n  \"avatar\":\"/upload/avatar/ca92d560-05a6-11e7-98ba-e1d08df9a25f\",\n  \"per_page\":90\n}"
+		},
+		{
+			"id": "0d833e8e-874d-c569-750c-2694fd64aa01",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/role?token={{token}}",
+			"queryParams": [
+				{
+					"key": "token",
+					"value": "{{token}}",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				}
+			],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"role added\"] = jsonData.status === 'ok';",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1503829480132,
+			"name": "add role member",
+			"description": "",
+			"collectionId": "b2114168-8995-24ff-4525-8f5089dfd3f2",
+			"responses": [],
+			"rawModeData": "{\n      \"name\":\"member\",\n     \"allows\":[{\"resources\":\"own\",\"permissions\":[\"UPDATE\",\"DELETE\"]},{\"resources\":\"*\",\"permissions\":[\"CREATE\",\"READ\"]}]\n}"
 		},
 		{
 			"folder": null,
@@ -160,6 +203,35 @@
 			"collectionId": "b2114168-8995-24ff-4525-8f5089dfd3f2"
 		},
 		{
+			"id": "219cd54a-4e37-1331-a692-b5cf755a25f3",
+			"headers": "",
+			"headerData": [],
+			"url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/role/member?token={{token}}",
+			"queryParams": [
+				{
+					"key": "token",
+					"value": "{{token}}",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				}
+			],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "DELETE",
+			"data": null,
+			"dataMode": "params",
+			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"role delete failed\"] = jsonData.status === 'error'",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1504018430146,
+			"name": "delete role already used failed",
+			"description": "",
+			"collectionId": "b2114168-8995-24ff-4525-8f5089dfd3f2",
+			"responses": []
+		},
+		{
 			"id": "50ff2906-e2cd-7d4a-fcce-7747485d7772",
 			"headers": "Content-Type: application/json\n",
 			"headerData": [
@@ -217,6 +289,35 @@
 			"pathVariableData": [],
 			"responses": [],
 			"collectionId": "b2114168-8995-24ff-4525-8f5089dfd3f2"
+		},
+		{
+			"id": "555318b6-2d9d-e267-1039-4f373baad5ee",
+			"headers": "",
+			"headerData": [],
+			"url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/role/member?token={{token}}",
+			"queryParams": [
+				{
+					"key": "token",
+					"value": "{{token}}",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				}
+			],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "GET",
+			"data": null,
+			"dataMode": "params",
+			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"at least one user found\"] = jsonData.data.length >=1",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1503896879779,
+			"name": "query role",
+			"description": "",
+			"collectionId": "b2114168-8995-24ff-4525-8f5089dfd3f2",
+			"responses": []
 		},
 		{
 			"folder": null,
@@ -344,6 +445,43 @@
 			"rawModeData": "{\n   \"token\":\"{{token}}\",\n   \"ldap_cn\":\"{{auth_ldap_user}}\"\n}"
 		},
 		{
+			"id": "94c84808-de13-5510-507c-8fccc1d03eee",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/assocRole/{{auth_user_id}}?token={{token}}",
+			"queryParams": [
+				{
+					"key": "token",
+					"value": "{{token}}",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				}
+			],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "PUT",
+			"data": [],
+			"dataMode": "raw",
+			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"user added\"] = jsonData.status === 'ok';",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1504018258080,
+			"name": "bind role to user",
+			"description": "",
+			"collectionId": "b2114168-8995-24ff-4525-8f5089dfd3f2",
+			"responses": [],
+			"rawModeData": "{\n      \"roles\":[\"member\"]\n}"
+		},
+		{
 			"id": "99669d68-055e-c6d7-b390-7a4a20e9d994",
 			"headers": "",
 			"headerData": [],
@@ -452,23 +590,37 @@
 			"responses": []
 		},
 		{
-			"folder": null,
-			"id": "b20c7c85-42a8-556f-0e0a-45c67adf774a",
-			"name": "add user 1",
-			"dataMode": "raw",
-			"data": [],
-			"rawModeData": "{\n      \"type\":1,\n      \"attempt_ip\":\"10.50.13.65\",\n      \"userid\":200,\n      \"passwd\":\"nerds\",\n      \"surname\":\"\",\n      \"name\":\"nerds\",\n      \"alias\":\"nerds\",\n      \"theme\":\"default\",\n      \"lang\":\"en_GB\"\n}",
-			"descriptionFormat": null,
-			"description": "",
-			"headers": "Content-Type: application/json\n",
-			"method": "POST",
-			"pathVariables": {},
-			"url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/register",
+			"id": "ae2d0733-55da-3f9d-d2ce-0ad7202b3c80",
+			"headers": "",
+			"headerData": [],
+			"url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/role?token={{token}}",
+			"queryParams": [
+				{
+					"key": "token",
+					"value": "{{token}}",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				}
+			],
 			"preRequestScript": null,
-			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"user added\"] = jsonData.status === 'ok';",
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "GET",
+			"data": null,
+			"dataMode": "params",
+			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"at least one user found\"] = jsonData.data.length >=1",
 			"currentHelper": "normal",
-			"helperAttributes": "{}",
-			"queryParams": [],
+			"helperAttributes": {},
+			"time": 1503837031358,
+			"name": "query roles",
+			"description": "",
+			"collectionId": "b2114168-8995-24ff-4525-8f5089dfd3f2",
+			"responses": []
+		},
+		{
+			"id": "b20c7c85-42a8-556f-0e0a-45c67adf774a",
+			"headers": "Content-Type: application/json\n",
 			"headerData": [
 				{
 					"key": "Content-Type",
@@ -477,9 +629,23 @@
 					"enabled": true
 				}
 			],
+			"url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/register",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
 			"pathVariableData": [],
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"user added\"] = jsonData.status === 'ok';",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1503896568784,
+			"name": "add user superadmin",
+			"description": "",
+			"collectionId": "b2114168-8995-24ff-4525-8f5089dfd3f2",
 			"responses": [],
-			"collectionId": "b2114168-8995-24ff-4525-8f5089dfd3f2"
+			"rawModeData": "{\n      \"type\":1,\n      \"attempt_ip\":\"10.50.13.65\",\n      \"userid\":200,\n      \"passwd\":\"alibaba\",\n      \"surname\":\"\",\n      \"name\":\"superadmin\",\n      \"alias\":\"superadmin\",\n      \"theme\":\"default\",\n      \"lang\":\"en_GB\"\n}"
 		},
 		{
 			"id": "bb259f97-2937-4a21-a65d-33983f4f0d9f",
@@ -624,23 +790,8 @@
 			"collectionId": "b2114168-8995-24ff-4525-8f5089dfd3f2"
 		},
 		{
-			"folder": null,
-			"id": "e25d356a-cc2f-56e6-79d6-6ce3583421d3",
-			"name": "delete user 1",
-			"dataMode": "raw",
-			"data": [],
-			"rawModeData": "{\n  \"token\":\"{{token}}\"\n}",
-			"descriptionFormat": null,
-			"description": "",
+			"id": "da613e93-d39d-2d65-6218-d751f9dc3afc",
 			"headers": "Content-Type: application/json\n",
-			"method": "POST",
-			"pathVariables": {},
-			"url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/unregister/200",
-			"preRequestScript": null,
-			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"user deleted\"] = jsonData.status === 'ok';",
-			"currentHelper": "normal",
-			"helperAttributes": "{}",
-			"queryParams": [],
 			"headerData": [
 				{
 					"key": "Content-Type",
@@ -649,9 +800,31 @@
 					"enabled": true
 				}
 			],
+			"url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/role?token={{token}}",
+			"queryParams": [
+				{
+					"key": "token",
+					"value": "{{token}}",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				}
+			],
+			"preRequestScript": null,
+			"pathVariables": {},
 			"pathVariableData": [],
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"role added\"] = jsonData.status === 'ok';",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1504015602546,
+			"name": "add role admin",
+			"description": "",
+			"collectionId": "b2114168-8995-24ff-4525-8f5089dfd3f2",
 			"responses": [],
-			"collectionId": "b2114168-8995-24ff-4525-8f5089dfd3f2"
+			"rawModeData": "{\n      \"name\":\"admin\",\n     \"allows\":[{\"resources\":\"*\",\"permissions\":\"*\"}]\n}"
 		},
 		{
 			"folder": null,
@@ -771,6 +944,43 @@
 			"pathVariableData": [],
 			"responses": [],
 			"collectionId": "b2114168-8995-24ff-4525-8f5089dfd3f2"
+		},
+		{
+			"id": "fee74662-72e1-e774-697a-11f4e26b5979",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/role?token={{token}}",
+			"queryParams": [
+				{
+					"key": "token",
+					"value": "{{token}}",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				}
+			],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"role added\"] = jsonData.status === 'ok';",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1503846140498,
+			"name": "add role guest",
+			"description": "",
+			"collectionId": "b2114168-8995-24ff-4525-8f5089dfd3f2",
+			"responses": [],
+			"rawModeData": "{\n      \"name\":\"guest\",\n     \"allows\":[{\"resources\":\"*\",\"permissions\":[\"read\"]}]\n}"
 		}
 	]
 }
