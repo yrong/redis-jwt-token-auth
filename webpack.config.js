@@ -21,7 +21,6 @@ var entry = {server:'./app.js',sync:'./sync.js'}
 var packages = [
     {from:'config',to:'config'},
     {from:'public',to:'public'},
-    {from:'views',to:'views'},
     {from:'test/*.json'},
     {from:'node_modules',to:'node_modules'}
 ]
