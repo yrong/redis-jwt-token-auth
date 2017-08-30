@@ -168,6 +168,10 @@ const syncWithLdap = async function() {
     return results
 }
 
-module.exports = {syncWithMysql,sync2NextCloud,syncWithLdap}
+const syncAcl = async function() {
+    await Account.syncAcl()
+}
+
+module.exports = {syncWithMysql,sync2NextCloud,syncWithLdap,syncAcl}
 
 

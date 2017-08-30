@@ -143,4 +143,13 @@ router.del('/role/:name', async(ctx, next) => {
     ctx.body = {}
 })
 
+router.put('/assocRole/:uuid', async(ctx, next) => {
+    let params = _.merge({},ctx.params,ctx.request.body)
+    if(!params.uuid||!params.roles)
+        throw new Error('assoc role missing params')
+    await Account.updateRole(params)
+    await ctx.req.session.deleteByUserId(params.uuid)
+    ctx.body = {}
+})
+
 module.exports = router;

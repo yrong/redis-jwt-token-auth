@@ -134,4 +134,48 @@ Account.searchLdapPagination = async(base,objectclass,page_params,attributes)=>{
     return items
 }
 
+Account.syncAcl = async()=>{
+    await acl.backend.cleanAsync()
+    let roles = await db.queryCql(`MATCH (r:Role) return r`)
+    for(let role of roles){
+        role.allows = JSON.parse(role.allows)
+        for(let allow of role.allows){
+            acl.allow(role.name,allow.resources,allow.permissions)
+        }
+        if(role.inherits){
+            acl.addRoleParents(role.name, role.inherits)
+        }
+    }
+    let accounts = await db.queryCql(`MATCH (u:User) return u`);
+    for(let account of accounts){
+        if(account.roles){
+            acl.addUserRoles(account.uuid,account.roles)
+        }
+    }
+}
+
+Account.updateRole = async (params)=>{
+    let delRoleRelsExistInUser_cypher = `MATCH (u:User{uuid: ${params.uuid}})-[r:AssocRole]-()
+                                    DELETE r`
+    await db.queryCql(delRoleRelsExistInUser_cypher)
+    let addUserRoleRel_cypher = `MATCH (u:User{uuid:${params.uuid}})
+                                    UNWIND {roles} AS role_name
+                                    MATCH (r:Role {name:role_name})
+                                    CREATE (u)-[:AssocRole]->(r)`
+    await db.queryCql(addUserRoleRel_cypher,params)
+    let addUserRoleProperty_cypher = `MATCH (u:User{uuid:${params.uuid}})
+                                    SET u.roles = {roles}`
+    await db.queryCql(addUserRoleProperty_cypher,params)
+    let promise = new Promise((resolve,reject)=>{
+        acl.userRoles(params.uuid,(err,roles)=>{
+            acl.removeUserRoles(params.uuid,roles,(err,res)=>{
+                acl.addUserRoles(params.uuid,params.roles,(err,res)=>{
+                    resolve(res)
+                })
+            })
+        })
+    })
+    await Promise.resolve(promise)
+}
+
 module.exports = Account;
