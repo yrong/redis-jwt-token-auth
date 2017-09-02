@@ -10,6 +10,7 @@ Role.findOne = async function (name) {
         throw new Error(`user with ${name} not exist!`)
     }
     roles[0].allows = JSON.parse(roles[0].allows)
+    roles[0].additional = JSON.parse(roles[0].additional)
     roles[0] = _.omit(roles[0],['id'])
     return roles[0]
 }
@@ -18,6 +19,7 @@ Role.findAll = async function () {
     let roles = await db.queryCql(`MATCH (n:Role) return n`);
     roles = _.map(roles,(role)=>{
         role.allows = JSON.parse(role.allows)
+        role.additional = JSON.parse(role.additional)
         role = _.omit(role,['id'])
         return role
     })
@@ -35,6 +37,7 @@ Role.addOrUpdate = async function(params) {
     if(params.inherits)
         acl.addRoleParents(params.name, params.inherits)
     params.allows = JSON.stringify(params.allows)
+    params.additional = JSON.stringify(params.additional)
     let cypher_params = {name:params.name,fields:params}
     let cypher = `MERGE (n:Role {name: {name}})
     ON CREATE SET n = {fields}

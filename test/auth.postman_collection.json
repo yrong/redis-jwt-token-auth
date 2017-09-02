@@ -80,6 +80,7 @@
 				}
 			],
 			"url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/role?token={{token}}",
+			"folder": null,
 			"queryParams": [
 				{
 					"key": "token",
@@ -98,12 +99,12 @@
 			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"role added\"] = jsonData.status === 'ok';",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1503829480132,
-			"name": "add role member",
+			"time": 1504318172359,
+			"name": "add role contributor",
 			"description": "",
 			"collectionId": "b2114168-8995-24ff-4525-8f5089dfd3f2",
 			"responses": [],
-			"rawModeData": "{\n      \"name\":\"member\",\n     \"allows\":[{\"resources\":\"own\",\"permissions\":[\"UPDATE\",\"DELETE\"]},{\"resources\":\"*\",\"permissions\":[\"CREATE\",\"READ\"]}]\n}"
+			"rawModeData": "{\n      \"name\":\"contributor\",\n     \"allows\":[{\"resources\":\"own\",\"permissions\":[\"UPDATE\",\"DELETE\"]},{\"resources\":\"*\",\"permissions\":[\"CREATE\",\"READ\"]}],\n     \"additional\":{\"menus\":[\"menu1\",\"menu3\"]}\n}"
 		},
 		{
 			"folder": null,
@@ -294,7 +295,7 @@
 			"id": "555318b6-2d9d-e267-1039-4f373baad5ee",
 			"headers": "",
 			"headerData": [],
-			"url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/role/member?token={{token}}",
+			"url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/role/contributor?token={{token}}",
 			"queryParams": [
 				{
 					"key": "token",
@@ -313,7 +314,7 @@
 			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"at least one user found\"] = jsonData.data.length >=1",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1503896879779,
+			"time": 1504318245299,
 			"name": "query role",
 			"description": "",
 			"collectionId": "b2114168-8995-24ff-4525-8f5089dfd3f2",
@@ -474,12 +475,12 @@
 			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"user added\"] = jsonData.status === 'ok';",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1504018258080,
+			"time": 1504318208842,
 			"name": "bind role to user",
 			"description": "",
 			"collectionId": "b2114168-8995-24ff-4525-8f5089dfd3f2",
 			"responses": [],
-			"rawModeData": "{\n      \"roles\":[\"member\"]\n}"
+			"rawModeData": "{\n      \"roles\":[\"contributor\"]\n}"
 		},
 		{
 			"id": "99669d68-055e-c6d7-b390-7a4a20e9d994",
@@ -801,6 +802,7 @@
 				}
 			],
 			"url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/role?token={{token}}",
+			"folder": null,
 			"queryParams": [
 				{
 					"key": "token",
@@ -819,12 +821,12 @@
 			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"role added\"] = jsonData.status === 'ok';",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1504015602546,
-			"name": "add role admin",
+			"time": 1504318185970,
+			"name": "add role superAdmin",
 			"description": "",
 			"collectionId": "b2114168-8995-24ff-4525-8f5089dfd3f2",
 			"responses": [],
-			"rawModeData": "{\n      \"name\":\"admin\",\n     \"allows\":[{\"resources\":\"*\",\"permissions\":\"*\"}]\n}"
+			"rawModeData": "{\n      \"name\":\"superAdmin\",\n     \"allows\":[{\"resources\":\"*\",\"permissions\":\"*\"}],\n     \"additional\":{\"menus\":[\"menu2\",\"menu3\"]}\n}"
 		},
 		{
 			"folder": null,
@@ -957,6 +959,7 @@
 				}
 			],
 			"url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/role?token={{token}}",
+			"folder": null,
 			"queryParams": [
 				{
 					"key": "token",
@@ -975,12 +978,12 @@
 			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"role added\"] = jsonData.status === 'ok';",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1503846140498,
-			"name": "add role guest",
+			"time": 1504318139326,
+			"name": "add role viewer",
 			"description": "",
 			"collectionId": "b2114168-8995-24ff-4525-8f5089dfd3f2",
 			"responses": [],
-			"rawModeData": "{\n      \"name\":\"guest\",\n     \"allows\":[{\"resources\":\"*\",\"permissions\":[\"read\"]}]\n}"
+			"rawModeData": "{\n      \"name\":\"viewer\",\n     \"allows\":[{\"resources\":\"*\",\"permissions\":[\"read\"]}],\n     \"additional\":{\"menus\":[\"menu1\",\"menu2\"]}\n}"
 		}
 	]
 }

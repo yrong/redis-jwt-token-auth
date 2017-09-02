@@ -10,11 +10,11 @@
     }
   },
   {
-    "name": "add role member",
+    "name": "add role contributor",
     "method": "POST",
     "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/role?token={{token}}",
     "body": {
-      "name": "member",
+      "name": "contributor",
       "allows": [
         {
           "resources": "own",
@@ -30,7 +30,13 @@
             "READ"
           ]
         }
-      ]
+      ],
+      "additional": {
+        "menus": [
+          "menu1",
+          "menu3"
+        ]
+      }
     }
   },
   {
@@ -87,7 +93,7 @@
   {
     "name": "query role",
     "method": "GET",
-    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/role/member?token={{token}}"
+    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/role/contributor?token={{token}}"
   },
   {
     "name": "login with wrong passwd",
@@ -133,7 +139,7 @@
     "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/assocRole/{{auth_user_id}}?token={{token}}",
     "body": {
       "roles": [
-        "member"
+        "contributor"
       ]
     }
   },
@@ -215,17 +221,23 @@
     }
   },
   {
-    "name": "add role admin",
+    "name": "add role superAdmin",
     "method": "POST",
     "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/role?token={{token}}",
     "body": {
-      "name": "admin",
+      "name": "superAdmin",
       "allows": [
         {
           "resources": "*",
           "permissions": "*"
         }
-      ]
+      ],
+      "additional": {
+        "menus": [
+          "menu2",
+          "menu3"
+        ]
+      }
     }
   },
   {
@@ -268,11 +280,11 @@
     }
   },
   {
-    "name": "add role guest",
+    "name": "add role viewer",
     "method": "POST",
     "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/role?token={{token}}",
     "body": {
-      "name": "guest",
+      "name": "viewer",
       "allows": [
         {
           "resources": "*",
@@ -280,7 +292,13 @@
             "read"
           ]
         }
-      ]
+      ],
+      "additional": {
+        "menus": [
+          "menu1",
+          "menu2"
+        ]
+      }
     }
   }
 ]
