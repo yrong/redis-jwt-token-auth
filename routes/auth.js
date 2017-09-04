@@ -35,13 +35,27 @@ router.post('/unregister/:uuid', async(ctx, next) => {
     ctx.body = {}
 });
 
+const mapUserRoles = async (user)=>{
+    let roles = [];
+    user = _.omit(user,['passwd'])
+    if(user.roles){
+        for(let role of user.roles){
+            role = await Role.findOne(role)
+            roles.push(role)
+        }
+        user.roles = roles
+    }
+    return user
+}
+
 router.post('/login', async(ctx, next) => {
     await passport.authenticate('local',async(user, info) => {
         if(!user)
             ctx.throw('login failed',401)
         await ctx.login(user);
         let token = await ctx.req.session.create(ctx.req.session.passport);
-        ctx.body = {token: token,local:_.omit(user,['passwd'])};
+        let local_user = await mapUserRoles(user)
+        ctx.body = {token: token,local:local_user};
     })(ctx, next)
 });
 
@@ -52,7 +66,8 @@ router.post('/login-ldap', async (ctx, next) => {
             await ctx.login(user);
             let token = await ctx.req.session.create(ctx.req.session.passport);
             let local_user = await Account.getLocalByLdap(user)
-            ctx.body = {token: token,local:_.omit(local_user,['passwd']),ldap:_.omit(user,['userPassword'])};
+            local_user = await mapUserRoles(local_user)
+            ctx.body = {token: token,local:local_user,ldap:_.omit(user,['userPassword'])};
         }else{
             throw new Error(info.message)
         }

@@ -10,7 +10,8 @@ Role.findOne = async function (name) {
         throw new Error(`user with ${name} not exist!`)
     }
     roles[0].allows = JSON.parse(roles[0].allows)
-    roles[0].additional = JSON.parse(roles[0].additional)
+    if(roles[0].additional)
+        roles[0].additional = JSON.parse(roles[0].additional)
     roles[0] = _.omit(roles[0],['id'])
     return roles[0]
 }
