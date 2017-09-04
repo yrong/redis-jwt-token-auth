@@ -18,8 +18,10 @@ Role.findOne = async function (name) {
 Role.findAll = async function () {
     let roles = await db.queryCql(`MATCH (n:Role) return n`);
     roles = _.map(roles,(role)=>{
-        role.allows = JSON.parse(role.allows)
-        role.additional = JSON.parse(role.additional)
+        if(role.allows)
+            role.allows = JSON.parse(role.allows)
+        if(role.additional)
+            role.additional = JSON.parse(role.additional)
         role = _.omit(role,['id'])
         return role
     })
