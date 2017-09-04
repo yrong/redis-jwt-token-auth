@@ -10,6 +10,7 @@
 		"0d833e8e-874d-c569-750c-2694fd64aa01",
 		"da613e93-d39d-2d65-6218-d751f9dc3afc",
 		"94c84808-de13-5510-507c-8fccc1d03eee",
+		"6094e955-ba0a-ac7f-2db8-3de30e5ffdc2",
 		"555318b6-2d9d-e267-1039-4f373baad5ee",
 		"ae2d0733-55da-3f9d-d2ce-0ad7202b3c80",
 		"219cd54a-4e37-1331-a692-b5cf755a25f3",
@@ -207,7 +208,7 @@
 			"id": "219cd54a-4e37-1331-a692-b5cf755a25f3",
 			"headers": "",
 			"headerData": [],
-			"url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/role/member?token={{token}}",
+			"url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/role/contributor?token={{token}}",
 			"queryParams": [
 				{
 					"key": "token",
@@ -226,7 +227,7 @@
 			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"role delete failed\"] = jsonData.status === 'error'",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1504018430146,
+			"time": 1504500397821,
 			"name": "delete role already used failed",
 			"description": "",
 			"collectionId": "b2114168-8995-24ff-4525-8f5089dfd3f2",
@@ -386,6 +387,43 @@
 			"collectionId": "b2114168-8995-24ff-4525-8f5089dfd3f2",
 			"responses": [],
 			"rawModeData": "{\n\t\"base\":\"dc=test,dc=com\",\n\t\"options\":{\n\t\t\"filter\": \"(objectclass=posixGroup)\",\n\t\t\"paged\": {\n\t\t    \"pageSize\": 5,\n\t\t    \"page\":2\n\t\t  }\n\t}\n}"
+		},
+		{
+			"id": "6094e955-ba0a-ac7f-2db8-3de30e5ffdc2",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/assocRole/{{auth_user_id}}?token={{token}}",
+			"queryParams": [
+				{
+					"key": "token",
+					"value": "{{token}}",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				}
+			],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "PUT",
+			"data": [],
+			"dataMode": "raw",
+			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"user added\"] = jsonData.status === 'ok';",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1504515295377,
+			"name": "unbind role to user",
+			"description": "",
+			"collectionId": "b2114168-8995-24ff-4525-8f5089dfd3f2",
+			"responses": [],
+			"rawModeData": "{\n      \"roles\":[]\n}"
 		},
 		{
 			"id": "8af7792e-69fa-74f3-e786-4a1ded983f35",
