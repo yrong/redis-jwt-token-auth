@@ -5,15 +5,15 @@ const acl = require('../lib/acl')
 const Role = {}
 
 Role.findOne = async function (name) {
-    let roles = await db.queryCql(`MATCH (n:Role{name:"${name}"}) return n`);
-    if(roles == null || roles.length != 1) {
-        throw new Error(`user with ${name} not exist!`)
+    let roles = await db.queryCql(`MATCH (n:Role{name:"${name}"}) return n`),role;
+    if(roles.length == 1) {
+        role = roles[0]
+        role.allows = JSON.parse(role.allows)
+        if(role.additional)
+            role.additional = JSON.parse(role.additional)
+        role = _.omit(role,['id'])
     }
-    roles[0].allows = JSON.parse(roles[0].allows)
-    if(roles[0].additional)
-        roles[0].additional = JSON.parse(roles[0].additional)
-    roles[0] = _.omit(roles[0],['id'])
-    return roles[0]
+    return role
 }
 
 Role.findAll = async function () {

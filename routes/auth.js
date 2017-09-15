@@ -41,9 +41,11 @@ const mapUserRoles = async (user)=>{
     if(user.roles){
         for(let role of user.roles){
             role = await Role.findOne(role)
-            roles.push(role)
+            if(role)
+                roles.push(role)
         }
-        user.roles = roles
+        if(roles.length)
+            user.roles = roles
     }
     return user
 }
