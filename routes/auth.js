@@ -147,6 +147,14 @@ router.post('/role', async(ctx, next) => {
     ctx.body = {}
 })
 
+router.post('/roles', async(ctx, next) => {
+    let roles = ctx.request.body
+    for(let role of roles){
+        await Role.addOrUpdate(role)
+    }
+    ctx.body = {}
+})
+
 router.get('/role/:name', async(ctx, next) => {
     ctx.body = await Role.findOne(ctx.params.name)
 })

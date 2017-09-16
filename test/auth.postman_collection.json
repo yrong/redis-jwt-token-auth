@@ -6,7 +6,8 @@
 		"c2a419c2-0059-e332-5c79-0ee479b055e8",
 		"fbce4389-0256-4aa7-b821-5c782298f99f",
 		"eadd274e-4e3a-af91-bad0-17ebc3a02437",
-		"fee74662-72e1-e774-697a-11f4e26b5979",
+		"3578c7b5-8fe2-a878-9cd7-9b2ec9958a0f",
+		"ac8ca90a-a25a-5b04-1bdc-6291c36585d7",
 		"0d833e8e-874d-c569-750c-2694fd64aa01",
 		"da613e93-d39d-2d65-6218-d751f9dc3afc",
 		"94c84808-de13-5510-507c-8fccc1d03eee",
@@ -14,7 +15,6 @@
 		"555318b6-2d9d-e267-1039-4f373baad5ee",
 		"ae2d0733-55da-3f9d-d2ce-0ad7202b3c80",
 		"219cd54a-4e37-1331-a692-b5cf755a25f3",
-		"b20c7c85-42a8-556f-0e0a-45c67adf774a",
 		"e8f84069-a4f3-ab7b-270d-061ee72a6c43",
 		"ee8e1fc7-8f8c-288e-489c-09c5b2ee1b58",
 		"8af7792e-69fa-74f3-e786-4a1ded983f35",
@@ -100,7 +100,7 @@
 			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"role added\"] = jsonData.status === 'ok';",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1504318172359,
+			"time": 1505576552551,
 			"name": "add role contributor",
 			"description": "",
 			"collectionId": "b2114168-8995-24ff-4525-8f5089dfd3f2",
@@ -232,6 +232,44 @@
 			"description": "",
 			"collectionId": "b2114168-8995-24ff-4525-8f5089dfd3f2",
 			"responses": []
+		},
+		{
+			"id": "3578c7b5-8fe2-a878-9cd7-9b2ec9958a0f",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/roles?token={{token}}",
+			"folder": null,
+			"queryParams": [
+				{
+					"key": "token",
+					"value": "{{token}}",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				}
+			],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"role added\"] = jsonData.status === 'ok';",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1505576490307,
+			"name": "batch add roles",
+			"description": "",
+			"collectionId": "b2114168-8995-24ff-4525-8f5089dfd3f2",
+			"responses": [],
+			"rawModeData": "[\n\t{\n      \"name\":\"viewer\",\n     \"allows\":[{\"resources\":\"*\",\"permissions\":[\"READ\"]}],\n     \"additional\":{\"menus\":[\"menu1\",\"menu3\"]}\n\t},\n\t{\n      \"name\":\"contributor\",\n     \"allows\":[{\"resources\":\"own\",\"permissions\":[\"UPDATE\",\"DELETE\"]},{\"resources\":\"*\",\"permissions\":[\"CREATE\",\"READ\"]}],\n     \"additional\":{\"menus\":[\"menu1\",\"menu3\"]}\n\t},\n\t{\n      \"name\":\"superAdmin\",\n     \"allows\":[{\"resources\":\"*\",\"permissions\":\"*\"}],\n     \"additional\":{\"menus\":[\"menu2\",\"menu3\"]}\n\t}\n]"
 		},
 		{
 			"id": "50ff2906-e2cd-7d4a-fcce-7747485d7772",
@@ -513,12 +551,12 @@
 			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"user added\"] = jsonData.status === 'ok';",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1504318208842,
+			"time": 1505574616245,
 			"name": "bind role to user",
 			"description": "",
 			"collectionId": "b2114168-8995-24ff-4525-8f5089dfd3f2",
 			"responses": [],
-			"rawModeData": "{\n      \"roles\":[\"contributor\"]\n}"
+			"rawModeData": "{\n      \"roles\":[\"superAdmin\"]\n}"
 		},
 		{
 			"id": "99669d68-055e-c6d7-b390-7a4a20e9d994",
@@ -629,6 +667,44 @@
 			"responses": []
 		},
 		{
+			"id": "ac8ca90a-a25a-5b04-1bdc-6291c36585d7",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/role?token={{token}}",
+			"folder": null,
+			"queryParams": [
+				{
+					"key": "token",
+					"value": "{{token}}",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				}
+			],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"role added\"] = jsonData.status === 'ok';",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1505467012880,
+			"name": "add role viewer",
+			"description": "",
+			"collectionId": "b2114168-8995-24ff-4525-8f5089dfd3f2",
+			"responses": [],
+			"rawModeData": "{\n      \"name\":\"viewer\",\n     \"allows\":[{\"resources\":\"*\",\"permissions\":[\"READ\"]}],\n     \"additional\":{\"menus\":[\"menu1\",\"menu3\"]}\n}"
+		},
+		{
 			"id": "ae2d0733-55da-3f9d-d2ce-0ad7202b3c80",
 			"headers": "",
 			"headerData": [],
@@ -656,35 +732,6 @@
 			"description": "",
 			"collectionId": "b2114168-8995-24ff-4525-8f5089dfd3f2",
 			"responses": []
-		},
-		{
-			"id": "b20c7c85-42a8-556f-0e0a-45c67adf774a",
-			"headers": "Content-Type: application/json\n",
-			"headerData": [
-				{
-					"key": "Content-Type",
-					"value": "application/json",
-					"description": "",
-					"enabled": true
-				}
-			],
-			"url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/register",
-			"queryParams": [],
-			"preRequestScript": null,
-			"pathVariables": {},
-			"pathVariableData": [],
-			"method": "POST",
-			"data": [],
-			"dataMode": "raw",
-			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"user added\"] = jsonData.status === 'ok';",
-			"currentHelper": "normal",
-			"helperAttributes": {},
-			"time": 1503896568784,
-			"name": "add user superadmin",
-			"description": "",
-			"collectionId": "b2114168-8995-24ff-4525-8f5089dfd3f2",
-			"responses": [],
-			"rawModeData": "{\n      \"type\":1,\n      \"attempt_ip\":\"10.50.13.65\",\n      \"userid\":200,\n      \"passwd\":\"alibaba\",\n      \"surname\":\"\",\n      \"name\":\"superadmin\",\n      \"alias\":\"superadmin\",\n      \"theme\":\"default\",\n      \"lang\":\"en_GB\"\n}"
 		},
 		{
 			"id": "bb259f97-2937-4a21-a65d-33983f4f0d9f",
@@ -830,26 +877,24 @@
 		},
 		{
 			"id": "da613e93-d39d-2d65-6218-d751f9dc3afc",
-			"headers": "Content-Type: application/json\n",
+			"headers": "Content-Type: application/json\nx-token: superadmin_alibaba\n",
 			"headerData": [
 				{
 					"key": "Content-Type",
 					"value": "application/json",
 					"description": "",
 					"enabled": true
-				}
-			],
-			"url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/role?token={{token}}",
-			"folder": null,
-			"queryParams": [
+				},
 				{
-					"key": "token",
-					"value": "{{token}}",
-					"equals": true,
+					"key": "x-token",
+					"value": "superadmin_alibaba",
 					"description": "",
 					"enabled": true
 				}
 			],
+			"url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/role",
+			"folder": null,
+			"queryParams": [],
 			"preRequestScript": null,
 			"pathVariables": {},
 			"pathVariableData": [],
@@ -859,7 +904,7 @@
 			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"role added\"] = jsonData.status === 'ok';",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1504318185970,
+			"time": 1505465989573,
 			"name": "add role superAdmin",
 			"description": "",
 			"collectionId": "b2114168-8995-24ff-4525-8f5089dfd3f2",
@@ -984,44 +1029,6 @@
 			"pathVariableData": [],
 			"responses": [],
 			"collectionId": "b2114168-8995-24ff-4525-8f5089dfd3f2"
-		},
-		{
-			"id": "fee74662-72e1-e774-697a-11f4e26b5979",
-			"headers": "Content-Type: application/json\n",
-			"headerData": [
-				{
-					"key": "Content-Type",
-					"value": "application/json",
-					"description": "",
-					"enabled": true
-				}
-			],
-			"url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/role?token={{token}}",
-			"folder": null,
-			"queryParams": [
-				{
-					"key": "token",
-					"value": "{{token}}",
-					"equals": true,
-					"description": "",
-					"enabled": true
-				}
-			],
-			"preRequestScript": null,
-			"pathVariables": {},
-			"pathVariableData": [],
-			"method": "POST",
-			"data": [],
-			"dataMode": "raw",
-			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"role added\"] = jsonData.status === 'ok';",
-			"currentHelper": "normal",
-			"helperAttributes": {},
-			"time": 1504318139326,
-			"name": "add role viewer",
-			"description": "",
-			"collectionId": "b2114168-8995-24ff-4525-8f5089dfd3f2",
-			"responses": [],
-			"rawModeData": "{\n      \"name\":\"viewer\",\n     \"allows\":[{\"resources\":\"*\",\"permissions\":[\"read\"]}],\n     \"additional\":{\"menus\":[\"menu1\",\"menu2\"]}\n}"
 		}
 	]
 }

@@ -72,6 +72,70 @@
     "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/role/contributor?token={{token}}"
   },
   {
+    "name": "batch add roles",
+    "method": "POST",
+    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/roles?token={{token}}",
+    "body": [
+      {
+        "name": "viewer",
+        "allows": [
+          {
+            "resources": "*",
+            "permissions": [
+              "READ"
+            ]
+          }
+        ],
+        "additional": {
+          "menus": [
+            "menu1",
+            "menu3"
+          ]
+        }
+      },
+      {
+        "name": "contributor",
+        "allows": [
+          {
+            "resources": "own",
+            "permissions": [
+              "UPDATE",
+              "DELETE"
+            ]
+          },
+          {
+            "resources": "*",
+            "permissions": [
+              "CREATE",
+              "READ"
+            ]
+          }
+        ],
+        "additional": {
+          "menus": [
+            "menu1",
+            "menu3"
+          ]
+        }
+      },
+      {
+        "name": "superAdmin",
+        "allows": [
+          {
+            "resources": "*",
+            "permissions": "*"
+          }
+        ],
+        "additional": {
+          "menus": [
+            "menu2",
+            "menu3"
+          ]
+        }
+      }
+    ]
+  },
+  {
     "name": "modify passwd",
     "method": "PUT",
     "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/changepwd/{{auth_user_id}}",
@@ -147,7 +211,7 @@
     "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/assocRole/{{auth_user_id}}?token={{token}}",
     "body": {
       "roles": [
-        "contributor"
+        "superAdmin"
       ]
     }
   },
@@ -170,25 +234,31 @@
     "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/enterprise/users?token={{token}}&page=1&per_page=5"
   },
   {
+    "name": "add role viewer",
+    "method": "POST",
+    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/role?token={{token}}",
+    "body": {
+      "name": "viewer",
+      "allows": [
+        {
+          "resources": "*",
+          "permissions": [
+            "READ"
+          ]
+        }
+      ],
+      "additional": {
+        "menus": [
+          "menu1",
+          "menu3"
+        ]
+      }
+    }
+  },
+  {
     "name": "query roles",
     "method": "GET",
     "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/role?token={{token}}"
-  },
-  {
-    "name": "add user superadmin",
-    "method": "POST",
-    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/register",
-    "body": {
-      "type": 1,
-      "attempt_ip": "10.50.13.65",
-      "userid": 200,
-      "passwd": "alibaba",
-      "surname": "",
-      "name": "superadmin",
-      "alias": "superadmin",
-      "theme": "default",
-      "lang": "en_GB"
-    }
   },
   {
     "name": "search ldap department",
@@ -231,7 +301,7 @@
   {
     "name": "add role superAdmin",
     "method": "POST",
-    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/role?token={{token}}",
+    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/role",
     "body": {
       "name": "superAdmin",
       "allows": [
@@ -285,28 +355,6 @@
       "alias": "{{auth_user}}",
       "theme": "default",
       "lang": "en_GB"
-    }
-  },
-  {
-    "name": "add role viewer",
-    "method": "POST",
-    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/role?token={{token}}",
-    "body": {
-      "name": "viewer",
-      "allows": [
-        {
-          "resources": "*",
-          "permissions": [
-            "read"
-          ]
-        }
-      ],
-      "additional": {
-        "menus": [
-          "menu1",
-          "menu2"
-        ]
-      }
     }
   }
 ]
