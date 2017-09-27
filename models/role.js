@@ -54,7 +54,7 @@ Role.destory = async function(name) {
                     RETURN u`
     let result = await db.queryCql(find_user_cypher)
     if(result&&result.length){
-        throw new Error(`user already assoc,users:${JSON.stringify(result)}`)
+        throw new Error(`user already assoc,user:${result[0].uuid}`)
     }
     let cypher = `MATCH (n:Role) WHERE n.name = "${name}" DETACH DELETE n`
     await db.queryCql(cypher)

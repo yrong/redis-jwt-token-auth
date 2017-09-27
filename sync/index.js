@@ -18,6 +18,7 @@ const syncWithMysql = async function() {
                 row.uuid = row.userid
             }
             row.category = 'User'
+            row.name = row.alias
             cypher = `MERGE (u:User{uuid:${row.userid}}) ON CREATE SET u = {row} ON MATCH SET u = {row}`
             result = await db.queryCql(cypher, {row: row})
             results.push(result)

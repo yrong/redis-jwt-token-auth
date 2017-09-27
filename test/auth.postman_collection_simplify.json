@@ -1,13 +1,108 @@
 [
   {
-    "name": "modify user info",
-    "method": "PUT",
-    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/userinfo/{{auth_user_id}}",
+    "name": "logout",
+    "method": "POST",
+    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/logout",
     "body": {
-      "token": "{{token}}",
-      "avatar": "/upload/avatar/ca92d560-05a6-11e7-98ba-e1d08df9a25f",
-      "per_page": 90
+      "token": "{{token}}"
     }
+  },
+  {
+    "name": "check invalid token",
+    "method": "POST",
+    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/check",
+    "body": {
+      "token": "hello"
+    }
+  },
+  {
+    "name": "search ldap user",
+    "method": "GET",
+    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/enterprise/users?token={{token}}&page=1&per_page=5"
+  },
+  {
+    "name": "login",
+    "method": "POST",
+    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/login",
+    "body": {
+      "username": "{{auth_user}}",
+      "password": "{{auth_passwd}}"
+    }
+  },
+  {
+    "name": "search ldap department advanced",
+    "method": "POST",
+    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/ldapsearch?token={{token}}",
+    "body": {
+      "base": "dc=test,dc=com",
+      "options": {
+        "filter": "(objectclass=posixGroup)",
+        "paged": {
+          "pageSize": 5,
+          "page": 2
+        }
+      }
+    }
+  },
+  {
+    "name": "query active tokens",
+    "method": "GET",
+    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/active_users?token={{token}}"
+  },
+  {
+    "name": "delete role already used failed",
+    "method": "DELETE",
+    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/role/superAdmin?token={{token}}"
+  },
+  {
+    "name": "query User",
+    "method": "GET",
+    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/userinfo?token={{token}}"
+  },
+  {
+    "name": "add user",
+    "method": "POST",
+    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/register",
+    "body": {
+      "type": 1,
+      "attempt_ip": "10.50.13.69",
+      "userid": "{{auth_user_id}}",
+      "passwd": "{{auth_passwd}}",
+      "surname": "",
+      "name": "{{auth_user}}",
+      "alias": "{{auth_user}}",
+      "theme": "default",
+      "lang": "en_GB"
+    }
+  },
+  {
+    "name": "search ldap department",
+    "method": "GET",
+    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/enterprise/departments?token={{token}}&page=1&per_page=5",
+    "body": {
+      "base": "dc=test,dc=com",
+      "options": {
+        "filter": "(objectclass=posixGroup)",
+        "paged": {
+          "pageSize": 5,
+          "page": 2
+        }
+      }
+    }
+  },
+  {
+    "name": "login-ldap",
+    "method": "POST",
+    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/login-ldap",
+    "body": {
+      "username": "{{auth_ldap_user}}",
+      "password": "{{auth_ldap_passwd}}"
+    }
+  },
+  {
+    "name": "query roles",
+    "method": "GET",
+    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/role?token={{token}}"
   },
   {
     "name": "add role contributor",
@@ -40,11 +135,94 @@
     }
   },
   {
-    "name": "logout",
+    "name": "query role",
+    "method": "GET",
+    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/role/contributor?token={{token}}"
+  },
+  {
+    "name": "clean",
     "method": "POST",
-    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/logout",
+    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/hidden/clean"
+  },
+  {
+    "name": "bind role to user",
+    "method": "PUT",
+    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/assocRole/{{auth_user_id}}?token={{token}}",
+    "body": {
+      "roles": [
+        "superAdmin"
+      ]
+    }
+  },
+  {
+    "name": "query User By userid",
+    "method": "GET",
+    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/userinfo/{{auth_user_id}}?token={{token}}"
+  },
+  {
+    "name": "modify user passwd",
+    "method": "PUT",
+    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/changepwd/{{auth_user_id}}",
+    "body": {
+      "token": "{{token}}",
+      "oldpwd": "{{auth_passwd}}",
+      "newpwd": "{{auth_passwd}}"
+    }
+  },
+  {
+    "name": "check valid token",
+    "method": "POST",
+    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/check",
     "body": {
       "token": "{{token}}"
+    }
+  },
+  {
+    "name": "modify user info",
+    "method": "PUT",
+    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/userinfo/{{auth_user_id}}",
+    "body": {
+      "token": "{{token}}",
+      "avatar": "/upload/avatar/ca92d560-05a6-11e7-98ba-e1d08df9a25f",
+      "per_page": 90
+    }
+  },
+  {
+    "name": "add role superAdmin",
+    "method": "POST",
+    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/role",
+    "body": {
+      "name": "superAdmin",
+      "allows": [
+        {
+          "resources": "*",
+          "permissions": "*"
+        }
+      ],
+      "additional": {
+        "menus": [
+          "menu2",
+          "menu3"
+        ]
+      }
+    }
+  },
+  {
+    "name": "login with user not exist",
+    "method": "POST",
+    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/login",
+    "body": {
+      "username": "test1",
+      "password": "test"
+    }
+  },
+  {
+    "name": "login with wrong passwd",
+    "method": "POST",
+    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/login",
+    "body": {
+      "username": "nerds",
+      "password": "test1"
     }
   },
   {
@@ -59,17 +237,35 @@
     }
   },
   {
-    "name": "check invalid token",
+    "name": "add role viewer",
     "method": "POST",
-    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/check",
+    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/role?token={{token}}",
     "body": {
-      "token": "hello"
+      "name": "viewer",
+      "allows": [
+        {
+          "resources": "*",
+          "permissions": [
+            "READ"
+          ]
+        }
+      ],
+      "additional": {
+        "menus": [
+          "menu1",
+          "menu3"
+        ]
+      }
     }
   },
   {
-    "name": "delete role already used failed",
-    "method": "DELETE",
-    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/role/contributor?token={{token}}"
+    "name": "login again",
+    "method": "POST",
+    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/login",
+    "body": {
+      "username": "{{auth_user}}",
+      "password": "{{auth_passwd}}"
+    }
   },
   {
     "name": "batch add roles",
@@ -136,91 +332,6 @@
     ]
   },
   {
-    "name": "modify passwd",
-    "method": "PUT",
-    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/changepwd/{{auth_user_id}}",
-    "body": {
-      "token": "{{token}}",
-      "oldpwd": "{{auth_passwd}}",
-      "newpwd": "{{auth_passwd}}"
-    }
-  },
-  {
-    "name": "login with user not exist",
-    "method": "POST",
-    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/login",
-    "body": {
-      "username": "test1",
-      "password": "test"
-    }
-  },
-  {
-    "name": "query role",
-    "method": "GET",
-    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/role/contributor?token={{token}}"
-  },
-  {
-    "name": "login with wrong passwd",
-    "method": "POST",
-    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/login",
-    "body": {
-      "username": "nerds",
-      "password": "test1"
-    }
-  },
-  {
-    "name": "search ldap department advanced",
-    "method": "POST",
-    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/ldapsearch?token={{token}}",
-    "body": {
-      "base": "dc=test,dc=com",
-      "options": {
-        "filter": "(objectclass=posixGroup)",
-        "paged": {
-          "pageSize": 5,
-          "page": 2
-        }
-      }
-    }
-  },
-  {
-    "name": "unbind role to user",
-    "method": "PUT",
-    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/assocRole/{{auth_user_id}}?token={{token}}",
-    "body": {
-      "roles": []
-    }
-  },
-  {
-    "name": "query User By userid",
-    "method": "GET",
-    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/userinfo/{{auth_user_id}}?token={{token}}"
-  },
-  {
-    "name": "assoc with ldap",
-    "method": "PUT",
-    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/assoc/{{auth_user_id}}",
-    "body": {
-      "token": "{{token}}",
-      "ldap_cn": "{{auth_ldap_user}}"
-    }
-  },
-  {
-    "name": "bind role to user",
-    "method": "PUT",
-    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/assocRole/{{auth_user_id}}?token={{token}}",
-    "body": {
-      "roles": [
-        "superAdmin"
-      ]
-    }
-  },
-  {
-    "name": "query active users",
-    "method": "GET",
-    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/active_users?token={{token}}"
-  },
-  {
     "name": "unassoc",
     "method": "PUT",
     "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/unassoc/{{auth_user_id}}",
@@ -229,132 +340,12 @@
     }
   },
   {
-    "name": "search ldap user",
-    "method": "GET",
-    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/enterprise/users?token={{token}}&page=1&per_page=5"
-  },
-  {
-    "name": "add role viewer",
-    "method": "POST",
-    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/role?token={{token}}",
-    "body": {
-      "name": "viewer",
-      "allows": [
-        {
-          "resources": "*",
-          "permissions": [
-            "READ"
-          ]
-        }
-      ],
-      "additional": {
-        "menus": [
-          "menu1",
-          "menu3"
-        ]
-      }
-    }
-  },
-  {
-    "name": "query roles",
-    "method": "GET",
-    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/role?token={{token}}"
-  },
-  {
-    "name": "search ldap department",
-    "method": "GET",
-    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/enterprise/departments?token={{token}}&page=1&per_page=5",
-    "body": {
-      "base": "dc=test,dc=com",
-      "options": {
-        "filter": "(objectclass=posixGroup)",
-        "paged": {
-          "pageSize": 5,
-          "page": 2
-        }
-      }
-    }
-  },
-  {
-    "name": "clean",
-    "method": "POST",
-    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/hidden/clean"
-  },
-  {
-    "name": "modify user alias",
+    "name": "assoc with ldap",
     "method": "PUT",
-    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/userinfo/{{auth_user_id}}",
+    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/assoc/{{auth_user_id}}",
     "body": {
       "token": "{{token}}",
-      "avatar": "/upload/avatar/ca92d560-05a6-11e7-98ba-e1d08df9a25f",
-      "per_page": 90
-    }
-  },
-  {
-    "name": "check valid token",
-    "method": "POST",
-    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/check",
-    "body": {
-      "token": "{{token}}"
-    }
-  },
-  {
-    "name": "add role superAdmin",
-    "method": "POST",
-    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/role",
-    "body": {
-      "name": "superAdmin",
-      "allows": [
-        {
-          "resources": "*",
-          "permissions": "*"
-        }
-      ],
-      "additional": {
-        "menus": [
-          "menu2",
-          "menu3"
-        ]
-      }
-    }
-  },
-  {
-    "name": "login-ldap",
-    "method": "POST",
-    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/login-ldap",
-    "body": {
-      "username": "{{auth_ldap_user}}",
-      "password": "{{auth_ldap_passwd}}"
-    }
-  },
-  {
-    "name": "login",
-    "method": "POST",
-    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/login",
-    "body": {
-      "username": "{{auth_user}}",
-      "password": "{{auth_passwd}}"
-    }
-  },
-  {
-    "name": "query User",
-    "method": "GET",
-    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/userinfo?token={{token}}"
-  },
-  {
-    "name": "add user",
-    "method": "POST",
-    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/register",
-    "body": {
-      "type": 1,
-      "attempt_ip": "10.50.13.69",
-      "userid": "{{auth_user_id}}",
-      "passwd": "{{auth_passwd}}",
-      "surname": "",
-      "name": "{{auth_user}}",
-      "alias": "{{auth_user}}",
-      "theme": "default",
-      "lang": "en_GB"
+      "ldap_cn": "{{auth_ldap_user}}"
     }
   }
 ]

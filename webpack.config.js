@@ -22,6 +22,7 @@ var packages = [
     {from:'config',to:'config'},
     {from:'public',to:'public'},
     {from:'test/*.json'},
+    {from:'cypher',to:'cypher'},
     {from:'node_modules',to:'node_modules'}
 ]
 

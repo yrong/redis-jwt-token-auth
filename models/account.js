@@ -38,7 +38,7 @@ Account.destory = function(uuid) {
 }
 
 Account.destoryAll = function() {
-    let cypher = `MATCH (n:User) DETACH DELETE n`
+    let cypher = `MATCH (n) WHERE n:User or n:Role or n:LdapUser DETACH DELETE n`
     return db.queryCql(cypher);
 }
 
