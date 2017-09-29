@@ -50,7 +50,8 @@
         "departmentAttributes":["dn","cn","gidNumber"],
         "uuid_type":"dn",
         "searchFilter": "(cn={{username}})",
-        "reconnect": true
+        "reconnect": true,
+        "searchAttributes":["cn","dn","objectClass","test"]
       }
     },
     "upload": {
