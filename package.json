@@ -51,7 +51,7 @@
     "passport-ldapauth-fork": "^1.0.1",
     "passport-local": "^1.0.0",
     "webdav": "^0.9.0",
-    "scirichon-common": "1.0.0-beta.8"
+    "scirichon-common": "1.0.0-beta.9"
   },
   "devDependencies": {
     "babel-cli": "^6.24.0",

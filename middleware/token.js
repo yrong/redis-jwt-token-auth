@@ -2,7 +2,9 @@ const _ = require('lodash');
 const jwt = require('jsonwebtoken');
 const utils = require('../lib/sessionUtils');
 const config = require('config');
-
+const scirichon_common = require('scirichon-common')
+const TokenName = scirichon_common.TokenName
+const internal_token_id = scirichon_common.internal_token_id
 
 module.exports = function jwt_token(options) {
     return async function (ctx, next) {
@@ -15,20 +17,16 @@ module.exports = function jwt_token(options) {
             keyspace: options.keyspace || "sess:",
             maxAge: options.maxAge || config.get('expiration'),
             requestKey: options.requestKey || "session",
-            requestArg: options.requestArg || "token"
+            requestArg: options.requestArg || TokenName
         };
-        var requestHeader = _.reduce(options.requestArg.split(""), function (memo, ch) {
-            return memo + (ch.toUpperCase() === ch ? "-" + ch.toLowerCase() : ch);
-        }, "x" + (options.requestArg.charAt(0) === options.requestArg.charAt(0).toUpperCase() ? "" : "-"));
-        options.requestHeader = requestHeader;
 		var SessionUtils = utils(options);
 		var req = ctx.req;
 		req[options.requestKey] = new SessionUtils();
-		var token = ctx.req.headers[options.requestHeader]
-			|| ctx.query[options.requestArg]
-			|| (ctx.request.body && ctx.request.body[options.requestArg]);
+		var token = (ctx.request.body && ctx.request.body[options.requestArg])
+            || ctx.query[options.requestArg]
+            || ctx.req.headers[options.requestArg]
 		if(token){
-		    if(token === 'superadmin_alibaba'){
+		    if(token === internal_token_id){
                 await next()
                 return
             }
