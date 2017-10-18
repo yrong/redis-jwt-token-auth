@@ -33,12 +33,12 @@ Role.addOrUpdate = async function(params) {
     params.category = 'Role'
     if(!params.name || !params.allows)
         throw new Error('role missing params')
-    acl.removeRole(params.name)
-    _.each(params.allows,(allow)=>{
-        acl.allow(params.name,allow.resources,allow.permissions)
-    })
+    await acl.removeRole(params.name)
+    for(let allow of params.allows){
+        await acl.allow(params.name,allow.resources,allow.permissions)
+    }
     if(params.inherits)
-        acl.addRoleParents(params.name, params.inherits)
+        await acl.addRoleParents(params.name, params.inherits)
     params.allows = JSON.stringify(params.allows)
     params.additional = JSON.stringify(params.additional)
     let cypher_params = {name:params.name,fields:params}
@@ -59,6 +59,10 @@ Role.destory = async function(name) {
     let cypher = `MATCH (n:Role) WHERE n.name = "${name}" DETACH DELETE n`
     await db.queryCql(cypher)
     acl.removeRole(name)
+}
+
+Role.clearAll = async function() {
+    return await acl.backend.cleanAsync()
 }
 
 module.exports = Role;

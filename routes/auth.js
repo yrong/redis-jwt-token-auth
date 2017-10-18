@@ -148,6 +148,7 @@ router.post('/role', async(ctx, next) => {
 })
 
 router.post('/roles', async(ctx, next) => {
+    await Role.clearAll()
     let roles = ctx.request.body
     for(let role of roles){
         await Role.addOrUpdate(role)
