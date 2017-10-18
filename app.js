@@ -10,6 +10,7 @@ const baseconfig = require('./base/index')
 const middleware = require('./middleware')
 const routes = require('./routes')
 const app = new Koa()
+const Account = require('./models/account')
 
 //configure basic app
 baseconfig(app)
@@ -20,7 +21,11 @@ app.use(middleware())
 //configure custom routes
 app.use(routes())
 
-app.listen(config.get('port'));
-logger.info("Server started, listening on port: " + config.get('port'));
+Account.syncAcl().then(()=>{
+    app.listen(config.get('port'));
+    logger.info("Server started, listening on port: " + config.get('port'))
+})
 
-module.exports = app
+process.on('uncaughtException', (err) => {
+    console.log(`Caught exception: ${err}`)
+})
