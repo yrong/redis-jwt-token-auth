@@ -11,7 +11,7 @@ const passport = require('koa-passport')
 const config = require('config')
 const _ = require('lodash')
 const file_uploader = require('koa-file-upload-fork')
-const responseWrapper = require('koa-response-wrapper')
+const responseWrapper = require('scirichon-response-wrapper')
 
 module.exports = function middleware(app) {
     app.use(responseWrapper())

@@ -5,6 +5,7 @@ const config = require('config');
 const scirichon_common = require('scirichon-common')
 const TokenName = scirichon_common.TokenName
 const internal_token_id = scirichon_common.internal_token_id
+const ScirichonError = scirichon_common.ScirichonError
 
 module.exports = function jwt_token(options) {
     return async function (ctx, next) {
@@ -32,41 +33,37 @@ module.exports = function jwt_token(options) {
             }
 			var decoded,session;
             try {
-                decoded = jwt.verify(token, options.secret);
+                decoded = jwt.verify(token, options.secret)
             } catch(err) {
-                ctx.throw(err,401);
+                ctx.throw(401,new ScirichonError('token invalid!'))
             }
-            try{
-                let promise = new Promise((resolve, reject) => {
-                    options.client.get(options.keyspace + decoded.jti, function (error,session) {
-                        if(error){
-                            reject(error);
-                        }else{
-                            resolve(session);
-                        }
-                    });
+            let promise = new Promise((resolve, reject) => {
+                options.client.get(options.keyspace + decoded.jti, function (error,session) {
+                    if(error){
+                        reject(error);
+                    }else{
+                        resolve(session);
+                    }
                 });
-                session = await Promise.resolve(promise);
-            } catch(err) {
-                ctx.throw('redis read error:' + String(err));
-            }
+            });
+            session = await Promise.resolve(promise);
             session = JSON.parse(session);
-            if(!session)
-                ctx.throw('token expired!',401);
+            if(!session){
+                ctx.throw(401,new ScirichonError('token expired!'))
+            }
             _.extend(req[options.requestKey], session);
             req[options.requestKey].claims = decoded;
             req[options.requestKey].id = decoded.jti;
             req[options.requestKey].jwt = token;
-            // Update the TTL
             req[options.requestKey].touch(_.noop);
-            req.jsonBody = true
             await next();
 		}else {
             if (ctx.path.includes('/auth/login') || ctx.path.includes('/auth/register')
                 || ctx.path.includes('/auth/hidden/clean') || ctx.path.includes('.html')||ctx.path.includes('.ico'))
                 await next()
-            else
-                ctx.throw('token not found!',401);
+            else{
+                ctx.throw(401,new ScirichonError('token not found in request!'))
+            }
 		}
     };
 };

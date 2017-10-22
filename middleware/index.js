@@ -1,7 +1,6 @@
 'use strict';
 
 const compose = require('koa-compose');
-const checkauth =require('./checkauth');
 const jwt_token = require('./token');
 const Redis = require('redis');
 const config = require('config')

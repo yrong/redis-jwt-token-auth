@@ -1,18 +1,18 @@
 'use strict';
 
 const db = require('../lib/db')
-const Log = require('log4js_wrapper')
-const logger = Log.getLogger()
 const _ = require('lodash')
 const ldap = require('../lib/ldap')
 const config = require('config')
 const acl = require('../lib/acl')
 const Account = {}
+const common = require('scirichon-common')
+const ScirichonError = common.ScirichonError
 
 Account.findOne = async function (uuid) {
     let account = await db.queryCql(`MATCH (u:User{uuid:${uuid}}) return u`);
     if(account == null || account.length != 1) {
-        throw new Error(`user with name ${uuid} not exist!`)
+        throw new ScirichonError(`user with name ${uuid} not exist!`)
     }
     return account[0]
 }
@@ -38,17 +38,17 @@ Account.destory = function(uuid) {
 }
 
 Account.destoryAll = function() {
-    let cypher = `MATCH (n) WHERE n:User or n:Role or n:LdapUser DETACH DELETE n`
+    let cypher = `MATCH (n) WHERE n:User OR n:LdapUser DETACH DELETE n`
     return db.queryCql(cypher);
 }
 
 Account.verify = function(username, password) {
     return db.queryCql(`MATCH (u:User{alias:'${username}'}) return u`).then((account)=>{
         if(account == null || account.length != 1) {
-            throw new Error(`user with name ${username} not exist!`)
+            throw new ScirichonError(`user with name ${username} not exist!`)
         } else{
             if(password !== account[0].passwd){
-                throw new Error("user password not match!");
+                throw new ScirichonError("user password not match!");
             }else {
                 return account[0];
             }
@@ -60,7 +60,7 @@ Account.updatePassword = async (params)=>{
     let cql = `MATCH (u:User{uuid:${params.uuid},passwd:'${params.oldpwd}'}) return u`
     let account = await db.queryCql(cql)
     if(account == null || account.length != 1) {
-        throw new Error(`user with id ${params.uuid} and password ${params.oldpwd} not exist!`)
+        throw new ScirichonError(`user with id ${params.uuid} and password ${params.oldpwd} not exist!`)
     }
     return await db.queryCql(`MATCH (u:User{uuid:${params.uuid}}) SET u.passwd = '${params.newpwd}'`)
 }
@@ -69,7 +69,7 @@ const getUser = async(params)=>{
     let cql = `MATCH (u:User{uuid:${params.uuid}}) return u`
     let account = await db.queryCql(cql)
     if(account == null || account.length != 1) {
-        throw new Error(`user with id ${params.uuid} not exist!`)
+        throw new ScirichonError(`user with id ${params.uuid} not exist!`)
     }
     return account[0]
 }
@@ -82,7 +82,7 @@ Account.updateInfo = async (params)=>{
 
 Account.updateLocal2LdapAssoc = async (params)=>{
     if(!params.ldap_cn){
-        throw new Error(`missing param ldap_user!`)
+        throw new ScirichonError(`missing param ldap_user!`)
     }
     let ldap_user = await ldap.searchByUser(params.ldap_cn)
     let cql = `MERGE (n:LdapUser {cn: "${ldap_user.cn}"})
@@ -107,7 +107,7 @@ Account.unAssocLocal = async (params)=>{
 
 Account.getLocalByLdap = async (ldap_user)=>{
     if(!ldap_user.cn){
-        throw new Error('no cn found in ldap attributes')
+        throw new ScirichonError('no cn found in ldap attributes')
     }
     let cypher = `MATCH (u:User)-[r:Assoc]->(l:LdapUser {cn:"${ldap_user.cn}"})
                   RETURN u`

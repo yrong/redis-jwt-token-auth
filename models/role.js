@@ -1,4 +1,3 @@
-const uuid = require('uuid')
 const db = require('../lib/db')
 const _ = require('lodash')
 const acl = require('../lib/acl')
@@ -14,6 +13,16 @@ Role.findOne = async function (name) {
         role = _.omit(role,['id'])
     }
     return role
+}
+
+Role.mapRoles = async (roles)=>{
+    let result = []
+    for(let role of roles){
+        role = await Role.findOne(role)
+        if(role)
+            result.push(role)
+    }
+    return result
 }
 
 Role.findAll = async function () {
@@ -32,7 +41,7 @@ Role.findAll = async function () {
 Role.addOrUpdate = async function(params) {
     params.category = 'Role'
     if(!params.name || !params.allows)
-        throw new Error('role missing params')
+        throw new ScirichonError('role missing params')
     await acl.removeRole(params.name)
     for(let allow of params.allows){
         await acl.allow(params.name,allow.resources,allow.permissions)
@@ -54,7 +63,7 @@ Role.destory = async function(name) {
                     RETURN u`
     let result = await db.queryCql(find_user_cypher)
     if(result&&result.length){
-        throw new Error(`user already assoc,user:${result[0].uuid}`)
+        throw new ScirichonError(`user already assoc,user:${result[0].uuid}`)
     }
     let cypher = `MATCH (n:Role) WHERE n.name = "${name}" DETACH DELETE n`
     await db.queryCql(cypher)
@@ -62,7 +71,8 @@ Role.destory = async function(name) {
 }
 
 Role.clearAll = async function() {
-    return await acl.backend.cleanAsync()
+    await db.queryCql(`MATCH (n) WHERE n:Role DETACH DELETE n`)
+    await acl.backend.cleanAsync()
 }
 
-module.exports = Role;
+module.exports = Role
