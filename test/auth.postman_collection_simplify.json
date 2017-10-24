@@ -60,7 +60,7 @@
     "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/userinfo?token={{token}}"
   },
   {
-    "name": "add user",
+    "name": "add demo user",
     "method": "POST",
     "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/register",
     "body": {
@@ -346,6 +346,22 @@
     "body": {
       "token": "{{token}}",
       "ldap_cn": "{{auth_ldap_user}}"
+    }
+  },
+  {
+    "name": "add demo user",
+    "method": "POST",
+    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/register",
+    "body": {
+      "type": 1,
+      "attempt_ip": "10.50.13.69",
+      "userid": "{{auth_user_id}}",
+      "passwd": "{{auth_passwd}}",
+      "surname": "",
+      "name": "{{auth_user}}",
+      "alias": "{{auth_user}}",
+      "theme": "default",
+      "lang": "en_GB"
     }
   }
 ]

@@ -11,6 +11,7 @@
 			"description": "",
 			"collectionId": "dc89d653-d489-4df2-6b54-65c17dd6c874",
 			"order": [
+				"42e74763-d83a-6160-0585-ca53d4604a17",
 				"292df11b-ef7b-5a8d-1d23-904e83a73f98",
 				"71f8ef8b-c2b2-fb47-5dba-066be48d9307"
 			],
@@ -29,8 +30,8 @@
 				"daaf9732-f507-e945-1e35-11aaa891232a",
 				"6e919da0-a5bd-0ccc-5118-2be2018c2eac",
 				"5e9428ae-42f2-9ee8-f17a-e6d9f9efdb4f",
-				"42e74763-d83a-6160-0585-ca53d4604a17",
 				"72fe663d-70fa-2eda-6dc6-27d306d83331",
+				"f79905a0-0ef2-98f7-2373-63947aee0fb2",
 				"be1ed9f4-d3e8-bc1d-2d9d-b650be6734c5",
 				"317b8f1b-842a-b95f-d974-551a0adc25d4",
 				"31c7c1ef-8496-0f49-3c38-8ccae0edd4eb",
@@ -117,23 +118,8 @@
 			"collection_id": "dc89d653-d489-4df2-6b54-65c17dd6c874"
 		},
 		{
-			"folder": "2a71282f-9db8-ba09-31eb-aef3a2b96bba",
 			"id": "1567337e-63cb-fa12-9af9-7f74459ec739",
-			"name": "check invalid token",
-			"dataMode": "raw",
-			"data": [],
-			"rawModeData": "{\n  \"token\":\"hello\"\n}",
-			"descriptionFormat": null,
-			"description": "",
 			"headers": "Content-Type: application/json\n",
-			"method": "POST",
-			"pathVariables": {},
-			"url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/check",
-			"preRequestScript": null,
-			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"token invalid\"] = jsonData.status === 'error';\n",
-			"currentHelper": "normal",
-			"helperAttributes": {},
-			"queryParams": [],
 			"headerData": [
 				{
 					"key": "Content-Type",
@@ -142,10 +128,24 @@
 					"enabled": true
 				}
 			],
+			"url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/check",
+			"folder": "2a71282f-9db8-ba09-31eb-aef3a2b96bba",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
 			"pathVariableData": [],
-			"responses": [],
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"tests": "tests[\"token invalid\"] = responseCode.code != 200\n",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1508738078867,
+			"name": "check invalid token",
+			"description": "",
 			"collectionId": "dc89d653-d489-4df2-6b54-65c17dd6c874",
-			"collection_id": "dc89d653-d489-4df2-6b54-65c17dd6c874"
+			"responses": [],
+			"rawModeData": "{\n  \"token\":\"hello\"\n}"
 		},
 		{
 			"id": "1851da7b-b564-77e4-06ec-02e1168c87d9",
@@ -159,6 +159,7 @@
 				}
 			],
 			"url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/enterprise/users?token={{token}}&page=1&per_page=5",
+			"folder": "3eed2fbe-b9de-d0a2-9b10-2733dfbb4b34",
 			"queryParams": [
 				{
 					"key": "token",
@@ -188,35 +189,18 @@
 			"method": "GET",
 			"data": [],
 			"dataMode": "params",
-			"tests": "var jsonData = JSON.parse(responseBody);\n",
+			"tests": "var jsonData = JSON.parse(responseBody);\nvar ldap_users = jsonData.data||jsonData\ntests['ldap users found']=ldap_users.length>0",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1503477685240,
+			"time": 1508738560148,
 			"name": "search ldap user",
 			"description": "",
 			"collectionId": "dc89d653-d489-4df2-6b54-65c17dd6c874",
-			"responses": [],
-			"collection_id": "dc89d653-d489-4df2-6b54-65c17dd6c874",
-			"folder": "3eed2fbe-b9de-d0a2-9b10-2733dfbb4b34"
+			"responses": []
 		},
 		{
-			"folder": "7c3198d0-380f-e0be-f10a-3a07bd207859",
 			"id": "292df11b-ef7b-5a8d-1d23-904e83a73f98",
-			"name": "login",
-			"dataMode": "raw",
-			"data": [],
-			"rawModeData": "{\n  \"username\":\"{{auth_user}}\",\n  \"password\":\"{{auth_passwd}}\"\n}",
-			"descriptionFormat": null,
-			"description": "",
 			"headers": "Content-Type: application/json\n",
-			"method": "POST",
-			"pathVariables": {},
-			"url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/login",
-			"preRequestScript": "",
-			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"token found\"] = jsonData.data.token;\npostman.setEnvironmentVariable(\"token\", jsonData.data.token);\n",
-			"currentHelper": "normal",
-			"helperAttributes": {},
-			"queryParams": [],
 			"headerData": [
 				{
 					"key": "Content-Type",
@@ -225,12 +209,24 @@
 					"enabled": true
 				}
 			],
+			"url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/login",
+			"folder": "7c3198d0-380f-e0be-f10a-3a07bd207859",
+			"queryParams": [],
+			"preRequestScript": "",
+			"pathVariables": {},
 			"pathVariableData": [],
-			"responses": [],
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"tests": "var jsonData = JSON.parse(responseBody);\nvar token = jsonData.token||jsonData.data.token;\ntests[\"token found\"] = token;\nif(token){\n  postman.setEnvironmentVariable(\"token\", token);  \n}",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1508853636063,
+			"name": "login",
+			"description": "",
 			"collectionId": "dc89d653-d489-4df2-6b54-65c17dd6c874",
-			"collection_id": "dc89d653-d489-4df2-6b54-65c17dd6c874",
-			"isFromCollection": true,
-			"collectionRequestId": "292df11b-ef7b-5a8d-1d23-904e83a73f98"
+			"responses": [],
+			"rawModeData": "{\n  \"username\":\"{{auth_user}}\",\n  \"password\":\"{{auth_passwd}}\"\n}"
 		},
 		{
 			"id": "2b38964a-f471-8945-1456-6ef14b79f538",
@@ -244,6 +240,7 @@
 				}
 			],
 			"url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/ldapsearch?token={{token}}",
+			"folder": "3eed2fbe-b9de-d0a2-9b10-2733dfbb4b34",
 			"queryParams": [
 				{
 					"key": "token",
@@ -259,23 +256,22 @@
 			"method": "POST",
 			"data": [],
 			"dataMode": "raw",
-			"tests": "var jsonData = JSON.parse(responseBody);\n",
+			"tests": "var jsonData = JSON.parse(responseBody);\nvar ldap_users = jsonData.data||jsonData\ntests['ldap department found']=ldap_users.length>0\n",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1503416602268,
+			"time": 1508738630614,
 			"name": "search ldap department advanced",
 			"description": "",
 			"collectionId": "dc89d653-d489-4df2-6b54-65c17dd6c874",
 			"responses": [],
-			"rawModeData": "{\n\t\"base\":\"dc=test,dc=com\",\n\t\"options\":{\n\t\t\"filter\": \"(objectclass=posixGroup)\",\n\t\t\"paged\": {\n\t\t    \"pageSize\": 5,\n\t\t    \"page\":2\n\t\t  }\n\t}\n}",
-			"collection_id": "dc89d653-d489-4df2-6b54-65c17dd6c874",
-			"folder": "3eed2fbe-b9de-d0a2-9b10-2733dfbb4b34"
+			"rawModeData": "{\n\t\"base\":\"dc=test,dc=com\",\n\t\"options\":{\n\t\t\"filter\": \"(objectclass=posixGroup)\",\n\t\t\"paged\": {\n\t\t    \"pageSize\": 5,\n\t\t    \"page\":2\n\t\t  }\n\t}\n}"
 		},
 		{
 			"id": "2cd7ffb5-3feb-e372-c10e-4c3b69587ff9",
 			"headers": "",
 			"headerData": [],
 			"url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/active_users?token={{token}}",
+			"folder": "2a71282f-9db8-ba09-31eb-aef3a2b96bba",
 			"queryParams": [
 				{
 					"key": "token",
@@ -291,17 +287,14 @@
 			"method": "GET",
 			"data": null,
 			"dataMode": "params",
-			"tests": "var jsonData = JSON.parse(responseBody);\n",
+			"tests": "var jsonData = JSON.parse(responseBody)\nvar tokens = jsonData.data||jsonData\ntests[\"token found\"] = tokens.length >0\n",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1499147591924,
+			"time": 1508738183861,
 			"name": "query active tokens",
 			"description": "",
 			"collectionId": "dc89d653-d489-4df2-6b54-65c17dd6c874",
-			"responses": [],
-			"collection_id": "dc89d653-d489-4df2-6b54-65c17dd6c874",
-			"folderId": "2a71282f-9db8-ba09-31eb-aef3a2b96bba",
-			"folder": "2a71282f-9db8-ba09-31eb-aef3a2b96bba"
+			"responses": []
 		},
 		{
 			"id": "317b8f1b-842a-b95f-d974-551a0adc25d4",
@@ -324,10 +317,10 @@
 			"method": "DELETE",
 			"data": null,
 			"dataMode": "params",
-			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"role delete failed\"] = jsonData.status === 'error'",
+			"tests": "tests[\"delete role already used failed\"] = responseCode.code != 200",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1506509641243,
+			"time": 1508736383428,
 			"name": "delete role already used failed",
 			"description": "",
 			"collectionId": "dc89d653-d489-4df2-6b54-65c17dd6c874",
@@ -338,6 +331,7 @@
 			"headers": "",
 			"headerData": [],
 			"url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/userinfo?token={{token}}",
+			"folder": "81b700b9-c6bd-eea9-3f53-c51110847759",
 			"queryParams": [
 				{
 					"key": "token",
@@ -353,35 +347,18 @@
 			"method": "GET",
 			"data": null,
 			"dataMode": "params",
-			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"at least one user found\"] = jsonData.data.length >=1",
+			"tests": "var jsonData = JSON.parse(responseBody);\nvar users = jsonData.data||jsonData\ntests[\"at least one user found\"] = users.length >=1",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1501132025108,
+			"time": 1508736454210,
 			"name": "query User",
 			"description": "",
 			"collectionId": "dc89d653-d489-4df2-6b54-65c17dd6c874",
-			"responses": [],
-			"collection_id": "dc89d653-d489-4df2-6b54-65c17dd6c874",
-			"folder": "81b700b9-c6bd-eea9-3f53-c51110847759"
+			"responses": []
 		},
 		{
-			"folder": "81b700b9-c6bd-eea9-3f53-c51110847759",
 			"id": "42e74763-d83a-6160-0585-ca53d4604a17",
-			"name": "add user",
-			"dataMode": "raw",
-			"data": [],
-			"rawModeData": "{\n      \"type\":1,\n      \"attempt_ip\":\"10.50.13.69\",\n      \"userid\":{{auth_user_id}},\n      \"passwd\":\"{{auth_passwd}}\",\n      \"surname\":\"\",\n      \"name\":\"{{auth_user}}\",\n      \"alias\":\"{{auth_user}}\",\n      \"theme\":\"default\",\n      \"lang\":\"en_GB\"\n}",
-			"descriptionFormat": null,
-			"description": "",
 			"headers": "Content-Type: application/json\n",
-			"method": "POST",
-			"pathVariables": {},
-			"url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/register",
-			"preRequestScript": null,
-			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"user added\"] = jsonData.status === 'ok';",
-			"currentHelper": "normal",
-			"helperAttributes": {},
-			"queryParams": [],
 			"headerData": [
 				{
 					"key": "Content-Type",
@@ -390,12 +367,24 @@
 					"enabled": true
 				}
 			],
+			"url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/register",
+			"folder": "81b700b9-c6bd-eea9-3f53-c51110847759",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
 			"pathVariableData": [],
-			"responses": [],
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"tests": "tests[\"add user success\"] = responseCode.code == 200",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1508853710074,
+			"name": "add demo user",
+			"description": "",
 			"collectionId": "dc89d653-d489-4df2-6b54-65c17dd6c874",
-			"collection_id": "dc89d653-d489-4df2-6b54-65c17dd6c874",
-			"isFromCollection": true,
-			"collectionRequestId": "42e74763-d83a-6160-0585-ca53d4604a17"
+			"responses": [],
+			"rawModeData": "{\n      \"type\":1,\n      \"attempt_ip\":\"10.50.13.69\",\n      \"userid\":{{auth_user_id}},\n      \"passwd\":\"{{auth_passwd}}\",\n      \"surname\":\"\",\n      \"name\":\"{{auth_user}}\",\n      \"alias\":\"{{auth_user}}\",\n      \"theme\":\"default\",\n      \"lang\":\"en_GB\"\n}"
 		},
 		{
 			"id": "554bbd86-d394-4fbf-b6f8-124987dd4ab6",
@@ -409,6 +398,7 @@
 				}
 			],
 			"url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/enterprise/departments?token={{token}}&page=1&per_page=5",
+			"folder": "3eed2fbe-b9de-d0a2-9b10-2733dfbb4b34",
 			"queryParams": [
 				{
 					"key": "token",
@@ -438,36 +428,19 @@
 			"method": "GET",
 			"data": [],
 			"dataMode": "raw",
-			"tests": "var jsonData = JSON.parse(responseBody);\n",
+			"tests": "var jsonData = JSON.parse(responseBody);\nvar ldap_users = jsonData.data||jsonData\ntests['ldap department found']=ldap_users.length>0",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1503477667564,
+			"time": 1508738606661,
 			"name": "search ldap department",
 			"description": "",
 			"collectionId": "dc89d653-d489-4df2-6b54-65c17dd6c874",
 			"responses": [],
-			"rawModeData": "{\n\t\"base\":\"dc=test,dc=com\",\n\t\"options\":{\n\t\t\"filter\": \"(objectclass=posixGroup)\",\n\t\t\"paged\": {\n\t\t    \"pageSize\": 5,\n\t\t    \"page\":2\n\t\t  }\n\t}\n}",
-			"collection_id": "dc89d653-d489-4df2-6b54-65c17dd6c874",
-			"folder": "3eed2fbe-b9de-d0a2-9b10-2733dfbb4b34"
+			"rawModeData": "{\n\t\"base\":\"dc=test,dc=com\",\n\t\"options\":{\n\t\t\"filter\": \"(objectclass=posixGroup)\",\n\t\t\"paged\": {\n\t\t    \"pageSize\": 5,\n\t\t    \"page\":2\n\t\t  }\n\t}\n}"
 		},
 		{
-			"folder": "3eed2fbe-b9de-d0a2-9b10-2733dfbb4b34",
 			"id": "5df18eba-7799-7dcc-de60-dbd3b4840d84",
-			"name": "login-ldap",
-			"dataMode": "raw",
-			"data": [],
-			"rawModeData": "{\n  \"username\":\"{{auth_ldap_user}}\",\n  \"password\":\"{{auth_ldap_passwd}}\"\n}",
-			"descriptionFormat": null,
-			"description": "",
 			"headers": "Content-Type: application/json\n",
-			"method": "POST",
-			"pathVariables": {},
-			"url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/login-ldap",
-			"preRequestScript": "",
-			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"token found\"] = jsonData.data.token;\npostman.setEnvironmentVariable(\"token\", jsonData.data.token);\n",
-			"currentHelper": "normal",
-			"helperAttributes": {},
-			"queryParams": [],
 			"headerData": [
 				{
 					"key": "Content-Type",
@@ -476,10 +449,24 @@
 					"enabled": true
 				}
 			],
+			"url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/login-ldap",
+			"folder": "3eed2fbe-b9de-d0a2-9b10-2733dfbb4b34",
+			"queryParams": [],
+			"preRequestScript": "",
+			"pathVariables": {},
 			"pathVariableData": [],
-			"responses": [],
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"tests": "var jsonData = JSON.parse(responseBody);\nvar token = jsonData.data&&jsonData.data.token||jsonData.token\ntests[\"token found\"] = token;\nif(token){\n    postman.setEnvironmentVariable(\"token\", token);\n}\n\n",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1508738276847,
+			"name": "login-ldap",
+			"description": "",
 			"collectionId": "dc89d653-d489-4df2-6b54-65c17dd6c874",
-			"collection_id": "dc89d653-d489-4df2-6b54-65c17dd6c874"
+			"responses": [],
+			"rawModeData": "{\n  \"username\":\"{{auth_ldap_user}}\",\n  \"password\":\"{{auth_ldap_passwd}}\"\n}"
 		},
 		{
 			"id": "5e9428ae-42f2-9ee8-f17a-e6d9f9efdb4f",
@@ -502,10 +489,10 @@
 			"method": "GET",
 			"data": null,
 			"dataMode": "params",
-			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"at least one role found\"] = jsonData.data.length >=1",
+			"tests": "var jsonData = JSON.parse(responseBody);\nvar roles = jsonData.data||jsonData;\ntests[\"at least one role found\"] = roles.length >=1",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1506514813774,
+			"time": 1508735921928,
 			"name": "query roles",
 			"description": "",
 			"collectionId": "dc89d653-d489-4df2-6b54-65c17dd6c874",
@@ -539,16 +526,15 @@
 			"method": "POST",
 			"data": [],
 			"dataMode": "raw",
-			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"role added\"] = jsonData.status === 'ok';",
+			"tests": "tests[\"add role success\"] = responseCode.code == 200",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1505576552551,
+			"time": 1508735818136,
 			"name": "add role contributor",
 			"description": "",
 			"collectionId": "dc89d653-d489-4df2-6b54-65c17dd6c874",
 			"responses": [],
-			"rawModeData": "{\n      \"name\":\"contributor\",\n     \"allows\":[{\"resources\":\"own\",\"permissions\":[\"UPDATE\",\"DELETE\"]},{\"resources\":\"*\",\"permissions\":[\"CREATE\",\"READ\"]}],\n     \"additional\":{\"menus\":[\"menu1\",\"menu3\"]}\n}",
-			"collection_id": "dc89d653-d489-4df2-6b54-65c17dd6c874"
+			"rawModeData": "{\n      \"name\":\"contributor\",\n     \"allows\":[{\"resources\":\"own\",\"permissions\":[\"UPDATE\",\"DELETE\"]},{\"resources\":\"*\",\"permissions\":[\"CREATE\",\"READ\"]}],\n     \"additional\":{\"menus\":[\"menu1\",\"menu3\"]}\n}"
 		},
 		{
 			"id": "6e919da0-a5bd-0ccc-5118-2be2018c2eac",
@@ -571,10 +557,10 @@
 			"method": "GET",
 			"data": null,
 			"dataMode": "params",
-			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"at least one permission found\"] = jsonData.data.allows.length >=1",
+			"tests": "var jsonData = JSON.parse(responseBody);\nvar role = jsonData.data||jsonData\ntests[\"at least one permission found\"] = role.allows.length >=1",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1506514934563,
+			"time": 1508735889356,
 			"name": "query role",
 			"description": "",
 			"collectionId": "dc89d653-d489-4df2-6b54-65c17dd6c874",
@@ -641,10 +627,10 @@
 			"method": "PUT",
 			"data": [],
 			"dataMode": "raw",
-			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"role bind with user\"] = jsonData.status === 'ok';",
+			"tests": "tests[\"bind role to user success\"] = responseCode.code == 200",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1506514843679,
+			"time": 1508736040479,
 			"name": "bind role to user",
 			"description": "",
 			"collectionId": "dc89d653-d489-4df2-6b54-65c17dd6c874",
@@ -656,6 +642,7 @@
 			"headers": "",
 			"headerData": [],
 			"url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/userinfo/{{auth_user_id}}?token={{token}}",
+			"folder": "81b700b9-c6bd-eea9-3f53-c51110847759",
 			"queryParams": [
 				{
 					"key": "token",
@@ -671,16 +658,14 @@
 			"method": "GET",
 			"data": null,
 			"dataMode": "params",
-			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"one user found\"] = jsonData.status ==\"ok\"",
+			"tests": "tests[\"user found\"] = responseCode.code == 200",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1500866138386,
+			"time": 1508736501104,
 			"name": "query User By userid",
 			"description": "",
 			"collectionId": "dc89d653-d489-4df2-6b54-65c17dd6c874",
-			"responses": [],
-			"collection_id": "dc89d653-d489-4df2-6b54-65c17dd6c874",
-			"folder": "81b700b9-c6bd-eea9-3f53-c51110847759"
+			"responses": []
 		},
 		{
 			"id": "81410c0b-55b2-3cd8-6a2e-800a10353563",
@@ -694,6 +679,7 @@
 				}
 			],
 			"url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/changepwd/{{auth_user_id}}",
+			"folder": "81b700b9-c6bd-eea9-3f53-c51110847759",
 			"queryParams": [],
 			"preRequestScript": "",
 			"pathVariables": {},
@@ -701,36 +687,19 @@
 			"method": "PUT",
 			"data": [],
 			"dataMode": "raw",
-			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"passwd modified\"] = jsonData.status === 'ok';\n",
+			"tests": "tests[\"passwd modified\"] = responseCode.code == 200\n",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1499587166888,
+			"time": 1508736529151,
 			"name": "modify user passwd",
 			"description": "",
 			"collectionId": "dc89d653-d489-4df2-6b54-65c17dd6c874",
 			"responses": [],
-			"rawModeData": "{\n  \"token\":\"{{token}}\",\n  \"oldpwd\":\"{{auth_passwd}}\",\n  \"newpwd\":\"{{auth_passwd}}\"\n}",
-			"collection_id": "dc89d653-d489-4df2-6b54-65c17dd6c874",
-			"folder": "81b700b9-c6bd-eea9-3f53-c51110847759"
+			"rawModeData": "{\n  \"token\":\"{{token}}\",\n  \"oldpwd\":\"{{auth_passwd}}\",\n  \"newpwd\":\"{{auth_passwd}}\"\n}"
 		},
 		{
-			"folder": "2a71282f-9db8-ba09-31eb-aef3a2b96bba",
 			"id": "819858e4-2f3c-0cc7-5fbd-1090cafe2782",
-			"name": "check valid token",
-			"dataMode": "raw",
-			"data": [],
-			"rawModeData": "{\n  \"token\":\"{{token}}\"\n}",
-			"descriptionFormat": null,
-			"description": "",
 			"headers": "Content-Type: application/json\n",
-			"method": "POST",
-			"pathVariables": {},
-			"url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/check",
-			"preRequestScript": null,
-			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"token valid\"] = jsonData.status === 'ok';",
-			"currentHelper": "normal",
-			"helperAttributes": {},
-			"queryParams": [],
 			"headerData": [
 				{
 					"key": "Content-Type",
@@ -739,10 +708,24 @@
 					"enabled": true
 				}
 			],
+			"url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/check",
+			"folder": "2a71282f-9db8-ba09-31eb-aef3a2b96bba",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
 			"pathVariableData": [],
-			"responses": [],
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"tests": "tests[\"token valid\"] = responseCode.code == 200",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1508736623478,
+			"name": "check valid token",
+			"description": "",
 			"collectionId": "dc89d653-d489-4df2-6b54-65c17dd6c874",
-			"collection_id": "dc89d653-d489-4df2-6b54-65c17dd6c874"
+			"responses": [],
+			"rawModeData": "{\n  \"token\":\"{{token}}\"\n}"
 		},
 		{
 			"id": "87335566-86c6-a5e7-a683-5176f2247f01",
@@ -764,10 +747,10 @@
 			"method": "PUT",
 			"data": [],
 			"dataMode": "raw",
-			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"user modified\"] = jsonData.status === 'ok';\n",
+			"tests": "tests[\"user modified\"] = responseCode.code == 200\n",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1506514875957,
+			"time": 1508736542123,
 			"name": "modify user info",
 			"description": "",
 			"collectionId": "dc89d653-d489-4df2-6b54-65c17dd6c874",
@@ -776,7 +759,7 @@
 		},
 		{
 			"id": "8fb8d3d3-9645-7b69-ddd0-84f3e8242965",
-			"headers": "Content-Type: application/json\nx-token: superadmin_alibaba\n",
+			"headers": "Content-Type: application/json\ntoken: {{token}}\n",
 			"headerData": [
 				{
 					"key": "Content-Type",
@@ -785,8 +768,8 @@
 					"enabled": true
 				},
 				{
-					"key": "x-token",
-					"value": "superadmin_alibaba",
+					"key": "token",
+					"value": "{{token}}",
 					"description": "",
 					"enabled": true
 				}
@@ -800,35 +783,19 @@
 			"method": "POST",
 			"data": [],
 			"dataMode": "raw",
-			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"role added\"] = jsonData.status === 'ok';",
+			"tests": "tests[\"add role success\"] = responseCode.code == 200",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1505465989573,
+			"time": 1508735825827,
 			"name": "add role superAdmin",
 			"description": "",
 			"collectionId": "dc89d653-d489-4df2-6b54-65c17dd6c874",
 			"responses": [],
-			"rawModeData": "{\n      \"name\":\"superAdmin\",\n     \"allows\":[{\"resources\":\"*\",\"permissions\":\"*\"}],\n     \"additional\":{\"menus\":[\"menu2\",\"menu3\"]}\n}",
-			"collection_id": "dc89d653-d489-4df2-6b54-65c17dd6c874"
+			"rawModeData": "{\n      \"name\":\"superAdmin\",\n     \"allows\":[{\"resources\":\"*\",\"permissions\":\"*\"}],\n     \"additional\":{\"menus\":[\"menu2\",\"menu3\"]}\n}"
 		},
 		{
-			"folder": "2a71282f-9db8-ba09-31eb-aef3a2b96bba",
 			"id": "a3f56f06-a388-f528-5971-d6ebd6307b91",
-			"name": "login with user not exist",
-			"dataMode": "raw",
-			"data": [],
-			"rawModeData": "{\n  \"username\":\"test1\",\n  \"password\":\"test\"\n}",
-			"descriptionFormat": null,
-			"description": "",
 			"headers": "Content-Type: application/json\n",
-			"method": "POST",
-			"pathVariables": {},
-			"url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/login",
-			"preRequestScript": null,
-			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"login error\"] = jsonData.status === 'error';\n",
-			"currentHelper": "normal",
-			"helperAttributes": {},
-			"queryParams": [],
 			"headerData": [
 				{
 					"key": "Content-Type",
@@ -837,29 +804,28 @@
 					"enabled": true
 				}
 			],
+			"url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/login",
+			"folder": "2a71282f-9db8-ba09-31eb-aef3a2b96bba",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
 			"pathVariableData": [],
-			"responses": [],
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"tests": "tests[\"login failed\"] = responseCode.code != 200\n",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1508736579918,
+			"name": "login with user not exist",
+			"description": "",
 			"collectionId": "dc89d653-d489-4df2-6b54-65c17dd6c874",
-			"collection_id": "dc89d653-d489-4df2-6b54-65c17dd6c874"
+			"responses": [],
+			"rawModeData": "{\n  \"username\":\"test1\",\n  \"password\":\"test\"\n}"
 		},
 		{
-			"folder": "2a71282f-9db8-ba09-31eb-aef3a2b96bba",
 			"id": "a575da42-2f0f-6d1c-68ba-cd0ab2cb78be",
-			"name": "login with wrong passwd",
-			"dataMode": "raw",
-			"data": [],
-			"rawModeData": "{\n  \"username\":\"nerds\",\n  \"password\":\"test1\"\n}",
-			"descriptionFormat": null,
-			"description": "",
 			"headers": "Content-Type: application/json\n",
-			"method": "POST",
-			"pathVariables": {},
-			"url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/login",
-			"preRequestScript": null,
-			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"login error\"] = jsonData.status === 'error';\n",
-			"currentHelper": "normal",
-			"helperAttributes": {},
-			"queryParams": [],
 			"headerData": [
 				{
 					"key": "Content-Type",
@@ -868,10 +834,24 @@
 					"enabled": true
 				}
 			],
+			"url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/login",
+			"folder": "2a71282f-9db8-ba09-31eb-aef3a2b96bba",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
 			"pathVariableData": [],
-			"responses": [],
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"tests": "tests[\"login failed\"] = responseCode.code != 200\n",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1508736597890,
+			"name": "login with wrong passwd",
+			"description": "",
 			"collectionId": "dc89d653-d489-4df2-6b54-65c17dd6c874",
-			"collection_id": "dc89d653-d489-4df2-6b54-65c17dd6c874"
+			"responses": [],
+			"rawModeData": "{\n  \"username\":\"nerds\",\n  \"password\":\"test1\"\n}"
 		},
 		{
 			"id": "ba32652b-692a-1c3a-0306-1290b1bda1ee",
@@ -885,6 +865,7 @@
 				}
 			],
 			"url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/ldapsearch?token={{token}}",
+			"folder": "3eed2fbe-b9de-d0a2-9b10-2733dfbb4b34",
 			"queryParams": [
 				{
 					"key": "token",
@@ -900,17 +881,15 @@
 			"method": "POST",
 			"data": [],
 			"dataMode": "raw",
-			"tests": "var jsonData = JSON.parse(responseBody);\n",
+			"tests": "var jsonData = JSON.parse(responseBody);\nvar ldap_users = jsonData.data||jsonData\ntests['ldap users found']=ldap_users.length>0\n",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1503155651635,
+			"time": 1508738583243,
 			"name": "search ldap user advanced",
 			"description": "",
 			"collectionId": "dc89d653-d489-4df2-6b54-65c17dd6c874",
 			"responses": [],
-			"rawModeData": "{\n\t\"base\":\"ou=users,dc=test,dc=com\",\n\t\"options\":{\n\t\t\"filter\": \"(objectclass=posixAccount)\"\n\t}\n}",
-			"collection_id": "dc89d653-d489-4df2-6b54-65c17dd6c874",
-			"folder": "3eed2fbe-b9de-d0a2-9b10-2733dfbb4b34"
+			"rawModeData": "{\n\t\"base\":\"ou=users,dc=test,dc=com\",\n\t\"options\":{\n\t\t\"filter\": \"(objectclass=posixAccount)\"\n\t}\n}"
 		},
 		{
 			"id": "ba8b628b-f8ff-e762-799c-8d28d14f1f64",
@@ -940,35 +919,19 @@
 			"method": "POST",
 			"data": [],
 			"dataMode": "raw",
-			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"role added\"] = jsonData.status === 'ok';",
+			"tests": "tests[\"add role success\"] = responseCode.code == 200",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1505467012880,
+			"time": 1508735795655,
 			"name": "add role viewer",
 			"description": "",
 			"collectionId": "dc89d653-d489-4df2-6b54-65c17dd6c874",
 			"responses": [],
-			"rawModeData": "{\n      \"name\":\"viewer\",\n     \"allows\":[{\"resources\":\"*\",\"permissions\":[\"READ\"]}],\n     \"additional\":{\"menus\":[\"menu1\",\"menu3\"]}\n}",
-			"collection_id": "dc89d653-d489-4df2-6b54-65c17dd6c874"
+			"rawModeData": "{\n      \"name\":\"viewer\",\n     \"allows\":[{\"resources\":\"*\",\"permissions\":[\"READ\"]}],\n     \"additional\":{\"menus\":[\"menu1\",\"menu3\"]}\n}"
 		},
 		{
-			"folder": "81b700b9-c6bd-eea9-3f53-c51110847759",
 			"id": "be1ed9f4-d3e8-bc1d-2d9d-b650be6734c5",
-			"name": "login again",
-			"dataMode": "raw",
-			"data": [],
-			"rawModeData": "{\n  \"username\":\"{{auth_user}}\",\n  \"password\":\"{{auth_passwd}}\"\n}",
-			"descriptionFormat": null,
-			"description": "",
 			"headers": "Content-Type: application/json\n",
-			"method": "POST",
-			"pathVariables": {},
-			"url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/login",
-			"preRequestScript": "",
-			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"token found\"] = jsonData.data.token;\npostman.setEnvironmentVariable(\"token\", jsonData.data.token);\n",
-			"currentHelper": "normal",
-			"helperAttributes": {},
-			"queryParams": [],
 			"headerData": [
 				{
 					"key": "Content-Type",
@@ -977,13 +940,24 @@
 					"enabled": true
 				}
 			],
+			"url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/login",
+			"folder": "81b700b9-c6bd-eea9-3f53-c51110847759",
+			"queryParams": [],
+			"preRequestScript": "",
+			"pathVariables": {},
 			"pathVariableData": [],
-			"responses": [],
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"tests": "var jsonData = JSON.parse(responseBody);\nvar token = jsonData.token||jsonData.data.token;\ntests[\"token found\"] = token;\nif(token){\n   postman.setEnvironmentVariable(\"token\", token); \n}\n\n",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1508736108414,
+			"name": "login again",
+			"description": "",
 			"collectionId": "dc89d653-d489-4df2-6b54-65c17dd6c874",
-			"collection_id": "dc89d653-d489-4df2-6b54-65c17dd6c874",
-			"isFromCollection": true,
-			"collectionRequestId": "be1ed9f4-d3e8-bc1d-2d9d-b650be6734c5",
-			"folderId": "81b700b9-c6bd-eea9-3f53-c51110847759"
+			"responses": [],
+			"rawModeData": "{\n  \"username\":\"{{auth_user}}\",\n  \"password\":\"{{auth_passwd}}\"\n}"
 		},
 		{
 			"id": "daaf9732-f507-e945-1e35-11aaa891232a",
@@ -1013,18 +987,15 @@
 			"method": "POST",
 			"data": [],
 			"dataMode": "raw",
-			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"role added\"] = jsonData.status === 'ok';",
+			"tests": "tests[\"add role success\"] = responseCode.code == 200",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1505576490307,
+			"time": 1508735832473,
 			"name": "batch add roles",
 			"description": "",
 			"collectionId": "dc89d653-d489-4df2-6b54-65c17dd6c874",
 			"responses": [],
-			"rawModeData": "[\n\t{\n      \"name\":\"viewer\",\n     \"allows\":[{\"resources\":\"*\",\"permissions\":[\"READ\"]}],\n     \"additional\":{\"menus\":[\"menu1\",\"menu3\"]}\n\t},\n\t{\n      \"name\":\"contributor\",\n     \"allows\":[{\"resources\":\"own\",\"permissions\":[\"UPDATE\",\"DELETE\"]},{\"resources\":\"*\",\"permissions\":[\"CREATE\",\"READ\"]}],\n     \"additional\":{\"menus\":[\"menu1\",\"menu3\"]}\n\t},\n\t{\n      \"name\":\"superAdmin\",\n     \"allows\":[{\"resources\":\"*\",\"permissions\":\"*\"}],\n     \"additional\":{\"menus\":[\"menu2\",\"menu3\"]}\n\t}\n]",
-			"collection_id": "dc89d653-d489-4df2-6b54-65c17dd6c874",
-			"isFromCollection": true,
-			"collectionRequestId": "daaf9732-f507-e945-1e35-11aaa891232a"
+			"rawModeData": "[\n\t{\n      \"name\":\"viewer\",\n     \"allows\":[{\"resources\":\"*\",\"permissions\":[\"READ\"]}],\n     \"additional\":{\"menus\":[\"menu1\",\"menu3\"]}\n\t},\n\t{\n      \"name\":\"contributor\",\n     \"allows\":[{\"resources\":\"own\",\"permissions\":[\"UPDATE\",\"DELETE\"]},{\"resources\":\"*\",\"permissions\":[\"CREATE\",\"READ\"]}],\n     \"additional\":{\"menus\":[\"menu1\",\"menu3\"]}\n\t},\n\t{\n      \"name\":\"superAdmin\",\n     \"allows\":[{\"resources\":\"*\",\"permissions\":\"*\"}],\n     \"additional\":{\"menus\":[\"menu2\",\"menu3\"]}\n\t}\n]"
 		},
 		{
 			"id": "df00fc76-e39c-2037-c1d1-6281f270b6b5",
@@ -1038,6 +1009,7 @@
 				}
 			],
 			"url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/unassoc/{{auth_user_id}}",
+			"folder": "3eed2fbe-b9de-d0a2-9b10-2733dfbb4b34",
 			"queryParams": [],
 			"preRequestScript": "",
 			"pathVariables": {},
@@ -1045,17 +1017,15 @@
 			"method": "PUT",
 			"data": [],
 			"dataMode": "raw",
-			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"unassoc\"] = jsonData.status === 'ok';\n",
+			"tests": "tests[\"unassoc with ldap success\"] = responseCode.code == 200\n",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1499587038150,
+			"time": 1508738454422,
 			"name": "unassoc",
 			"description": "",
 			"collectionId": "dc89d653-d489-4df2-6b54-65c17dd6c874",
 			"responses": [],
-			"rawModeData": "{\n   \"token\":\"{{token}}\"\n}",
-			"collection_id": "dc89d653-d489-4df2-6b54-65c17dd6c874",
-			"folder": "3eed2fbe-b9de-d0a2-9b10-2733dfbb4b34"
+			"rawModeData": "{\n   \"token\":\"{{token}}\"\n}"
 		},
 		{
 			"id": "f7976b76-db6b-c435-a09f-bcab8443852f",
@@ -1077,15 +1047,46 @@
 			"method": "PUT",
 			"data": [],
 			"dataMode": "raw",
-			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"passwd modified\"] = jsonData.status === 'ok';\n",
+			"tests": "tests[\"assoc with ldap success\"] = responseCode.code == 200\n",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1506514508539,
+			"time": 1508738439529,
 			"name": "assoc with ldap",
 			"description": "",
 			"collectionId": "dc89d653-d489-4df2-6b54-65c17dd6c874",
 			"responses": [],
 			"rawModeData": "{\n   \"token\":\"{{token}}\",\n   \"ldap_cn\":\"{{auth_ldap_user}}\"\n}"
+		},
+		{
+			"id": "f79905a0-0ef2-98f7-2373-63947aee0fb2",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/register",
+			"folder": "81b700b9-c6bd-eea9-3f53-c51110847759",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"tests": "tests[\"add user success\"] = responseCode.code == 200",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1508853710074,
+			"name": "add demo user",
+			"description": "",
+			"collectionId": "dc89d653-d489-4df2-6b54-65c17dd6c874",
+			"responses": [],
+			"folderId": "81b700b9-c6bd-eea9-3f53-c51110847759",
+			"rawModeData": "{\n      \"type\":1,\n      \"attempt_ip\":\"10.50.13.69\",\n      \"userid\":{{auth_user_id}},\n      \"passwd\":\"{{auth_passwd}}\",\n      \"surname\":\"\",\n      \"name\":\"{{auth_user}}\",\n      \"alias\":\"{{auth_user}}\",\n      \"theme\":\"default\",\n      \"lang\":\"en_GB\"\n}"
 		}
 	]
 }

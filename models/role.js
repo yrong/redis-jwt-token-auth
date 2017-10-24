@@ -2,6 +2,8 @@ const db = require('../lib/db')
 const _ = require('lodash')
 const acl = require('../lib/acl')
 const Role = {}
+const common = require('scirichon-common')
+const ScirichonError = common.ScirichonError
 
 Role.findOne = async function (name) {
     let roles = await db.queryCql(`MATCH (n:Role{name:"${name}"}) return n`),role;

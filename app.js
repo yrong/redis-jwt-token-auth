@@ -4,6 +4,7 @@
 const log4js_wrapper = require('log4js_wrapper')
 const config = require('config')
 log4js_wrapper.initialize(config.get('logger'))
+const logger = log4js_wrapper.getLogger()
 
 const Koa = require('koa')
 const baseconfig = require('./base/index')
@@ -27,5 +28,5 @@ Account.syncAcl().then(()=>{
 })
 
 process.on('uncaughtException', (err) => {
-    console.log(`Caught exception: ${err}`)
+    logger.error(`Caught exception: ${err}`)
 })

@@ -59,7 +59,7 @@ module.exports = function jwt_token(options) {
             await next();
 		}else {
             if (ctx.path.includes('/auth/login') || ctx.path.includes('/auth/register')
-                || ctx.path.includes('/auth/hidden/clean') || ctx.path.includes('.html')||ctx.path.includes('.ico'))
+                 || ctx.path.includes('.html')||ctx.path.includes('.ico'))
                 await next()
             else{
                 ctx.throw(401,new ScirichonError('token not found in request!'))

@@ -12,9 +12,26 @@ const config = require('config')
 const _ = require('lodash')
 const file_uploader = require('koa-file-upload-fork')
 const responseWrapper = require('scirichon-response-wrapper')
+const log4js_wrapper = require('log4js_wrapper')
+const logger = log4js_wrapper.getLogger()
 
 module.exports = function middleware(app) {
-    app.use(responseWrapper())
+    if(config.get('wrapResponse'))
+        app.use(responseWrapper())
+    else{
+        app.use(async (ctx, next) => {
+            try {
+                const start = new Date()
+                await next();
+                const ms = new Date() - start
+                logger.info('%s %s - %s ms', ctx.method, ctx.originalUrl, ms)
+            } catch (error) {
+                ctx.body = String(error)
+                ctx.status = error.statusCode || 500
+                logger.error('%s %s - %s', ctx.method, ctx.originalUrl, error.stack || error)
+            }
+        })
+    }
     app.use(cors({ credentials: true }))
     app.use(bodyParser())
     app.use(mount("/", convert(Serve(__dirname + '/../public/'))))
