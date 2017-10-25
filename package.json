@@ -49,7 +49,7 @@
     "passport-ldapauth-fork": "^1.0.1",
     "passport-local": "^1.0.0",
     "webdav": "^0.9.0",
-    "scirichon-common": "1.0.1-beta.4",
+    "scirichon-common": "1.0.1-beta.5",
     "scirichon-response-wrapper": "1.0.0-beta.4"
   },
   "devDependencies": {
