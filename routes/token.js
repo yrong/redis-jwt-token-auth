@@ -2,6 +2,7 @@ const passport = require('koa-passport')
 const _ = require('lodash')
 const Account = require('../models/account')
 const Role = require('../models/role')
+const common = require('scirichon-common')
 
 module.exports = (router)=>{
     router.post('/login', async(ctx, next) => {
@@ -13,6 +14,8 @@ module.exports = (router)=>{
             user = _.omit(user,['passwd'])
             if(user.roles&&user.roles.length)
                 user.roles = await Role.mapRoles(user.roles)
+            ctx.cookies.set(common.TokenUserName, JSON.stringify(_.pick(user,['uuid','alias','userid','avatar','roles'])))
+            ctx.cookies.set(common.TokenName, token)
             ctx.body = {token: token,local:user}
         })(ctx, next)
     })

@@ -50,7 +50,7 @@
     "passport-local": "^1.0.0",
     "webdav": "^0.9.0",
     "scirichon-common": "1.0.1-beta.5",
-    "scirichon-response-wrapper": "1.0.0-beta.4"
+    "scirichon-response-wrapper": "1.0.0-beta.5"
   },
   "devDependencies": {
     "babel-cli": "^6.24.0",
