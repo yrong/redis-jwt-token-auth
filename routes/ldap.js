@@ -26,7 +26,7 @@ module.exports = (router)=>{
                 let token = await ctx.req.session.create(ctx.req.session.passport);
                 let local_user = await Account.getLocalByLdap(user)
                 if(local_user&&local_user.roles&&local_user.roles.length)
-                    local_user.roles = await Role.mapRoles(user.roles)
+                    local_user.roles = await Role.mapRoles(local_user.roles)
                 ctx.body = {token: token,local:local_user,ldap:_.omit(user,['userPassword'])};
             }else{
                 throw new ScirichonError('ldap authenticate failed,' + info.message)
