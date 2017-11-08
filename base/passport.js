@@ -10,7 +10,7 @@ const LocalStrategy = passport_local.Strategy
 const log4js = require('log4js');
 
 passport.serializeUser(function(user, done) {
-    if(user.cn) {
+    if(user[config.get('ldap.bindType')]) {
         user = _.pick(user, ['cn', 'dn'])
     }
     else{
@@ -36,9 +36,12 @@ passport.use(new LocalStrategy(function(username, password, done) {
     }).catch(done)
 }))
 
-let ldap_options = config.get('ldap')
+let ldap_options = _.clone(config.get('ldap'))
 const logger = log4js.getLogger('ldapauth')
-ldap_options.server.log = logger
+ldap_options.log = logger
+ldap_options.searchBase = ldap_options.userSearchBase
+ldap_options.searchAttributes = ldap_options.userAttributes
+ldap_options.server = ldap_options
 passport.use(new LdapStrategy(ldap_options));
 
 

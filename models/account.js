@@ -81,21 +81,26 @@ Account.updateInfo = async (params)=>{
 }
 
 Account.updateLocal2LdapAssoc = async (params)=>{
-    if(!params.ldap_cn){
-        throw new ScirichonError(`missing param ldap_user!`)
+    if(!params.ldapId){
+        throw new ScirichonError(`missing param ldapId!`)
     }
-    let ldap_user = await ldap.searchByUser(params.ldap_cn)
-    let cql = `MERGE (n:LdapUser {cn: "${ldap_user.cn}"})
-                                    ON CREATE SET n = {ldap_user}
-                                    ON MATCH SET n = {ldap_user}`
-    await db.queryCql(cql,{ldap_user})
-    let delRelsExistInUser_cypher = `MATCH (u:User{uuid: ${params.uuid}})-[r:Assoc]-()
-                                    DELETE r`
-    await db.queryCql(delRelsExistInUser_cypher)
-    let addUser2LdapUserRel_cypher = `MATCH (u:User{uuid:${params.uuid}})
-                                    MATCH (l:LdapUser {cn:"${ldap_user.cn}"})
-                                    CREATE (u)-[:Assoc]->(l)`
-    await db.queryCql(addUser2LdapUserRel_cypher)
+    let ldap_user = await ldap.searchByFilter(params.ldapId,{attributes:config.get('ldap.userAttributes')}),cql
+    if(ldap_user&&ldap_user.length){
+        ldap_user = ldap_user[0]
+        cql = `MERGE (n:LdapUser {${config.get('ldap.bindType')}: "${params.ldapId}"})
+               ON CREATE SET n = {ldap_user}
+               ON MATCH SET n = {ldap_user}`
+        await db.queryCql(cql,{ldap_user})
+        cql = `MATCH (u:User{uuid: ${params.uuid}})-[r:Assoc]-()
+               DELETE r`
+        await db.queryCql(cql)
+        cql = `MATCH (u:User{uuid:${params.uuid}})
+               MATCH (l:LdapUser {${config.get('ldap.bindType')}:"${params.ldapId}"})
+               CREATE (u)-[:Assoc]->(l)`
+        await db.queryCql(cql)
+    }else{
+        throw new ScirichonError('ldap user not found')
+    }
 }
 
 Account.unAssocLocal = async (params)=>{
@@ -106,18 +111,18 @@ Account.unAssocLocal = async (params)=>{
 
 
 Account.getLocalByLdap = async (ldap_user)=>{
-    if(!ldap_user.cn){
-        throw new ScirichonError('no cn found in ldap attributes')
+    if(!ldap_user[config.get('ldap.bindType')]){
+        throw new ScirichonError(`no ${config.get('ldap.bindType')} found in ldap attributes`)
     }
-    let cypher = `MATCH (u:User)-[r:Assoc]->(l:LdapUser {cn:"${ldap_user.cn}"})
+    let cypher = `MATCH (u:User)-[r:Assoc]->(l:LdapUser {${config.get('ldap.bindType')}:"${ldap_user[config.get('ldap.bindType')]}"})
                   RETURN u`
     let users = await db.queryCql(cypher)
-    return users[0]
+    return users.length?_.omit(users[0],['passwd','id']):undefined
 }
 
 Account.searchLdap = async(base,options)=>{
     options = options||{}
-    options.scope = options.scope || 'sub'
+    options.scope = 'sub'
     let items = await ldap.searchByFilter(base,options)
     return items
 }

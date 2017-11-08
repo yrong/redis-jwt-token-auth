@@ -1,7 +1,7 @@
 const _ = require('lodash')
 const config = require('config')
 const passport = require('koa-passport')
-const ldap_config = config.get('ldap.server')
+const ldap_config = config.get('ldap')
 const Account = require('../models/account')
 const Role = require('../models/role')
 const common = require('scirichon-common')
@@ -36,13 +36,13 @@ module.exports = (router)=>{
 
     router.post('/ldapsearch',async(ctx)=>{
         let params = ctx.request.body
-        let items = await Account.searchLdap(params.base,params.options)
+        let items = await Account.searchLdap(params.base,params.options||{})
         ctx.body = items
     })
 
     router.get('/enterprise/users',async(ctx)=>{
         let paged_params = _.assign({},ctx.params,ctx.query,ctx.request.body)
-        let items = await Account.searchLdapPagination(ldap_config.searchBase,ldap_config.userClass,paged_params,ldap_config.userAttributes)
+        let items = await Account.searchLdapPagination(ldap_config.userSearchBase,ldap_config.userClass,paged_params,ldap_config.userAttributes)
         ctx.body = items
     })
 

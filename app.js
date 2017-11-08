@@ -23,8 +23,8 @@ app.use(middleware())
 app.use(routes())
 
 Account.syncAcl().then(()=>{
-    app.listen(config.get('port'));
-    logger.info("Server started, listening on port: " + config.get('port'))
+    app.listen(config.get('auth.port'));
+    logger.info("Server started, listening on port: " + config.get('auth.port'))
 })
 
 process.on('uncaughtException', (err) => {
