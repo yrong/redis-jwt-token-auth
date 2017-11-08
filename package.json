@@ -12,7 +12,8 @@
     "init": "/bin/bash ./script/init.sh",
     "generate_simplified_postman_collection": "postman_simplify ./test/auth.postman_collection.json",
     "build": "webpack",
-    "syncNameWithAlias": "/bin/bash ./script/execute_cypher.sh ./cypher/syncNameWithAlias.cyp"
+    "syncNameWithAlias": "/bin/bash ./script/execute_cypher.sh ./cypher/syncNameWithAlias.cyp",
+    "prepare": "/bin/bash ./script/prepare.sh"
   },
   "keywords": [
     "koa2-boilerplate",
