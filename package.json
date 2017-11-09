@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "start": "node --harmony app.js",
-    "test": "node ./test/index.js",
+    "start": "NODE_ENV=production NODE_NAME=auth node ./server.js",
+    "test": "mocha ./test/index.js",
     "sync-mysql": "SYNC_TYPE=mysql node --harmony sync.js",
     "sync-nextcloud": "SYNC_TYPE=nextcloud node --harmony sync.js",
     "sync-ldap": "SYNC_TYPE=ldap node --harmony sync.js",

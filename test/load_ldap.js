@@ -1,6 +1,6 @@
 const ldap = require('ldapjs')
 const config = require('config')
-const ldap_config = config.get('ldap.server')
+const ldap_config = config.get('ldap')
 const client = ldap.createClient({
     url: ldap_config.url
 })
