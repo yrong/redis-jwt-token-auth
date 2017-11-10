@@ -1,29 +1,27 @@
 {
-  "name": "cmdb-auth",
+  "name": "auth",
   "version": "1.0.0",
   "description": "",
   "scripts": {
     "start": "NODE_ENV=production NODE_NAME=auth node ./server.js",
     "test": "mocha ./test/index.js",
-    "sync-mysql": "SYNC_TYPE=mysql node --harmony sync.js",
-    "sync-nextcloud": "SYNC_TYPE=nextcloud node --harmony sync.js",
-    "sync-ldap": "SYNC_TYPE=ldap node --harmony sync.js",
-    "sync-roles": "SYNC_TYPE=acl node --harmony sync.js",
+    "sync-mysql": "SYNC_TYPE=mysql node sync.js",
+    "sync-nextcloud": "SYNC_TYPE=nextcloud node sync.js",
+    "sync-ldap": "SYNC_TYPE=ldap node sync.js",
+    "sync-roles": "SYNC_TYPE=acl node sync.js",
     "init": "/bin/bash ./script/init.sh",
-    "generate_simplified_postman_collection": "postman_simplify ./test/auth.postman_collection.json",
     "build": "webpack",
-    "syncNameWithAlias": "/bin/bash ./script/execute_cypher.sh ./cypher/syncNameWithAlias.cyp",
-    "prepare": "/bin/bash ./script/prepare.sh"
+    "prepare": "/bin/bash ./script/prepare.sh&&/bin/bash ./script/execute_cypher.sh ./cypher/syncNameWithAlias.cyp"
   },
   "keywords": [
-    "koa2-boilerplate",
-    "koa2 export excel",
-    "koa2 login with passport.js",
-    "koa2 cors rest request",
-    "koa2 with redux or vue",
-    "koa2 with docker"
+    "redis-jwt-token",
+    "rbac",
+    "acl",
+    "passport",
+    "ldapauth",
+    "nextcloud"
   ],
-  "author": "SRK.Lyu <superalsrk@gmail.com> (http://stackbox.org)",
+  "author": "Ron.Yang <yrong1997@gmail.com>",
   "license": "MIT",
   "dependencies": {
     "acl-fork": "0.4.10-beta.3",
@@ -36,7 +34,6 @@
     "koa-compose": "^3.1.0",
     "koa-convert": "^1.2.0",
     "koa-generic-session": "^1.11.3",
-    "koa-logger": "^1.3.0",
     "koa-passport": "^2.2.1",
     "koa-router": "^7.0.1",
     "moment": "^2.13.0",
@@ -62,9 +59,9 @@
     "copy-webpack-plugin": "^4.0.1",
     "git-revision-webpack-plugin": "^2.4.1",
     "uglifyjs-webpack-plugin": "^1.0.1",
+    "chai": "^3.5.0",
     "mocha": "^3.0.2",
     "newman": "^3.4.2",
-    "postman_simplify": "1.0.0-beta.1",
     "webpack-shell-plugin": "^0.5.0",
     "webpack": "^3.8.1"
   }
