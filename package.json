@@ -11,7 +11,7 @@
     "sync-roles": "SYNC_TYPE=acl node sync.js",
     "init": "/bin/bash ./script/init.sh",
     "build": "webpack",
-    "prepare": "/bin/bash ./script/prepare.sh&&/bin/bash ./script/execute_cypher.sh ./cypher/syncNameWithAlias.cyp"
+    "prepare": "/bin/bash ./script/prepare.sh"
   },
   "keywords": [
     "redis-jwt-token",
