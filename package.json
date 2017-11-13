@@ -26,6 +26,7 @@
   "dependencies": {
     "acl-fork": "0.4.10-beta.3",
     "bcryptjs": "^2.3.0",
+    "config": "^1.25.1",
     "hashids": "^1.1.0",
     "jsonwebtoken": "^7.2.1",
     "kcors": "^2.1.1",
@@ -42,14 +43,13 @@
     "neo4j-driver": "^1.3.0",
     "ldapauth-fork-plus": "4.0.0-beta.1",
     "lodash": "^4.17.4",
-    "log4js_wrapper": "1.0.3-beta.4",
     "parse-neo4j": "^0.6.8",
     "passport-ldapauth-fork": "^1.0.1",
     "passport-local": "^1.0.0",
     "uuid": "^3.0.0",
     "webdav": "^0.9.0",
     "scirichon-common": "1.0.1-beta.6",
-    "scirichon-response-wrapper": "1.0.0-beta.5"
+    "scirichon-response-wrapper": "1.0.0-beta.6"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",

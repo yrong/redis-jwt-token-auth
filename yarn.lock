@@ -1060,8 +1060,8 @@ concat-stream@^1.5.0:
     typedarray "^0.0.6"
 
 config@^1.25.1:
-  version "1.27.0"
-  resolved "https://registry.npmjs.org/config/-/config-1.27.0.tgz#3ab30d0080ff76f407c2f47ac1326adfd908af5f"
+  version "1.28.1"
+  resolved "https://registry.npmjs.org/config/-/config-1.28.1.tgz#7625d2a1e4c90f131d8a73347982d93c3873282d"
   dependencies:
     json5 "0.4.0"
     os-homedir "1.0.2"
@@ -2615,16 +2615,9 @@ log4js@^1.1.0:
     semver "^5.3.0"
     streamroller "^0.4.0"
 
-log4js_wrapper@1.0.3-beta.3:
-  version "1.0.3-beta.3"
-  resolved "https://registry.npmjs.org/log4js_wrapper/-/log4js_wrapper-1.0.3-beta.3.tgz#d0dc865e4a0cd79f961f97b0a262c9c8020c3c7d"
-  dependencies:
-    config "^1.25.1"
-    log4js "^1.1.0"
-
-log4js_wrapper@1.0.3-beta.4:
-  version "1.0.3-beta.4"
-  resolved "https://registry.npmjs.org/log4js_wrapper/-/log4js_wrapper-1.0.3-beta.4.tgz#8bd44d36e3bcd72959186549c12927293c68e19e"
+log4js_wrapper@1.0.3-beta.5:
+  version "1.0.3-beta.5"
+  resolved "https://registry.npmjs.org/log4js_wrapper/-/log4js_wrapper-1.0.3-beta.5.tgz#9ce92fe63dbff2a79788b0337075b785c0141693"
   dependencies:
     log4js "^1.1.0"
 
@@ -3773,12 +3766,12 @@ scirichon-common@1.0.1-beta.6:
     request "^2.81.0"
     request-promise "^4.1.1"
 
-scirichon-response-wrapper@1.0.0-beta.5:
-  version "1.0.0-beta.5"
-  resolved "https://registry.npmjs.org/scirichon-response-wrapper/-/scirichon-response-wrapper-1.0.0-beta.5.tgz#b0080d3517724d06d3687a1a6bdc1be8d90e9c09"
+scirichon-response-wrapper@1.0.0-beta.6:
+  version "1.0.0-beta.6"
+  resolved "https://registry.npmjs.org/scirichon-response-wrapper/-/scirichon-response-wrapper-1.0.0-beta.6.tgz#3a71e8e258b5d422e2e878f8706243141b72addc"
   dependencies:
     lodash "^4.17.4"
-    log4js_wrapper "1.0.3-beta.3"
+    log4js_wrapper "1.0.3-beta.5"
 
 "semver@2 || 3 || 4 || 5", semver@5.4.1, semver@^5.3.0:
   version "5.4.1"
