@@ -10,8 +10,7 @@
     "sync-ldap": "SYNC_TYPE=ldap node sync.js",
     "sync-roles": "SYNC_TYPE=acl node sync.js",
     "init": "/bin/bash ./script/init.sh",
-    "build": "webpack",
-    "prepare": "/bin/bash ./script/prepare.sh"
+    "build": "webpack"
   },
   "keywords": [
     "redis-jwt-token",
