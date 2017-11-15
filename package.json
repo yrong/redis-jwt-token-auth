@@ -42,7 +42,7 @@
     "neo4j-driver": "^1.3.0",
     "ldapauth-fork-plus": "4.0.0-beta.1",
     "lodash": "^4.17.4",
-    "parse-neo4j": "^0.6.8",
+    "parse-neo4j-fork": "0.6.10",
     "passport-ldapauth-fork": "^1.0.1",
     "passport-local": "^1.0.0",
     "uuid": "^3.0.0",
