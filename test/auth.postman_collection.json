@@ -11,48 +11,7 @@
 			"description": "",
 			"item": [
 				{
-					"name": "add demo user",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"type": "text/javascript",
-								"exec": [
-									"tests[\"add user success\"] = responseCode.code == 200"
-								]
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n      \"type\":1,\n      \"attempt_ip\":\"10.50.13.69\",\n      \"userid\":{{auth_user_id}},\n      \"passwd\":\"{{auth_passwd}}\",\n      \"surname\":\"\",\n      \"name\":\"{{auth_user}}\",\n      \"alias\":\"{{auth_user}}\",\n      \"theme\":\"default\",\n      \"lang\":\"en_GB\"\n}"
-						},
-						"url": {
-							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/register",
-							"protocol": "http",
-							"host": [
-								"{{auth_api_host}}"
-							],
-							"port": "{{auth_api_port}}",
-							"path": [
-								"auth",
-								"register"
-							]
-						},
-						"description": ""
-					},
-					"response": []
-				},
-				{
-					"name": "login",
+					"name": "login with superadmin",
 					"event": [
 						{
 							"listen": "test",
@@ -79,7 +38,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"username\":\"{{auth_user}}\",\n  \"password\":\"{{auth_passwd}}\"\n}"
+							"raw": "{\n  \"username\":\"superadmin\",\n  \"password\":\"superadmin\"\n}"
 						},
 						"url": {
 							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/login",
@@ -420,7 +379,14 @@
 							"script": {
 								"type": "text/javascript",
 								"exec": [
-									"tests[\"add user success\"] = responseCode.code == 200"
+									"tests[\"add user success\"] = responseCode.code == 200",
+									"var jsonData = JSON.parse(responseBody);",
+									"jsonData = jsonData.data||jsonData",
+									"var userid = jsonData.uuid",
+									"tests[\"userid found\"] = userid;",
+									"if(userid){",
+									"  postman.setEnvironmentVariable(\"auth_user_id\", userid);  ",
+									"}"
 								]
 							}
 						}
@@ -435,7 +401,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n      \"type\":1,\n      \"attempt_ip\":\"10.50.13.69\",\n      \"userid\":{{auth_user_id}},\n      \"passwd\":\"{{auth_passwd}}\",\n      \"surname\":\"\",\n      \"name\":\"{{auth_user}}\",\n      \"alias\":\"{{auth_user}}\",\n      \"theme\":\"default\",\n      \"lang\":\"en_GB\"\n}"
+							"raw": "{\n  \"name\":\"{{auth_user}}\",\n  \"passwd\":\"{{auth_passwd}}\",\n  \"email\":\"{{auth_user_email}}\"\n}"
 						},
 						"url": {
 							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/register",
@@ -790,7 +756,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"username\":\"test1\",\n  \"password\":\"test\"\n}"
+							"raw": "{\n  \"username\":\"wronguser\",\n  \"password\":\"test\"\n}"
 						},
 						"url": {
 							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/login",
@@ -832,7 +798,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"username\":\"nerds\",\n  \"password\":\"test1\"\n}"
+							"raw": "{\n  \"username\":\"{{auth_user}}\",\n  \"password\":\"wrongpasswd\"\n}"
 						},
 						"url": {
 							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/login",
