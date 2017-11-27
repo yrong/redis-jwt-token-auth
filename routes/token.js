@@ -2,7 +2,7 @@ const passport = require('koa-passport')
 const _ = require('lodash')
 const Account = require('../models/account')
 const Role = require('../models/role')
-const common = require('scirichon-common')
+const ScirichonError = require('scirichon-common').ScirichonError
 
 const isLdapUser = (user)=>{
     return user.cn&&user.dn
@@ -20,7 +20,7 @@ module.exports = (router)=>{
     router.post('/login', async(ctx, next) => {
         await passport.authenticate('local',async(user, info) => {
             if(!user)
-                ctx.throw('login failed',401)
+                ctx.throw(401,new ScirichonError('login failed!'))
             await ctx.login(user)
             let token = await ctx.req.session.create(ctx.req.session.passport)
             user = _.omit(user,['passwd'])

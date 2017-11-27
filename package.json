@@ -3,14 +3,16 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "start": "NODE_ENV=production NODE_NAME=auth node ./server.js",
+    "setenv": "source ../config/.env&&source .env",
+    "prebuild": "yarn install&&rm -rf build",
+    "build": "webpack",
+    "initSchema": "$NEO4J_HOME/bin/neo4j-shell -file ./cypher/initSchema.cyp",
+    "start": "node ./server.js",
     "test": "mocha ./test/index.js",
     "sync-mysql": "SYNC_TYPE=mysql node sync.js",
     "sync-nextcloud": "SYNC_TYPE=nextcloud node sync.js",
     "sync-ldap": "SYNC_TYPE=ldap node sync.js",
-    "sync-roles": "SYNC_TYPE=acl node sync.js",
-    "init": "/bin/bash ./script/init.sh",
-    "build": "webpack"
+    "sync-roles": "SYNC_TYPE=acl node sync.js"
   },
   "keywords": [
     "redis-jwt-token",
@@ -51,17 +53,6 @@
     "scirichon-response-wrapper": "1.0.0-beta.6"
   },
   "devDependencies": {
-    "babel-core": "^6.26.0",
-    "babel-loader": "^7.1.2",
-    "babel-preset-env": "^1.6.1",
-    "clean-webpack-plugin": "^0.1.16",
-    "copy-webpack-plugin": "^4.0.1",
-    "git-revision-webpack-plugin": "^2.4.1",
-    "uglifyjs-webpack-plugin": "^1.0.1",
-    "chai": "^3.5.0",
-    "mocha": "^3.0.2",
-    "newman": "^3.4.2",
-    "webpack-shell-plugin": "^0.5.0",
-    "webpack": "^3.8.1"
+    "webpack-builder-advanced": "1.0.0-beta.1"
   }
 }

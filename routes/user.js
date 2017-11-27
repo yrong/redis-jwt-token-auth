@@ -26,8 +26,7 @@ module.exports = (router)=>{
 
     router.post('/register', async(ctx, next) => {
         let params = ctx.request.body
-        await Account.add(params)
-        ctx.body = {}
+        ctx.body = await Account.add(params)
     })
 
     router.post('/unregister/:uuid', async(ctx, next) => {

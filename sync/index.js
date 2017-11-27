@@ -9,18 +9,18 @@ const syncFromMysql = async function() {
     let rows = await db.querySql("SELECT * FROM users"),cypher,result,errors = [],results = []
     for(let row of rows){
         try {
-            cypher = `MATCH (u:User{alias:'${row.alias}'}) return u`
-            result = await db.queryCql(cypher)
+            cypher = `MATCH (u:User{alias:{alias}}) return u`
+            result = await db.queryCql(cypher,{alias:row.alias})
             if (result && result.length) {
                 row = _.merge({}, result[0], row)
-                row.userid = row.uuid = result[0].userid
+                row.uuid = row.userid = (String)(result[0].userid)
             }else{
-                row.uuid = row.userid
+                row.uuid = (String)(row.userid)
             }
             row.category = 'User'
             row.name = row.alias
-            cypher = `MERGE (u:User{uuid:${row.userid}}) ON CREATE SET u = {row} ON MATCH SET u = {row}`
-            result = await db.queryCql(cypher, {row: row})
+            cypher = `MERGE (u:User{uuid:{uuid}}) ON CREATE SET u = {row} ON MATCH SET u = {row}`
+            result = await db.queryCql(cypher, {row: row,uuid:row.uuid})
             results.push(result)
             console.log(`sync user ${JSON.stringify(row)} from mysql to neo4j`)
         }catch(error){
@@ -45,11 +45,11 @@ const sync2NextCloud = async function() {
         },
         result, results = [], errors = []
     for(let row of rows){
-        options.form = {userid:row.alias,password:row.passwd}
+        options.form = {userid:row.name,password:row.passwd}
         try {
             result = await rp(options)
             results.push(result)
-            console.log(`sync user ${row.alias} from neo4j to nextcloud`)
+            console.log(`sync user ${row.name} from neo4j to nextcloud`)
         }catch(error){
             errors.push(String(error))
         }

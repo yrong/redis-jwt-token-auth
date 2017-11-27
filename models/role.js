@@ -6,7 +6,7 @@ const common = require('scirichon-common')
 const ScirichonError = common.ScirichonError
 
 Role.findOne = async function (name) {
-    let roles = await db.queryCql(`MATCH (n:Role{name:"${name}"}) return n`),role;
+    let roles = await db.queryCql(`MATCH (n:Role{name:{name}}) return n`,{name}),role;
     if(roles.length == 1) {
         role = roles[0]
         role.allows = JSON.parse(role.allows)
@@ -60,10 +60,10 @@ Role.addOrUpdate = async function(params) {
 }
 
 Role.destory = async function(name) {
-    let find_user_cypher = `MATCH (r:Role) WHERE r.name = "${name}"
+    let find_user_cypher = `MATCH (r:Role) WHERE r.name = {name}
                     MATCH (u:User)-[:AssocRole]->(r)
                     RETURN u`
-    let result = await db.queryCql(find_user_cypher)
+    let result = await db.queryCql(find_user_cypher,{name})
     if(result&&result.length){
         throw new ScirichonError(`user already assoc,user:${result[0].uuid}`)
     }

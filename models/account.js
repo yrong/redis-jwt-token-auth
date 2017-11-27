@@ -8,9 +8,10 @@ const acl = require('../lib/acl')
 const Account = {}
 const common = require('scirichon-common')
 const ScirichonError = common.ScirichonError
+const uuid = require('uuid')
 
 Account.findOne = async function (uuid) {
-    let account = await db.queryCql(`MATCH (u:User{uuid:${uuid}}) return u`);
+    let account = await db.queryCql(`MATCH (u:User{uuid:{uuid}}) return u`,{uuid});
     if(account == null || account.length != 1) {
         throw new ScirichonError(`user with name ${uuid} not exist!`)
     }
@@ -23,13 +24,11 @@ Account.findAll = async function () {
 }
 
 Account.add = async function(params) {
-    params.uuid = params.userid
+    params.uuid = uuid.v1()
     params.category = 'User'
-    let cypher_params = {uuid:params.userid,fields:params}
-    let cypher = `MERGE (n:User {uuid: {uuid}})
-    ON CREATE SET n = {fields}
-    ON MATCH SET n = {fields}`
-    return await db.queryCql(cypher,cypher_params);
+    let cypher = `CREATE (n:User) SET n = {fields}`
+    await db.queryCql(cypher,{fields:params});
+    return {uuid:params.uuid}
 }
 
 Account.destory = function(uuid) {
@@ -38,12 +37,12 @@ Account.destory = function(uuid) {
 }
 
 Account.destoryAll = function() {
-    let cypher = `MATCH (n) WHERE n:User OR n:LdapUser DETACH DELETE n`
+    let cypher = `MATCH (n) WHERE (n:User and n.name<>"superadmin") OR n:LdapUser DETACH DELETE n`
     return db.queryCql(cypher);
 }
 
 Account.verify = function(username, password) {
-    return db.queryCql(`MATCH (u:User{alias:'${username}'}) return u`).then((account)=>{
+    return db.queryCql(`MATCH (u:User{name:{name}}) return u`,{name:username}).then((account)=>{
         if(account == null || account.length != 1) {
             throw new ScirichonError(`user with name ${username} not exist!`)
         } else{
@@ -57,17 +56,17 @@ Account.verify = function(username, password) {
 }
 
 Account.updatePassword = async (params)=>{
-    let cql = `MATCH (u:User{uuid:${params.uuid},passwd:'${params.oldpwd}'}) return u`
-    let account = await db.queryCql(cql)
+    let cql = `MATCH (u:User{uuid:{uuid},passwd:{passwd}}) return u`
+    let account = await db.queryCql(cql,{uuid:params.uuid,passwd:params.oldpwd})
     if(account == null || account.length != 1) {
         throw new ScirichonError(`user with id ${params.uuid} and password ${params.oldpwd} not exist!`)
     }
-    return await db.queryCql(`MATCH (u:User{uuid:${params.uuid}}) SET u.passwd = '${params.newpwd}'`)
+    return await db.queryCql(`MATCH (u:User{uuid:{uuid}}) SET u.passwd = {passwd}`,{uuid:params.uuid,passwd:params.newpwd})
 }
 
 const getUser = async(params)=>{
-    let cql = `MATCH (u:User{uuid:${params.uuid}}) return u`
-    let account = await db.queryCql(cql)
+    let cql = `MATCH (u:User{uuid:{uuid}}) return u`
+    let account = await db.queryCql(cql,{uuid:params.uuid})
     if(account == null || account.length != 1) {
         throw new ScirichonError(`user with id ${params.uuid} not exist!`)
     }
@@ -77,7 +76,7 @@ const getUser = async(params)=>{
 Account.updateInfo = async (params)=>{
     let account = await getUser(params)
     account = _.merge(account,_.omit(params,['token','uuid']))
-    return await db.queryCql(`MATCH (u:User{uuid:${params.uuid}}) SET u={account}`,{account})
+    return await db.queryCql(`MATCH (u:User{uuid:{uuid}}) SET u={account}`,{uuid:params.uuid,account})
 }
 
 Account.updateLocal2LdapAssoc = async (params)=>{
@@ -91,22 +90,22 @@ Account.updateLocal2LdapAssoc = async (params)=>{
                ON CREATE SET n = {ldap_user}
                ON MATCH SET n = {ldap_user}`
         await db.queryCql(cql,{ldap_user})
-        cql = `MATCH (u:User{uuid: ${params.uuid}})-[r:Assoc]-()
+        cql = `MATCH (u:User{uuid: {uuid}})-[r:Assoc]-()
                DELETE r`
-        await db.queryCql(cql)
-        cql = `MATCH (u:User{uuid:${params.uuid}})
-               MATCH (l:LdapUser {${config.get('ldap.bindType')}:"${params.ldapId}"})
+        await db.queryCql(cql,{uuid:params.uuid})
+        cql = `MATCH (u:User{uuid:{uuid}})
+               MATCH (l:LdapUser {${config.get('ldap.bindType')}:{ldapId}})
                CREATE (u)-[:Assoc]->(l)`
-        await db.queryCql(cql)
+        await db.queryCql(cql,{uuid:params.uuid,ldapId:params.ldapId})
     }else{
         throw new ScirichonError('ldap user not found')
     }
 }
 
 Account.unAssocLocal = async (params)=>{
-    let delRelsExistInUser_cypher = `MATCH (u:User{uuid: ${params.uuid}})-[r:Assoc]-()
+    let delRelsExistInUser_cypher = `MATCH (u:User{uuid: {uuid}})-[r:Assoc]-()
                                     DELETE r`
-    await db.queryCql(delRelsExistInUser_cypher)
+    await db.queryCql(delRelsExistInUser_cypher,{uuid:params.uuid})
 }
 
 
@@ -114,9 +113,9 @@ Account.getLocalByLdap = async (ldap_user)=>{
     if(!ldap_user[config.get('ldap.bindType')]){
         throw new ScirichonError(`no ${config.get('ldap.bindType')} found in ldap attributes`)
     }
-    let cypher = `MATCH (u:User)-[r:Assoc]->(l:LdapUser {${config.get('ldap.bindType')}:"${ldap_user[config.get('ldap.bindType')]}"})
+    let cypher = `MATCH (u:User)-[r:Assoc]->(l:LdapUser {${config.get('ldap.bindType')}:{ldapId}})
                   RETURN u`
-    let users = await db.queryCql(cypher)
+    let users = await db.queryCql(cypher,{ldapId:ldap_user[config.get('ldap.bindType')]})
     return users.length?_.omit(users[0],['passwd','id']):undefined
 }
 
@@ -160,15 +159,15 @@ Account.syncAcl = async()=>{
 }
 
 Account.updateRole = async (params)=>{
-    let delRoleRelsExistInUser_cypher = `MATCH (u:User{uuid: ${params.uuid}})-[r:AssocRole]-()
+    let delRoleRelsExistInUser_cypher = `MATCH (u:User{uuid: {uuid}})-[r:AssocRole]-()
                                     DELETE r`
-    await db.queryCql(delRoleRelsExistInUser_cypher)
-    let addUserRoleRel_cypher = `MATCH (u:User{uuid:${params.uuid}})
+    await db.queryCql(delRoleRelsExistInUser_cypher,{uuid:params.uuid})
+    let addUserRoleRel_cypher = `MATCH (u:User{uuid:{uuid}})
                                     UNWIND {roles} AS role_name
                                     MATCH (r:Role {name:role_name})
                                     CREATE (u)-[:AssocRole]->(r)`
     await db.queryCql(addUserRoleRel_cypher,params)
-    let addUserRoleProperty_cypher = `MATCH (u:User{uuid:${params.uuid}})
+    let addUserRoleProperty_cypher = `MATCH (u:User{uuid:{uuid}})
                                     SET u.roles = {roles}`
     await db.queryCql(addUserRoleProperty_cypher,params)
     let promise = new Promise((resolve,reject)=>{

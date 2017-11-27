@@ -6,8 +6,8 @@ const Redis = require('redis');
 const config = require('config')
 
 module.exports = function middleware() {
-    const redis_config = config.get('redis')
-    const redis_client = Redis.createClient(redis_config);
+    const redisOption = {host:`${process.env['REDIS_HOST']||config.get('redis.host')}`,port:config.get('redis.port')}
+    const redis_client = Redis.createClient(Object.assign({db:0},redisOption));
     return compose(
         [
             jwt_token({
