@@ -135,9 +135,9 @@
 							],
 							"query": [
 								{
+									"equals": true,
 									"key": "token",
-									"value": "{{token}}",
-									"equals": true
+									"value": "{{token}}"
 								}
 							]
 						},
@@ -183,9 +183,9 @@
 							],
 							"query": [
 								{
+									"equals": true,
 									"key": "token",
-									"value": "{{token}}",
-									"equals": true
+									"value": "{{token}}"
 								}
 							]
 						},
@@ -276,9 +276,9 @@
 							],
 							"query": [
 								{
+									"equals": true,
 									"key": "token",
-									"value": "{{token}}",
-									"equals": true
+									"value": "{{token}}"
 								}
 							]
 						},
@@ -319,9 +319,9 @@
 							],
 							"query": [
 								{
+									"equals": true,
 									"key": "token",
-									"value": "{{token}}",
-									"equals": true
+									"value": "{{token}}"
 								}
 							]
 						},
@@ -361,9 +361,9 @@
 							],
 							"query": [
 								{
+									"equals": true,
 									"key": "token",
-									"value": "{{token}}",
-									"equals": true
+									"value": "{{token}}"
 								}
 							]
 						},
@@ -458,9 +458,9 @@
 							],
 							"query": [
 								{
+									"equals": true,
 									"key": "token",
-									"value": "{{token}}",
-									"equals": true
+									"value": "{{token}}"
 								}
 							]
 						},
@@ -547,9 +547,9 @@
 							],
 							"query": [
 								{
+									"equals": true,
 									"key": "token",
-									"value": "{{token}}",
-									"equals": true
+									"value": "{{token}}"
 								}
 							]
 						},
@@ -589,9 +589,9 @@
 							],
 							"query": [
 								{
+									"equals": true,
 									"key": "token",
-									"value": "{{token}}",
-									"equals": true
+									"value": "{{token}}"
 								}
 							]
 						},
@@ -630,9 +630,9 @@
 							],
 							"query": [
 								{
+									"equals": true,
 									"key": "token",
-									"value": "{{token}}",
-									"equals": true
+									"value": "{{token}}"
 								}
 							]
 						},
@@ -720,6 +720,100 @@
 								"auth",
 								"userinfo",
 								"{{auth_user_id}}"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "add test user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"add user success\"] = responseCode.code == 200",
+									"var jsonData = JSON.parse(responseBody);",
+									"jsonData = jsonData.data||jsonData",
+									"var userid = jsonData.uuid",
+									"tests[\"userid found\"] = userid;",
+									"if(userid){",
+									"  postman.setEnvironmentVariable(\"test_user_id\", userid);  ",
+									"}"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\":\"test\",\n  \"passwd\":\"test\",\n  \"email\":\"test1@email.com\"\n}"
+						},
+						"url": {
+							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/register",
+							"protocol": "http",
+							"host": [
+								"{{auth_api_host}}"
+							],
+							"port": "{{auth_api_port}}",
+							"path": [
+								"auth",
+								"register"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "del test user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"user deleted\"] = responseCode.code == 200"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "token",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\":\"test\",\n  \"passwd\":\"test\",\n  \"email\":\"test1@email.com\"\n}"
+						},
+						"url": {
+							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/unregister/{{test_user_id}}",
+							"protocol": "http",
+							"host": [
+								"{{auth_api_host}}"
+							],
+							"port": "{{auth_api_port}}",
+							"path": [
+								"auth",
+								"unregister",
+								"{{test_user_id}}"
 							]
 						},
 						"description": ""
@@ -932,9 +1026,9 @@
 							],
 							"query": [
 								{
+									"equals": true,
 									"key": "token",
-									"value": "{{token}}",
-									"equals": true
+									"value": "{{token}}"
 								}
 							]
 						},
@@ -1120,19 +1214,19 @@
 							],
 							"query": [
 								{
+									"equals": true,
 									"key": "token",
-									"value": "{{token}}",
-									"equals": true
+									"value": "{{token}}"
 								},
 								{
+									"equals": true,
 									"key": "page",
-									"value": "1",
-									"equals": true
+									"value": "1"
 								},
 								{
+									"equals": true,
 									"key": "per_page",
-									"value": "5",
-									"equals": true
+									"value": "5"
 								}
 							]
 						},
@@ -1181,9 +1275,9 @@
 							],
 							"query": [
 								{
+									"equals": true,
 									"key": "token",
-									"value": "{{token}}",
-									"equals": true
+									"value": "{{token}}"
 								}
 							]
 						},
@@ -1232,19 +1326,19 @@
 							],
 							"query": [
 								{
+									"equals": true,
 									"key": "token",
-									"value": "{{token}}",
-									"equals": true
+									"value": "{{token}}"
 								},
 								{
+									"equals": true,
 									"key": "page",
-									"value": "1",
-									"equals": true
+									"value": "1"
 								},
 								{
+									"equals": true,
 									"key": "per_page",
-									"value": "5",
-									"equals": true
+									"value": "5"
 								}
 							]
 						},
@@ -1293,9 +1387,9 @@
 							],
 							"query": [
 								{
+									"equals": true,
 									"key": "token",
-									"value": "{{token}}",
-									"equals": true
+									"value": "{{token}}"
 								}
 							]
 						},
@@ -1341,6 +1435,54 @@
 					"path": [
 						"auth",
 						"logout"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "add superadmin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"add user success\"] = responseCode.code == 200",
+							"var jsonData = JSON.parse(responseBody);",
+							"jsonData = jsonData.data||jsonData",
+							"var userid = jsonData.uuid",
+							"tests[\"userid found\"] = userid;",
+							"if(userid){",
+							"  postman.setEnvironmentVariable(\"auth_user_id\", userid);  ",
+							"}"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\":\"{{auth_user}}\",\n  \"passwd\":\"{{auth_passwd}}\",\n  \"email\":\"{{auth_user_email}}\"\n}"
+				},
+				"url": {
+					"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/register",
+					"protocol": "http",
+					"host": [
+						"{{auth_api_host}}"
+					],
+					"port": "{{auth_api_port}}",
+					"path": [
+						"auth",
+						"register"
 					]
 				},
 				"description": ""

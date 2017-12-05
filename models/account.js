@@ -32,8 +32,8 @@ Account.add = async function(params) {
 }
 
 Account.destory = function(uuid) {
-    let cypher = `MATCH (n:User) WHERE n.uuid = ${uuid} DETACH DELETE n`
-    return db.queryCql(cypher);
+    let cypher = `MATCH (n:User) WHERE n.uuid = {uuid} DETACH DELETE n`
+    return db.queryCql(cypher,{uuid});
 }
 
 Account.destoryAll = function() {
