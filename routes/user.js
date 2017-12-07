@@ -29,7 +29,7 @@ module.exports = (router)=>{
         ctx.body = await Account.add(params)
     })
 
-    router.post('/unregister/:uuid', async(ctx, next) => {
+    router.del('/unregister/:uuid', async(ctx, next) => {
         await Account.destory(ctx.params.uuid)
         ctx.body = {}
     })
