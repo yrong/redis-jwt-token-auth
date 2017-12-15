@@ -18,12 +18,13 @@ const getUser = async (ctx,user)=>{
 
 module.exports = (router)=>{
     router.post('/login', async(ctx, next) => {
-        await passport.authenticate('local',async(user, info) => {
+        await passport.authenticate('local',async(err,user,info) => {
             if(!user)
                 ctx.throw(401,new ScirichonError('login failed!'))
             await ctx.login(user)
-            let token = await ctx.req.session.create(ctx.req.session.passport)
-            user = _.omit(user,['passwd'])
+            let passport = ctx.req.session.passport
+            let token = await ctx.req.session.create(passport)
+            user = passport.user
             if(user.roles&&user.roles.length)
                 user.roles = await Role.mapRoles(user.roles)
             ctx.body = {token: token,local:user}
@@ -37,13 +38,15 @@ module.exports = (router)=>{
     })
 
     router.post('/check', async(ctx, next) => {
-        let userInfo = await ctx.req.session.reload(),local_user=_.clone(userInfo.passport.user),result
-        if(local_user){
-            if(isLdapUser(local_user)){
-                local_user = await Account.getLocalByLdap(local_user)
-                result = {token: ctx.request.body.token,local:await getUser(ctx,local_user),ldap:userInfo.passport.user}
+        let passport = (await ctx.req.session.reload()).passport,
+            local_user = passport_user = passport.user,
+            token = ctx.request.body.token, result
+        if(passport_user){
+            if(isLdapUser(passport_user)){
+                local_user = await Account.getLocalByLdap(passport_user)
+                result = {token: token,local:await getUser(ctx,local_user),ldap:passport_user}
             }else{
-                result = {token: ctx.request.body.token,local:await getUser(ctx,local_user)}
+                result = {token: token,local:await getUser(ctx,local_user)}
             }
         }
         ctx.body = result

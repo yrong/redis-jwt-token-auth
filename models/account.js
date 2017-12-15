@@ -116,7 +116,7 @@ Account.getLocalByLdap = async (ldap_user)=>{
     let cypher = `MATCH (u:User)-[r:Assoc]->(l:LdapUser {${config.get('ldap.bindType')}:{ldapId}})
                   RETURN u`
     let users = await db.queryCql(cypher,{ldapId:ldap_user[config.get('ldap.bindType')]})
-    return users.length?_.omit(users[0],['passwd','id']):undefined
+    return users.length?_.pick(users[0],['category','uuid','name','avatar','roles','email']):undefined
 }
 
 Account.searchLdap = async(base,options)=>{

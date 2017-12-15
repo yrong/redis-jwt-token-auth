@@ -770,7 +770,7 @@
 								"register"
 							]
 						},
-						"description": ""
+						"description": null
 					},
 					"response": []
 				},
@@ -788,7 +788,7 @@
 						}
 					],
 					"request": {
-						"method": "POST",
+						"method": "DELETE",
 						"header": [
 							{
 								"key": "Content-Type",
@@ -814,6 +814,55 @@
 								"auth",
 								"unregister",
 								"{{test_user_id}}"
+							]
+						},
+						"description": null
+					},
+					"response": []
+				},
+				{
+					"name": "add test user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b7ed24f2-400d-4750-bf2e-ee714ae11e1b",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"add user success\"] = responseCode.code == 200",
+									"var jsonData = JSON.parse(responseBody);",
+									"jsonData = jsonData.data||jsonData",
+									"var userid = jsonData.uuid",
+									"tests[\"userid found\"] = userid;",
+									"if(userid){",
+									"  postman.setEnvironmentVariable(\"test_user_id\", userid);  ",
+									"}"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\":\"test\",\n  \"passwd\":\"test\",\n  \"email\":\"test@test.com\"\n}"
+						},
+						"url": {
+							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/register",
+							"protocol": "http",
+							"host": [
+								"{{auth_api_host}}"
+							],
+							"port": "{{auth_api_port}}",
+							"path": [
+								"auth",
+								"register"
 							]
 						},
 						"description": ""
@@ -1435,54 +1484,6 @@
 					"path": [
 						"auth",
 						"logout"
-					]
-				},
-				"description": ""
-			},
-			"response": []
-		},
-		{
-			"name": "add superadmin",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"type": "text/javascript",
-						"exec": [
-							"tests[\"add user success\"] = responseCode.code == 200",
-							"var jsonData = JSON.parse(responseBody);",
-							"jsonData = jsonData.data||jsonData",
-							"var userid = jsonData.uuid",
-							"tests[\"userid found\"] = userid;",
-							"if(userid){",
-							"  postman.setEnvironmentVariable(\"auth_user_id\", userid);  ",
-							"}"
-						]
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n  \"name\":\"{{auth_user}}\",\n  \"passwd\":\"{{auth_passwd}}\",\n  \"email\":\"{{auth_user_email}}\"\n}"
-				},
-				"url": {
-					"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/register",
-					"protocol": "http",
-					"host": [
-						"{{auth_api_host}}"
-					],
-					"port": "{{auth_api_port}}",
-					"path": [
-						"auth",
-						"register"
 					]
 				},
 				"description": ""

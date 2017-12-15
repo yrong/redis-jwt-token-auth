@@ -4,18 +4,19 @@ const config = require('config')
 const rp = require('request-promise')
 const webdav = require("webdav")
 const Account = require('../models/account')
+const uuid = require('uuid')
 
 const syncFromMysql = async function() {
     let rows = await db.querySql("SELECT * FROM users"),cypher,result,errors = [],results = []
     for(let row of rows){
         try {
-            cypher = `MATCH (u:User{alias:{alias}}) return u`
-            result = await db.queryCql(cypher,{alias:row.alias})
+            cypher = `MATCH (u:User{name:{name}}) return u`
+            result = await db.queryCql(cypher,{name:row.alias})
             if (result && result.length) {
                 row = _.merge({}, result[0], row)
-                row.uuid = row.userid = (String)(result[0].userid)
+                row.uuid = row.userid = (String)(result[0].uuid)
             }else{
-                row.uuid = (String)(row.userid)
+                row.uuid = row.userid = (String)(row.userid)
             }
             row.category = 'User'
             row.name = row.alias

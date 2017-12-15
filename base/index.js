@@ -1,9 +1,8 @@
 'use strict';
 
-const convert = require('koa-convert')
 const cors = require('kcors')
 const bodyParser = require('koa-bodyparser')
-const session = require('koa-generic-session')
+const session = require('koa-session')
 require('./passport')
 const passport = require('koa-passport')
 const config = require('config')
@@ -31,8 +30,8 @@ module.exports = function middleware(app) {
     }
     app.use(cors({ credentials: true }))
     app.use(bodyParser())
-    app.keys = ['auth']
-    app.use(convert(session()))
+    app.keys = [config.get('secret')]
+    app.use(session({},app))
     app.use(passport.initialize())
     app.use(passport.session())
 
