@@ -30,7 +30,18 @@ module.exports = (router)=>{
     })
 
     router.del('/unregister/:uuid', async(ctx, next) => {
-        await Account.destory(ctx.params.uuid)
+        let userid = ctx.params.uuid
+        await Account.destory(userid)
+        await ctx.req.session.deleteByUserId(userid)
+        ctx.body = {}
+    })
+
+    router.del('/unregister', async(ctx, next) => {
+        let uuids = ctx.request.body.uuids
+        for(let userid of uuids){
+            await Account.destory(userid)
+            await ctx.req.session.deleteByUserId(userid)
+        }
         ctx.body = {}
     })
 }

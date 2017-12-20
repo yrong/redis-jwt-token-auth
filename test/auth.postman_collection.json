@@ -469,7 +469,7 @@
 					"response": []
 				},
 				{
-					"name": "login again",
+					"name": "login with demo user",
 					"event": [
 						{
 							"listen": "test",
@@ -775,7 +775,7 @@
 					"response": []
 				},
 				{
-					"name": "del test user",
+					"name": "del multiple users",
 					"event": [
 						{
 							"listen": "test",
@@ -801,10 +801,10 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"name\":\"test\",\n  \"passwd\":\"test\",\n  \"email\":\"test1@email.com\"\n}"
+							"raw": "{\n  \"uuids\":[\"{{test_user_id}}\"]\n}"
 						},
 						"url": {
-							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/unregister/{{test_user_id}}",
+							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/unregister",
 							"protocol": "http",
 							"host": [
 								"{{auth_api_host}}"
@@ -812,8 +812,7 @@
 							"port": "{{auth_api_port}}",
 							"path": [
 								"auth",
-								"unregister",
-								"{{test_user_id}}"
+								"unregister"
 							]
 						},
 						"description": null

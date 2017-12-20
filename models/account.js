@@ -31,17 +31,19 @@ Account.add = async function(params) {
     return {uuid:params.uuid}
 }
 
-Account.destory = function(uuid) {
+Account.destory = async function(uuid) {
     let cypher = `MATCH (n:User) WHERE n.uuid = {uuid} DETACH DELETE n`
-    return db.queryCql(cypher,{uuid});
+    db.queryCql(cypher,{uuid})
+    let roles = await acl.userRoles(uuid)
+    await acl.removeUserRoles(uuid,roles)
 }
 
-Account.destoryAll = function() {
+Account.destoryAll = async function() {
     let cypher = `MATCH (n) WHERE (n:User and n.name<>"superadmin") OR n:LdapUser DETACH DELETE n`
     return db.queryCql(cypher);
 }
 
-Account.verify = function(username, password) {
+Account.verify = async function(username, password) {
     return db.queryCql(`MATCH (u:User{name:{name}}) return u`,{name:username}).then((account)=>{
         if(account == null || account.length != 1) {
             throw new ScirichonError(`user with name ${username} not exist!`)
