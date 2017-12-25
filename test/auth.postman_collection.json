@@ -1,15 +1,56 @@
 {
 	"info": {
 		"name": "auth",
-		"_postman_id": "dc89d653-d489-4df2-6b54-65c17dd6c874",
+		"_postman_id": "002873b4-8ce3-eac3-4eff-bbcc153c90fa",
 		"description": "",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
 			"name": "0-prepare",
-			"description": "",
 			"item": [
+				{
+					"name": "add superadmin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "1a36a392-560e-429f-be84-7a5de9bb90fb",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\":\"superadmin\",\n  \"passwd\":\"superadmin\"\n}"
+						},
+						"url": {
+							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/register",
+							"protocol": "http",
+							"host": [
+								"{{auth_api_host}}"
+							],
+							"port": "{{auth_api_port}}",
+							"path": [
+								"auth",
+								"register"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
 				{
 					"name": "login with superadmin",
 					"event": [
@@ -51,8 +92,7 @@
 								"auth",
 								"login"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -86,8 +126,7 @@
 								"hidden",
 								"clean"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				}
@@ -95,7 +134,6 @@
 		},
 		{
 			"name": "1-role&user",
-			"description": "",
 			"item": [
 				{
 					"name": "add role viewer",
@@ -140,8 +178,7 @@
 									"value": "{{token}}"
 								}
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -188,8 +225,7 @@
 									"value": "{{token}}"
 								}
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -233,8 +269,7 @@
 								"auth",
 								"role"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -281,8 +316,7 @@
 									"value": "{{token}}"
 								}
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -304,7 +338,10 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/role/contributor?token={{token}}",
 							"protocol": "http",
@@ -324,8 +361,7 @@
 									"value": "{{token}}"
 								}
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -347,7 +383,10 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/role?token={{token}}",
 							"protocol": "http",
@@ -366,8 +405,7 @@
 									"value": "{{token}}"
 								}
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -414,21 +452,20 @@
 								"auth",
 								"register"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
 				{
-					"name": "bind role to user",
+					"name": "bind role to demo user",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
 								"exec": [
 									"tests[\"bind role to user success\"] = responseCode.code == 200"
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -458,13 +495,12 @@
 							],
 							"query": [
 								{
-									"equals": true,
 									"key": "token",
-									"value": "{{token}}"
+									"value": "{{token}}",
+									"equals": true
 								}
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -511,8 +547,7 @@
 								"auth",
 								"login"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -522,10 +557,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
 								"exec": [
 									"tests[\"delete role already used failed\"] = responseCode.code != 200"
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -547,13 +582,12 @@
 							],
 							"query": [
 								{
-									"equals": true,
 									"key": "token",
-									"value": "{{token}}"
+									"value": "{{token}}",
+									"equals": true
 								}
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -575,7 +609,10 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/userinfo?token={{token}}",
 							"protocol": "http",
@@ -594,8 +631,7 @@
 									"value": "{{token}}"
 								}
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -615,7 +651,10 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/userinfo/{{auth_user_id}}?token={{token}}",
 							"protocol": "http",
@@ -635,8 +674,7 @@
 									"value": "{{token}}"
 								}
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -678,8 +716,7 @@
 								"changepwd",
 								"{{auth_user_id}}"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -721,8 +758,7 @@
 								"userinfo",
 								"{{auth_user_id}}"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -769,8 +805,7 @@
 								"auth",
 								"register"
 							]
-						},
-						"description": null
+						}
 					},
 					"response": []
 				},
@@ -814,8 +849,7 @@
 								"auth",
 								"unregister"
 							]
-						},
-						"description": null
+						}
 					},
 					"response": []
 				},
@@ -863,8 +897,55 @@
 								"auth",
 								"register"
 							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "bind role to test user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"tests[\"bind role to user success\"] = responseCode.code == 200"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n      \"roles\":[\"contributor\"]\n}"
 						},
-						"description": ""
+						"url": {
+							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/assocRole/{{test_user_id}}?token={{token}}",
+							"protocol": "http",
+							"host": [
+								"{{auth_api_host}}"
+							],
+							"port": "{{auth_api_port}}",
+							"path": [
+								"auth",
+								"assocRole",
+								"{{test_user_id}}"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"equals": true
+								}
+							]
+						}
 					},
 					"response": []
 				}
@@ -872,7 +953,6 @@
 		},
 		{
 			"name": "2-token",
-			"description": "",
 			"item": [
 				{
 					"name": "login with user not exist",
@@ -911,8 +991,7 @@
 								"auth",
 								"login"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -953,8 +1032,7 @@
 								"auth",
 								"login"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -994,8 +1072,7 @@
 								"auth",
 								"check"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -1036,8 +1113,7 @@
 								"auth",
 								"check"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -1060,7 +1136,10 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/active_users?token={{token}}",
 							"protocol": "http",
@@ -1079,8 +1158,7 @@
 									"value": "{{token}}"
 								}
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				}
@@ -1088,7 +1166,6 @@
 		},
 		{
 			"name": "3-ldap",
-			"description": "",
 			"item": [
 				{
 					"name": "login-ldap",
@@ -1133,8 +1210,7 @@
 								"auth",
 								"login-ldap"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -1176,8 +1252,7 @@
 								"assoc",
 								"{{auth_user_id}}"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -1219,8 +1294,7 @@
 								"unassoc",
 								"{{auth_user_id}}"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -1247,7 +1321,10 @@
 								"value": "application/json"
 							}
 						],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/enterprise/users?token={{token}}&page=1&per_page=5",
 							"protocol": "http",
@@ -1277,8 +1354,7 @@
 									"value": "5"
 								}
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -1328,8 +1404,7 @@
 									"value": "{{token}}"
 								}
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -1389,8 +1464,7 @@
 									"value": "5"
 								}
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -1440,8 +1514,7 @@
 									"value": "{{token}}"
 								}
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				}
@@ -1484,8 +1557,7 @@
 						"auth",
 						"logout"
 					]
-				},
-				"description": ""
+				}
 			},
 			"response": []
 		}
