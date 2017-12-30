@@ -28,7 +28,6 @@ Account.add = async function(params) {
         throw new ScirichonError('user missing params')
     params.uuid = uuid.v1()
     params.category = 'User'
-    params.alias = params.name
     let cypher = `CREATE (n:User) SET n = {fields}`
     await db.queryCql(cypher,{fields:params});
     return {uuid:params.uuid}
