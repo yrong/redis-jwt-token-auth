@@ -41,13 +41,13 @@ Account.destory = async function(uuid) {
 }
 
 Account.destoryAll = async function() {
-    let cypher = `MATCH (n) WHERE (n:User and n.name<>"superadmin") OR n:LdapUser DETACH DELETE n`
+    let cypher = `MATCH (n) WHERE (n:User) OR n:LdapUser DETACH DELETE n`
     return db.queryCql(cypher);
 }
 
 Account.verify = async function(username, password) {
     return db.queryCql(`MATCH (u:User{name:{name}}) return u`,{name:username}).then((account)=>{
-        if(account == null || account.length != 1) {
+        if(account == null) {
             throw new ScirichonError(`user with name ${username} not exist!`)
         } else{
             if(password !== account[0].passwd){
