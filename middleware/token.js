@@ -4,7 +4,7 @@ const utils = require('../lib/sessionUtils');
 const config = require('config');
 const scirichon_common = require('scirichon-common')
 const TokenName = scirichon_common.TokenName
-const internal_token_id = scirichon_common.internal_token_id
+const internal_token_id = scirichon_common.InternalTokenId
 const ScirichonError = scirichon_common.ScirichonError
 
 module.exports = function jwt_token(options) {

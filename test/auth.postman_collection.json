@@ -1,7 +1,7 @@
 {
 	"info": {
 		"name": "auth",
-		"_postman_id": "002873b4-8ce3-eac3-4eff-bbcc153c90fa",
+		"_postman_id": "651dc08b-7e52-25a6-8ef1-2d6547fbff1b",
 		"description": "",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -15,11 +15,11 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "1a36a392-560e-429f-be84-7a5de9bb90fb",
-								"type": "text/javascript",
 								"exec": [
 									""
-								]
+								],
+								"id": "1a36a392-560e-429f-be84-7a5de9bb90fb",
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -46,8 +46,7 @@
 								"auth",
 								"register"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -57,7 +56,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
 								"exec": [
 									"var jsonData = JSON.parse(responseBody);",
 									"var token = jsonData.token||jsonData.data.token;",
@@ -65,7 +63,8 @@
 									"if(token){",
 									"  postman.setEnvironmentVariable(\"token\", token);  ",
 									"}"
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -141,10 +140,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
 								"exec": [
 									"tests[\"add role success\"] = responseCode.code == 200"
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -188,10 +187,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
 								"exec": [
 									"tests[\"add role success\"] = responseCode.code == 200"
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -235,10 +234,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
 								"exec": [
 									"tests[\"add role success\"] = responseCode.code == 200"
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -279,10 +278,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
 								"exec": [
 									"tests[\"add role success\"] = responseCode.code == 200"
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -326,12 +325,12 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
 								"exec": [
 									"var jsonData = JSON.parse(responseBody);",
 									"var role = jsonData.data||jsonData",
 									"tests[\"at least one permission found\"] = role.allows.length >=1"
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -371,12 +370,12 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
 								"exec": [
 									"var jsonData = JSON.parse(responseBody);",
 									"var roles = jsonData.data||jsonData;",
 									"tests[\"at least one role found\"] = roles.length >=1"
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -415,7 +414,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
 								"exec": [
 									"tests[\"add user success\"] = responseCode.code == 200",
 									"var jsonData = JSON.parse(responseBody);",
@@ -425,7 +423,8 @@
 									"if(userid){",
 									"  postman.setEnvironmentVariable(\"auth_user_id\", userid);  ",
 									"}"
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -495,9 +494,9 @@
 							],
 							"query": [
 								{
+									"equals": true,
 									"key": "token",
-									"value": "{{token}}",
-									"equals": true
+									"value": "{{token}}"
 								}
 							]
 						}
@@ -510,7 +509,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
 								"exec": [
 									"var jsonData = JSON.parse(responseBody);",
 									"var token = jsonData.token||jsonData.data.token;",
@@ -520,7 +518,8 @@
 									"}",
 									"",
 									""
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -567,7 +566,10 @@
 					"request": {
 						"method": "DELETE",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/role/superAdmin?token={{token}}",
 							"protocol": "http",
@@ -582,9 +584,9 @@
 							],
 							"query": [
 								{
+									"equals": true,
 									"key": "token",
-									"value": "{{token}}",
-									"equals": true
+									"value": "{{token}}"
 								}
 							]
 						}
@@ -597,12 +599,12 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
 								"exec": [
 									"var jsonData = JSON.parse(responseBody);",
 									"var users = jsonData.data||jsonData",
 									"tests[\"at least one user found\"] = users.length >=1"
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -641,10 +643,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
 								"exec": [
 									"tests[\"user found\"] = responseCode.code == 200"
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -684,11 +686,11 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
 								"exec": [
 									"tests[\"passwd modified\"] = responseCode.code == 200",
 									""
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -726,11 +728,11 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
 								"exec": [
 									"tests[\"user modified\"] = responseCode.code == 200",
 									""
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -763,12 +765,53 @@
 					"response": []
 				},
 				{
+					"name": "modify demo user department",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"tests[\"user modified\"] = responseCode.code == 200",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n   \"token\":\"{{token}}\",\n  \"department\":\"{{department_2_id}}\"\n}"
+						},
+						"url": {
+							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/userinfo/{{auth_user_id}}",
+							"protocol": "http",
+							"host": [
+								"{{auth_api_host}}"
+							],
+							"port": "{{auth_api_port}}",
+							"path": [
+								"auth",
+								"userinfo",
+								"{{auth_user_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "add test user",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
 								"exec": [
 									"tests[\"add user success\"] = responseCode.code == 200",
 									"var jsonData = JSON.parse(responseBody);",
@@ -778,7 +821,8 @@
 									"if(userid){",
 									"  postman.setEnvironmentVariable(\"test_user_id\", userid);  ",
 									"}"
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -792,7 +836,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"name\":\"test\",\n  \"passwd\":\"test\",\n  \"email\":\"test1@email.com\"\n}"
+							"raw": "{\n  \"name\":\"test1\",\n  \"passwd\":\"test\",\n  \"email\":\"test1@email.com\"\n}"
 						},
 						"url": {
 							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/register",
@@ -815,10 +859,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
 								"exec": [
 									"tests[\"user deleted\"] = responseCode.code == 200"
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -859,8 +903,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "b7ed24f2-400d-4750-bf2e-ee714ae11e1b",
-								"type": "text/javascript",
 								"exec": [
 									"tests[\"add user success\"] = responseCode.code == 200",
 									"var jsonData = JSON.parse(responseBody);",
@@ -870,7 +912,9 @@
 									"if(userid){",
 									"  postman.setEnvironmentVariable(\"test_user_id\", userid);  ",
 									"}"
-								]
+								],
+								"id": "b7ed24f2-400d-4750-bf2e-ee714ae11e1b",
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -896,6 +940,48 @@
 							"path": [
 								"auth",
 								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "modify test user department",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"tests[\"user modified\"] = responseCode.code == 200",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n   \"token\":\"{{token}}\",\n  \"department\":\"{{department_3_id}}\"\n}"
+						},
+						"url": {
+							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/userinfo/{{test_user_id}}",
+							"protocol": "http",
+							"host": [
+								"{{auth_api_host}}"
+							],
+							"port": "{{auth_api_port}}",
+							"path": [
+								"auth",
+								"userinfo",
+								"{{test_user_id}}"
 							]
 						}
 					},
@@ -940,9 +1026,9 @@
 							],
 							"query": [
 								{
+									"equals": true,
 									"key": "token",
-									"value": "{{token}}",
-									"equals": true
+									"value": "{{token}}"
 								}
 							]
 						}
@@ -960,11 +1046,11 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
 								"exec": [
 									"tests[\"login failed\"] = responseCode.code != 200",
 									""
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -1001,11 +1087,11 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
 								"exec": [
 									"tests[\"login failed\"] = responseCode.code != 200",
 									""
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -1042,10 +1128,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
 								"exec": [
 									"tests[\"token valid\"] = responseCode.code == 200"
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -1082,11 +1168,11 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
 								"exec": [
 									"tests[\"token invalid\"] = responseCode.code != 200",
 									""
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -1123,13 +1209,13 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
 								"exec": [
 									"var jsonData = JSON.parse(responseBody)",
 									"var tokens = jsonData.data||jsonData",
 									"tests[\"token found\"] = tokens.length >0",
 									""
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -1173,7 +1259,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
 								"exec": [
 									"var jsonData = JSON.parse(responseBody);",
 									"var token = jsonData.data&&jsonData.data.token||jsonData.token",
@@ -1183,7 +1268,8 @@
 									"}",
 									"",
 									""
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -1220,11 +1306,11 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
 								"exec": [
 									"tests[\"assoc with ldap success\"] = responseCode.code == 200",
 									""
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -1262,11 +1348,11 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
 								"exec": [
 									"tests[\"unassoc with ldap success\"] = responseCode.code == 200",
 									""
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -1304,12 +1390,12 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
 								"exec": [
 									"var jsonData = JSON.parse(responseBody);",
 									"var ldap_users = jsonData.data||jsonData",
 									"tests['ldap users found']=ldap_users.length>0"
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -1364,13 +1450,13 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
 								"exec": [
 									"var jsonData = JSON.parse(responseBody);",
 									"var ldap_users = jsonData.data||jsonData",
 									"tests['ldap users found']=ldap_users.length>0",
 									""
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -1414,12 +1500,12 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
 								"exec": [
 									"var jsonData = JSON.parse(responseBody);",
 									"var ldap_users = jsonData.data||jsonData",
 									"tests['ldap department found']=ldap_users.length>0"
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -1474,13 +1560,13 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
 								"exec": [
 									"var jsonData = JSON.parse(responseBody);",
 									"var ldap_users = jsonData.data||jsonData",
 									"tests['ldap department found']=ldap_users.length>0",
 									""
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
