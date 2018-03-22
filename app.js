@@ -21,8 +21,10 @@ app.use(middleware())
 //configure custom routes
 app.use(routes())
 
-app.listen(config.get('auth.port'));
-logger.info("Server started, listening on port: " + config.get('auth.port'))
+app.listen(config.get('auth.port'),()=>{
+    logger.info("Server started, listening on port: " + config.get('auth.port'))
+})
+
 
 process.on('uncaughtException', (err) => {
     logger.error(`Caught exception: ${err}`)

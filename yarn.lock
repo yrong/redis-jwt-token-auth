@@ -3760,17 +3760,17 @@ schema-utils@^0.3.0:
   dependencies:
     ajv "^5.0.0"
 
-scirichon-common@1.0.1-beta.8:
-  version "1.0.1-beta.8"
-  resolved "https://registry.npmjs.org/scirichon-common/-/scirichon-common-1.0.1-beta.8.tgz#bd146d30d554e2cc0ce160b28e35ac6049ee4c89"
+scirichon-common@1.0.2-beta.2:
+  version "1.0.2-beta.2"
+  resolved "https://registry.npmjs.org/scirichon-common/-/scirichon-common-1.0.2-beta.2.tgz#165c1a6d94b394feaebd58ecf5213fdf2dcf9a8a"
   dependencies:
     lodash "^4.17.4"
     request "^2.81.0"
     request-promise "^4.1.1"
 
-scirichon-response-wrapper@1.0.0-beta.8:
-  version "1.0.0-beta.8"
-  resolved "https://registry.npmjs.org/scirichon-response-wrapper/-/scirichon-response-wrapper-1.0.0-beta.8.tgz#d930346b79423e43fe372bbe7f22de934c1dec4a"
+scirichon-response-wrapper@1.0.0-beta.9:
+  version "1.0.0-beta.9"
+  resolved "https://registry.npmjs.org/scirichon-response-wrapper/-/scirichon-response-wrapper-1.0.0-beta.9.tgz#74fff82dff87f37781b8db3050d3123fa7293e94"
   dependencies:
     lodash "^4.17.4"
     log4js_wrapper "1.0.3-beta.5"

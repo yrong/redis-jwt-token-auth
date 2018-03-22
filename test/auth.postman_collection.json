@@ -7,7 +7,7 @@
 	},
 	"item": [
 		{
-			"name": "0-prepare",
+			"name": "prepare",
 			"item": [
 				{
 					"name": "add superadmin",
@@ -132,7 +132,7 @@
 			]
 		},
 		{
-			"name": "1-role&user",
+			"name": "role&user",
 			"item": [
 				{
 					"name": "add role viewer",
@@ -256,6 +256,50 @@
 						"body": {
 							"mode": "raw",
 							"raw": "{\n      \"name\":\"superAdmin\",\n     \"allows\":[{\"resources\":\"*\",\"permissions\":\"*\"}],\n     \"additional\":{\"menus\":[\"menu2\",\"menu3\"]}\n}"
+						},
+						"url": {
+							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/role",
+							"protocol": "http",
+							"host": [
+								"{{auth_api_host}}"
+							],
+							"port": "{{auth_api_port}}",
+							"path": [
+								"auth",
+								"role"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add external role",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"tests[\"add role success\"] = responseCode.code == 200"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "token",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n      \"name\":\"external\",\n     \"allows\":[{\"resources\":\"*\",\"permissions\":\"*\"}],\n     \"external\":true\n}"
 						},
 						"url": {
 							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/role",
@@ -1034,11 +1078,59 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "add external user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "fe9763e6-5fbf-4bcf-99b9-8e87f9416cb1",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"add user success\"] = responseCode.code == 200",
+									"var jsonData = JSON.parse(responseBody);",
+									"jsonData = jsonData.data||jsonData",
+									"var userid = jsonData.uuid",
+									"tests[\"userid found\"] = userid;",
+									"if(userid){",
+									"  postman.setEnvironmentVariable(\"external_user_id\", userid);  ",
+									"}"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\":\"external\",\n  \"passwd\":\"external\",\n  \"email\":\"external@test.com\",\n  \"external\":true\n}"
+						},
+						"url": {
+							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/register",
+							"protocol": "http",
+							"host": [
+								"{{auth_api_host}}"
+							],
+							"port": "{{auth_api_port}}",
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
 		{
-			"name": "2-token",
+			"name": "token",
 			"item": [
 				{
 					"name": "login with user not exist",
@@ -1251,7 +1343,7 @@
 			]
 		},
 		{
-			"name": "3-ldap",
+			"name": "ldap",
 			"item": [
 				{
 					"name": "login-ldap",
