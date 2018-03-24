@@ -67,9 +67,9 @@ Role.destory = async function(name) {
     if(result&&result.length){
         throw new ScirichonError(`user already assoc,user:${result[0].uuid}`)
     }
-    let cypher = `MATCH (n:Role) WHERE n.name = "${name}" DETACH DELETE n`
-    await db.queryCql(cypher)
-    acl.removeRole(name)
+    let cypher = `MATCH (n:Role) WHERE n.name = {name} DETACH DELETE n`
+    await db.queryCql(cypher,{name})
+    await acl.removeRole(name)
 }
 
 Role.clearAll = async function() {

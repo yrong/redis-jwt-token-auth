@@ -5,6 +5,7 @@ const log4js_wrapper = require('log4js_wrapper')
 const config = require('config')
 log4js_wrapper.initialize(config.get('logger'))
 const logger = log4js_wrapper.getLogger()
+const scirichon_cache = require('scirichon-cache')
 
 const Koa = require('koa')
 const baseconfig = require('./base/index')
@@ -20,6 +21,9 @@ app.use(middleware())
 
 //configure custom routes
 app.use(routes())
+
+const redisOption = {host:`${process.env['REDIS_HOST']||config.get('redis.host')}`,port:config.get('redis.port')}
+scirichon_cache.initialize({redisOption,prefix:process.env['SCHEMA_TYPE']})
 
 app.listen(config.get('auth.port'),()=>{
     logger.info("Server started, listening on port: " + config.get('auth.port'))

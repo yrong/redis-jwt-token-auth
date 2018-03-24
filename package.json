@@ -48,7 +48,8 @@
     "passport-local": "^1.0.0",
     "uuid": "^3.0.0",
     "webdav": "^0.9.0",
-    "scirichon-common": "1.0.2-beta.2",
+    "scirichon-common": "1.0.2-beta.4",
+    "scirichon-cache": "1.0.6-beta.4",
     "scirichon-response-wrapper": "1.0.0-beta.9"
   },
   "devDependencies": {
