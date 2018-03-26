@@ -4,6 +4,7 @@ const common = require('scirichon-common')
 const ScirichonError = common.ScirichonError
 const ScirichonWarning = common.ScirichonWarning
 const scirichon_cache = require('scirichon-cache')
+const config = require('config')
 
 const addRole = async(role)=>{
     if(!role.name||!role.allows){
@@ -37,7 +38,16 @@ module.exports = (router)=>{
     })
 
     router.get('/role', async(ctx, next) => {
-        ctx.body = await Role.findAll()
+        let params = ctx.query
+        params.limit = parseInt(params.per_page||config.get('perPageSize'))
+        params.skip = (parseInt(params.page||1)-1) * params.limit
+        if(params.external==='true'){
+            params.fields = {external:true}
+        }else if(params.external==='false'){
+            params.condition = `where not exists(n.external)`
+        }
+        let roles = await Role.findAll(params)
+        ctx.body = roles||{}
     })
 
     router.del('/role/:name', async(ctx, next) => {

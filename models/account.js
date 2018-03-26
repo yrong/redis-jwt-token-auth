@@ -16,9 +16,25 @@ Account.findOne = async function (uuid) {
     return account[0]
 }
 
-Account.findAll = async function () {
-    let account = await db.queryCql(`MATCH (u:User) return u`);
-    return account
+Account.findAll = async function (params) {
+    let condition = params.condition||''
+    if(params.fields){
+        _.assign(params,params.fields)
+        for(let key in params.fields){
+            condition = condition + ` AND n.${key}={${key}}`
+        }
+        if(!condition.includes('where')){
+            condition = 'where' + condition.substr(4)
+        }
+    }
+    let cypher = `
+    MATCH (n:User) ${condition} WITH count(n) AS cnt
+    MATCH (n:User) ${condition}
+    WITH n as n, cnt
+    SKIP {skip} LIMIT {limit}
+    RETURN { count: cnt, results:collect(n) }`
+    let account = await db.queryCql(cypher,params);
+    return account&&account[0]
 }
 
 Account.add = async function(params) {

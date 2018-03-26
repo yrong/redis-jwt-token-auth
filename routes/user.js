@@ -5,6 +5,7 @@ const ScirichonError = common.ScirichonError
 const ScirichonWarning = common.ScirichonWarning
 const scirichon_cache = require('scirichon-cache')
 const uuid = require('uuid')
+const config = require('config')
 
 const deleteUser = async (userid,ctx)=>{
     let notification,user = await Account.findOne(userid),notification_url = common.getServiceApiUrl('notifier'),department
@@ -47,8 +48,18 @@ const UserOmitFields = ['passwd','id']
 
 module.exports = (router)=>{
     router.get('/userinfo', async(ctx, next) => {
-        let users = await Account.findAll()
-        ctx.body = _.map(users,(user)=>_.omit(user,UserOmitFields))
+        let params = ctx.query
+        params.limit = parseInt(params.per_page||config.get('perPageSize'))
+        params.skip = (parseInt(params.page||1)-1) * params.limit
+        if(params.external==='true'){
+            params.fields = {external:true}
+        }else if(params.external==='false'){
+            params.condition = `where not exists(n.external)`
+        }
+        let users = await Account.findAll(params)
+        if(users&&users.results)
+            users.results = _.map(users.results,(user)=>_.omit(user,UserOmitFields))
+        ctx.body = users||{}
     });
 
     router.get('/userinfo/:uuid',async(ctx,next)=>{
