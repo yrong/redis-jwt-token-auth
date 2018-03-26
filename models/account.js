@@ -16,9 +16,9 @@ Account.findOne = async function (uuid) {
     return account[0]
 }
 
-Account.findAll = async function (params) {
-    let condition = params.condition||''
-    if(params.fields){
+Account.Search = async function (params) {
+    let condition = params&&params.condition||''
+    if(!_.isEmpty(params.fields)){
         _.assign(params,params.fields)
         for(let key in params.fields){
             condition = condition + ` AND n.${key}={${key}}`
@@ -34,6 +34,13 @@ Account.findAll = async function (params) {
     SKIP {skip} LIMIT {limit}
     RETURN { count: cnt, results:collect(n) }`
     let account = await db.queryCql(cypher,params);
+    return account&&account[0]
+}
+
+Account.findAll = async function () {
+    let cypher = `
+    MATCH (n:User) return collect(n)`
+    let account = await db.queryCql(cypher);
     return account&&account[0]
 }
 

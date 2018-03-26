@@ -27,9 +27,26 @@ Role.mapRoles = async (roles)=>{
     return result
 }
 
-Role.findAll = async function (params) {
+const mapRole = (role)=>{
+    if(role.allows)
+        role.allows = JSON.parse(role.allows)
+    if(role.additional)
+        role.additional = JSON.parse(role.additional)
+    role = _.omit(role,['id'])
+    return role
+}
+
+Role.findAll = async function () {
+    let cypher = `MATCH (n:Role) return collect(n)`
+    let roles = await db.queryCql(cypher)
+    roles = roles[0]
+    roles = _.map(roles,mapRole)
+    return roles
+}
+
+Role.Search = async function (params) {
     let condition = params.condition||''
-    if(params.fields){
+    if(!_.isEmpty(params.fields)){
         _.assign(params,params.fields)
         for(let key in params.fields){
             condition = condition + ` AND n.${key}={${key}}`
@@ -47,14 +64,7 @@ Role.findAll = async function (params) {
     let roles = await db.queryCql(cypher,params)
     roles = roles[0]
     if(roles&&roles.results){
-        roles.results = _.map(roles.results,(role)=>{
-            if(role.allows)
-                role.allows = JSON.parse(role.allows)
-            if(role.additional)
-                role.additional = JSON.parse(role.additional)
-            role = _.omit(role,['id'])
-            return role
-        })
+        roles.results = _.map(roles.results,mapRole)
     }
     return roles
 }

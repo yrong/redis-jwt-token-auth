@@ -414,12 +414,12 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "55ea85a4-080d-4406-a680-3bcc1ad15df9",
+								"id": "4175f6e4-2191-46f9-8478-be7ba69ca27c",
 								"type": "text/javascript",
 								"exec": [
 									"var jsonData = JSON.parse(responseBody);",
 									"var roles = jsonData.data||jsonData;",
-									"tests[\"at least one role found\"] = roles.count >=1"
+									"tests[\"at least one role found\"] = roles.length >=1"
 								]
 							}
 						}
@@ -471,19 +471,23 @@
 						}
 					],
 					"request": {
-						"method": "GET",
+						"method": "POST",
 						"header": [
 							{
 								"key": "token",
 								"value": "{{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": ""
+							"raw": "{\n\t\"fields\":{\n\t\t\"external\":false\n\t},\n\t\"page\":1,\n\t\"per_page\":2\n}"
 						},
 						"url": {
-							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/role?external=false&page=1&per_page=2",
+							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/role/search",
 							"protocol": "http",
 							"host": [
 								"{{auth_api_host}}"
@@ -491,24 +495,8 @@
 							"port": "{{auth_api_port}}",
 							"path": [
 								"auth",
-								"role"
-							],
-							"query": [
-								{
-									"key": "external",
-									"value": "false",
-									"equals": true
-								},
-								{
-									"key": "page",
-									"value": "1",
-									"equals": true
-								},
-								{
-									"key": "per_page",
-									"value": "2",
-									"equals": true
-								}
+								"role",
+								"search"
 							]
 						}
 					},
@@ -1189,17 +1177,65 @@
 					"response": []
 				},
 				{
+					"name": "add external user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "175bffc4-b167-4b75-b6e6-a14ff8c68c50",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"add user success\"] = responseCode.code == 200",
+									"var jsonData = JSON.parse(responseBody);",
+									"jsonData = jsonData.data||jsonData",
+									"var userid = jsonData.uuid",
+									"tests[\"userid found\"] = userid;",
+									"if(userid){",
+									"  postman.setEnvironmentVariable(\"external_user_id\", userid);  ",
+									"}"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\":\"external\",\n  \"passwd\":\"external\",\n  \"email\":\"external@email.com\",\n  \"external\":true\n}"
+						},
+						"url": {
+							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/register",
+							"protocol": "http",
+							"host": [
+								"{{auth_api_host}}"
+							],
+							"port": "{{auth_api_port}}",
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "query all user",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
-								"id": "b240473e-1993-46de-ab5b-cd750f1a37ef",
+								"id": "c18dacf9-bdcd-40be-9cce-691c54e628e9",
 								"type": "text/javascript",
 								"exec": [
 									"var jsonData = JSON.parse(responseBody);",
 									"var users = jsonData.data||jsonData",
-									"tests[\"at least one user found\"] = users.count >=1"
+									"tests[\"at least one user found\"] = users.length >=1"
 								]
 							}
 						}
@@ -1237,30 +1273,34 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "b240473e-1993-46de-ab5b-cd750f1a37ef",
-								"type": "text/javascript",
 								"exec": [
 									"var jsonData = JSON.parse(responseBody);",
 									"var users = jsonData.data||jsonData",
 									"tests[\"at least one user found\"] = users.count >=1"
-								]
+								],
+								"id": "b240473e-1993-46de-ab5b-cd750f1a37ef",
+								"type": "text/javascript"
 							}
 						}
 					],
 					"request": {
-						"method": "GET",
+						"method": "POST",
 						"header": [
 							{
 								"key": "token",
 								"value": "{{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": ""
+							"raw": "{\n\t\"fields\":{\n\t\t\"external\":false\n\t},\n\t\"page\":1,\n\t\"per_page\":2\n}"
 						},
 						"url": {
-							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/userinfo?external=true&page=1&per_page=2",
+							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/userinfo/search",
 							"protocol": "http",
 							"host": [
 								"{{auth_api_host}}"
@@ -1268,24 +1308,8 @@
 							"port": "{{auth_api_port}}",
 							"path": [
 								"auth",
-								"userinfo"
-							],
-							"query": [
-								{
-									"key": "external",
-									"value": "true",
-									"equals": true
-								},
-								{
-									"key": "page",
-									"value": "1",
-									"equals": true
-								},
-								{
-									"key": "per_page",
-									"value": "2",
-									"equals": true
-								}
+								"userinfo",
+								"search"
 							]
 						}
 					},

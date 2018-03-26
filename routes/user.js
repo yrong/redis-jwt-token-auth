@@ -48,19 +48,24 @@ const UserOmitFields = ['passwd','id']
 
 module.exports = (router)=>{
     router.get('/userinfo', async(ctx, next) => {
-        let params = ctx.query
+        let users = await Account.findAll()
+        users = _.map(users,(user)=>_.omit(user,UserOmitFields))
+        ctx.body = users||{}
+    });
+
+    router.post('/userinfo/search', async(ctx, next) => {
+        let params = ctx.request.body
         params.limit = parseInt(params.per_page||config.get('perPageSize'))
         params.skip = (parseInt(params.page||1)-1) * params.limit
-        if(params.external==='true'){
-            params.fields = {external:true}
-        }else if(params.external==='false'){
-            params.condition = `where not exists(n.external)`
+        if(params.fields&&params.fields.external===false){
+            params.condition = `where (not exists(n.external) or n.external=false)`
+            delete params.fields.external
         }
-        let users = await Account.findAll(params)
+        let users = await Account.Search(params)
         if(users&&users.results)
             users.results = _.map(users.results,(user)=>_.omit(user,UserOmitFields))
         ctx.body = users||{}
-    });
+    })
 
     router.get('/userinfo/:uuid',async(ctx,next)=>{
         let user = await Account.findOne(ctx.params.uuid)

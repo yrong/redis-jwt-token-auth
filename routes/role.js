@@ -38,15 +38,19 @@ module.exports = (router)=>{
     })
 
     router.get('/role', async(ctx, next) => {
-        let params = ctx.query
+        let roles = await Role.findAll()
+        ctx.body = roles||{}
+    })
+
+    router.post('/role/search', async(ctx, next) => {
+        let params = ctx.request.body
         params.limit = parseInt(params.per_page||config.get('perPageSize'))
         params.skip = (parseInt(params.page||1)-1) * params.limit
-        if(params.external==='true'){
-            params.fields = {external:true}
-        }else if(params.external==='false'){
-            params.condition = `where not exists(n.external)`
+        if(params.fields&&params.fields.external===false){
+            params.condition = `where (not exists(n.external) or n.external=false)`
+            delete params.fields.external
         }
-        let roles = await Role.findAll(params)
+        let roles = await Role.Search(params)
         ctx.body = roles||{}
     })
 
