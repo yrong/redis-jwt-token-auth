@@ -1,0 +1,5 @@
+{
+  "id": "Role",
+  "service":"auth",
+  "loadUrl":"/auth/role"
+}

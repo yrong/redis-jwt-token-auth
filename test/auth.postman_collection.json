@@ -1207,7 +1207,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"name\":\"external\",\n  \"passwd\":\"external\",\n  \"email\":\"external@email.com\",\n  \"external\":true\n}"
+							"raw": "{\n  \"name\":\"external2\",\n  \"passwd\":\"external2\",\n  \"email\":\"external2@email.com\",\n  \"external\":true,\n  \"department\":\"{{department_2_id}}\"\n}"
 						},
 						"url": {
 							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/register",
@@ -1309,6 +1309,55 @@
 							"path": [
 								"auth",
 								"userinfo",
+								"search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "user advanced search",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9bb67f68-7b91-4fd7-8550-0075b632ca29",
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"var tree = jsonData.data||jsonData",
+									"tests[\"department found\"] = tree.department"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"category\":\"User\",\n  \"body\":{\n   \"aggs\": {\n          \"department\" : {\n              \"terms\" : { \"field\" : \"department_path.raw\" }\n          }\n      }\n    }\n}"
+						},
+						"url": {
+							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/userinfo/v1/search",
+							"protocol": "http",
+							"host": [
+								"{{auth_api_host}}"
+							],
+							"port": "{{auth_api_port}}",
+							"path": [
+								"auth",
+								"userinfo",
+								"v1",
 								"search"
 							]
 						}

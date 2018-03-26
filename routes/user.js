@@ -6,6 +6,7 @@ const ScirichonWarning = common.ScirichonWarning
 const scirichon_cache = require('scirichon-cache')
 const uuid = require('uuid')
 const config = require('config')
+const search = require('../search')
 
 const deleteUser = async (userid,ctx)=>{
     let notification,user = await Account.findOne(userid),notification_url = common.getServiceApiUrl('notifier'),department
@@ -13,6 +14,7 @@ const deleteUser = async (userid,ctx)=>{
         await scirichon_cache.delItem(user)
         await ctx.req.session.deleteByUserId(userid)
         await Account.destory(userid)
+        await search.deleteItem(user,ctx)
         try {
             if(user.department){
                 department = await scirichon_cache.getItemByCategoryAndID('Department',user.department)
@@ -36,11 +38,39 @@ const deleteUser = async (userid,ctx)=>{
 const addUser = async (user)=>{
     if(!user.name || !user.passwd)
         throw new ScirichonError('user missing params')
+    await checkUser(user)
     user.uuid = user.uuid||uuid.v1()
     user.category = 'User'
     user.unique_name = user.name
     await Account.add(user)
     await scirichon_cache.addItem(user)
+    await search.addOrUpdateItem(user)
+    return user
+}
+
+const checkUser = async (user)=>{
+    if(user.roles){
+        for(let role of user.roles){
+            role = await scirichon_cache.getItemByCategoryAndID('Role',role)
+            if(!_.isEmpty(role)){
+                throw new ScirichonError('role not exist')
+            }
+        }
+    }
+    if(user.department){
+        let department = await scirichon_cache.getItemByCategoryAndID('Department',user.department)
+        if(_.isEmpty(department)){
+            throw new ScirichonError('department not exist')
+        }else{
+            user.department_path = department.path
+        }
+    }
+    if(user.internalId){
+        let internalUser = await scirichon_cache.getItemByCategoryAndID('User',user.internalId)
+        if(_.isEmpty(internalUser)){
+            throw new ScirichonError('internalUser not exist')
+        }
+    }
     return user
 }
 
@@ -67,6 +97,11 @@ module.exports = (router)=>{
         ctx.body = users||{}
     })
 
+    router.post('/userinfo/v1/search', async(ctx, next) => {
+        let params = _.merge({},ctx.query,ctx.request.body)
+        ctx.body = await search.searchItem(params)||{}
+    })
+
     router.get('/userinfo/:uuid',async(ctx,next)=>{
         let user = await Account.findOne(ctx.params.uuid)
         ctx.body = _.omit(user,UserOmitFields)
@@ -85,6 +120,7 @@ module.exports = (router)=>{
         let user = await Account.findOne(params.uuid)
         user.roles = params.roles
         await scirichon_cache.addItem(user)
+        await search.addOrUpdateItem(user)
         await Account.updateRole(params)
         await ctx.req.session.deleteByUserId(params.uuid)
         console.log('user role changed,need relogin')
@@ -92,9 +128,11 @@ module.exports = (router)=>{
     })
 
     router.put('/userinfo/:uuid',async(ctx,next)=>{
-        let params = _.merge({},ctx.params,ctx.request.body)
-        let account = await Account.updateInfo(params)
-        await scirichon_cache.delItem(account)
+        let user = _.merge({},ctx.params,ctx.request.body)
+        await checkUser(user)
+        user = await Account.updateInfo(user)
+        await scirichon_cache.addItem(user)
+        await search.addOrUpdateItem(user)
         ctx.body = {}
     })
 

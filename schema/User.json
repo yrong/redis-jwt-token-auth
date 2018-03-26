@@ -1,0 +1,24 @@
+{
+  "id": "User",
+  "service":"auth",
+  "loadUrl":"/auth/userinfo",
+  "cache":{"exclude_fields":["passwd"]},
+  "search":{"index":"user"},
+  "properties": {
+    "name":{
+      "type": "string"
+    },
+    "internalId":{
+      "type": "string",
+      "schema":"User"
+    },
+    "department":{
+      "type": "string",
+      "schema":"Department"
+    },
+    "roles": {
+      "type": "array",
+      "items": { "type": "string", "schema":"Role"}
+    }
+  }
+}

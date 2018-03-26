@@ -1,0 +1,39 @@
+{
+  "mappings": {
+    "doc": {
+      "properties": {
+        "uuid": {
+          "type": "keyword"
+        },
+        "category": {
+          "type": "keyword"
+        },
+        "name": {
+          "type": "keyword"
+        },
+        "department": {
+          "type": "keyword"
+        },
+        "department_path":{
+          "type": "string",
+          "fields": {
+            "raw": {
+              "type": "keyword"
+            }
+          }
+        },
+        "internalId":{
+          "type": "keyword"
+        },
+        "roles":{
+          "type": "string",
+          "fields": {
+            "raw": {
+              "type": "keyword"
+            }
+          }
+        }
+      }
+    }
+  }
+}
