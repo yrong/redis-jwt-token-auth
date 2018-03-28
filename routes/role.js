@@ -58,8 +58,8 @@ module.exports = (router)=>{
         let role = await Role.findOne(ctx.params.name),notification_url = common.getServiceApiUrl('notifier'),
             notification = {type:"Role",user:ctx.req.session.passport.user,source:process.env['NODE_NAME']}
         if(role){
-            await scirichon_cache.delItem(role)
             await Role.destory(ctx.params.name)
+            await scirichon_cache.delItem(role)
             try{
                 notification.action = 'DELETE'
                 notification.old = role

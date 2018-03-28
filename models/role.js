@@ -94,7 +94,7 @@ Role.destory = async function(name) {
                     RETURN u`
     let result = await db.queryCql(find_user_cypher,{name})
     if(result&&result.length){
-        throw new ScirichonError(`user already assoc,user:${result[0].uuid}`)
+        throw new ScirichonError(`已绑定用户:${result[0].uuid}`)
     }
     let cypher = `MATCH (n:Role) WHERE n.name = {name} DETACH DELETE n`
     await db.queryCql(cypher,{name})
