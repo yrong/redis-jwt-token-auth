@@ -12,6 +12,9 @@ const addRole = async(role)=>{
     }
     role.category = 'Role'
     role.uuid = role.unique_name = role.name
+    if(!_.has(role,'external')){
+        role.external = false
+    }
     await scirichon_cache.addItem(role)
     await Role.addOrUpdate(role)
     console.log(`role ${role.name} added`)

@@ -1,5 +1,6 @@
 {
   "id": "Role",
   "service":"auth",
-  "loadUrl":"/auth/role"
+  "loadUrl":"/auth/role",
+  "uniqueKeys":["name"]
 }

@@ -20,5 +20,6 @@
       "type": "array",
       "items": { "type": "string", "schema":"Role"}
     }
-  }
+  },
+  "uniqueKeys":["name"]
 }

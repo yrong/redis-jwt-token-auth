@@ -38,6 +38,9 @@ const deleteUser = async (userid,ctx)=>{
 const addUser = async (user)=>{
     if(!user.name || !user.passwd)
         throw new ScirichonError('user missing params')
+    if(!_.has(user,'external')){
+        user.external = false
+    }
     await checkUser(user)
     user.uuid = user.uuid||uuid.v1()
     user.category = 'User'
