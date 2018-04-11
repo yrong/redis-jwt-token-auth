@@ -30,7 +30,7 @@ module.exports = (router)=>{
                     local_user.roles = await Role.mapRoles(local_user.roles)
                 ctx.body = {token: token,local:local_user,ldap:_.omit(user,['userPassword'])};
             }else{
-                throw new ScirichonError('ldap authenticate failed,' + info.message)
+                throw new ScirichonError('ldap authenticate failed,' + info)
             }
         })(ctx, next)
     });

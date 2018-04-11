@@ -4,7 +4,6 @@ const config = require('config')
 const rp = require('request-promise')
 const webdav = require("webdav")
 const Account = require('../models/account')
-const uuid = require('uuid')
 
 const syncFromMysql = async function() {
     let rows = await db.querySql("SELECT * FROM users"),cypher,result,errors = [],results = []

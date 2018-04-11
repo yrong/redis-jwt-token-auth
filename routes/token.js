@@ -1,6 +1,7 @@
 const passport = require('koa-passport')
 const _ = require('lodash')
 const Account = require('../models/account')
+const LdapAccount = require('../models/ldap_account')
 const Role = require('../models/role')
 const ScirichonError = require('scirichon-common').ScirichonError
 
@@ -43,7 +44,7 @@ module.exports = (router)=>{
             token = ctx.request.body.token, result
         if(passport_user){
             if(isLdapUser(passport_user)){
-                local_user = await Account.getLocalByLdap(passport_user)
+                local_user = await LdapAccount.getLocalByLdap(passport_user)
                 result = {token: token,local:await getUser(ctx,local_user),ldap:passport_user}
             }else{
                 result = {token: token,local:await getUser(ctx,local_user)}
