@@ -6,7 +6,7 @@ const webdav = require("webdav")
 const Account = require('../models/account')
 
 const syncFromMysql = async function() {
-    let rows = await db.querySql("SELECT * FROM users"),cypher,result,errors = [],results = []
+    let rows = await db.querySql("SELECT * FROM users"),cypher,result,errors = []
     for(let row of rows){
         try {
             cypher = `MATCH (u:User{name:{name}}) return u`
@@ -16,18 +16,17 @@ const syncFromMysql = async function() {
                 row.uuid = row.userid = (String)(result[0].uuid)
             }else{
                 row.uuid = row.userid = (String)(row.userid)
+                row.name = row.unique_name = row.alias
             }
             row.category = 'User'
-            row.name = row.alias
             cypher = `MERGE (u:User{uuid:{uuid}}) ON CREATE SET u = {row} ON MATCH SET u = {row}`
             result = await db.queryCql(cypher, {row: row,uuid:row.uuid})
-            results.push(result)
             console.log(`sync user ${JSON.stringify(row)} from mysql to neo4j`)
         }catch(error){
             errors.push(String(error))
         }
     }
-    return {results,errors}
+    return errors
 }
 
 const sync2NextCloud = async function() {

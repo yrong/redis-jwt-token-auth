@@ -58,8 +58,10 @@ Account.destory = async function(uuid) {
 }
 
 Account.destoryAll = async function() {
-    let cypher = `MATCH (n) WHERE (n:User) OR n:LdapUser DETACH DELETE n`
-    return db.queryCql(cypher);
+    let cypher = `MATCH (n:User) WHERE n.name<>"nerds" and n.name<>"superadmin" DETACH DELETE n`
+    await db.queryCql(cypher)
+    cypher = `MATCH (n:LdapUser) DETACH DELETE n`
+    await db.queryCql(cypher);
 }
 
 Account.verify = async function(username, password) {

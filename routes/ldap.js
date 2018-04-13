@@ -10,12 +10,15 @@ const ScirichonError = common.ScirichonError
 module.exports = (router)=>{
     router.put('/assoc/:uuid', async(ctx, next) => {
         let params = _.merge({},ctx.params,ctx.request.body)
+        if(!params.ldapId||!params.uuid){
+            throw new ScirichonError(`missing params!`)
+        }
         await Account.updateLocal2LdapAssoc(params)
         ctx.body = {}
     })
 
     router.put('/unassoc/:uuid', async(ctx, next) => {
-        await Account.unAssocLocal(ctx.params)
+        await Account.unAssocLocal(ctx.params.uuid)
         ctx.body = {}
     })
 

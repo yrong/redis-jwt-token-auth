@@ -503,22 +503,16 @@
 					"response": []
 				},
 				{
-					"name": "add demo user",
+					"name": "login with superadmin",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
+								"id": "78ae4cc5-1ca7-441d-9978-02eeced0cd89",
+								"type": "text/javascript",
 								"exec": [
-									"tests[\"add user success\"] = responseCode.code == 200",
-									"var jsonData = JSON.parse(responseBody);",
-									"jsonData = jsonData.data||jsonData",
-									"var userid = jsonData.uuid",
-									"tests[\"userid found\"] = userid;",
-									"if(userid){",
-									"  postman.setEnvironmentVariable(\"auth_user_id\", userid);  ",
-									"}"
-								],
-								"type": "text/javascript"
+									""
+								]
 							}
 						}
 					],
@@ -532,10 +526,10 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"name\":\"{{auth_user}}\",\n  \"passwd\":\"{{auth_passwd}}\",\n  \"email\":\"{{auth_user_email}}\"\n}"
+							"raw": "{\n  \"username\":\"superadmin\",\n  \"password\":\"superadmin\"\n}"
 						},
 						"url": {
-							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/register",
+							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/login",
 							"protocol": "http",
 							"host": [
 								"{{auth_api_host}}"
@@ -543,7 +537,7 @@
 							"port": "{{auth_api_port}}",
 							"path": [
 								"auth",
-								"register"
+								"login"
 							]
 						}
 					},
@@ -778,11 +772,15 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "d8651657-f77d-4ed4-9815-16f0a39a6255",
+								"type": "text/javascript",
 								"exec": [
 									"tests[\"user modified\"] = responseCode.code == 200",
+									"if(pm.environment.get(\"schema_type\")==='cmdb'){",
+									"    postman.setNextRequest('add test user')",
+									"}",
 									""
-								],
-								"type": "text/javascript"
+								]
 							}
 						}
 					],
@@ -1092,10 +1090,14 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "050dc3af-c1d2-455a-a4c3-02f76e76fa52",
+								"type": "text/javascript",
 								"exec": [
-									"tests[\"bind role to user success\"] = responseCode.code == 200"
-								],
-								"type": "text/javascript"
+									"tests[\"bind role to user success\"] = responseCode.code == 200",
+									"if(pm.environment.get(\"schema_type\")==='cmdb'){",
+									"    postman.setNextRequest('query all user')",
+									"}"
+								]
 							}
 						}
 					],
@@ -1225,49 +1227,6 @@
 					"response": []
 				},
 				{
-					"name": "query all user",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "c18dacf9-bdcd-40be-9cce-691c54e628e9",
-								"type": "text/javascript",
-								"exec": [
-									"var jsonData = JSON.parse(responseBody);",
-									"var users = jsonData.data||jsonData",
-									"tests[\"at least one user found\"] = users.length >=1"
-								]
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "token",
-								"value": "{{token}}"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/userinfo",
-							"protocol": "http",
-							"host": [
-								"{{auth_api_host}}"
-							],
-							"port": "{{auth_api_port}}",
-							"path": [
-								"auth",
-								"userinfo"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "query external user paginated",
 					"event": [
 						{
@@ -1359,6 +1318,49 @@
 								"userinfo",
 								"v1",
 								"search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "query all user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c18dacf9-bdcd-40be-9cce-691c54e628e9",
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"var users = jsonData.data||jsonData",
+									"tests[\"at least one user found\"] = users.length >=1"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/userinfo",
+							"protocol": "http",
+							"host": [
+								"{{auth_api_host}}"
+							],
+							"port": "{{auth_api_port}}",
+							"path": [
+								"auth",
+								"userinfo"
 							]
 						}
 					},

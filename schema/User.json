@@ -2,7 +2,7 @@
   "id": "User",
   "service":"auth",
   "loadUrl":"/auth/userinfo",
-  "cache":{"exclude_fields":["passwd"]},
+  "cache":{"exclude_fields":["passwd","id"]},
   "search":{"index":"user"},
   "properties": {
     "name":{
