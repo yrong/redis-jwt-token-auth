@@ -23,15 +23,15 @@ module.exports = (router)=>{
     })
 
     router.post('/login-ldap', async (ctx, next) => {
-        await passport.authenticate('ldapauth',{session: false},async (err,user,info) => {
-            if(user){
-                await ctx.login(user)
+        await passport.authenticate('ldapauth',{session: false},async (err,ldap_user,info) => {
+            if(ldap_user){
+                await ctx.login(ldap_user)
                 let passport = ctx.req.session.passport
                 let token = await ctx.req.session.create(passport)
-                let local_user = await Account.getLocalByLdap(user)
+                let local_user = await Account.getLocalByLdap(ldap_user)
                 if(local_user&&local_user.roles&&local_user.roles.length)
                     local_user.roles = await Role.mapRoles(local_user.roles)
-                ctx.body = {token: token,local:local_user,ldap:_.omit(user,['userPassword'])};
+                ctx.body = {token: token,local:local_user,ldap:_.omit(ldap_user,['userPassword'])};
             }else{
                 throw new ScirichonError('ldap authenticate failed,' + info)
             }

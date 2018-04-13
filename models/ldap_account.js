@@ -13,6 +13,7 @@ Account.updateLocal2LdapAssoc = async (params)=>{
         throw new ScirichonError('ldap user not found')
     }
     ldap_user = result[0]
+    ldap_user[bindType]=ldapId
     cql = `MATCH (n:User{uuid:{uuid}}) return n`
     result = await db.queryCql(cql,{uuid:params.uuid})
     if(_.isEmpty(result)){
