@@ -46,7 +46,7 @@
     "mysql2": "^1.2.0",
     "neo4j-driver": "^1.3.0",
     "parse-neo4j-fork": "0.6.10",
-    "passport-ldapauth-fork": "^1.0.1",
+    "passport-ldapauth-fork": "1.0.1-beta.1",
     "passport-local": "^1.0.0",
     "redis-json-schema": "1.0.2-beta.3",
     "redis-json-schema-init": "1.0.1-beta.8",

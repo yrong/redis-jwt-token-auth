@@ -2545,16 +2545,6 @@ ldapauth-fork-plus@4.0.0-beta.1:
     ldapjs "^1.0.1"
     lru-cache "^4.0.2"
 
-ldapauth-fork-plus@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.npmjs.org/ldapauth-fork-plus/-/ldapauth-fork-plus-4.0.0.tgz#db7923f373b7bdb8f8a388d16b661893f32cf7a2"
-  dependencies:
-    "@types/ldapjs" "^1.0.0"
-    "@types/node" "^7.0.21"
-    bcryptjs "^2.4.0"
-    ldapjs "^1.0.1"
-    lru-cache "^4.0.2"
-
 ldapjs@^1.0.1:
   version "1.0.1"
   resolved "https://registry.npmjs.org/ldapjs/-/ldapjs-1.0.1.tgz#352b812ae74b0a8e96549a4b896060eee1b9a546"
@@ -3259,11 +3249,11 @@ parseurl@^1.3.0:
   version "1.3.2"
   resolved "https://registry.npmjs.org/parseurl/-/parseurl-1.3.2.tgz#fc289d4ed8993119460c156253262cdc8de65bf3"
 
-passport-ldapauth-fork@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.npmjs.org/passport-ldapauth-fork/-/passport-ldapauth-fork-1.0.1.tgz#de125062edfe65adf20ad3b42538ac9128bcbc4f"
+passport-ldapauth-fork@1.0.1-beta.1:
+  version "1.0.1-beta.1"
+  resolved "https://registry.npmjs.org/passport-ldapauth-fork/-/passport-ldapauth-fork-1.0.1-beta.1.tgz#6eddc101385873c03f2f7cc18d569dae4f1e6ea2"
   dependencies:
-    ldapauth-fork-plus "^4.0.0"
+    ldapauth-fork-plus "4.0.0-beta.1"
     passport-strategy "^1.0.0"
 
 passport-local@^1.0.0:
