@@ -19,9 +19,15 @@ const getUser = async (ctx,user)=>{
 
 module.exports = (router)=>{
     router.post('/login', async(ctx, next) => {
+        let params = ctx.request.body
         await passport.authenticate('local',async(err,user,info) => {
             if(!user)
                 ctx.throw(401,new ScirichonError('login failed!'))
+            if(params.illegalRoles&&user.roles){
+                if(_.intersection(params.illegalRoles,user.roles).length){
+                    ctx.throw(401,`user with illegal roles as ${user.roles} can not login`)
+                }
+            }
             await ctx.login(user)
             let passport = ctx.req.session.passport
             let token = await ctx.req.session.create(passport)
