@@ -144,4 +144,12 @@ module.exports = (router)=>{
         await deleteUser(userid,ctx)
         ctx.body = {}
     })
+
+    router.del('/unregister', async (ctx, next) => {
+        let uuids = ctx.request.body.uuids
+        for (let userid of uuids) {
+            await deleteUser(userid, ctx)
+        }
+        ctx.body = {}
+    })
 }
