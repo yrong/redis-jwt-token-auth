@@ -6,10 +6,12 @@ const token_routes = require('./token')
 const ldap_routes = require('./ldap')
 const role_routes = require('./role')
 const user_routes = require('./user')
+const department_routes = require('./department')
 
 token_routes(router)
 ldap_routes(router)
 role_routes(router)
 user_routes(router)
+department_routes(router)
 
 module.exports = router

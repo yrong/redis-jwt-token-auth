@@ -4,57 +4,58 @@ const common = require('scirichon-common')
 const ScirichonError = common.ScirichonError
 const ScirichonWarning = common.ScirichonWarning
 const scirichon_cache = require('scirichon-cache')
-const config = require('config')
+const search = require('../search')
+const responseWrapper = require('../hook/responseWrapper')
 
-const addRole = async(role)=>{
-    if(!role.name||!role.allows){
-        throw new ScirichonError('add role missing params')
-    }
+const addOrUpdateRole = async(role,update)=>{
     role.category = 'Role'
-    role.uuid = role.unique_name = role.name
-    if(!_.has(role,'external')){
-        role.external = false
-    }
+    role.uuid = role.unique_name = role.uuid||role.name
+    role.type = role.type || 'internal'
     await scirichon_cache.addItem(role)
     await Role.addOrUpdate(role)
-    console.log(`role ${role.name} added`)
+    await search.addOrUpdateItem('role',role)
+    console.log(`role ${role.uuid} added`)
+    return role.uuid
 }
 
 module.exports = (router)=>{
     router.post('/role', async(ctx, next) => {
-        let role = ctx.request.body
-        await addRole(role)
-        ctx.body = {}
+        let role = ctx.request.body,uuid
+        if(!role.name||!role.allows){
+            throw new ScirichonError('add role missing params')
+        }
+        uuid = await addOrUpdateRole(role)
+        ctx.body = {uuid}
     })
 
     router.post('/roles', async(ctx, next) => {
         await Role.clearAll()
-        let roles = ctx.request.body
+        let roles = ctx.request.body,uuid,results = []
         for(let role of roles){
-            await addRole(role)
+            uuid = await addOrUpdateRole(role)
+            results.push(uuid)
         }
-        ctx.body = {}
-    })
-
-    router.get('/role/:name', async(ctx, next) => {
-        ctx.body = await Role.findOne(ctx.params.name)
-    })
-
-    router.get('/role', async(ctx, next) => {
-        let roles = await Role.findAll()
-        ctx.body = roles||{}
+        ctx.body = results
     })
 
     router.post('/role/search', async(ctx, next) => {
-        let params = ctx.request.body
-        params.limit = parseInt(params.per_page||config.get('perPageSize'))
-        params.skip = (parseInt(params.page||1)-1) * params.limit
-        if(params.fields&&params.fields.external===false){
-            params.condition = `where (not exists(n.external) or n.external=false)`
-            delete params.fields.external
+        let params = _.merge({category:'Role'},ctx.query,ctx.request.body)
+        ctx.body = await search.searchItem(params)||{}
+    })
+
+    router.get('/role/:uuid', async(ctx, next) => {
+        let role = await Role.findOne(ctx.params.uuid)
+        role = await responseWrapper.responseMapper(role,_.assign({category:'Role'},ctx.query))
+        ctx.body = role||{}
+    })
+
+    router.get('/role', async(ctx, next) => {
+        let roles = await Role.findAll(),result=[]
+        for(let role of roles){
+            role = await responseWrapper.responseMapper(role,_.assign({category:'Role'}))
+            result.push(role)
         }
-        let roles = await Role.Search(params)
-        ctx.body = roles||{}
+        ctx.body = result
     })
 
     router.del('/role/:name', async(ctx, next) => {

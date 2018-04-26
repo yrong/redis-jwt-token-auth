@@ -7,6 +7,16 @@ const TokenName = scirichon_common.TokenName
 const internal_token_id = scirichon_common.InternalTokenId
 const ScirichonError = scirichon_common.ScirichonError
 
+const needCheckToken = (ctx)=>{
+    if (ctx.method==='POST' && (ctx.path.includes('/auth/login') || ctx.path.includes('/auth/register') || ctx.path.includes('/auth/departments'))){
+        return false
+    }
+    else if(ctx.method==="GET" && (ctx.path.includes('.html')||ctx.path.includes('.ico'))){
+        return false
+    }
+    return true
+}
+
 module.exports = function jwt_token(options) {
     return async function (ctx, next) {
         if (!options.client || !options.secret)
@@ -20,16 +30,13 @@ module.exports = function jwt_token(options) {
             requestKey: options.requestKey || "session",
             requestArg: options.requestArg || TokenName
         };
-		var SessionUtils = utils(options);
-		var req = ctx.req;
+		let SessionUtils = utils(options);
+		let req = ctx.req;
 		req[options.requestKey] = new SessionUtils();
-		var token = (ctx.request.body && ctx.request.body[options.requestArg])
-            || ctx.query[options.requestArg]
-            || ctx.req.headers[options.requestArg]
-        if (ctx.path.includes('/auth/login') || ctx.path.includes('/auth/register')
-            || ctx.path.includes('.html')||ctx.path.includes('.ico'))
-            await next()
-        else{
+        if (needCheckToken(ctx)){
+            var token = (ctx.request.body && ctx.request.body[options.requestArg])
+                || ctx.query[options.requestArg]
+                || ctx.req.headers[options.requestArg]
             if(token){
                 if(token === internal_token_id){
                     await next()
@@ -64,6 +71,9 @@ module.exports = function jwt_token(options) {
             }else{
                 ctx.throw(401,new ScirichonError('token not found in request!'))
             }
+        }
+        else{
+            await next()
         }
     };
 };

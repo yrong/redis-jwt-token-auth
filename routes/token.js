@@ -32,8 +32,6 @@ module.exports = (router)=>{
             let passport = ctx.req.session.passport
             let token = await ctx.req.session.create(passport)
             user = passport.user
-            if(user.roles&&user.roles.length)
-                user.roles = await Role.mapRoles(user.roles)
             ctx.body = {token: token,local:user}
         })(ctx, next)
     })

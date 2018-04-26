@@ -73,7 +73,7 @@ const parse2JsonObject = async (val,params)=>{
 
 const resultMapper = async (val,params) => {
     val = await parse2JsonObject(val,params)
-    if(!params.origional){
+    if(!params.original){
         val = await mapper.referencedObjectMapper(val,params)
     }
     return val

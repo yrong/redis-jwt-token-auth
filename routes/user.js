@@ -7,6 +7,8 @@ const scirichon_cache = require('scirichon-cache')
 const uuid = require('uuid')
 const config = require('config')
 const search = require('../search')
+const responseWrapper = require('../hook/responseWrapper')
+const LdapAccount = require('../models/ldap_account')
 
 const deleteUser = async (userid,ctx)=>{
     let notification,user = await Account.findOne(userid),notification_url = common.getServiceApiUrl('notifier'),department
@@ -38,76 +40,76 @@ const deleteUser = async (userid,ctx)=>{
 const addUser = async (user)=>{
     if(!user.name || !user.passwd)
         throw new ScirichonError('user missing params')
-    if(!_.has(user,'external')){
-        user.external = false
-    }
     await checkUser(user)
+    user.type = user.type || 'internal'
     user.uuid = user.uuid||uuid.v1()
     user.category = 'User'
     user.unique_name = user.name
     await Account.add(user)
     await scirichon_cache.addItem(user)
-    await search.addOrUpdateItem(user)
+    await search.addOrUpdateItem('user',user,false)
     return user
 }
 
 const checkUser = async (user)=>{
+    let result
     if(user.roles){
         for(let role of user.roles){
-            role = await scirichon_cache.getItemByCategoryAndID('Role',role)
-            if(!_.isEmpty(role)){
+            result = await scirichon_cache.getItemByCategoryAndID('Role',role)
+            if(_.isEmpty(result)){
                 throw new ScirichonError('role not exist')
             }
         }
     }
     if(user.department){
-        let department = await scirichon_cache.getItemByCategoryAndID('Department',user.department)
-        if(_.isEmpty(department)){
+        result = await scirichon_cache.getItemByCategoryAndID('Department',user.department)
+        if(_.isEmpty(result)){
             throw new ScirichonError('department not exist')
         }else{
-            user.department_path = department.path
+            user.department_path = result.path
         }
     }
-    if(user.internalId){
-        let internalUser = await scirichon_cache.getItemByCategoryAndID('User',user.internalId)
-        if(_.isEmpty(internalUser)){
+    if(user.internal){
+        result = await scirichon_cache.getItemByCategoryAndID('User',user.internal)
+        if(_.isEmpty(result)){
             throw new ScirichonError('internalUser not exist')
+        }
+    }
+    if(user.ldapId){
+        result = await LdapAccount.searchLdap(user.ldapId,{attributes:config.get('ldap.userAttributes')})
+        if(_.isEmpty(result)){
+            throw new ScirichonError('ldap user not found')
         }
     }
     return user
 }
 
-const UserOmitFields = ['passwd','id']
+const updateUser = async (ctx)=>{
+    let user = _.merge({},ctx.params,ctx.request.body)
+    await checkUser(user)
+    user = await Account.updateInfo(user,ctx)
+    await scirichon_cache.addItem(user)
+    await search.addOrUpdateItem('user',user,true)
+}
 
 module.exports = (router)=>{
     router.get('/userinfo', async(ctx, next) => {
         let users = await Account.findAll()
-        users = _.map(users,(user)=>_.omit(user,UserOmitFields))
+        users = _.map(users,(user)=>_.omit(user,Account.OmitFields))
+        users = await responseWrapper.responseMapper(users,{category:'User'})
         ctx.body = users||{}
-    });
-
-    router.post('/userinfo/search', async(ctx, next) => {
-        let params = ctx.request.body
-        params.limit = parseInt(params.per_page||config.get('perPageSize'))
-        params.skip = (parseInt(params.page||1)-1) * params.limit
-        if(params.fields&&params.fields.external===false){
-            params.condition = `where (not exists(n.external) or n.external=false)`
-            delete params.fields.external
-        }
-        let users = await Account.Search(params)
-        if(users&&users.results)
-            users.results = _.map(users.results,(user)=>_.omit(user,UserOmitFields))
-        ctx.body = users||{}
-    })
-
-    router.post('/userinfo/v1/search', async(ctx, next) => {
-        let params = _.merge({},ctx.query,ctx.request.body)
-        ctx.body = await search.searchItem(params)||{}
     })
 
     router.get('/userinfo/:uuid',async(ctx,next)=>{
         let user = await Account.findOne(ctx.params.uuid)
-        ctx.body = _.omit(user,UserOmitFields)
+        user = _.omit(user,Account.OmitFields)
+        user = await responseWrapper.responseMapper(user,_.assign({category:'User'},ctx.query))
+        ctx.body = user||{}
+    })
+
+    router.post('/userinfo/search', async(ctx, next) => {
+        let params = _.merge({category:'User'},ctx.query,ctx.request.body)
+        ctx.body = await search.searchItem(params)||{}
     })
 
     router.put('/changepwd/:uuid', async(ctx, next) => {
@@ -116,26 +118,18 @@ module.exports = (router)=>{
         ctx.body = {}
     })
 
-    router.put('/assocRole/:uuid', async(ctx, next) => {
-        let params = _.merge({},ctx.params,ctx.request.body)
-        if(!params.uuid||!params.roles)
-            throw new ScirichonError('assoc role missing params')
-        let user = await Account.findOne(params.uuid)
-        user.roles = params.roles
-        await scirichon_cache.addItem(user)
-        await search.addOrUpdateItem(user)
-        await Account.updateRole(params)
-        await ctx.req.session.deleteByUserId(params.uuid)
-        console.log('user role changed,need relogin')
+    router.put('/userinfo/:uuid',async(ctx,next)=>{
+        await updateUser(ctx)
         ctx.body = {}
     })
 
-    router.put('/userinfo/:uuid',async(ctx,next)=>{
-        let user = _.merge({},ctx.params,ctx.request.body)
-        await checkUser(user)
-        user = await Account.updateInfo(user)
-        await scirichon_cache.addItem(user)
-        await search.addOrUpdateItem(user)
+    router.put('/assocRole/:uuid', async(ctx, next) => {
+        await updateUser(ctx)
+        ctx.body = {}
+    })
+
+    router.put('/assoc/:uuid', async(ctx, next) => {
+        await updateUser(ctx)
         ctx.body = {}
     })
 
@@ -148,14 +142,6 @@ module.exports = (router)=>{
     router.del('/unregister/:uuid', async(ctx, next) => {
         let userid = ctx.params.uuid
         await deleteUser(userid,ctx)
-        ctx.body = {}
-    })
-
-    router.del('/unregister', async(ctx, next) => {
-        let uuids = ctx.request.body.uuids
-        for(let userid of uuids){
-            await deleteUser(userid,ctx)
-        }
         ctx.body = {}
     })
 }

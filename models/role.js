@@ -5,100 +5,44 @@ const Role = {}
 const common = require('scirichon-common')
 const ScirichonError = common.ScirichonError
 
-Role.findOne = async function (name) {
-    let roles = await db.queryCql(`MATCH (n:Role{name:{name}}) return n`,{name}),role;
-    if(roles.length == 1) {
-        role = roles[0]
-        role.allows = JSON.parse(role.allows)
-        if(role.additional)
-            role.additional = JSON.parse(role.additional)
-        role = _.omit(role,['id'])
-    }
+Role.findOne = async function (uuid) {
+    let roles = await db.queryCql(`MATCH (n:Role{uuid:{uuid}}) return n`,{uuid}),role
+    role = roles&&roles[0]
     return role
 }
 
-Role.mapRoles = async (roles)=>{
-    let result = []
-    for(let role of roles){
-        role = await Role.findOne(role)
-        if(role)
-            result.push(role)
-    }
-    return result
-}
-
-const mapRole = (role)=>{
-    if(role.allows)
-        role.allows = JSON.parse(role.allows)
-    if(role.additional)
-        role.additional = JSON.parse(role.additional)
-    role = _.omit(role,['id'])
-    return role
-}
 
 Role.findAll = async function () {
-    let cypher = `MATCH (n:Role) return collect(n)`
+    let cypher = `MATCH (n:Role) return n`
     let roles = await db.queryCql(cypher)
-    roles = roles[0]
-    roles = _.map(roles,mapRole)
-    return roles
-}
-
-Role.Search = async function (params) {
-    let condition = params.condition||''
-    if(!_.isEmpty(params.fields)){
-        _.assign(params,params.fields)
-        for(let key in params.fields){
-            condition = condition + ` AND n.${key}={${key}}`
-        }
-        if(!condition.includes('where')){
-            condition = 'where' + condition.substr(4)
-        }
-    }
-    let cypher = `
-    MATCH (n:Role) ${condition} WITH count(n) AS cnt
-    MATCH (n:Role) ${condition}
-    WITH n as n, cnt
-    SKIP {skip} LIMIT {limit}
-    RETURN { count: cnt, results:collect(n) }`
-    let roles = await db.queryCql(cypher,params)
-    roles = roles[0]
-    if(roles&&roles.results){
-        roles.results = _.map(roles.results,mapRole)
-    }
     return roles
 }
 
 Role.addOrUpdate = async function(params) {
-    params.category = 'Role'
-    if(!params.name || !params.allows)
-        throw new ScirichonError('role missing params')
-    await acl.removeRole(params.name)
+    await acl.removeRole(params.uuid)
     for(let allow of params.allows){
-        await acl.allow(params.name,allow.resources,allow.permissions)
+        await acl.allow(params.uuid,allow.resources,allow.permissions)
     }
     if(params.inherits)
-        await acl.addRoleParents(params.name, params.inherits)
+        await acl.addRoleParents(params.uuid, params.inherits)
     params.allows = JSON.stringify(params.allows)
     params.additional = JSON.stringify(params.additional)
-    let cypher_params = {name:params.name,fields:params}
-    let cypher = `MERGE (n:Role {name: {name}})
+    let cypher_params = {uuid:params.uuid,fields:params}
+    let cypher = `MERGE (n:Role {uuid: {uuid}})
     ON CREATE SET n = {fields}
     ON MATCH SET n = {fields}`
     return await db.queryCql(cypher,cypher_params);
 }
 
-Role.destory = async function(name) {
-    let find_user_cypher = `MATCH (r:Role) WHERE r.name = {name}
-                    MATCH (u:User)-[:AssocRole]->(r)
-                    RETURN u`
-    let result = await db.queryCql(find_user_cypher,{name})
+Role.destory = async function(uuid) {
+    let find_user_cypher = `MATCH (n:User) where {uuid} in n.roles return n`
+    let result = await db.queryCql(find_user_cypher,{uuid})
     if(result&&result.length){
         throw new ScirichonError(`已绑定用户:${result[0].uuid}`)
     }
-    let cypher = `MATCH (n:Role) WHERE n.name = {name} DETACH DELETE n`
-    await db.queryCql(cypher,{name})
-    await acl.removeRole(name)
+    let cypher = `MATCH (n:Role) WHERE n.uuid = {uuid} DETACH DELETE n`
+    await db.queryCql(cypher,{uuid})
+    await acl.removeRole(uuid)
 }
 
 Role.clearAll = async function() {

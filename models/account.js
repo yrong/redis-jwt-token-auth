@@ -3,10 +3,11 @@
 const db = require('../lib/db')
 const _ = require('lodash')
 const acl = require('../lib/acl')
-const Account = {}
 const common = require('scirichon-common')
 const ScirichonError = common.ScirichonError
 const uuid = require('uuid')
+
+let Account = {OmitFields:['passwd','id']}
 
 Account.findOne = async function (uuid) {
     let account = await db.queryCql(`MATCH (u:User{uuid:{uuid}}) return u`,{uuid});
@@ -16,38 +17,17 @@ Account.findOne = async function (uuid) {
     return account[0]
 }
 
-Account.Search = async function (params) {
-    let condition = params&&params.condition||''
-    if(!_.isEmpty(params.fields)){
-        _.assign(params,params.fields)
-        for(let key in params.fields){
-            condition = condition + ` AND n.${key}={${key}}`
-        }
-        if(!condition.includes('where')){
-            condition = 'where' + condition.substr(4)
-        }
-    }
-    let cypher = `
-    MATCH (n:User) ${condition} WITH count(n) AS cnt
-    MATCH (n:User) ${condition}
-    WITH n as n, cnt
-    SKIP {skip} LIMIT {limit}
-    RETURN { count: cnt, results:collect(n) }`
-    let account = await db.queryCql(cypher,params);
-    return account&&account[0]
-}
-
 Account.findAll = async function () {
     let cypher = `
-    MATCH (n:User) return collect(n)`
+    MATCH (n:User) return n`
     let account = await db.queryCql(cypher);
-    return account&&account[0]
+    return account
 }
 
-Account.add = async function(params) {
+Account.add = async function(fields) {
     let cypher = `CREATE (n:User) SET n = {fields}`
-    await db.queryCql(cypher,{fields:params});
-    return {uuid:params.uuid}
+    await db.queryCql(cypher,{fields});
+    return {uuid:fields.uuid}
 }
 
 Account.destory = async function(uuid) {
@@ -60,8 +40,6 @@ Account.destory = async function(uuid) {
 Account.destoryAll = async function() {
     let cypher = `MATCH (n:User) WHERE n.name<>"superadmin" DETACH DELETE n`
     await db.queryCql(cypher)
-    cypher = `MATCH (n:LdapUser) DETACH DELETE n`
-    await db.queryCql(cypher);
 }
 
 Account.verify = async function(username, password) {
@@ -87,19 +65,28 @@ Account.updatePassword = async (params)=>{
     return await db.queryCql(`MATCH (u:User{uuid:{uuid}}) SET u.passwd = {passwd}`,{uuid:params.uuid,passwd:params.newpwd})
 }
 
-const getUser = async(params)=>{
+const getUser = async(uuid)=>{
     let cql = `MATCH (u:User{uuid:{uuid}}) return u`
-    let account = await db.queryCql(cql,{uuid:params.uuid})
+    let account = await db.queryCql(cql,{uuid})
     if(account == null || account.length != 1) {
-        throw new ScirichonError(`user with id ${params.uuid} not exist!`)
+        throw new ScirichonError(`user with id ${uuid} not exist!`)
     }
     return account[0]
 }
 
-Account.updateInfo = async (params)=>{
-    let account = await getUser(params)
+Account.updateInfo = async (params,ctx)=>{
+    let account = await getUser(params.uuid)
     account = _.merge(account,_.omit(params,['token','uuid']))
     await db.queryCql(`MATCH (u:User{uuid:{uuid}}) SET u={account}`,{uuid:params.uuid,account})
+    if(params.roles){
+        acl.userRoles(params.uuid,(err,roles)=>{
+            acl.removeUserRoles(params.uuid,roles,(err,res)=>{
+                acl.addUserRoles(params.uuid,params.roles,(err,res)=>{
+                })
+            })
+        })
+        await ctx.req.session.deleteByUserId(params.uuid)
+    }
     return account
 }
 
@@ -121,30 +108,6 @@ Account.syncAcl = async()=>{
             acl.addUserRoles(account.uuid,account.roles)
         }
     }
-}
-
-Account.updateRole = async (params)=>{
-    let delRoleRelsExistInUser_cypher = `MATCH (u:User{uuid: {uuid}})-[r:AssocRole]-()
-                                    DELETE r`
-    await db.queryCql(delRoleRelsExistInUser_cypher,{uuid:params.uuid})
-    let addUserRoleRel_cypher = `MATCH (u:User{uuid:{uuid}})
-                                    UNWIND {roles} AS role_name
-                                    MATCH (r:Role {name:role_name})
-                                    CREATE (u)-[:AssocRole]->(r)`
-    await db.queryCql(addUserRoleRel_cypher,params)
-    let addUserRoleProperty_cypher = `MATCH (u:User{uuid:{uuid}})
-                                    SET u.roles = {roles}`
-    await db.queryCql(addUserRoleProperty_cypher,params)
-    let promise = new Promise((resolve,reject)=>{
-        acl.userRoles(params.uuid,(err,roles)=>{
-            acl.removeUserRoles(params.uuid,roles,(err,res)=>{
-                acl.addUserRoles(params.uuid,params.roles,(err,res)=>{
-                    resolve(res)
-                })
-            })
-        })
-    })
-    await Promise.resolve(promise)
 }
 
 module.exports = Account;
