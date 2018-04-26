@@ -64,6 +64,7 @@ module.exports = (router)=>{
         if(role){
             await Role.destory(ctx.params.name)
             await scirichon_cache.delItem(role)
+            await search.deleteItem('role',role)
             try{
                 notification.action = 'DELETE'
                 notification.old = role
