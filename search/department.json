@@ -5,36 +5,22 @@
         "uuid": {
           "type": "keyword"
         },
+        "parent": {
+          "type": "keyword"
+        },
         "category": {
           "type": "keyword"
         },
         "name": {
           "type": "keyword"
         },
-        "department": {
-          "type": "keyword"
-        },
-        "department_path":{
+        "path":{
           "type": "string",
           "fields": {
             "raw": {
               "type": "keyword"
             }
           }
-        },
-        "internal":{
-          "type": "keyword"
-        },
-        "roles":{
-          "type": "string",
-          "fields": {
-            "raw": {
-              "type": "keyword"
-            }
-          }
-        },
-        "type":{
-          "type": "keyword"
         }
       }
     }

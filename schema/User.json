@@ -4,11 +4,12 @@
   "loadUrl":"/auth/userinfo",
   "cache":{"exclude_fields":["passwd","id"]},
   "search":{"index":"user"},
+  "type": "object",
   "properties": {
     "name":{
       "type": "string"
     },
-    "internalId":{
+    "internal":{
       "type": "string",
       "schema":"User"
     },
@@ -19,6 +20,9 @@
     "roles": {
       "type": "array",
       "items": { "type": "string", "schema":"Role"}
+    },
+    "type":{
+      "type": "string"
     }
   },
   "uniqueKeys":["name"]

@@ -2,5 +2,22 @@
   "id": "Role",
   "service":"auth",
   "loadUrl":"/auth/role",
-  "uniqueKeys":["name"]
+  "uniqueKeys":["name"],
+  "search":{"index":"role"},
+  "properties": {
+    "inherits":{
+      "type": "array",
+      "items": { "type": "string", "schema":"Role"}
+    },
+    "allows":{
+      "type": "array",
+      "items": { "type": "object"}
+    },
+    "additional":{
+      "type":"object"
+    },
+    "type":{
+      "type": "string"
+    }
+  }
 }
