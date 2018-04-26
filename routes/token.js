@@ -2,8 +2,9 @@ const passport = require('koa-passport')
 const _ = require('lodash')
 const Account = require('../models/account')
 const LdapAccount = require('../models/ldap_account')
-const Role = require('../models/role')
 const ScirichonError = require('scirichon-common').ScirichonError
+const config = require('config')
+const responseWrapper = require('../hook/responseWrapper')
 
 const isLdapUser = (user)=>{
     return user.cn&&user.dn
@@ -19,7 +20,7 @@ const getUser = async (ctx,user)=>{
 
 module.exports = (router)=>{
     router.post('/login', async(ctx, next) => {
-        let params = ctx.request.body
+        let params = ctx.request.body,token
         await passport.authenticate('local',async(err,user,info) => {
             if(!user)
                 ctx.throw(401,new ScirichonError('login failed!'))
@@ -29,10 +30,9 @@ module.exports = (router)=>{
                 }
             }
             await ctx.login(user)
-            let passport = ctx.req.session.passport
-            let token = await ctx.req.session.create(passport)
-            user = passport.user
-            ctx.body = {token: token,local:user}
+            user = await responseWrapper.responseMapper(user,_.assign({category:'User'}))
+            token = await ctx.req.session.create(ctx.req.session.passport)
+            ctx.body = {token: token,login_date:new Date().toISOString(),expiration_date:new Date(Date.now()+config.get('expiration')*1000).toISOString(),local:user}
         })(ctx, next)
     })
 

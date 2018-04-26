@@ -16,8 +16,6 @@ passport.serializeUser(function(user, done) {
     else{
         user = _.omit(user, ['passwd','id'])
     }
-    user.login_date = new Date().toISOString()
-    user.expiration_date = new Date(Date.now()+config.get('expiration')*1000).toISOString()
     done(null, user)
 })
 
