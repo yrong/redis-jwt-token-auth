@@ -16,7 +16,7 @@ const deleteUser = async (userid,ctx)=>{
         await scirichon_cache.delItem(user)
         await ctx.req.session.deleteByUserId(userid)
         await Account.destory(userid)
-        await search.deleteItem(user,ctx)
+        await search.deleteItem('user',user)
         try {
             if(user.department){
                 department = await scirichon_cache.getItemByCategoryAndID('Department',user.department)
