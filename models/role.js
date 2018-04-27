@@ -19,15 +19,16 @@ Role.findAll = async function () {
 }
 
 Role.addOrUpdate = async function(params) {
-    await acl.removeRole(params.uuid)
-    for(let allow of params.allows){
-        await acl.allow(params.uuid,allow.resources,allow.permissions)
+    let role = _.cloneDeep(params)
+    await acl.removeRole(role.uuid)
+    for(let allow of role.allows){
+        await acl.allow(role.uuid,allow.resources,allow.permissions)
     }
-    if(params.inherits)
-        await acl.addRoleParents(params.uuid, params.inherits)
-    params.allows = JSON.stringify(params.allows)
-    params.additional = JSON.stringify(params.additional)
-    let cypher_params = {uuid:params.uuid,fields:params}
+    if(role.inherits)
+        await acl.addRoleParents(role.uuid, role.inherits)
+    role.allows = JSON.stringify(role.allows)
+    role.additional = JSON.stringify(role.additional)
+    let cypher_params = {uuid:role.uuid,fields:role}
     let cypher = `MERGE (n:Role {uuid: {uuid}})
     ON CREATE SET n = {fields}
     ON MATCH SET n = {fields}`
