@@ -6,8 +6,8 @@ const ScirichonWarning = common.ScirichonWarning
 const scirichon_cache = require('scirichon-cache')
 const uuid = require('uuid')
 const config = require('config')
-const search = require('../search')
-const responseWrapper = require('../hook/responseWrapper')
+const search = require('scirichon-search')
+const responseWrapper = require('scirichon-response-mapper')
 const LdapAccount = require('../models/ldap_account')
 
 const deleteUser = async (userid,ctx)=>{
@@ -15,8 +15,8 @@ const deleteUser = async (userid,ctx)=>{
     if(user){
         await scirichon_cache.delItem(user)
         await ctx.req.session.deleteByUserId(userid)
-        await Account.destory(userid)
-        await search.deleteItem('user',user)
+        await Account.destroy(userid)
+        await search.deleteItem(user)
         try {
             if(user.department){
                 department = await scirichon_cache.getItemByCategoryAndID('Department',user.department)
@@ -43,11 +43,11 @@ const addUser = async (user)=>{
     await checkUser(user)
     user.type = user.type || 'internal'
     user.uuid = user.uuid||uuid.v1()
-    user.category = 'User'
-    user.unique_name = user.name
+    user.category = user.category||'User'
+    user.unique_name = user.unique_name||user.name
     await Account.add(user)
     await scirichon_cache.addItem(user)
-    await search.addOrUpdateItem('user',user,false)
+    await search.addOrUpdateItem(user)
     return user
 }
 
@@ -87,23 +87,25 @@ const checkUser = async (user)=>{
 const updateUser = async (ctx)=>{
     let user = _.merge({},ctx.params,ctx.request.body)
     await checkUser(user)
-    user = await Account.updateInfo(user,ctx)
+    user = await Account.update(user,ctx)
     await scirichon_cache.addItem(user)
-    await search.addOrUpdateItem('user',user,true)
+    await search.addOrUpdateItem(user,true)
 }
+
+const omitFields = config.get('userFieldsIgnored4Token')
 
 module.exports = (router)=>{
     router.get('/userinfo', async(ctx, next) => {
         let users = await Account.findAll()
-        users = _.map(users,(user)=>_.omit(user,Account.OmitFields))
-        users = await responseWrapper.responseMapper(users,{category:'User'})
+        users = _.map(users,(user)=>_.omit(user,omitFields))
+        users = await responseWrapper.responseMapper(users,ctx.query)
         ctx.body = users||{}
     })
 
     router.get('/userinfo/:uuid',async(ctx,next)=>{
         let user = await Account.findOne(ctx.params.uuid)
-        user = _.omit(user,Account.OmitFields)
-        user = await responseWrapper.responseMapper(user,_.assign({category:'User'},ctx.query))
+        user = _.omit(user,omitFields)
+        user = await responseWrapper.responseMapper(user,ctx.query)
         ctx.body = user||{}
     })
 

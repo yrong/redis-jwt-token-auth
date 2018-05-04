@@ -4,7 +4,7 @@ const db = require('../lib/db')
 const scirichon_cache = require('scirichon-cache')
 const common = require('scirichon-common')
 const ScirichonError = common.ScirichonError
-const search = require('../search')
+const search = require('scirichon-search')
 
 const addDepartment = async (department)=>{
     let parent_department,cypher
@@ -34,7 +34,7 @@ const addDepartment = async (department)=>{
         await db.queryCql(cypher,{uuid:department.uuid,parent:department.parent})
     }
     await scirichon_cache.addItem(department)
-    await search.addOrUpdateItem('department',department)
+    await search.addOrUpdateItem(department)
     return department
 }
 
@@ -63,10 +63,10 @@ const deleteDepartment = async (uuid)=>{
     if(_.isEmpty(department)){
         throw new ScirichonError('department not found')
     }
-    await scirichon_cache.delItem(department)
     let cypher = `match (n:Department) where n.uuid={uuid} detach delete n`
     await db.queryCql(cypher,{uuid})
-    await search.deleteItem('department',{uuid})
+    await scirichon_cache.delItem(department)
+    await search.deleteItem(department)
 }
 
 const getDepartmentTree = async (uuid)=>{

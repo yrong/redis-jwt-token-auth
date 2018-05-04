@@ -5,7 +5,9 @@ const log4js_wrapper = require('log4js_wrapper')
 const config = require('config')
 log4js_wrapper.initialize(config.get('logger'))
 const logger = log4js_wrapper.getLogger()
-const scirichon_cache = require('scirichon-cache')
+const scirichonSchema = require('scirichon-json-schema')
+const scirichonCache = require('scirichon-cache')
+const scirichonSearch = require('scirichon-search')
 
 const Koa = require('koa')
 const baseconfig = require('./base/index')
@@ -22,13 +24,20 @@ app.use(middleware())
 //configure custom routes
 app.use(routes())
 
-const redisOption = {host:`${process.env['REDIS_HOST']||config.get('redis.host')}`,port:config.get('redis.port')}
-scirichon_cache.initialize({redisOption,prefix:process.env['SCHEMA_TYPE']})
 
-app.listen(config.get('auth.port'),()=>{
-    logger.info("Server started, listening on port: " + config.get('auth.port'))
+const initializeComponents = async ()=>{
+    let redisOption = {host:`${process.env['REDIS_HOST']||config.get('redis.host')}`,port:config.get('redis.port')}
+    let schema_option = {redisOption,prefix:process.env['SCHEMA_TYPE']}
+    await scirichonSchema.initialize(schema_option)
+    await scirichonCache.initialize(schema_option)
+    await scirichonSearch.initialize(schema_option)
+}
+
+initializeComponents().then(()=>{
+    app.listen(config.get('auth.port'),()=>{
+        logger.info("Server started, listening on port: " + config.get('auth.port'))
+    })
 })
-
 
 process.on('uncaughtException', (err) => {
     logger.error(`Caught exception: ${err}`)

@@ -4,8 +4,8 @@ const common = require('scirichon-common')
 const ScirichonError = common.ScirichonError
 const ScirichonWarning = common.ScirichonWarning
 const scirichon_cache = require('scirichon-cache')
-const search = require('../search')
-const responseWrapper = require('../hook/responseWrapper')
+const search = require('scirichon-search')
+const scirichonResponseMapper = require('scirichon-response-mapper')
 
 const addOrUpdateRole = async(role,update)=>{
     role.category = 'Role'
@@ -13,7 +13,7 @@ const addOrUpdateRole = async(role,update)=>{
     role.type = role.type || 'internal'
     await scirichon_cache.addItem(role)
     await Role.addOrUpdate(role)
-    await search.addOrUpdateItem('role',role)
+    await search.addOrUpdateItem(role)
     console.log(`role ${role.uuid} added`)
     return role.uuid
 }
@@ -45,26 +45,23 @@ module.exports = (router)=>{
 
     router.get('/role/:uuid', async(ctx, next) => {
         let role = await Role.findOne(ctx.params.uuid)
-        role = await responseWrapper.responseMapper(role,_.assign({category:'Role'},ctx.query))
+        role = await scirichonResponseMapper.responseMapper(role,ctx.query)
         ctx.body = role||{}
     })
 
     router.get('/role', async(ctx, next) => {
-        let roles = await Role.findAll(),result=[]
-        for(let role of roles){
-            role = await responseWrapper.responseMapper(role,_.assign({category:'Role'}))
-            result.push(role)
-        }
-        ctx.body = result
+        let roles = await Role.findAll()
+        roles = await scirichonResponseMapper.responseMapper(roles,ctx.query)
+        ctx.body = roles||[]
     })
 
-    router.del('/role/:name', async(ctx, next) => {
-        let role = await Role.findOne(ctx.params.name),notification_url = common.getServiceApiUrl('notifier'),
+    router.del('/role/:uuid', async(ctx, next) => {
+        let role = await Role.findOne(ctx.params.uuid),notification_url = common.getServiceApiUrl('notifier'),
             notification = {type:"Role",user:ctx.req.session.passport.user,source:process.env['NODE_NAME']}
         if(role){
-            await Role.destory(ctx.params.name)
+            await Role.destroy(ctx.params.uuid)
             await scirichon_cache.delItem(role)
-            await search.deleteItem('role',role)
+            await search.deleteItem(role)
             try{
                 notification.action = 'DELETE'
                 notification.old = role

@@ -1,6 +1,6 @@
 const _ = require('lodash')
 const Department = require('../models/department')
-const responseWrapper = require('../hook/responseWrapper')
+const responseWrapper = require('scirichon-response-mapper')
 
 
 module.exports = (router)=> {

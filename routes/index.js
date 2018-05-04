@@ -8,7 +8,7 @@ const Account = require('../models/account')
 const Role = require('../models/role')
 const Department = require('../models/department')
 const scirichon_cache = require('scirichon-cache')
-const search = require('../search')
+const search = require('scirichon-search')
 
 router.use('/auth', RouterAuth.routes(), RouterAuth.allowedMethods())
 router.post('/auth/hidden/clean', async(ctx, next) => {

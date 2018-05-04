@@ -15,23 +15,13 @@
           "type": "keyword"
         },
         "department_path":{
-          "type": "string",
-          "fields": {
-            "raw": {
-              "type": "keyword"
-            }
-          }
+          "type": "keyword"
         },
         "internal":{
           "type": "keyword"
         },
         "roles":{
-          "type": "string",
-          "fields": {
-            "raw": {
-              "type": "keyword"
-            }
-          }
+          "type": "keyword"
         },
         "type":{
           "type": "keyword"

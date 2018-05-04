@@ -4,7 +4,7 @@ const Account = require('../models/account')
 const LdapAccount = require('../models/ldap_account')
 const ScirichonError = require('scirichon-common').ScirichonError
 const config = require('config')
-const responseWrapper = require('../hook/responseWrapper')
+const responseWrapper = require('scirichon-response-mapper')
 
 const isLdapUser = (user)=>{
     return user.cn&&user.dn

@@ -15,12 +15,7 @@
           "type": "keyword"
         },
         "path":{
-          "type": "string",
-          "fields": {
-            "raw": {
-              "type": "keyword"
-            }
-          }
+          "type": "keyword"
         }
       }
     }

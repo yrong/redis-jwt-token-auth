@@ -14,7 +14,7 @@ passport.serializeUser(function(user, done) {
         user = _.pick(user, ['cn', 'dn'])
     }
     else{
-        user = _.omit(user, ['passwd','id'])
+        user = _.omit(user, config.get('userFieldsIgnored4Token'))
     }
     done(null, user)
 })

@@ -32,10 +32,11 @@ Role.addOrUpdate = async function(params) {
     let cypher = `MERGE (n:Role {uuid: {uuid}})
     ON CREATE SET n = {fields}
     ON MATCH SET n = {fields}`
-    return await db.queryCql(cypher,cypher_params);
+    await db.queryCql(cypher,cypher_params)
+    return params
 }
 
-Role.destory = async function(uuid) {
+Role.destroy = async function(uuid) {
     let find_user_cypher = `MATCH (n:User) where {uuid} in n.roles return n`
     let result = await db.queryCql(find_user_cypher,{uuid})
     if(result&&result.length){

@@ -5,32 +5,33 @@ const _ = require('lodash')
 const acl = require('../lib/acl')
 const common = require('scirichon-common')
 const ScirichonError = common.ScirichonError
-const uuid = require('uuid')
 
-let Account = {OmitFields:['passwd','id']}
+let Account = {}
+
 
 Account.findOne = async function (uuid) {
-    let account = await db.queryCql(`MATCH (u:User{uuid:{uuid}}) return u`,{uuid});
-    if(account == null || account.length != 1) {
-        throw new ScirichonError(`user with name ${uuid} not exist!`)
+    let accounts = await db.queryCql(`MATCH (u:User{uuid:{uuid}}) return u`,{uuid});
+    if(accounts == null || accounts.length != 1) {
+        throw new ScirichonError(`user with id ${uuid} not exist!`)
     }
-    return account[0]
+    return accounts[0]
 }
 
 Account.findAll = async function () {
-    let cypher = `
-    MATCH (n:User) return n`
-    let account = await db.queryCql(cypher);
-    return account
+    let cypher = `MATCH (n:User) return n`
+    let accounts = await db.queryCql(cypher);
+    return accounts
 }
 
-Account.add = async function(fields) {
+Account.add = async function(params) {
     let cypher = `CREATE (n:User) SET n = {fields}`
-    await db.queryCql(cypher,{fields});
-    return {uuid:fields.uuid}
+    await db.queryCql(cypher,{fields: params})
+    if(params.roles)
+        await acl.addUserRoles(params.uuid,params.roles)
+    return {uuid:params.uuid}
 }
 
-Account.destory = async function(uuid) {
+Account.destroy = async function(uuid) {
     let cypher = `MATCH (n:User) WHERE n.uuid = {uuid} DETACH DELETE n`
     db.queryCql(cypher,{uuid})
     let roles = await acl.userRoles(uuid)
@@ -65,26 +66,14 @@ Account.updatePassword = async (params)=>{
     return await db.queryCql(`MATCH (u:User{uuid:{uuid}}) SET u.passwd = {passwd}`,{uuid:params.uuid,passwd:params.newpwd})
 }
 
-const getUser = async(uuid)=>{
-    let cql = `MATCH (u:User{uuid:{uuid}}) return u`
-    let account = await db.queryCql(cql,{uuid})
-    if(account == null || account.length != 1) {
-        throw new ScirichonError(`user with id ${uuid} not exist!`)
-    }
-    return account[0]
-}
-
-Account.updateInfo = async (params,ctx)=>{
-    let account = await getUser(params.uuid)
+Account.update = async (params, ctx)=>{
+    let account = await Account.findOne(params.uuid),roles
     account = _.merge(account,_.omit(params,['token','uuid']))
     await db.queryCql(`MATCH (u:User{uuid:{uuid}}) SET u={account}`,{uuid:params.uuid,account})
     if(params.roles){
-        acl.userRoles(params.uuid,(err,roles)=>{
-            acl.removeUserRoles(params.uuid,roles,(err,res)=>{
-                acl.addUserRoles(params.uuid,params.roles,(err,res)=>{
-                })
-            })
-        })
+        roles = await acl.userRoles(params.uuid)
+        await acl.removeUserRoles(params.uuid,roles)
+        await acl.addUserRoles(params.uuid,params.roles)
         await ctx.req.session.deleteByUserId(params.uuid)
     }
     return account
@@ -96,16 +85,16 @@ Account.syncAcl = async()=>{
     for(let role of roles){
         role.allows = JSON.parse(role.allows)
         for(let allow of role.allows){
-            acl.allow(role.name,allow.resources,allow.permissions)
+            await acl.allow(role.name,allow.resources,allow.permissions)
         }
         if(role.inherits){
-            acl.addRoleParents(role.name, role.inherits)
+            await acl.addRoleParents(role.name, role.inherits)
         }
     }
     let accounts = await db.queryCql(`MATCH (u:User) return u`);
     for(let account of accounts){
         if(account.roles){
-            acl.addUserRoles(account.uuid,account.roles)
+            await acl.addUserRoles(account.uuid,account.roles)
         }
     }
 }

@@ -2950,12 +2950,6 @@ negotiator@0.6.1:
   version "0.6.1"
   resolved "https://registry.npmjs.org/negotiator/-/negotiator-0.6.1.tgz#2b327184e8992101177b28563fb5e7102acd0ca9"
 
-neo4j-driver@^1.3.0:
-  version "1.5.0"
-  resolved "https://registry.npmjs.org/neo4j-driver/-/neo4j-driver-1.5.0.tgz#bd6f526c434d28a76caf5368ad50f18599181755"
-  dependencies:
-    babel-runtime "^6.18.0"
-
 neo4j-driver@^1.5.0:
   version "1.5.3"
   resolved "https://registry.npmjs.org/neo4j-driver/-/neo4j-driver-1.5.3.tgz#aa7cec63ed793dd5a51c98ab0477edc35c293248"
@@ -3657,35 +3651,6 @@ redis-crud-fork@1.0.0-beta.8:
   version "1.0.0-beta.8"
   resolved "https://registry.npmjs.org/redis-crud-fork/-/redis-crud-fork-1.0.0-beta.8.tgz#6ff803b251f092bb7a5d108c75d24f43b30fd057"
 
-redis-json-schema-init@1.0.1-beta.9:
-  version "1.0.1-beta.9"
-  resolved "https://registry.npmjs.org/redis-json-schema-init/-/redis-json-schema-init-1.0.1-beta.9.tgz#17bf2be161eebac8c28cde872d2c6af563dfa49e"
-  dependencies:
-    config "^1.25.1"
-    elasticsearch "^12.1.3"
-    lodash "^4.17.4"
-    neo4j-driver "^1.5.0"
-    parse-neo4j-fork "^0.6.10"
-    redis-json-schema "1.0.2-beta.3"
-
-redis-json-schema@1.0.2-beta.3:
-  version "1.0.2-beta.3"
-  resolved "https://registry.npmjs.org/redis-json-schema/-/redis-json-schema-1.0.2-beta.3.tgz#c0205142b9a049e630f376e9cbfaff6a52653c77"
-  dependencies:
-    ajv "^5.3.0"
-    lodash "^4.17.4"
-    redis "^2.8.0"
-    redis-crud-fork "1.0.0-beta.8"
-
-redis-json-schema@1.0.2-beta.4:
-  version "1.0.2-beta.4"
-  resolved "https://registry.npmjs.org/redis-json-schema/-/redis-json-schema-1.0.2-beta.4.tgz#ae77a964a35cd00ad96b5f5671f80eb2bccc2cf3"
-  dependencies:
-    ajv "^5.3.0"
-    lodash "^4.17.4"
-    redis "^2.8.0"
-    redis-crud-fork "1.0.0-beta.8"
-
 redis-parser@^2.6.0:
   version "2.6.0"
   resolved "https://registry.npmjs.org/redis-parser/-/redis-parser-2.6.0.tgz#52ed09dacac108f1a631c07e9b69941e7a19504b"
@@ -3915,36 +3880,65 @@ schema-utils@^0.3.0:
   dependencies:
     ajv "^5.0.0"
 
-scirichon-cache@1.0.6-beta.8:
-  version "1.0.6-beta.8"
-  resolved "https://registry.npmjs.org/scirichon-cache/-/scirichon-cache-1.0.6-beta.8.tgz#fca791e372526ae512e2b55c54983fdd16e063b8"
+scirichon-cache@1.0.7-beta.2:
+  version "1.0.7-beta.2"
+  resolved "https://registry.npmjs.org/scirichon-cache/-/scirichon-cache-1.0.7-beta.2.tgz#125fc943c303bb8c28c4cdf3d2f15a8f35a5c926"
   dependencies:
     config "^1.25.1"
     lodash "^4.17.4"
     node-cache-redis-fork "2.2.0-beta.3"
-    redis-json-schema "1.0.2-beta.4"
     request "^2.81.0"
     request-promise "^4.1.1"
-    scirichon-common "1.0.2-beta.4"
+    scirichon-common "1.0.2-beta.7"
+    scirichon-json-schema "1.0.2-beta.4"
     uuid-validate "0.0.2"
 
-scirichon-common@1.0.2-beta.4:
-  version "1.0.2-beta.4"
-  resolved "https://registry.npmjs.org/scirichon-common/-/scirichon-common-1.0.2-beta.4.tgz#8bab1b851ec101fa64b182339b573aa30b91d260"
+scirichon-common@1.0.2-beta.7:
+  version "1.0.2-beta.7"
+  resolved "https://registry.npmjs.org/scirichon-common/-/scirichon-common-1.0.2-beta.7.tgz#03dba99b6d9187dd9b4769bfb1a109138e8bf549"
   dependencies:
     config "^1.25.1"
     lodash "^4.17.4"
     request "^2.81.0"
     request-promise "^4.1.1"
 
-scirichon-response-mapper@1.0.1-beta.8:
-  version "1.0.1-beta.8"
-  resolved "https://registry.npmjs.org/scirichon-response-mapper/-/scirichon-response-mapper-1.0.1-beta.8.tgz#2eae0649824faff2bd04663a76cdce5720e1b17b"
+scirichon-common@1.0.2-beta.8:
+  version "1.0.2-beta.8"
+  resolved "https://registry.npmjs.org/scirichon-common/-/scirichon-common-1.0.2-beta.8.tgz#37e63df5478683b21f1d42890822f08cecdb6846"
+  dependencies:
+    config "^1.25.1"
+    lodash "^4.17.4"
+    request "^2.81.0"
+    request-promise "^4.1.1"
+
+scirichon-json-schema-init@1.0.2-beta.1:
+  version "1.0.2-beta.1"
+  resolved "https://registry.npmjs.org/scirichon-json-schema-init/-/scirichon-json-schema-init-1.0.2-beta.1.tgz#5595780191ddfeb9c1ef20dd478a64b61efca3b7"
+  dependencies:
+    config "^1.25.1"
+    elasticsearch "^12.1.3"
+    lodash "^4.17.4"
+    neo4j-driver "^1.5.0"
+    parse-neo4j-fork "^0.6.10"
+    scirichon-json-schema "1.0.2-beta.4"
+
+scirichon-json-schema@1.0.2-beta.4:
+  version "1.0.2-beta.4"
+  resolved "https://registry.npmjs.org/scirichon-json-schema/-/scirichon-json-schema-1.0.2-beta.4.tgz#5d64723d32555f0750713e095d64606764c831d4"
+  dependencies:
+    ajv "^5.3.0"
+    lodash "^4.17.4"
+    redis "^2.8.0"
+    redis-crud-fork "1.0.0-beta.8"
+
+scirichon-response-mapper@1.0.2-beta.4:
+  version "1.0.2-beta.4"
+  resolved "https://registry.npmjs.org/scirichon-response-mapper/-/scirichon-response-mapper-1.0.2-beta.4.tgz#e35e8ec364ac415f179af667030ddc48f85e4de1"
   dependencies:
     lodash "^4.17.4"
-    redis-json-schema "1.0.2-beta.4"
-    scirichon-cache "1.0.6-beta.8"
-    scirichon-common "1.0.2-beta.4"
+    scirichon-cache "1.0.7-beta.2"
+    scirichon-common "1.0.2-beta.8"
+    scirichon-json-schema "1.0.2-beta.4"
 
 scirichon-response-wrapper@1.0.0-beta.9:
   version "1.0.0-beta.9"
@@ -3952,6 +3946,18 @@ scirichon-response-wrapper@1.0.0-beta.9:
   dependencies:
     lodash "^4.17.4"
     log4js_wrapper "1.0.3-beta.5"
+
+scirichon-search@1.0.0-beta.3:
+  version "1.0.0-beta.3"
+  resolved "https://registry.npmjs.org/scirichon-search/-/scirichon-search-1.0.0-beta.3.tgz#aedad2a5ca7892eae4fb574a845f83fe92d0ecac"
+  dependencies:
+    config "^1.25.1"
+    elasticsearch "^12.1.3"
+    lodash "^4.17.4"
+    scirichon-cache "1.0.7-beta.2"
+    scirichon-common "1.0.2-beta.8"
+    scirichon-json-schema "1.0.2-beta.4"
+    scirichon-response-mapper "1.0.2-beta.4"
 
 "semver@2 || 3 || 4 || 5":
   version "5.5.0"
