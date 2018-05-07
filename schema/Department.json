@@ -1,15 +1,16 @@
 {
   "id": "Department",
   "type": "object",
+  "service":"auth",
+  "route":"/departments",
   "properties": {
     "parent":{
       "type": "string",
       "schema":"Department"
     }
   },
-  "service":"auth",
-  "loadUrl":"/auth/departments",
   "required": ["name"],
   "uniqueKeys":["name"],
-  "search":{"index":"department"}
+  "search":{"index":"department"},
+  "notification":true
 }

@@ -1,9 +1,7 @@
 {
   "id": "Role",
   "service":"auth",
-  "loadUrl":"/auth/role",
-  "uniqueKeys":["name"],
-  "search":{"index":"role"},
+  "route":"/roles",
   "properties": {
     "inherits":{
       "type": "array",
@@ -19,5 +17,9 @@
     "type":{
       "type": "string"
     }
-  }
+  },
+  "required": ["name"],
+  "uniqueKeys":["name"],
+  "search":{"index":"role"},
+  "notification":true
 }

@@ -1,9 +1,7 @@
 {
   "id": "User",
   "service":"auth",
-  "loadUrl":"/auth/userinfo",
-  "cache":{"exclude_fields":["passwd","id"]},
-  "search":{"index":"user"},
+  "route":"/users",
   "type": "object",
   "properties": {
     "name":{
@@ -23,7 +21,14 @@
     },
     "type":{
       "type": "string"
+    },
+    "ldapId":{
+      "type": "string"
     }
   },
-  "uniqueKeys":["name"]
+  "required": ["name"],
+  "uniqueKeys":["name"],
+  "cache":{"exclude_fields":["passwd","id"]},
+  "search":{"index":"user"},
+  "notification":true
 }
