@@ -1,18 +1,18 @@
 const passport = require('koa-passport')
 const _ = require('lodash')
-const Account = require('../models/account')
-const LdapAccount = require('../models/ldap_account')
+const LdapAccount = require('../handlers/ldap_account')
 const ScirichonError = require('scirichon-common').ScirichonError
 const config = require('config')
 const responseWrapper = require('scirichon-response-mapper')
+const handler = require('../handlers/index')
 
 const isLdapUser = (user)=>{
     return user.cn&&user.dn
 }
 
-const getUser = async (ctx,user)=>{
+const getFullUser = async (ctx,user)=>{
     if(ctx.request.body.requestAll){
-        user = await Account.findOne(user.uuid)
+        user = await handler.handleQuery({category:'User',uuid:user.uuid},ctx)
     }
     return user
 }
@@ -22,8 +22,9 @@ module.exports = (router)=>{
     router.post('/login', async(ctx, next) => {
         let params = ctx.request.body,token
         await passport.authenticate('local',async(err,user,info) => {
-            if(!user)
-                ctx.throw(401,new ScirichonError('login failed!'))
+            if(err){
+                ctx.throw(401,new ScirichonError(err.message))
+            }
             if(params.illegalRoles&&user.roles){
                 if(_.intersection(params.illegalRoles,user.roles).length){
                     ctx.throw(401,`user with illegal roles as ${user.roles} can not login`)
@@ -49,9 +50,9 @@ module.exports = (router)=>{
         if(passport_user){
             if(isLdapUser(passport_user)){
                 local_user = await LdapAccount.getLocalByLdap(passport_user)
-                result = {token: token,local:await getUser(ctx,local_user),ldap:passport_user}
+                result = {token: token,local:await getFullUser(ctx,local_user),ldap:passport_user}
             }else{
-                result = {token: token,local:await getUser(ctx,local_user)}
+                result = {token: token,local:await getFullUser(ctx,local_user)}
             }
         }
         ctx.body = result

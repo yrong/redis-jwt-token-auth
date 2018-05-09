@@ -1,13 +1,11 @@
-'use strict';
-
 const passport = require('koa-passport')
-const AccountModel = require('../models/account')
-const _ = require('lodash');
+const _ = require('lodash')
 const LdapStrategy = require('passport-ldapauth-fork')
 const config = require('config')
 const passport_local = require('passport-local')
 const LocalStrategy = passport_local.Strategy
-const log4js = require('log4js');
+const log4js = require('log4js')
+const userHandler = require('../handlers/user')
 
 passport.serializeUser(function(user, done) {
     if(user[config.get('ldap.bindType')]) {
@@ -24,7 +22,7 @@ passport.deserializeUser(function(user, done) {
 })
 
 passport.use(new LocalStrategy(function(username, password, done) {
-  AccountModel.verify(username, password)
+    userHandler.verify(username, password)
     .then(function(user) {
         if(user != null) {
             done(null, user)

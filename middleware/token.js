@@ -4,6 +4,7 @@ const utils = require('../lib/sessionUtils');
 const config = require('config');
 const scirichon_common = require('scirichon-common')
 const TokenName = scirichon_common.TokenName
+const TokenUserName = scirichon_common.TokenUserName
 const internal_token_id = scirichon_common.InternalTokenId
 const ScirichonError = scirichon_common.ScirichonError
 
@@ -67,6 +68,7 @@ module.exports = function jwt_token(options) {
                 req[options.requestKey].id = decoded.jti;
                 req[options.requestKey].jwt = token;
                 req[options.requestKey].touch(_.noop);
+                ctx[TokenUserName] = req[options.requestKey].passport&&req[options.requestKey].passport.user
                 await next();
             }else{
                 ctx.throw(401,new ScirichonError('token not found in request!'))

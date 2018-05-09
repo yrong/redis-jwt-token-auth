@@ -1,39 +1,22 @@
 const _ = require('lodash')
-const Role = require('../models/role')
-const common = require('scirichon-common')
-const ScirichonError = common.ScirichonError
-const ScirichonWarning = common.ScirichonWarning
-const scirichon_cache = require('scirichon-cache')
 const search = require('scirichon-search')
-const scirichonResponseMapper = require('scirichon-response-mapper')
-
-const addOrUpdateRole = async(role,update)=>{
-    role.category = 'Role'
-    role.uuid = role.unique_name = role.uuid||role.name
-    role.type = role.type || 'internal'
-    await scirichon_cache.addItem(role)
-    await Role.addOrUpdate(role)
-    await search.addOrUpdateItem(role)
-    console.log(`role ${role.uuid} added`)
-    return role.uuid
-}
+const handler = require('../handlers/index')
+const roleHandler = require('../handlers/role')
 
 module.exports = (router)=>{
     router.post('/role', async(ctx, next) => {
-        let role = ctx.request.body,uuid
-        if(!role.name||!role.allows){
-            throw new ScirichonError('add role missing params')
-        }
-        uuid = await addOrUpdateRole(role)
-        ctx.body = {uuid}
+        let params = _.assign({category:'Role'},ctx.params,ctx.request.body)
+        params = await handler.handleRequest(params,ctx)
+        ctx.body = {uuid:params.uuid}
     })
 
     router.post('/roles', async(ctx, next) => {
-        await Role.clearAll()
-        let roles = ctx.request.body,uuid,results = []
+        await roleHandler.clear()
+        let roles = ctx.request.body,results = [],params
         for(let role of roles){
-            uuid = await addOrUpdateRole(role)
-            results.push(uuid)
+            params = _.assign({category:'Role'},ctx.params,role)
+            params = await handler.handleRequest(params,ctx)
+            results.push(params.uuid)
         }
         ctx.body = results
     })
@@ -44,35 +27,20 @@ module.exports = (router)=>{
     })
 
     router.get('/role/:uuid', async(ctx, next) => {
-        let role = await Role.findOne(ctx.params.uuid)
-        role = await scirichonResponseMapper.responseMapper(role,ctx.query)
-        ctx.body = role||{}
+        let params = _.merge({category:'Role'},ctx.query,ctx.params,ctx.request.body)
+        let result = await handler.handleQuery(params,ctx)
+        ctx.body = result||{}
     })
 
     router.get('/role', async(ctx, next) => {
-        let roles = await Role.findAll()
-        roles = await scirichonResponseMapper.responseMapper(roles,ctx.query)
-        ctx.body = roles||[]
+        let params = _.merge({category:'Role'},ctx.query,ctx.params,ctx.request.body)
+        let result = await handler.handleQuery(params,ctx)
+        ctx.body = result||{}
     })
 
     router.del('/role/:uuid', async(ctx, next) => {
-        let role = await Role.findOne(ctx.params.uuid),notification_url = common.getServiceApiUrl('notifier'),
-            notification = {type:"Role",user:ctx.req.session.passport.user,source:process.env['NODE_NAME']}
-        if(role){
-            await Role.destroy(ctx.params.uuid)
-            await scirichon_cache.delItem(role)
-            await search.deleteItem(role)
-            try{
-                notification.action = 'DELETE'
-                notification.old = role
-                await common.apiInvoker('POST',notification_url,'/api/notifications','',notification)
-            }catch(error){
-                throw new ScirichonWarning(`add notification failed:`+ error)
-            }
-            console.log(`role ${ctx.params.name} deleted`)
-        }else{
-            throw new ScirichonError(`role ${ctx.params.name} not found`)
-        }
+        let params = _.assign({category:'Role'},ctx.params)
+        await handler.handleRequest(params,ctx)
         ctx.body = {}
     })
 }

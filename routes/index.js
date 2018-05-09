@@ -2,29 +2,41 @@
 
 const compose = require('koa-compose')
 const Router = require('koa-router')
-const RouterAuth = require('./auth')
+const authRoutes = require('./auth')
 const router = new Router()
-const Account = require('../models/account')
-const Role = require('../models/role')
-const Department = require('../models/department')
-const scirichon_cache = require('scirichon-cache')
-const search = require('scirichon-search')
+const scirichonCache = require('scirichon-cache')
+const scirichonSearch = require('scirichon-search')
+const userHandler = require('../handlers/user')
+const departmentHandler = require('../handlers/department')
+const roleHandler = require('../handlers/role')
 
-router.use('/auth', RouterAuth.routes(), RouterAuth.allowedMethods())
+/**
+ * legacy routes
+ */
 router.post('/auth/hidden/clean', async(ctx, next) => {
-    await Account.destoryAll()
-    await Role.clearAll()
-    await Department.destroyAll()
-    await scirichon_cache.flushAll()
-    await search.deleteAll()
+    await departmentHandler.clear()
+    await roleHandler.clear()
+    await userHandler.clear()
+    await scirichonCache.flushAll()
+    await scirichonSearch.deleteAll()
     ctx.body = {}
 })
+router.use('/auth', authRoutes.routes(), authRoutes.allowedMethods())
 
-module.exports = function routes() {
-    return compose(
+/**
+ * new routes
+ */
+const scirichonCrudHandler = require('scirichon-crud-handler')
+const crudRoutes = scirichonCrudHandler.routes
+const handlers = {'User':userHandler,'Department':departmentHandler,'Role':roleHandler}
+scirichonCrudHandler.hooks.setHandlers(handlers)
+
+const customizedRoutes = compose(
         [
             router.routes(),
             router.allowedMethods()
         ]
-    )
-}
+)
+
+
+module.exports = {crudRoutes,customizedRoutes}

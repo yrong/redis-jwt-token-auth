@@ -3,7 +3,8 @@ const db = require('../lib/db')
 const config = require('config')
 const rp = require('request-promise')
 const webdav = require("webdav")
-const Account = require('../models/account')
+const LdapAccount = require('../handlers/ldap_account')
+const userHandler = require('../handlers/user')
 
 const syncFromMysql = async function() {
     let rows = await db.querySql("SELECT * FROM users"),cypher,result,errors = []
@@ -158,7 +159,7 @@ const syncFromLdap = async function() {
     let user,ldap_user,results = [],bind_type = config.get('ldap.bindType')
     if(result&&result.length){
         for(user of result){
-            ldap_user = await Account.searchLdap(user[bind_type],{attributes:config.get('ldap.userAttributes')})
+            ldap_user = await LdapAccount.searchLdap(user[bind_type],{attributes:config.get('ldap.userAttributes')})
             if(ldap_user&&ldap_user.length){
                 cypher = `MERGE (u:LdapUser{${bind_type}:"${user[bind_type]}"}) ON CREATE SET u = {row} ON MATCH SET u = {row}`
                 result = await db.queryCql(cypher, {row: ldap_user[0]})
@@ -170,7 +171,7 @@ const syncFromLdap = async function() {
 }
 
 const syncAcl = async function() {
-    await Account.syncAcl()
+    await userHandler.syncAcl()
 }
 
 module.exports = {syncFromMysql,sync2NextCloud,syncFromLdap,syncAcl}

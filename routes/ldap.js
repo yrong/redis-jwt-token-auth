@@ -2,7 +2,7 @@ const _ = require('lodash')
 const config = require('config')
 const passport = require('koa-passport')
 const ldap_config = config.get('ldap')
-const Account = require('../models/ldap_account')
+const LdapAccount = require('../handlers/ldap_account')
 const common = require('scirichon-common')
 const ScirichonError = common.ScirichonError
 
@@ -14,7 +14,7 @@ module.exports = (router)=>{
                 await ctx.login(ldap_user)
                 let passport = ctx.req.session.passport
                 let token = await ctx.req.session.create(passport)
-                let local_user = await Account.getLocalByLdap(ldap_user)
+                let local_user = await LdapAccount.getLocalByLdap(ldap_user)
                 ctx.body = {token: token,local:local_user,ldap:_.omit(ldap_user,['userPassword'])};
             }else{
                 throw new ScirichonError('ldap authenticate failed,' + info)
@@ -24,19 +24,19 @@ module.exports = (router)=>{
 
     router.post('/ldapsearch',async(ctx)=>{
         let params = ctx.request.body
-        let items = await Account.searchLdap(params.base,params.options||{})
+        let items = await LdapAccount.searchLdap(params.base,params.options||{})
         ctx.body = items
     })
 
     router.get('/enterprise/users',async(ctx)=>{
         let paged_params = _.assign({},ctx.params,ctx.query,ctx.request.body)
-        let items = await Account.searchLdapPagination(ldap_config.userSearchBase,ldap_config.userClass,paged_params,ldap_config.userAttributes)
+        let items = await LdapAccount.searchLdapPagination(ldap_config.userSearchBase,ldap_config.userClass,paged_params,ldap_config.userAttributes)
         ctx.body = items
     })
 
     router.get('/enterprise/departments',async(ctx)=>{
         let paged_params = _.assign({},ctx.params,ctx.query,ctx.request.body)
-        let items = await Account.searchLdapPagination(ldap_config.departmentSearchBase,ldap_config.departmentClass,paged_params,ldap_config.departmentAttributes)
+        let items = await LdapAccount.searchLdapPagination(ldap_config.departmentSearchBase,ldap_config.departmentClass,paged_params,ldap_config.departmentAttributes)
         ctx.body = items
     })
 
