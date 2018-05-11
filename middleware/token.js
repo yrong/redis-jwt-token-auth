@@ -8,8 +8,28 @@ const TokenUserName = scirichon_common.TokenUserName
 const internal_token_id = scirichon_common.InternalTokenId
 const ScirichonError = scirichon_common.ScirichonError
 
+
+const urlIgnored = (ctx)=>{
+    if(ctx.path.includes('/hidden')){
+        return true
+    }
+    else if(ctx.path.includes('/auth/login')){
+        return true
+    }
+    else if(ctx.path.includes('/auth/register')||ctx.path.includes('/api/users')){
+        return true
+    }
+    else if(ctx.path.includes('/auth/departments')||ctx.path.includes('/api/departments')){
+        return true
+    }
+    else if(ctx.path.includes('/auth/roles')||ctx.path.includes('/api/roles')){
+        return true
+    }
+    return false
+}
+
 const needCheckToken = (ctx)=>{
-    if (ctx.method==='POST' && (ctx.path.includes('/auth/login') || ctx.path.includes('/auth/register') || ctx.path.includes('/auth/departments'))){
+    if (ctx.method==='POST' && urlIgnored(ctx)){
         return false
     }
     else if(ctx.method==="GET" && (ctx.path.includes('.html')||ctx.path.includes('.ico'))){

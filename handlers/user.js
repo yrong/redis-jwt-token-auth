@@ -88,7 +88,7 @@ const syncAcl = async()=>{
 }
 
 const clear = async()=>{
-    await db.queryCql(`MATCH (n:User) WHERE n.name<>"superadmin" DETACH DELETE n`)
+    await db.queryCql(`MATCH (n:User) DETACH DELETE n`)
 }
 
 module.exports = {preProcess,postProcess,verify,updatePassword,syncAcl,clear}

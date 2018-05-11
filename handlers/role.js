@@ -33,7 +33,7 @@ const postProcess = async (params, ctx)=>{
 }
 
 const clear = async ()=>{
-    await db.queryCql(`MATCH (n:Role) WHERE n.name<>"superadmin" DETACH DELETE n`)
+    await db.queryCql(`MATCH (n:Role) DETACH DELETE n`)
     await acl.backend.cleanAsync()
 }
 
