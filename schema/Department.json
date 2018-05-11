@@ -6,7 +6,8 @@
   "properties": {
     "parent":{
       "type": "string",
-      "schema":"Department"
+      "schema":"Department",
+      "relationship":{"name":"MemberOf"}
     }
   },
   "required": ["name"],
