@@ -1,6 +1,6 @@
 {
 	"info": {
-		"name": "auth-dev",
+		"name": "auth",
 		"_postman_id": "651dc08b-7e52-25a6-8ef1-2d6547fbff1b",
 		"description": "",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -15,11 +15,11 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "9f9615af-6652-485d-8c19-ae7fa0370ab4",
+								"type": "text/javascript",
 								"exec": [
 									""
-								],
-								"id": "1a36a392-560e-429f-be84-7a5de9bb90fb",
-								"type": "text/javascript"
+								]
 							}
 						}
 					],
@@ -61,9 +61,11 @@
 									"var token = jsonData.token||jsonData.data.token;",
 									"tests[\"token found\"] = token;",
 									"if(token){",
-									"  postman.setEnvironmentVariable(\"token\", token);  ",
-									"}"
+									"   postman.setEnvironmentVariable(\"token\", token); ",
+									"}",
+									""
 								],
+								"id": "e7984c45-e62a-46e8-87cc-3dc96282152c",
 								"type": "text/javascript"
 							}
 						}
@@ -124,52 +126,6 @@
 								"auth",
 								"hidden",
 								"clean"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "add demo user",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "c5f2a222-a0bd-45f0-8817-62a91872ee7b",
-								"type": "text/javascript",
-								"exec": [
-									"var jsonData = JSON.parse(responseBody);",
-									"var uuid = jsonData.uuid||jsonData.data.uuid;",
-									"if(uuid){",
-									"   postman.setEnvironmentVariable(\"auth_user_id\", uuid); ",
-									"}",
-									""
-								]
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"name\":\"{{auth_user}}\",\n  \"passwd\":\"{{auth_passwd}}\"\n}"
-						},
-						"url": {
-							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/register",
-							"protocol": "http",
-							"host": [
-								"{{auth_api_host}}"
-							],
-							"port": "{{auth_api_port}}",
-							"path": [
-								"auth",
-								"register"
 							]
 						}
 					},
@@ -383,58 +339,6 @@
 					"response": []
 				},
 				{
-					"name": "query  root department with members",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "740fc797-a177-4ae9-a982-df8259b892e2",
-								"type": "text/javascript",
-								"exec": [
-									"tests[\"query ok\"] = responseCode.code == 200;",
-									"",
-									"// var jsonData = JSON.parse(responseBody);",
-									"// var data = jsonData.data||jsonData",
-									"// tests[\"found\"] = data[0].name==='department1'",
-									""
-								]
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "token",
-								"value": "{{token}}"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"category\":\"Department\",\n\t\"root\":true\n}\n"
-						},
-						"url": {
-							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/api/departments/members",
-							"protocol": "http",
-							"host": [
-								"{{auth_api_host}}"
-							],
-							"port": "{{auth_api_port}}",
-							"path": [
-								"auth",
-								"api",
-								"departments",
-								"members"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "add department 4",
 					"event": [
 						{
@@ -484,22 +388,24 @@
 						}
 					},
 					"response": []
-				}
-			]
-		},
-		{
-			"name": "role&user",
-			"item": [
+				},
 				{
-					"name": "add one role",
+					"name": "add department 5",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
+								"id": "e67b7a91-33a1-4390-a38e-bbcd4d472116",
+								"type": "text/javascript",
 								"exec": [
-									"tests[\"add role success\"] = responseCode.code == 200"
-								],
-								"type": "text/javascript"
+									"var jsonData = JSON.parse(responseBody);",
+									"jsonData = jsonData.data||jsonData;",
+									"tests[\"uuid found\"] = jsonData.uuid;",
+									"if(jsonData.uuid){",
+									"    postman.setEnvironmentVariable(\"department_5_id\", jsonData.uuid);",
+									"}",
+									""
+								]
 							}
 						}
 					],
@@ -509,14 +415,18 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
+							},
+							{
+								"key": "token",
+								"value": "{{token}}"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n      \"name\":\"viewer\",\n     \"allows\":[{\"resources\":\"*\",\"permissions\":[\"READ\"]}],\n     \"additional\":{\"menus\":[\"menu1\",\"menu3\"]}\n}"
+							"raw": "{\n  \"name\":\"department5\",\n      \"parent\":\"{{department_3_id}}\"\n}"
 						},
 						"url": {
-							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/role?token={{token}}",
+							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/departments",
 							"protocol": "http",
 							"host": [
 								"{{auth_api_host}}"
@@ -524,19 +434,110 @@
 							"port": "{{auth_api_port}}",
 							"path": [
 								"auth",
-								"role"
-							],
-							"query": [
-								{
-									"equals": true,
-									"key": "token",
-									"value": "{{token}}"
-								}
+								"departments"
 							]
 						}
 					},
 					"response": []
 				},
+				{
+					"name": "patch department 5",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "522da7f2-fd6f-471b-b3dd-500aca4dd191",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"success\"] = responseCode.code == 200"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "token",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\":\"department5\",\n  \"test\":\"hello\"\n}"
+						},
+						"url": {
+							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/departments/{{department_5_id}}",
+							"protocol": "http",
+							"host": [
+								"{{auth_api_host}}"
+							],
+							"port": "{{auth_api_port}}",
+							"path": [
+								"auth",
+								"departments",
+								"{{department_5_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get departments",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d427afde-1af4-4eba-b035-575d484ef6f8",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"success\"] = responseCode.code == 200",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "token",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\":\"department4\",\n      \"parent\":\"{{department_3_id}}\"\n}"
+						},
+						"url": {
+							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/departments/",
+							"protocol": "http",
+							"host": [
+								"{{auth_api_host}}"
+							],
+							"port": "{{auth_api_port}}",
+							"path": [
+								"auth",
+								"departments",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "role&user",
+			"item": [
 				{
 					"name": "batch add roles",
 					"event": [
@@ -560,7 +561,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "[\n  {\n      \"name\":\"viewer\",\n     \"allows\":[{\"resources\":\"own\",\"permissions\":[\"READ\"]}],\n     \"additional\":{\"menus\":[\"menu1\",\"menu3\"]}\n  },\n  {\n      \"name\":\"contributor\",\n     \"allows\":[{\"resources\":\"own\",\"permissions\":[\"CREATE\",\"UPDATE\",\"DELETE\",\"READ\"]}],\n     \"additional\":{\"menus\":[\"menu1\",\"menu3\"]}\n  },\n  {\n      \"name\":\"superAdmin\",\n     \"allows\":[{\"resources\":\"*\",\"permissions\":\"*\"}],\n     \"additional\":{\"menus\":[\"menu1\",\"menu2\",\"menu3\"]}\n  },\n  {\n      \"name\":\"external\",\n     \"allows\":[{\"resources\":\"*\",\"permissions\":[\"READ\"]}],\n     \"type\":\"external\"\n  }\n]"
+							"raw": "[\n  {\n      \"name\":\"viewer\",\n     \"allows\":[{\"resources\":\"own\",\"permissions\":[\"READ\"]}],\n     \"additional\":{\"a\":1}\n  },\n  {\n      \"name\":\"contributor\",\n     \"allows\":[{\"resources\":\"own\",\"permissions\":[\"CREATE\",\"UPDATE\",\"DELETE\",\"READ\"]}]\n  },\n  {\n      \"name\":\"superAdmin\",\n     \"allows\":[{\"resources\":\"*\",\"permissions\":\"*\"}]\n  },\n  {\n      \"name\":\"external\",\n     \"allows\":[{\"resources\":\"*\",\"permissions\":[\"READ\"]}],\n     \"type\":\"external\"\n  }\n]"
 						},
 						"url": {
 							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/roles?token={{token}}",
@@ -724,12 +725,58 @@
 					"response": []
 				},
 				{
+					"name": "add superadmin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "79e8480b-a6be-439c-b9df-b87cfbcbe692",
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"var uuid = jsonData.uuid||jsonData.data.uuid;",
+									"if(uuid){",
+									"   postman.setEnvironmentVariable(\"superadmin_id\", uuid); ",
+									"}",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\":\"superadmin\",\n  \"passwd\":\"superadmin\"\n}"
+						},
+						"url": {
+							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/register",
+							"protocol": "http",
+							"host": [
+								"{{auth_api_host}}"
+							],
+							"port": "{{auth_api_port}}",
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "login with superadmin",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
-								"id": "431ad66e-19e8-4cb6-8f0c-7888676bb094",
+								"id": "e7984c45-e62a-46e8-87cc-3dc96282152c",
 								"type": "text/javascript",
 								"exec": [
 									"var jsonData = JSON.parse(responseBody);",
@@ -765,6 +812,150 @@
 							"path": [
 								"auth",
 								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "bind department",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"tests[\"user modified\"] = responseCode.code == 200",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "token",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"department\":\"{{department_1_id}}\"\n}"
+						},
+						"url": {
+							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/userinfo/{{superadmin_id}}",
+							"protocol": "http",
+							"host": [
+								"{{auth_api_host}}"
+							],
+							"port": "{{auth_api_port}}",
+							"path": [
+								"auth",
+								"userinfo",
+								"{{superadmin_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "query  root department with members",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "740fc797-a177-4ae9-a982-df8259b892e2",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"query ok\"] = responseCode.code == 200;",
+									"",
+									"// var jsonData = JSON.parse(responseBody);",
+									"// var data = jsonData.data||jsonData",
+									"// tests[\"found\"] = data[0].name==='department1'",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"category\":\"Department\",\n\t\"root\":true\n}\n"
+						},
+						"url": {
+							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/api/departments/members",
+							"protocol": "http",
+							"host": [
+								"{{auth_api_host}}"
+							],
+							"port": "{{auth_api_port}}",
+							"path": [
+								"auth",
+								"api",
+								"departments",
+								"members"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add demo user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c5f2a222-a0bd-45f0-8817-62a91872ee7b",
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"var uuid = jsonData.uuid||jsonData.data.uuid;",
+									"if(uuid){",
+									"   postman.setEnvironmentVariable(\"auth_user_id\", uuid); ",
+									"}",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\":\"{{auth_user}}\",\n  \"passwd\":\"{{auth_passwd}}\"\n}"
+						},
+						"url": {
+							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/register",
+							"protocol": "http",
+							"host": [
+								"{{auth_api_host}}"
+							],
+							"port": "{{auth_api_port}}",
+							"path": [
+								"auth",
+								"register"
 							]
 						}
 					},
@@ -1275,13 +1466,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "050dc3af-c1d2-455a-a4c3-02f76e76fa52",
+								"id": "04139459-e894-475c-8f59-e7aef4c9079c",
 								"type": "text/javascript",
 								"exec": [
-									"tests[\"bind role to user success\"] = responseCode.code == 200",
-									"if(pm.environment.get(\"schema_type\")==='cmdb'){",
-									"    postman.setNextRequest('query all user')",
-									"}"
+									"tests[\"bind role to user success\"] = responseCode.code == 200"
 								]
 							}
 						}
@@ -1296,7 +1484,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n      \"roles\":[\"contributor\"]\n}"
+							"raw": "{\n      \"roles\":[\"external\"]\n}"
 						},
 						"url": {
 							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/userinfo/{{test_user_id}}?token={{token}}",
@@ -1341,11 +1529,15 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
+							},
+							{
+								"key": "token",
+								"value": "{{token}}"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n   \"token\":\"{{token}}\",\n  \"department\":\"{{department_3_id}}\"\n}"
+							"raw": "{\n  \"department\":\"{{department_3_id}}\"\n}"
 						},
 						"url": {
 							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/userinfo/{{test_user_id}}",
@@ -1393,7 +1585,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"body\":\n\t  {\n\t      \"query\": {\n\t        \"bool\":{\n\t          \"must\":[\n\t            {\"match\":{\"type\":\"external\"}}\n\t          ]\n\t        }\n\t      }\n\t  },\n\t  \"page\":1,\n\t  \"per_page\":2\n}"
+							"raw": "{\n\t\"body\":\n\t  {\n\t      \"query\": {\n\t        \"bool\":{\n\t          \"must\":[\n\t            {\"term\":{\"type\":\"external\"}}\n\t          ]\n\t        }\n\t      }\n\t  },\n\t  \"page\":1,\n\t  \"per_page\":2\n}"
 						},
 						"url": {
 							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/userinfo/search",
@@ -1441,7 +1633,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"body\":{\n   \"aggs\": {\n          \"department\" : {\n              \"terms\" : { \"field\" : \"department_path.raw\" }\n          }\n      }\n    }\n}"
+							"raw": "{\n  \"body\":{\n   \"aggs\": {\n          \"department\" : {\n              \"terms\" : { \"field\" : \"department_path\" }\n          }\n      }\n    }\n}"
 						},
 						"url": {
 							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/userinfo/search",
@@ -1508,17 +1700,11 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "42651a86-0e76-4ffb-a3f2-fc3ad9dbdfde",
+								"type": "text/javascript",
 								"exec": [
-									"var jsonData = JSON.parse(responseBody);",
-									"var token = jsonData.token||jsonData.data.token;",
-									"tests[\"token found\"] = token;",
-									"if(token){",
-									"   postman.setEnvironmentVariable(\"token\", token); ",
-									"}",
-									"",
-									""
-								],
-								"type": "text/javascript"
+									"tests[\"failed\"] = responseCode.code != 200"
+								]
 							}
 						}
 					],
@@ -2077,47 +2263,6 @@
 					"response": []
 				}
 			]
-		},
-		{
-			"name": "logout",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"type": "text/javascript",
-						"exec": [
-							"",
-							""
-						]
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n  \"token\":\"{{token}}\"\n}"
-				},
-				"url": {
-					"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/logout",
-					"protocol": "http",
-					"host": [
-						"{{auth_api_host}}"
-					],
-					"port": "{{auth_api_port}}",
-					"path": [
-						"auth",
-						"logout"
-					]
-				}
-			},
-			"response": []
 		}
 	]
 }
