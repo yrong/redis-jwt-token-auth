@@ -9,6 +9,12 @@ module.exports = (router)=> {
         ctx.body = {uuid:params.uuid}
     })
 
+    router.put('/departments/:uuid', async (ctx, next) => {
+        let params = _.assign({category:'Department'},ctx.params,ctx.request.body)
+        await handler.handleRequest(params,ctx)
+        ctx.body = {}
+    })
+
     router.get('/departments/:uuid', async(ctx, next) => {
         let params = _.merge({category:'Department'},ctx.query,ctx.params,ctx.request.body)
         let department = await handler.handleQuery(params,ctx)
