@@ -631,6 +631,52 @@
 					"response": []
 				},
 				{
+					"name": "patch role",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "22e3cd19-8690-41e9-a044-ab103fd3e149",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"patch role success\"] = responseCode.code == 200"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "token",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"category\":\"Role\",\n  \"test\":\"test\"\n}"
+						},
+						"url": {
+							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/api/roles/contributor",
+							"protocol": "http",
+							"host": [
+								"{{auth_api_host}}"
+							],
+							"port": "{{auth_api_port}}",
+							"path": [
+								"api",
+								"roles",
+								"contributor"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "query roles",
 					"event": [
 						{
