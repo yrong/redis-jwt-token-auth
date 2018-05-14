@@ -12,7 +12,8 @@
       "items": { "type": "object"}
     },
     "additional":{
-      "type":"object"
+      "type": "array",
+      "items": { "type": "string"}
     },
     "type":{
       "type": "string"

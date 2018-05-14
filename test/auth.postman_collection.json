@@ -561,7 +561,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "[\n  {\n      \"name\":\"viewer\",\n     \"allows\":[{\"resources\":\"own\",\"permissions\":[\"READ\"]}],\n     \"additional\":{\"a\":1}\n  },\n  {\n      \"name\":\"contributor\",\n     \"allows\":[{\"resources\":\"own\",\"permissions\":[\"CREATE\",\"UPDATE\",\"DELETE\",\"READ\"]}]\n  },\n  {\n      \"name\":\"superAdmin\",\n     \"allows\":[{\"resources\":\"*\",\"permissions\":\"*\"}]\n  },\n  {\n      \"name\":\"external\",\n     \"allows\":[{\"resources\":\"*\",\"permissions\":[\"READ\"]}],\n     \"type\":\"external\"\n  }\n]"
+							"raw": "[\n  {\n      \"name\":\"viewer\",\n     \"allows\":[{\"resources\":\"own\",\"permissions\":[\"READ\"]}],\n     \"additional\":[\"a\"]\n  },\n  {\n      \"name\":\"contributor\",\n     \"allows\":[{\"resources\":\"own\",\"permissions\":[\"CREATE\",\"UPDATE\",\"DELETE\",\"READ\"]}]\n  },\n  {\n      \"name\":\"superAdmin\",\n     \"allows\":[{\"resources\":\"*\",\"permissions\":\"*\"}]\n  },\n  {\n      \"name\":\"external\",\n     \"allows\":[{\"resources\":\"*\",\"permissions\":[\"READ\"]}],\n     \"type\":\"external\"\n  }\n]"
 						},
 						"url": {
 							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/roles?token={{token}}",
