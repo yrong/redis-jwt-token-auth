@@ -17,6 +17,10 @@
     },
     "type":{
       "type": "string"
+    },
+    "currentUserRole":{
+      "type": "array",
+      "items": { "type": "string"}
     }
   },
   "required": ["name"],
