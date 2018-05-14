@@ -4202,9 +4202,9 @@ scirichon-common@1.0.2-beta.8:
     request "^2.81.0"
     request-promise "^4.1.1"
 
-scirichon-crud-handler@1.0.1-beta.8:
-  version "1.0.1-beta.8"
-  resolved "https://registry.npmjs.org/scirichon-crud-handler/-/scirichon-crud-handler-1.0.1-beta.8.tgz#354a2a0a8efd5a542f5bde8c3c79f3d6c7ced593"
+scirichon-crud-handler@1.0.1-beta.9:
+  version "1.0.1-beta.9"
+  resolved "https://registry.npmjs.org/scirichon-crud-handler/-/scirichon-crud-handler-1.0.1-beta.9.tgz#4e04203d1f02c3be9b6ba6667fbaff9d552ce711"
   dependencies:
     config "^1.25.1"
     elasticsearch "^12.1.3"
