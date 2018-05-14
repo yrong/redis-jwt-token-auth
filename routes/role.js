@@ -10,6 +10,12 @@ module.exports = (router)=>{
         ctx.body = {uuid:params.uuid}
     })
 
+    router.put('/role/:uuid', async(ctx, next) => {
+        let params = _.assign({category:'Role'},ctx.params,ctx.request.body)
+        await handler.handleRequest(params,ctx)
+        ctx.body = {}
+    })
+
     router.post('/roles', async(ctx, next) => {
         await roleHandler.clear()
         let roles = ctx.request.body,results = [],params

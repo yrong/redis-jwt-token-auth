@@ -4202,9 +4202,9 @@ scirichon-common@1.0.2-beta.8:
     request "^2.81.0"
     request-promise "^4.1.1"
 
-scirichon-crud-handler@1.0.1-beta.7:
-  version "1.0.1-beta.7"
-  resolved "https://registry.npmjs.org/scirichon-crud-handler/-/scirichon-crud-handler-1.0.1-beta.7.tgz#9712402354f631a5ed8bc422580c42e1aabbf761"
+scirichon-crud-handler@1.0.1-beta.8:
+  version "1.0.1-beta.8"
+  resolved "https://registry.npmjs.org/scirichon-crud-handler/-/scirichon-crud-handler-1.0.1-beta.8.tgz#354a2a0a8efd5a542f5bde8c3c79f3d6c7ced593"
   dependencies:
     config "^1.25.1"
     elasticsearch "^12.1.3"
@@ -4868,9 +4868,9 @@ webdav@^0.9.0:
     node-fetch "^1.6.3"
     xml2js "^0.4.17"
 
-webpack-builder-advanced@1.0.0-beta.1:
-  version "1.0.0-beta.1"
-  resolved "https://registry.npmjs.org/webpack-builder-advanced/-/webpack-builder-advanced-1.0.0-beta.1.tgz#37f04d0977ebd9afe2cb9c18a5f1cd36b3700cc4"
+webpack-builder-advanced@1.0.0-beta.2:
+  version "1.0.0-beta.2"
+  resolved "https://registry.npmjs.org/webpack-builder-advanced/-/webpack-builder-advanced-1.0.0-beta.2.tgz#bfe5175af4330c13915bc2191f1ffece1b225d66"
   dependencies:
     babel-core "^6.26.0"
     babel-loader "^7.1.2"

@@ -645,7 +645,7 @@
 						}
 					],
 					"request": {
-						"method": "PATCH",
+						"method": "PUT",
 						"header": [
 							{
 								"key": "Content-Type",
@@ -658,18 +658,18 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"category\":\"Role\",\n  \"test\":\"test\"\n}"
+							"raw": "{\n  \"test\":\"test\",\n  \"token\":\"{{token}}\"\n}"
 						},
 						"url": {
-							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/api/roles/contributor",
+							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/role/contributor",
 							"protocol": "http",
 							"host": [
 								"{{auth_api_host}}"
 							],
 							"port": "{{auth_api_port}}",
 							"path": [
-								"api",
-								"roles",
+								"auth",
+								"role",
 								"contributor"
 							]
 						}

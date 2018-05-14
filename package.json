@@ -56,11 +56,11 @@
     "scirichon-cache": "1.0.7-beta.3",
     "scirichon-response-mapper": "1.0.2-beta.5",
     "scirichon-search": "1.0.0-beta.4",
-    "scirichon-crud-handler":"1.0.1-beta.7",
+    "scirichon-crud-handler":"1.0.1-beta.8",
     "uuid": "^3.0.0",
     "webdav": "^0.9.0"
   },
   "devDependencies": {
-    "webpack-builder-advanced": "1.0.0-beta.1"
+    "webpack-builder-advanced": "1.0.0-beta.2"
   }
 }
