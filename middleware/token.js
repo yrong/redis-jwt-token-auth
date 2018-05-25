@@ -25,6 +25,9 @@ const urlIgnored = (ctx)=>{
     else if(ctx.path.includes('/auth/roles')||ctx.path.includes('/api/roles')){
         return true
     }
+    else if(ctx.path.includes('/status')){
+        return true
+    }
     return false
 }
 
@@ -32,7 +35,7 @@ const needCheckToken = (ctx)=>{
     if (ctx.method==='POST' && urlIgnored(ctx)){
         return false
     }
-    else if(ctx.method==="GET" && (ctx.path.includes('.html')||ctx.path.includes('.ico'))){
+    else if(ctx.method==="GET" && (!ctx.path.match(/api/i))){
         return false
     }
     return true

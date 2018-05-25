@@ -46,7 +46,7 @@ const initializeComponents = async ()=>{
 initializeComponents().then(()=>{
     routes.crudRoutes(app)
     app.use(routes.customizedRoutes)
-    app.listen(config.get('auth.port'),()=>{
+    app.server.listen(config.get('auth.port'),()=>{
         logger.info("Server started, listening on port: " + config.get('auth.port'))
     })
 })
