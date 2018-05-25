@@ -4674,9 +4674,9 @@ scirichon-search@1.0.0-beta.7:
     scirichon-json-schema "1.0.2-beta.4"
     scirichon-response-mapper "1.0.2-beta.6"
 
-scirichon-test-runner@1.0.0-beta.4:
-  version "1.0.0-beta.4"
-  resolved "https://registry.npmjs.org/scirichon-test-runner/-/scirichon-test-runner-1.0.0-beta.4.tgz#56d87344081fea6e56706616be0af787917c9510"
+scirichon-test-runner@1.0.0-beta.5:
+  version "1.0.0-beta.5"
+  resolved "https://registry.npmjs.org/scirichon-test-runner/-/scirichon-test-runner-1.0.0-beta.5.tgz#6d17e41416b2ab0f5a4a45e5d56bb877d1826f22"
   dependencies:
     config "^1.25.1"
     loadtest "^3.0.3"

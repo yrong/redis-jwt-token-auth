@@ -15,7 +15,8 @@
     "sync-ldap": "SYNC_TYPE=ldap node sync.js",
     "sync-roles": "SYNC_TYPE=acl node sync.js",
     "stressTestReload":"Command=reload DepartmentNum=50 UserNum=1050 BatchSize=100 node test/load_test.js",
-    "stressTestRunScenarioUserSearch":"Command=run Scenario=searchUser Concurrency=5 RequestsPerSecond=20 node test/load_test.js"
+    "stressTestRunScenarioUserSearch":"Command=run Scenario=searchUser Concurrency=5 RequestsPerSecond=20 node test/load_test.js",
+    "stressTestRunScenarioUserUpdate":"Command=run Scenario=updateUser Concurrency=5 RequestsPerSecond=20 node test/load_test.js"
   },
   "keywords": [
     "jwt",
@@ -63,7 +64,7 @@
     "webdav": "^0.9.0"
   },
   "devDependencies": {
-    "scirichon-test-runner": "1.0.0-beta.4",
+    "scirichon-test-runner": "1.0.0-beta.5",
     "webpack-builder-advanced": "1.0.0-beta.2"
   }
 }

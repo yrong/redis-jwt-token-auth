@@ -80,17 +80,10 @@ const generateItem = async (category,params)=>{
 }
 
 const getRunnerOption = async (scenario,params)=>{
-    let options
+    let options,result
     if(scenario==='searchUser'){
         options = {
             url: common.getServiceApiUrl('auth')+'/api/searchByEql',
-            concurrency:parseInt(process.env['Concurrency'])||1,
-            requestsPerSecond:parseInt(process.env['RequestsPerSecond'])||10,
-            agentKeepAlive:true,
-            headers:{
-                "token": params.token
-            },
-            contentType:"application/json",
             method:'POST',
             body:{
                 "category":"User",
@@ -110,7 +103,42 @@ const getRunnerOption = async (scenario,params)=>{
                 "per_page":10
             }
         }
-    }else{
+    }else if(scenario==='updateUser'){
+        let query = {
+            "category":"User",
+            "body":
+                {
+                    "query": {
+                        "bool":{
+                            "must":[
+                                {"term":{"type":"internal"}}
+                            ]
+                        }
+                    }
+                },
+            "page":1,
+            "per_page":100,
+            "source":['uuid']
+        }
+        result = await common.apiInvoker('POST',common.getServiceApiUrl('auth'),'/api/searchByEql','',query)
+        let userIds = _.map(result.data.results,(obj)=>obj.uuid)
+        options = {
+            url: common.getServiceApiUrl('auth'),
+            method:'PUT',
+            body:{
+                "avatar":"/upload/avatar/ca92d560-05a6-11e7-98ba-e1d08df9a25f",
+                "per_page":90
+            },
+            requestGenerator: (params, options, client, callback) => {
+                let userId = userIds[Math.floor(Math.random()*userIds.length)]
+                options.path = `/auth/userinfo/${userId}`;
+                const request = client(options, callback);
+                return request;
+            }
+        }
+
+    }
+    else{
         throw new Error('unknown scenario as:'+scenario)
     }
     return options
