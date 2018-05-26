@@ -33,6 +33,9 @@ module.exports = (router)=>{
     })
 
     router.put('/userinfo/:uuid',async(ctx,next)=>{
+        if(_.isEmpty(ctx.request.body)){
+            throw new Error('missing request body')
+        }
         let params = _.assign({category:'User'},ctx.params,ctx.request.body)
         await handler.handleRequest(params,ctx)
         ctx.body = {}
