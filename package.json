@@ -29,7 +29,6 @@
     "acl-fork": "0.4.10-beta.3",
     "bcryptjs": "^2.3.0",
     "config": "^1.25.1",
-    "elasticsearch": "^14.2.1",
     "hashids": "^1.1.0",
     "jsonwebtoken": "^7.2.1",
     "kcors": "^2.1.1",
@@ -49,16 +48,16 @@
     "parse-neo4j-fork": "0.6.10",
     "passport-ldapauth-fork": "1.0.1-beta.1",
     "passport-local": "^1.0.0",
-    "scirichon-cache": "1.0.7-beta.4",
-    "scirichon-common": "1.0.2-beta.9",
-    "scirichon-crud-handler": "1.0.2-beta.7",
-    "scirichon-json-schema": "1.0.2-beta.4",
-    "scirichon-json-schema-init": "1.0.2-beta.1",
-    "scirichon-response-mapper": "1.0.2-beta.6",
-    "scirichon-response-wrapper": "1.0.0-beta.9",
-    "scirichon-search": "1.0.0-beta.7",
     "uuid": "^3.0.0",
-    "webdav": "^0.9.0"
+    "webdav": "^0.9.0",
+    "scirichon-cache": "1.0.7-beta.5",
+    "scirichon-common": "1.0.3-beta.1",
+    "scirichon-crud-handler": "1.0.3-beta.1",
+    "scirichon-json-schema": "1.0.2-beta.4",
+    "scirichon-json-schema-init": "1.0.2-beta.3",
+    "scirichon-response-mapper": "1.0.2-beta.7",
+    "scirichon-response-wrapper": "1.0.0-beta.9",
+    "scirichon-search": "1.0.1-beta.2"
   },
   "devDependencies": {
     "webpack-builder-advanced": "1.0.0-beta.2"

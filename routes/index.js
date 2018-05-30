@@ -18,7 +18,7 @@ router.post('/auth/hidden/clean', async(ctx, next) => {
     await roleHandler.clear()
     await userHandler.clear()
     await scirichonCache.flushAll()
-    await scirichonSearch.deleteAll()
+    await scirichonSearch.deleteAll('role,department,user')
     ctx.body = {}
 })
 router.use('/auth', authRoutes.routes(), authRoutes.allowedMethods())
