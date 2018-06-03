@@ -2804,9 +2804,9 @@ koa-monitor-forked@0.3.0:
     pidusage "^1.0.5"
     socket.io "^1.5.0"
 
-koa-neo4j-monitor@1.2.8-beta.5:
-  version "1.2.8-beta.5"
-  resolved "https://registry.npmjs.org/koa-neo4j-monitor/-/koa-neo4j-monitor-1.2.8-beta.5.tgz#ea2c702f7fabd597ae49bd8715254ca008136d03"
+koa-neo4j-monitor@1.2.8-beta.6:
+  version "1.2.8-beta.6"
+  resolved "https://registry.npmjs.org/koa-neo4j-monitor/-/koa-neo4j-monitor-1.2.8-beta.6.tgz#9d0e9acb35189ffdb07fa606fa9e6ee5808e52be"
   dependencies:
     chai "^3.5.0"
     chalk "^1.1.3"
@@ -2942,9 +2942,9 @@ lex-parser@0.1.x, lex-parser@~0.1.3:
   version "0.1.4"
   resolved "https://registry.npmjs.org/lex-parser/-/lex-parser-0.1.4.tgz#64c4f025f17fd53bfb45763faeb16f015a747550"
 
-license-helper@1.0.4-beta.3:
-  version "1.0.4-beta.3"
-  resolved "https://registry.npmjs.org/license-helper/-/license-helper-1.0.4-beta.3.tgz#3c6cae6b8b501cbbae172f43ba8bebdd6fee8176"
+license-helper@1.0.4-beta.4:
+  version "1.0.4-beta.4"
+  resolved "https://registry.npmjs.org/license-helper/-/license-helper-1.0.4-beta.4.tgz#12ac54b71eb39749d9f4f16b970588b82c379617"
   dependencies:
     moment "^2.18.1"
     sntp "^2.0.2"
@@ -4451,13 +4451,14 @@ scirichon-common@1.0.3-beta.1:
     request "^2.81.0"
     request-promise "^4.1.1"
 
-scirichon-crud-handler@1.0.3-beta.6:
-  version "1.0.3-beta.6"
-  resolved "https://registry.npmjs.org/scirichon-crud-handler/-/scirichon-crud-handler-1.0.3-beta.6.tgz#44c07bc80fbb967883932579e4e5597f5983b887"
+scirichon-crud-handler@1.0.3-beta.8:
+  version "1.0.3-beta.8"
+  resolved "https://registry.npmjs.org/scirichon-crud-handler/-/scirichon-crud-handler-1.0.3-beta.8.tgz#cf07490b8370e946087c8c85cd1ba1cafc265edd"
   dependencies:
     config "^1.25.1"
     jsonpath "^1.0"
-    koa-neo4j-monitor "1.2.8-beta.5"
+    koa-neo4j-monitor "1.2.8-beta.6"
+    license-helper "1.0.4-beta.4"
     lodash "^4.17.4"
     log4js_wrapper "1.0.3-beta.5"
     mkdirp "^0.5.1"

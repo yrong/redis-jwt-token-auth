@@ -36,7 +36,7 @@
     "koa-session": "^5.0",
     "ldapauth-fork-plus": "4.0.0-beta.1",
     "lodash": "^4.17.4",
-    "license-helper": "1.0.4-beta.3",
+    "license-helper": "1.0.4-beta.4",
     "mysql": "^2.12.0",
     "neo4j-driver": "^1.5.0",
     "parse-neo4j-fork": "0.6.10",
@@ -50,7 +50,7 @@
     "scirichon-json-schema-init": "1.0.2-beta.5",
     "scirichon-cache": "1.0.7-beta.7",
     "scirichon-search": "1.0.1-beta.5",
-    "scirichon-crud-handler":"1.0.3-beta.6"
+    "scirichon-crud-handler":"1.0.3-beta.8"
   },
   "devDependencies": {
     "webpack-builder-advanced": "1.0.0-beta.2"
