@@ -159,4 +159,6 @@ dump.rdb
 build
 wheels
 config
+auth.lic
+license.json
 

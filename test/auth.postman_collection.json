@@ -1,13 +1,13 @@
 {
 	"info": {
+		"_postman_id": "47ef54a0-c812-4fbe-b46e-4b5638d2c790",
 		"name": "auth",
-		"_postman_id": "651dc08b-7e52-25a6-8ef1-2d6547fbff1b",
-		"description": "",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
 			"name": "prepare",
+			"description": null,
 			"item": [
 				{
 					"name": "add superadmin",
@@ -135,6 +135,7 @@
 		},
 		{
 			"name": "department",
+			"description": null,
 			"item": [
 				{
 					"name": "add department 1",
@@ -537,7 +538,54 @@
 		},
 		{
 			"name": "role&user",
+			"description": null,
 			"item": [
+				{
+					"name": "batch add roles legacy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"tests[\"add role success\"] = responseCode.code == 200"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n\t\t  {\n\t\t      \"name\":\"viewer\",\n\t\t     \"allows\":[{\"resources\":\"own\",\"permissions\":[\"READ\"]}],\n\t\t     \"additional\":[\"a\"],\n\t\t     \"currentUserRole\":[]\n\t\t  },\n\t\t  {\n\t\t      \"name\":\"contributor\",\n\t\t     \"allows\":[{\"resources\":\"own\",\"permissions\":[\"CREATE\",\"UPDATE\",\"DELETE\",\"READ\"]}]\n\t\t  },\n\t\t  {\n\t\t      \"name\":\"superAdmin\",\n\t\t     \"allows\":[{\"resources\":\"*\",\"permissions\":\"*\"}]\n\t\t  },\n\t\t  {\n\t\t      \"name\":\"external\",\n\t\t     \"allows\":[{\"resources\":\"*\",\"permissions\":[\"READ\"]}],\n\t\t     \"type\":\"external\"\n\t\t  }\n\t\t]\n"
+						},
+						"url": {
+							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/roles?token={{token}}",
+							"protocol": "http",
+							"host": [
+								"{{auth_api_host}}"
+							],
+							"port": "{{auth_api_port}}",
+							"path": [
+								"auth",
+								"roles"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "{{token}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
 				{
 					"name": "batch add roles",
 					"event": [
@@ -561,25 +609,19 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "[\n  {\n      \"name\":\"viewer\",\n     \"allows\":[{\"resources\":\"own\",\"permissions\":[\"READ\"]}],\n     \"additional\":[\"a\"],\n     \"currentUserRole\":[]\n  },\n  {\n      \"name\":\"contributor\",\n     \"allows\":[{\"resources\":\"own\",\"permissions\":[\"CREATE\",\"UPDATE\",\"DELETE\",\"READ\"]}]\n  },\n  {\n      \"name\":\"superAdmin\",\n     \"allows\":[{\"resources\":\"*\",\"permissions\":\"*\"}]\n  },\n  {\n      \"name\":\"external\",\n     \"allows\":[{\"resources\":\"*\",\"permissions\":[\"READ\"]}],\n     \"type\":\"external\"\n  }\n]"
+							"raw": "{\n\t\"procedure\":{\"ignoreUniqueCheck\":true},\n\t\"data\":{\n\t\t\"category\":\"Role\",\n\t\t\"fields\":\n\t\t\t[\n\t\t\t\t\t  {\n\t\t\t\t\t      \"name\":\"viewer\",\n\t\t\t\t\t     \"allows\":[{\"resources\":\"own\",\"permissions\":[\"READ\"]}],\n\t\t\t\t\t     \"additional\":[\"a\"],\n\t\t\t\t\t     \"currentUserRole\":[]\n\t\t\t\t\t  },\n\t\t\t\t\t  {\n\t\t\t\t\t      \"name\":\"contributor\",\n\t\t\t\t\t     \"allows\":[{\"resources\":\"own\",\"permissions\":[\"CREATE\",\"UPDATE\",\"DELETE\",\"READ\"]}]\n\t\t\t\t\t  },\n\t\t\t\t\t  {\n\t\t\t\t\t      \"name\":\"superAdmin\",\n\t\t\t\t\t     \"allows\":[{\"resources\":\"*\",\"permissions\":\"*\"}]\n\t\t\t\t\t  },\n\t\t\t\t\t  {\n\t\t\t\t\t      \"name\":\"external\",\n\t\t\t\t\t     \"allows\":[{\"resources\":\"*\",\"permissions\":[\"READ\"]}],\n\t\t\t\t\t     \"type\":\"external\"\n\t\t\t\t\t  }\n\t\t\t]\n\t}\n}\n"
 						},
 						"url": {
-							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/roles?token={{token}}",
+							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/api/roles/batch",
 							"protocol": "http",
 							"host": [
 								"{{auth_api_host}}"
 							],
 							"port": "{{auth_api_port}}",
 							"path": [
-								"auth",
-								"roles"
-							],
-							"query": [
-								{
-									"key": "token",
-									"value": "{{token}}",
-									"equals": true
-								}
+								"api",
+								"roles",
+								"batch"
 							]
 						}
 					},
@@ -621,7 +663,6 @@
 							],
 							"query": [
 								{
-									"equals": true,
 									"key": "token",
 									"value": "{{token}}"
 								}
@@ -752,7 +793,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"body\":\n\t  {\n\t      \"query\": {\n\t        \"bool\":{\n\t          \"must\":[\n\t            {\"match\":{\"type\":\"internal\"}}\n\t          ]\n\t        }\n\t      }\n\t  },\n\t  \"page\":1,\n\t  \"per_page\":2\n}"
+							"raw": "{\n\t\"body\":\n\t  {\n\t      \"query\": {\n\t        \"bool\":{\n\t          \"must\":[\n\t            {\"match\":{\"type\":\"internal\"}}\n\t          ]\n\t        }\n\t      }\n\t  },\n\t  \"page\":1,\n\t  \"per_page\":2,\n\t  \"source\": [\"uuid\"]\n}"
 						},
 						"url": {
 							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/role/search",
@@ -1047,8 +1088,7 @@
 							"query": [
 								{
 									"key": "token",
-									"value": "{{token}}",
-									"equals": true
+									"value": "{{token}}"
 								}
 							]
 						}
@@ -1089,7 +1129,6 @@
 							],
 							"query": [
 								{
-									"equals": true,
 									"key": "token",
 									"value": "{{token}}"
 								}
@@ -1132,7 +1171,6 @@
 							],
 							"query": [
 								{
-									"equals": true,
 									"key": "token",
 									"value": "{{token}}"
 								}
@@ -1547,8 +1585,7 @@
 							"query": [
 								{
 									"key": "token",
-									"value": "{{token}}",
-									"equals": true
+									"value": "{{token}}"
 								}
 							]
 						}
@@ -1602,7 +1639,7 @@
 					"response": []
 				},
 				{
-					"name": "query external user paginated",
+					"name": "query internal user paginated",
 					"event": [
 						{
 							"listen": "test",
@@ -1631,7 +1668,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"body\":\n\t  {\n\t      \"query\": {\n\t        \"bool\":{\n\t          \"must\":[\n\t            {\"term\":{\"type\":\"external\"}}\n\t          ]\n\t        }\n\t      }\n\t  },\n\t  \"page\":1,\n\t  \"per_page\":2\n}"
+							"raw": "{\n\t\"body\":\n\t  {\n\t      \"query\": {\n\t        \"bool\":{\n\t          \"must\":[\n\t             {\"match\":{\"type\":\"internal\"}}\n\t          ]\n\t        }\n\t      }\n\t  },\n\t  \"page\":1,\n\t  \"per_page\":10\n}"
 						},
 						"url": {
 							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/userinfo/search",
@@ -1785,6 +1822,7 @@
 		},
 		{
 			"name": "token",
+			"description": null,
 			"item": [
 				{
 					"name": "login with user not exist",
@@ -1985,7 +2023,6 @@
 							],
 							"query": [
 								{
-									"equals": true,
 									"key": "token",
 									"value": "{{token}}"
 								}
@@ -1998,6 +2035,7 @@
 		},
 		{
 			"name": "ldap",
+			"description": null,
 			"item": [
 				{
 					"name": "login-ldap",
@@ -2129,17 +2167,14 @@
 							],
 							"query": [
 								{
-									"equals": true,
 									"key": "token",
 									"value": "{{token}}"
 								},
 								{
-									"equals": true,
 									"key": "page",
 									"value": "1"
 								},
 								{
-									"equals": true,
 									"key": "per_page",
 									"value": "5"
 								}
@@ -2189,7 +2224,6 @@
 							],
 							"query": [
 								{
-									"equals": true,
 									"key": "token",
 									"value": "{{token}}"
 								}
@@ -2239,17 +2273,14 @@
 							],
 							"query": [
 								{
-									"equals": true,
 									"key": "token",
 									"value": "{{token}}"
 								},
 								{
-									"equals": true,
 									"key": "page",
 									"value": "1"
 								},
 								{
-									"equals": true,
 									"key": "per_page",
 									"value": "5"
 								}
@@ -2299,7 +2330,6 @@
 							],
 							"query": [
 								{
-									"equals": true,
 									"key": "token",
 									"value": "{{token}}"
 								}
