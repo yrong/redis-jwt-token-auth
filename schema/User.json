@@ -1,7 +1,7 @@
 {
   "id": "User",
   "service":"auth",
-  "route":"/users",
+  "route":"/api/users",
   "type": "object",
   "properties": {
     "name":{

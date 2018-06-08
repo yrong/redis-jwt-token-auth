@@ -1,7 +1,7 @@
 {
   "id": "Role",
   "service":"auth",
-  "route":"/roles",
+  "route":"/api/roles",
   "properties": {
     "inherits":{
       "type": "array",

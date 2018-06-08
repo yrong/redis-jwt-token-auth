@@ -2,7 +2,7 @@
   "id": "Department",
   "type": "object",
   "service":"auth",
-  "route":"/departments",
+  "route":"/api/departments",
   "properties": {
     "parent":{
       "type": "string",

@@ -31,7 +31,13 @@ module.exports = (router)=>{
                 }
             }
             await ctx.login(user)
-            user = await responseWrapper.responseMapper(user,_.assign({category:'User'}))
+            console.log(`user before mapping:${JSON.stringify(user)}`)
+            try{
+                user = await responseWrapper.responseMapper(user,_.assign({category:'User'}))
+            }catch(err){
+                console.log(err.stack||err)
+            }
+            console.log(`user after mapping:${JSON.stringify(user)}`)
             token = await ctx.req.session.create(ctx.req.session.passport)
             ctx.body = {token: token,login_date:new Date().toISOString(),expiration_date:new Date(Date.now()+config.get('expiration')*1000).toISOString(),local:user}
         })(ctx, next)
