@@ -50,7 +50,7 @@
     "scirichon-json-schema-init": "1.0.2-beta.5",
     "scirichon-cache": "1.0.7-beta.9",
     "scirichon-search": "1.0.1-beta.7",
-    "scirichon-crud-handler":"1.0.4-beta.1"
+    "scirichon-crud-handler":"1.0.4-beta.2"
   },
   "devDependencies": {
     "webpack-builder-advanced": "1.0.0-beta.2"

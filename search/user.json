@@ -2,124 +2,27 @@
   "mappings": {
     "doc": {
       "properties": {
-        "uuid": {
-          "type": "keyword"
+      },
+      "dynamic_templates": [
+        {
+          "string_as_keyword": {
+            "match_mapping_type": "string",
+            "mapping": {
+              "type": "keyword"
+            }
+          }
         },
-        "category": {
-          "type": "keyword"
-        },
-        "name": {
-          "type": "keyword"
-        },
-        "department": {
-          "type": "keyword"
-        },
-        "department_path": {
-          "type": "keyword"
-        },
-        "roles": {
-          "type": "keyword"
-        },
-        "type": {
-          "type": "keyword"
-        },
-        "order_test_duration": {
-          "type": "integer"
-        },
-        "phone": {
-          "type": "keyword"
-        },
-        "alias": {
-          "type": "keyword"
-        },
-        "email": {
-          "type": "keyword"
-        },
-        "department_name": {
-          "type": "keyword"
-        },
-        "department_area": {
-          "type": "keyword"
-        },
-        "department_city": {
-          "type": "keyword"
-        },
-        "vendor": {
-          "type": "keyword"
-        },
-        "vendor_name": {
-          "type": "keyword"
-        },
-        "vendor_logo": {
-          "type": "keyword"
-        },
-        "lastUpdated": {
-          "type": "date"
-        },
-        "model_name": {
-          "type": "keyword"
-        },
-        "brand_name": {
-          "type": "keyword"
-        },
-        "openid": {
-          "type": "keyword"
-        },
-        "order_begin_time": {
-          "type": "date"
-        },
-        "order_duration": {
-          "type": "date"
-        },
-        "province": {
-          "type": "keyword"
-        },
-        "city": {
-          "type": "keyword"
-        },
-        "id_card": {
-          "type": "keyword"
-        },
-        "gender": {
-          "type": "keyword"
-        },
-        "nationality": {
-          "type": "keyword"
-        },
-        "address": {
-          "type": "keyword"
-        },
-        "birth_date": {
-          "type": "date"
-        },
-        "license_date": {
-          "type": "date"
-        },
-        "quasi_driving_type": {
-          "type": "keyword"
-        },
-        "effective_date": {
-          "type": "date"
-        },
-        "order_start_time": {
-          "type": "date"
-        },
-        "created": {
-          "type": "date"
-        },
-        "order_score": {
-          "type": "keyword"
-        },
-        "important": {
-          "type": "keyword"
-        },
-        "buy": {
-          "type": "keyword"
-        },
-        "valid_term": {
-          "type": "keyword"
+        {
+          "string_as_date": {
+            "match_pattern": "regex",
+            "match":   "_date$|_time$",
+            "match_mapping_type": "string",
+            "mapping": {
+              "type": "date"
+            }
+          }
         }
-      }
+      ]
     }
   }
 }
