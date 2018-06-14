@@ -4478,9 +4478,9 @@ scirichon-crud-handler@1.0.4-beta.2:
     uuid "^3.0.0"
     uuid-validate "0.0.2"
 
-scirichon-json-schema-init@1.0.2-beta.5:
-  version "1.0.2-beta.5"
-  resolved "https://registry.npmjs.org/scirichon-json-schema-init/-/scirichon-json-schema-init-1.0.2-beta.5.tgz#8eba33165d27d1e3f358207e5f1eb373539f6e21"
+scirichon-json-schema-init@1.0.2-beta.6:
+  version "1.0.2-beta.6"
+  resolved "https://registry.npmjs.org/scirichon-json-schema-init/-/scirichon-json-schema-init-1.0.2-beta.6.tgz#6d4b4dda5795771ba93472912c5424a42c1794f7"
   dependencies:
     config "^1.25.1"
     elasticsearch "^15.0.0"
