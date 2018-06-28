@@ -6,13 +6,14 @@ const passport_local = require('passport-local')
 const LocalStrategy = passport_local.Strategy
 const log4js = require('log4js')
 const userHandler = require('../handlers/user')
+const OmitUserFields = require('../lib/const').OmitUserFields
 
 passport.serializeUser(function(user, done) {
     if(user[config.get('ldap.bindType')]) {
         user = _.pick(user, ['cn', 'dn'])
     }
     else{
-        user = _.omit(user, config.get('userFieldsIgnored4Token'))
+        user = _.omit(user, OmitUserFields)
     }
     done(null, user)
 })

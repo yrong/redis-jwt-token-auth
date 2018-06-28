@@ -1,23 +1,21 @@
 const _ = require('lodash')
-const config = require('config')
 const search = require('scirichon-search')
 const handler = require('../handlers/index')
 const userHandler = require('../handlers/user')
-
-const omitFields = config.get('userFieldsIgnored4Token')
+const OmitUserFields = require('../lib/const').OmitUserFields
 
 module.exports = (router)=>{
     router.get('/userinfo', async(ctx, next) => {
         let params = _.merge({category:'User'},ctx.query,ctx.params,ctx.request.body)
         let result = await handler.handleQuery(params,ctx)
-        result = _.map(result,(user)=>_.omit(user,omitFields))
+        result = _.map(result,(user)=>_.omit(user,OmitUserFields))
         ctx.body = result||{}
     })
 
     router.get('/userinfo/:uuid',async(ctx,next)=>{
         let params = _.merge({category:'User'},ctx.query,ctx.params,ctx.request.body)
         let result = await handler.handleQuery(params,ctx)
-        result = _.omit(result,omitFields)
+        result = _.omit(result,OmitUserFields)
         ctx.body = result||{}
     })
 

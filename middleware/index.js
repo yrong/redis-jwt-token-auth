@@ -12,15 +12,16 @@ module.exports = {
     load:(app)=>{
         const redisOption = {host:`${process.env['REDIS_HOST']||config.get('redis.host')}`,port:config.get('redis.port')}
         const redis_client = Redis.createClient(Object.assign({db:0},redisOption))
+        const secret = config.get('auth.secret')
         app.use(compose([
             passport.initialize(),
             passport.session(),
             jwt_token({
                 client: redis_client,
-                secret: config.get('secret')
+                secret: secret
             }),
         ]));
-        app.keys = [config.get('secret')]
+        app.keys = [secret]
         app.use(session({},app))
     }
 }

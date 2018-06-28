@@ -5,7 +5,7 @@ const ScirichonError = common.ScirichonError
 const db = require('../lib/db')
 const ldap = require('../lib/ldap')
 const LdapAccount = {}
-const omitFields = config.get('userFieldsIgnored4Token')
+const OmitUserFields = require('../lib/const').OmitUserFields
 
 LdapAccount.getLocalByLdap = async (ldap_user)=>{
     let bindType = config.get('ldap.bindType'),ldapId = ldap_user[bindType]
@@ -14,7 +14,7 @@ LdapAccount.getLocalByLdap = async (ldap_user)=>{
     }
     let cypher = `MATCH (u:User) where u.ldapId={ldapId} return u`
     let users = await db.queryCql(cypher,{ldapId})
-    return users.length?_.omit(users[0],omitFields):undefined
+    return users.length?_.omit(users[0],OmitUserFields):undefined
 }
 
 LdapAccount.searchLdap = async(base,options)=>{

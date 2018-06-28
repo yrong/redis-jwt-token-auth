@@ -2,9 +2,9 @@ const passport = require('koa-passport')
 const _ = require('lodash')
 const LdapAccount = require('../handlers/ldap_account')
 const ScirichonError = require('scirichon-common').ScirichonError
-const config = require('config')
-const responseWrapper = require('scirichon-response-mapper')
+const scirichonMapper = require('scirichon-response-mapper')
 const handler = require('../handlers/index')
+const TokenExpiration = require('../lib/const').TokenExpiration
 
 const isLdapUser = (user)=>{
     return user.cn&&user.dn
@@ -33,13 +33,13 @@ module.exports = (router)=>{
             await ctx.login(user)
             console.log(`user before mapping:${JSON.stringify(user)}`)
             try{
-                user = await responseWrapper.responseMapper(user,_.assign({category:'User'}))
+                user = await scirichonMapper.responseMapper(user,_.assign({category:'User'}))
             }catch(err){
                 console.log(err.stack||err)
             }
             console.log(`user after mapping:${JSON.stringify(user)}`)
             token = await ctx.req.session.create(ctx.req.session.passport)
-            ctx.body = {token: token,login_date:new Date().toISOString(),expiration_date:new Date(Date.now()+config.get('expiration')*1000).toISOString(),local:user}
+            ctx.body = {token: token,login_date:new Date().toISOString(),expiration_date:new Date(Date.now()+TokenExpiration*1000).toISOString(),local:user}
         })(ctx, next)
     })
 

@@ -1,19 +1,18 @@
-const _ = require('lodash');
-const jwt = require('jsonwebtoken');
-const utils = require('../lib/sessionUtils');
-const config = require('config');
+const _ = require('lodash')
+const jwt = require('jsonwebtoken')
+const utils = require('../lib/sessionUtils')
 const scirichon_common = require('scirichon-common')
 const TokenName = scirichon_common.TokenName
 const TokenUserName = scirichon_common.TokenUserName
 const internal_token_id = scirichon_common.InternalTokenId
 const ScirichonError = scirichon_common.ScirichonError
-
+const TokenExpiration = require('../lib/const').TokenExpiration
 
 const urlIgnored = (ctx)=>{
     if(ctx.path.includes('/hidden')){
         return true
     }
-    else if(ctx.path.includes('/auth/login')){
+    else if(ctx.path.includes('/auth/login')||ctx.path.includes('/auth/login-ldap')){
         return true
     }
     else if(ctx.path.includes('/auth/register')||ctx.path.includes('/api/users')){
@@ -26,6 +25,9 @@ const urlIgnored = (ctx)=>{
         return true
     }
     else if(ctx.path.includes('/status')){
+        return true
+    }
+    else if(ctx.path.includes('/auth/smsGenerateCode')||ctx.path.includes('/auth/smsLogin')){
         return true
     }
     return false
@@ -50,7 +52,7 @@ module.exports = function jwt_token(options) {
             secret: options.secret,
             algorithm: options.algorithm || "HS256",
             keyspace: options.keyspace || "sess:",
-            maxAge: options.maxAge || config.get('expiration'),
+            maxAge: options.maxAge || TokenExpiration,
             requestKey: options.requestKey || "session",
             requestArg: options.requestArg || TokenName
         };
