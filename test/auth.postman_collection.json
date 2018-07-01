@@ -33,7 +33,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"name\":\"superadmin\",\n  \"passwd\":\"superadmin\"\n}"
+							"raw": "{\n  \"name\":\"superadmin\",\n  \"passwd\":\"superadmin\",\n  \"phone\":\"18918911889\"\n}"
 						},
 						"url": {
 							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/register",
@@ -840,7 +840,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"name\":\"superadmin\",\n  \"passwd\":\"superadmin\"\n}"
+							"raw": "{\n  \"name\":\"superadmin\",\n  \"passwd\":\"superadmin\",\n  \"phone\":\"18918911889\"\n}"
 						},
 						"url": {
 							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/register",
@@ -1031,7 +1031,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"name\":\"{{auth_user}}\",\n  \"passwd\":\"{{auth_passwd}}\",\n  \"created_time\":\"2018-05-09\"\n}"
+							"raw": "{\n  \"name\":\"{{auth_user}}\",\n  \"passwd\":\"{{auth_passwd}}\",\n  \"created_time\":\"2018-05-09\",\n  \"phone\":\"{{auth_mobile}}\"\n}"
 						},
 						"url": {
 							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/register",
@@ -1485,7 +1485,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"name\":\"test\",\n  \"passwd\":\"test\",\n  \"email\":\"test@email.com\",\n  \"type\":\"external\"\n}"
+							"raw": "{\n  \"name\":\"test\",\n  \"passwd\":\"test\",\n  \"email\":\"test@email.com\",\n  \"type\":\"external\",\n  \"phone\":\"13613611336\"\n}"
 						},
 						"url": {
 							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/register",
@@ -1783,7 +1783,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "42651a86-0e76-4ffb-a3f2-fc3ad9dbdfde",
+								"id": "7c3219ce-e6aa-46e9-bdb6-0ec285e748b8",
 								"type": "text/javascript",
 								"exec": [
 									"tests[\"failed\"] = responseCode.code != 200"
@@ -2026,6 +2026,101 @@
 									"key": "token",
 									"value": "{{token}}"
 								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "generate sms code from  phone number",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "4fa4921d-bca5-43b2-a49c-8fde41fd7d60",
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"jsonData = jsonData.data||jsonData;",
+									"var code = jsonData.code",
+									"tests[\"code found\"] = code;",
+									"if(code){",
+									"   postman.setEnvironmentVariable(\"auth_code\", code); ",
+									"}"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\n}"
+						},
+						"url": {
+							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/smsGenerateCode/{{auth_mobile}}",
+							"protocol": "http",
+							"host": [
+								"{{auth_api_host}}"
+							],
+							"port": "{{auth_api_port}}",
+							"path": [
+								"auth",
+								"smsGenerateCode",
+								"{{auth_mobile}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login with sms code",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7fe10175-67f1-4f31-bfb8-f6f8cb964f7b",
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"var token = jsonData.token||jsonData.data.token;",
+									"tests[\"token found\"] = token;",
+									"if(token){",
+									"   postman.setEnvironmentVariable(\"token\", token); ",
+									"}",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"phone\":\"{{auth_mobile}}\",\n  \"code\":\"{{auth_code}}\"\n}"
+						},
+						"url": {
+							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/smsLogin",
+							"protocol": "http",
+							"host": [
+								"{{auth_api_host}}"
+							],
+							"port": "{{auth_api_port}}",
+							"path": [
+								"auth",
+								"smsLogin"
 							]
 						}
 					},
