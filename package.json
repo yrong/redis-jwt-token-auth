@@ -7,7 +7,7 @@
     "prebuild": "yarn install&&rm -rf build",
     "build": "webpack",
     "init": "initSchema",
-    "initES": "INIT_ES=1 initSchema",
+    "initES": "INIT_ES=1 initSchema && /bin/sh script/modify_es_schema.sh",
     "start": "scirichon-crud-api",
     "test": "mocha",
     "sync-mysql": "SYNC_TYPE=mysql node sync.js",
