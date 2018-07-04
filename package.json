@@ -52,7 +52,7 @@
     "scirichon-json-schema-init": "^1.0.3",
     "scirichon-cache": "^1.0.8",
     "scirichon-search": "^1.0.2",
-    "scirichon-crud-handler": "^1.0.5"
+    "scirichon-crud-handler": "1.0.5-beta.3"
   },
   "devDependencies": {
     "webpack-builder-advanced": "^1.0.1"
