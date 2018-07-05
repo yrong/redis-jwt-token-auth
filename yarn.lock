@@ -4429,9 +4429,9 @@ schema-utils@^0.4.5:
     ajv "^6.1.0"
     ajv-keywords "^3.1.0"
 
-scirichon-acl-checker@^1.0.3:
-  version "1.0.3"
-  resolved "https://registry.npmjs.org/scirichon-acl-checker/-/scirichon-acl-checker-1.0.3.tgz#d22a69bca98d7163d94e4933d85c5904e8110222"
+scirichon-acl-checker@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.npmjs.org/scirichon-acl-checker/-/scirichon-acl-checker-1.0.4.tgz#bc52ce99445c3c111d50aa238348b98872c25152"
   dependencies:
     acl-fork "^0.4.11"
     lodash "^4.17.4"
@@ -4460,9 +4460,9 @@ scirichon-common@^1.0.4:
     request "^2.81.0"
     request-promise "^4.1.1"
 
-scirichon-crud-handler@1.0.5-beta.3:
-  version "1.0.5-beta.3"
-  resolved "https://registry.npmjs.org/scirichon-crud-handler/-/scirichon-crud-handler-1.0.5-beta.3.tgz#d46991ad7b77b52837e668f04cca564d03f95f0e"
+scirichon-crud-handler@1.0.5-beta.4:
+  version "1.0.5-beta.4"
+  resolved "https://registry.npmjs.org/scirichon-crud-handler/-/scirichon-crud-handler-1.0.5-beta.4.tgz#e7c9cdc1a10fb163964ff7f4b5fdddc98bb73d36"
   dependencies:
     config "^1.25.1"
     jsonpath "^1.0"
@@ -4476,14 +4476,14 @@ scirichon-crud-handler@1.0.5-beta.3:
     parse-neo4j-fork "0.6.10"
     request "^2.81.0"
     request-promise "^4.1.1"
-    scirichon-acl-checker "^1.0.3"
+    scirichon-acl-checker "^1.0.4"
     scirichon-cache "^1.0.8"
     scirichon-common "^1.0.4"
     scirichon-json-schema "^1.0.3"
     scirichon-response-mapper "^1.0.4"
     scirichon-response-wrapper "^1.0.1"
     scirichon-search "^1.0.2"
-    scirichon-token-checker "^1.0.2"
+    scirichon-token-checker "^1.0.3"
     uuid "^3.0.0"
     uuid-validate "^0.0.2"
 
@@ -4535,9 +4535,9 @@ scirichon-search@^1.0.2:
     scirichon-json-schema "^1.0.3"
     scirichon-response-mapper "^1.0.4"
 
-scirichon-token-checker@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.npmjs.org/scirichon-token-checker/-/scirichon-token-checker-1.0.2.tgz#95f835dd58cd4cb070829c07308aa62f236b5065"
+scirichon-token-checker@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.npmjs.org/scirichon-token-checker/-/scirichon-token-checker-1.0.3.tgz#565ec296452b0514f7a6c7005ba1a0a5e77341c1"
   dependencies:
     config "^1.25.1"
     lodash "^4.17.4"

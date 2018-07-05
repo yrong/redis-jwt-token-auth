@@ -17,7 +17,7 @@ const sendSms = async (phone,code,maxAge)=>{
     const sms_uri = "http://cowsms.market.alicloudapi.com/intf/smsapi",tpid='009',sign='消息通',appcode=config.get('auth.sms.AppCode')
     let options = {
         method: 'GET',
-        uri: sms_uri + '?' + qs.stringify({phone,sign,tpid,paras:`${code},${maxAge}`}),
+        uri: sms_uri + '?' + qs.stringify({mobile:phone,sign,tpid,paras:`${code},${maxAge}`}),
         headers: {Authorization:"APPCODE "+appcode},
         json: true
     }

@@ -9,10 +9,7 @@ const ScirichonError = scirichon_common.ScirichonError
 const TokenExpiration = require('../lib/const').TokenExpiration
 
 const urlIgnored = (ctx)=>{
-    if(ctx.path.includes('/hidden')){
-        return true
-    }
-    else if(ctx.path.includes('/auth/login')||ctx.path.includes('/auth/login-ldap')){
+    if(ctx.path.includes('/auth/login')||ctx.path.includes('/auth/login-ldap')){
         return true
     }
     else if(ctx.path.includes('/auth/register')||ctx.path.includes('/api/users')){
@@ -38,6 +35,9 @@ const needCheckToken = (ctx)=>{
         return false
     }
     else if(ctx.method==="GET" && (!ctx.path.match(/api/i))){
+        return false
+    }
+    else if(ctx.path.includes('/no_auth/api')||(ctx.path.includes('/hidden'))){
         return false
     }
     return true
