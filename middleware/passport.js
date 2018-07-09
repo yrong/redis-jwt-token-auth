@@ -7,10 +7,11 @@ const LocalStrategy = passport_local.Strategy
 const log4js = require('log4js')
 const userHandler = require('../handlers/user')
 const OmitUserFields = require('../lib/const').OmitUserFields
+const ldapConfig = config.get('auth.ldap')
 
 passport.serializeUser(function(user, done) {
-    if(user[config.get('ldap.bindType')]) {
-        user = _.pick(user, ['cn', 'dn'])
+    if(user[ldapConfig.bindType]) {
+        user = _.pick(user, ldapConfig.userAttributes)
     }
     else{
         user = _.omit(user, OmitUserFields)
@@ -33,7 +34,7 @@ passport.use(new LocalStrategy(function(username, password, done) {
     }).catch(done)
 }))
 
-let ldap_options = _.clone(config.get('ldap'))
+let ldap_options = _.clone(config.get('auth.ldap'))
 const logger = log4js.getLogger('ldapauth')
 ldap_options.log = logger
 ldap_options.searchBase = ldap_options.userSearchBase

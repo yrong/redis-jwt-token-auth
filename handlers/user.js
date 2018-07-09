@@ -5,19 +5,39 @@ const scirichonCache = require('scirichon-cache')
 const acl = require('../lib/acl')
 const db = require('../lib/db')
 const LdapAccount = require('./ldap_account')
+const ldapConfig = config.get('auth.ldap')
+
+const sanitizeInput = function(input) {
+    return input
+        .replace(/\*/g, '\\2a')
+        .replace(/\(/g, '\\28')
+        .replace(/\)/g, '\\29')
+        .replace(/\\/g, '\\5c')
+        .replace(/\0/g, '\\00')
+        .replace(/\//g, '\\2f');
+};
 
 const preProcess = async (params, ctx)=>{
+    let result
     if(ctx.method==='POST'||ctx.method==='PUT'||ctx.method==='PATCH') {
         params.type = params.fields.type = params.fields.type || 'internal'
         if (params.ldapId) {
-            let result = await LdapAccount.searchLdap(params.ldapId, {attributes: config.get('ldap.userAttributes')})
+            let filter = ldapConfig.bindType==='dn'?params.ldapId:(ldapConfig.searchFilter.replace(/{{username}}/g, sanitizeInput(params.ldapId)))
+            result = await LdapAccount.searchLdap(ldapConfig.userSearchBase, {filter,attributes: ldapConfig.userAttributes})
             if (_.isEmpty(result)) {
                 throw new ScirichonError('ldap user not found')
             }
         }
         if (params.department) {
-            let department = await scirichonCache.getItemByCategoryAndID('Department',params.department)
-            params.department_path = params.fields.department_path = department.path
+            result = await scirichonCache.getItemByCategoryAndID('Department',params.department)
+            params.department_path = params.fields.department_path = result.path
+        }
+        if (params.uuid&&params.oldpwd&&params.newpwd) {
+            result = await db.queryCql(`MATCH (u:User{uuid:{uuid},passwd:{passwd}}) return u`,{uuid:params.uuid,passwd:params.oldpwd})
+            if(result == null || result.length != 1) {
+                throw new ScirichonError(`user with id ${params.uuid} and password ${params.oldpwd} not exist!`)
+            }
+            params.passwd = params.fields.passwd = params.newpwd
         }
     }
     return params
@@ -57,16 +77,6 @@ const verify = async function(username, password) {
     });
 }
 
-const updatePassword = async (params)=>{
-    let cql = `MATCH (u:User{uuid:{uuid},passwd:{passwd}}) return u`
-    let account = await db.queryCql(cql,{uuid:params.uuid,passwd:params.oldpwd})
-    if(account == null || account.length != 1) {
-        throw new ScirichonError(`user with id ${params.uuid} and password ${params.oldpwd} not exist!`)
-    }
-    return await db.queryCql(`MATCH (u:User{uuid:{uuid}}) SET u.passwd = {passwd}`,{uuid:params.uuid,passwd:params.newpwd})
-}
-
-
 const syncAcl = async()=>{
     await acl.backend.cleanAsync()
     let roles = await db.queryCql(`MATCH (r:Role) return r`)
@@ -91,4 +101,4 @@ const clear = async()=>{
     await db.queryCql(`MATCH (n:User) DETACH DELETE n`)
 }
 
-module.exports = {preProcess,postProcess,verify,updatePassword,syncAcl,clear}
+module.exports = {preProcess,postProcess,verify,syncAcl,clear}

@@ -52,8 +52,8 @@ module.exports = (router)=>{
     })
 
     router.put('/changepwd/:uuid', async(ctx, next) => {
-        let params = _.merge({},ctx.params,ctx.request.body)
-        await userHandler.updatePassword(params)
+        let params = _.merge({category:'User'},ctx.params,ctx.request.body)
+        await handler.handleRequest(params,ctx)
         ctx.body = {}
     })
 

@@ -153,27 +153,11 @@ const addPublicShare = async ()=>{
     return {results,errors};
 }
 
-const syncFromLdap = async function() {
-    let cypher = `MATCH (u:LdapUser) return u`
-    let result = await db.queryCql(cypher)
-    let user,ldap_user,results = [],bind_type = config.get('ldap.bindType')
-    if(result&&result.length){
-        for(user of result){
-            ldap_user = await LdapAccount.searchLdap(user[bind_type],{attributes:config.get('ldap.userAttributes')})
-            if(ldap_user&&ldap_user.length){
-                cypher = `MERGE (u:LdapUser{${bind_type}:"${user[bind_type]}"}) ON CREATE SET u = {row} ON MATCH SET u = {row}`
-                result = await db.queryCql(cypher, {row: ldap_user[0]})
-                results.push(ldap_user[0])
-            }
-        }
-    }
-    return results
-}
 
 const syncAcl = async function() {
     await userHandler.syncAcl()
 }
 
-module.exports = {syncFromMysql,sync2NextCloud,syncFromLdap,syncAcl}
+module.exports = {syncFromMysql,sync2NextCloud,syncAcl}
 
 

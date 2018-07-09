@@ -3,11 +3,12 @@ redis-jwt-token-auth
 
 ### Features
 
-+ local authentication/ldap authentication and ldap account binding with local account/oauth
++ local authentication/ldap authentication/ldap account binding
 + role and resource based access control support(rbac)
-+ user and role provisioning api(register,add-role,bind-role,login,logout,destroy)
-+ generate jwt token when login/provide token check interface
-+ sync script for user synchronization with [nextcloud-token-auth](https://github.com/yrong/nextcloud-token-auth) which is integrated with this project and customized from [nextcloud](https://github.com/nextcloud/server)
++ user/role/department provisioning api(register,add-role,bind-role,bind-ldap,login,logout,destroy)
++ provide search interface provided by elasticsearch
++ generate jwt token when login/provide token check interface to integrate with other apps
++ sync.js script for user synchronization with [nextcloud-token-auth](https://github.com/yrong/nextcloud-token-auth) which is integrated with this project and customized from [nextcloud](https://github.com/nextcloud/server)
 + webpack wrapper
 
 
@@ -29,7 +30,7 @@ SYNC_TYPE=nextcloud node sync.js
 #### configuration
 
 ```
-git clone https://coding.net/u/alien11/p/config ../config
+git clone https://github.com/yrong/config ../config
 ln -s ../config .
 ```
 then config db servers as required,e.g:
@@ -41,6 +42,13 @@ then config db servers as required,e.g:
     "port": 7687,
     "user": "neo4j",
     "password": "admin"
+  },
+  "elasticsearch":{
+  	"host": "localhost",
+  	"port": 9200,
+  	"user":"elastic",
+  	"password":"elastic",
+  	"mode": "strict"
   },
   "redis": {
     "host": "localhost",
@@ -75,14 +83,23 @@ then config db servers as required,e.g:
 
 ```
 yarn install
-source ../config/.env&&source .env"
-node app.js
+
+//set envirionment variables required
+set -a;source ../config/.env;source .env;set +a
+
+//init schema required when first time started
+npm run init
+
+//start server
+scirichon-crud-api
+
 ```
 
 #### test
 
 ```
-node ../test/index.js
+//run postman testcases with newman
+node ../config/config/test/index.js
 ```
 
 

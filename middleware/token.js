@@ -8,36 +8,11 @@ const internal_token_id = scirichon_common.InternalTokenId
 const ScirichonError = scirichon_common.ScirichonError
 const TokenExpiration = require('../lib/const').TokenExpiration
 
-const urlIgnored = (ctx)=>{
-    if(ctx.path.includes('/auth/login')||ctx.path.includes('/auth/login-ldap')){
-        return true
-    }
-    else if(ctx.path.includes('/auth/register')||ctx.path.includes('/api/users')){
-        return true
-    }
-    else if(ctx.path.includes('/auth/departments')||ctx.path.includes('/api/departments')){
-        return true
-    }
-    else if(ctx.path.includes('/auth/roles')||ctx.path.includes('/api/roles')){
-        return true
-    }
-    else if(ctx.path.includes('/status')){
-        return true
-    }
-    else if(ctx.path.includes('/auth/smsGenerateCode')||ctx.path.includes('/auth/smsLogin')){
-        return true
-    }
-    return false
-}
-
 const needCheckToken = (ctx)=>{
-    if (ctx.method==='POST' && urlIgnored(ctx)){
+    if(ctx.headers[TokenName]===internal_token_id){
         return false
     }
-    else if(ctx.method==="GET" && (!ctx.path.match(/api/i))){
-        return false
-    }
-    else if(ctx.path.includes('/no_auth/api')||(ctx.path.includes('/hidden'))){
+    else if(ctx.path.includes('/no_auth')||(ctx.path.includes('/hidden'))||(!ctx.path.match(/api\/.*\/members/)&&!ctx.path.match(/auth\/check/))){
         return false
     }
     return true
@@ -72,7 +47,7 @@ module.exports = function jwt_token(options) {
                 try {
                     decoded = jwt.verify(token, options.secret)
                 } catch(err) {
-                    ctx.throw(401,new ScirichonError('token invalid!'))
+                    ctx.throw(new ScirichonError('token invalid!',401))
                 }
                 let promise = new Promise((resolve, reject) => {
                     options.client.get(options.keyspace + decoded.jti, function (error,session) {
@@ -86,7 +61,7 @@ module.exports = function jwt_token(options) {
                 session = await Promise.resolve(promise);
                 session = JSON.parse(session);
                 if(!session){
-                    ctx.throw(401,new ScirichonError('token expired!'))
+                    ctx.throw(new ScirichonError('token expired!',401))
                 }
                 _.extend(req[options.requestKey], session);
                 req[options.requestKey].claims = decoded;
@@ -96,7 +71,7 @@ module.exports = function jwt_token(options) {
                 ctx[TokenUserName] = req[options.requestKey].passport&&req[options.requestKey].passport.user
                 await next();
             }else{
-                ctx.throw(401,new ScirichonError('token not found in request!'))
+                ctx.throw(new ScirichonError('token not found in request!',401))
             }
         }
         else{

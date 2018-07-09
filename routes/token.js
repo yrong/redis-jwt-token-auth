@@ -23,11 +23,11 @@ module.exports = (router)=>{
         let params = ctx.request.body,token
         await passport.authenticate('local',async(err,user,info) => {
             if(err){
-                ctx.throw(401,new ScirichonError(err.message))
+                ctx.throw(new ScirichonError(err.message,401))
             }
             if(params.illegalRoles&&user.roles){
                 if(_.intersection(params.illegalRoles,user.roles).length){
-                    ctx.throw(401,`user with illegal roles as ${user.roles} can not login`)
+                    ctx.throw(new ScirichonError(`user with illegal roles as ${user.roles} can not login`,401))
                 }
             }
             await ctx.login(user)

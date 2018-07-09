@@ -6,11 +6,12 @@ const db = require('../lib/db')
 const ldap = require('../lib/ldap')
 const LdapAccount = {}
 const OmitUserFields = require('../lib/const').OmitUserFields
+const ldapConfig = config.get('auth.ldap')
 
 LdapAccount.getLocalByLdap = async (ldap_user)=>{
-    let bindType = config.get('ldap.bindType'),ldapId = ldap_user[bindType]
+    let bindType = ldapConfig.bindType,ldapId = ldap_user[bindType]
     if(!ldapId){
-        throw new ScirichonError(`no ${bindType} found in ldap user ${JSON.stringify(ldap_user)}`)
+        throw new ScirichonError(`no ${bindType} found in ldap user ${JSON.stringify(ldap_user)}`,401)
     }
     let cypher = `MATCH (u:User) where u.ldapId={ldapId} return u`
     let users = await db.queryCql(cypher,{ldapId})

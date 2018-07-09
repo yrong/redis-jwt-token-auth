@@ -1,7 +1,7 @@
 const _ = require('lodash')
 const config = require('config')
 const passport = require('koa-passport')
-const ldap_config = config.get('ldap')
+const ldap_config = config.get('auth.ldap')
 const LdapAccount = require('../handlers/ldap_account')
 const common = require('scirichon-common')
 const ScirichonError = common.ScirichonError
@@ -10,15 +10,14 @@ module.exports = (router)=>{
 
     router.post('/login-ldap', async (ctx, next) => {
         await passport.authenticate('ldapauth',{session: false},async (err,ldap_user,info) => {
-            if(ldap_user){
-                await ctx.login(ldap_user)
-                let passport = ctx.req.session.passport
-                let token = await ctx.req.session.create(passport)
-                let local_user = await LdapAccount.getLocalByLdap(ldap_user)
-                ctx.body = {token: token,local:local_user,ldap:_.omit(ldap_user,['userPassword'])};
-            }else{
-                throw new ScirichonError('ldap authenticate failed,' + info)
+            if(err){
+                ctx.throw(new ScirichonError(err.message,401))
             }
+            await ctx.login(ldap_user)
+            let passport = ctx.req.session.passport
+            let token = await ctx.req.session.create(passport)
+            let local_user = await LdapAccount.getLocalByLdap(ldap_user)
+            ctx.body = {token: token,local:local_user,ldap:_.omit(ldap_user,['userPassword'])}
         })(ctx, next)
     });
 

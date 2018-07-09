@@ -3069,6 +3069,12 @@ lodash@^4.13.1, lodash@^4.14.0, lodash@^4.17.10, lodash@^4.17.3, lodash@^4.17.4:
   version "4.17.10"
   resolved "https://registry.npmjs.org/lodash/-/lodash-4.17.10.tgz#1b7793cf7259ea38fb3661d4d38b3260af8ae4e7"
 
+log4js-wrapper-advanced@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.npmjs.org/log4js-wrapper-advanced/-/log4js-wrapper-advanced-1.0.4.tgz#5db3050c2a1a108aba42813b2e0c30f16760acb8"
+  dependencies:
+    log4js "^1.1.0"
+
 log4js@^1.1.0:
   version "1.1.1"
   resolved "https://registry.npmjs.org/log4js/-/log4js-1.1.1.tgz#c21d29c7604089e4f255833e7f94b3461de1ff43"
@@ -3076,12 +3082,6 @@ log4js@^1.1.0:
     debug "^2.2.0"
     semver "^5.3.0"
     streamroller "^0.4.0"
-
-log4js_wrapper@^1.0.4:
-  version "1.0.4"
-  resolved "https://registry.npmjs.org/log4js_wrapper/-/log4js_wrapper-1.0.4.tgz#f326ccb9b6eab2f0fee3d59551c1740268251ecb"
-  dependencies:
-    log4js "^1.1.0"
 
 longest@^1.0.1:
   version "1.0.1"
@@ -3717,7 +3717,7 @@ parse-ms@^1.0.0:
   version "1.0.1"
   resolved "https://registry.npmjs.org/parse-ms/-/parse-ms-1.0.1.tgz#56346d4749d78f23430ca0c713850aef91aa361d"
 
-parse-neo4j-fork@0.6.10, parse-neo4j-fork@^0.6.10:
+parse-neo4j-fork@0.6.10:
   version "0.6.10"
   resolved "https://registry.npmjs.org/parse-neo4j-fork/-/parse-neo4j-fork-0.6.10.tgz#aa6eae62cbb0301a3d7509ce61ddfcac3c5d7abc"
 
@@ -4429,74 +4429,63 @@ schema-utils@^0.4.5:
     ajv "^6.1.0"
     ajv-keywords "^3.1.0"
 
-scirichon-acl-checker@^1.0.4:
-  version "1.0.4"
-  resolved "https://registry.npmjs.org/scirichon-acl-checker/-/scirichon-acl-checker-1.0.4.tgz#bc52ce99445c3c111d50aa238348b98872c25152"
+scirichon-acl-checker@^1.0.8:
+  version "1.0.8"
+  resolved "https://registry.npmjs.org/scirichon-acl-checker/-/scirichon-acl-checker-1.0.8.tgz#086a607b2615a8ef1cdefd1046ec0ef2016ca055"
   dependencies:
     acl-fork "^0.4.11"
     lodash "^4.17.4"
     redis "^2.8.0"
-    scirichon-common "^1.0.4"
+    scirichon-common "^1.0.7"
 
-scirichon-cache@^1.0.8:
-  version "1.0.8"
-  resolved "https://registry.npmjs.org/scirichon-cache/-/scirichon-cache-1.0.8.tgz#7a997afb607825479b51b46742def0cab984d0c1"
+scirichon-cache@^1.0.11:
+  version "1.0.11"
+  resolved "https://registry.npmjs.org/scirichon-cache/-/scirichon-cache-1.0.11.tgz#accd0c386c84558a533f73d32e53e298a5629de1"
   dependencies:
     config "^1.25.1"
     lodash "^4.17.4"
     node-cache-redis-fork "^2.2.1"
     request "^2.81.0"
     request-promise "^4.1.1"
-    scirichon-common "^1.0.4"
+    scirichon-common "^1.0.7"
     scirichon-json-schema "^1.0.3"
     uuid-validate "^0.0.2"
 
-scirichon-common@^1.0.4:
-  version "1.0.4"
-  resolved "https://registry.npmjs.org/scirichon-common/-/scirichon-common-1.0.4.tgz#e5823cdd23bcd1c65b13ffa7d9edb735afe7b358"
+scirichon-common@^1.0.7:
+  version "1.0.7"
+  resolved "https://registry.npmjs.org/scirichon-common/-/scirichon-common-1.0.7.tgz#c3584339c934d9b6bc8aa2bcfc1469c6f5c726c4"
   dependencies:
     config "^1.25.1"
     lodash "^4.17.4"
     request "^2.81.0"
     request-promise "^4.1.1"
 
-scirichon-crud-handler@1.0.5-beta.6:
-  version "1.0.5-beta.6"
-  resolved "https://registry.npmjs.org/scirichon-crud-handler/-/scirichon-crud-handler-1.0.5-beta.6.tgz#04a945fe6e1d4b88a2da66507699107149c06482"
+scirichon-crud-handler@1.0.5-beta.10:
+  version "1.0.5-beta.10"
+  resolved "https://registry.npmjs.org/scirichon-crud-handler/-/scirichon-crud-handler-1.0.5-beta.10.tgz#be98163d8e895e3c11f10f35b08eb8c149d7e0fc"
   dependencies:
     config "^1.25.1"
     jsonpath "^1.0"
     koa-neo4j-monitor "^1.2.9"
     license-helper "^1.0.5"
     lodash "^4.17.4"
-    log4js_wrapper "^1.0.4"
+    log4js-wrapper-advanced "^1.0.4"
     mkdirp "^0.5.1"
     moment "^2.13.0"
     neo4j-driver "^1.5.0"
     parse-neo4j-fork "0.6.10"
     request "^2.81.0"
     request-promise "^4.1.1"
-    scirichon-acl-checker "^1.0.4"
-    scirichon-cache "^1.0.8"
-    scirichon-common "^1.0.4"
+    scirichon-acl-checker "^1.0.8"
+    scirichon-cache "^1.0.11"
+    scirichon-common "^1.0.7"
     scirichon-json-schema "^1.0.3"
-    scirichon-response-mapper "^1.0.4"
-    scirichon-response-wrapper "^1.0.1"
-    scirichon-search "^1.0.2"
-    scirichon-token-checker "^1.0.3"
+    scirichon-response-mapper "^1.0.7"
+    scirichon-response-wrapper "^1.0.2"
+    scirichon-search "^1.0.5"
+    scirichon-token-checker "^1.0.6"
     uuid "^3.0.0"
     uuid-validate "^0.0.2"
-
-scirichon-json-schema-init@^1.0.3:
-  version "1.0.3"
-  resolved "https://registry.npmjs.org/scirichon-json-schema-init/-/scirichon-json-schema-init-1.0.3.tgz#4bacf426985a27314f74be3805165abdea379c9b"
-  dependencies:
-    config "^1.25.1"
-    elasticsearch "^15.0.0"
-    lodash "^4.17.4"
-    neo4j-driver "^1.5.0"
-    parse-neo4j-fork "^0.6.10"
-    scirichon-json-schema "^1.0.3"
 
 scirichon-json-schema@^1.0.3:
   version "1.0.3"
@@ -4507,43 +4496,43 @@ scirichon-json-schema@^1.0.3:
     redis "^2.8.0"
     redis-crud-fork "^1.0.1"
 
-scirichon-response-mapper@^1.0.4:
-  version "1.0.4"
-  resolved "https://registry.npmjs.org/scirichon-response-mapper/-/scirichon-response-mapper-1.0.4.tgz#c27660715ac5897144c89904fc650c5753ef9fb3"
+scirichon-response-mapper@^1.0.7:
+  version "1.0.7"
+  resolved "https://registry.npmjs.org/scirichon-response-mapper/-/scirichon-response-mapper-1.0.7.tgz#4c0a2cb54361a42f750309c0fd39efb3b56d31d0"
   dependencies:
     lodash "^4.17.4"
-    scirichon-cache "^1.0.8"
-    scirichon-common "^1.0.4"
+    scirichon-cache "^1.0.11"
+    scirichon-common "^1.0.7"
     scirichon-json-schema "^1.0.3"
 
-scirichon-response-wrapper@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.npmjs.org/scirichon-response-wrapper/-/scirichon-response-wrapper-1.0.1.tgz#69bea10cc1684576cb51d81ea57e4ed81b4df6b5"
+scirichon-response-wrapper@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.npmjs.org/scirichon-response-wrapper/-/scirichon-response-wrapper-1.0.2.tgz#21b4587e191ef9f7916c395af78fb72c10661c5b"
   dependencies:
     lodash "^4.17.4"
-    log4js_wrapper "^1.0.4"
+    log4js-wrapper-advanced "^1.0.4"
 
-scirichon-search@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.npmjs.org/scirichon-search/-/scirichon-search-1.0.2.tgz#1bac9f4fb2761aef62b40a2a0eb342970c2b7308"
+scirichon-search@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.npmjs.org/scirichon-search/-/scirichon-search-1.0.5.tgz#cb680db264c67644ebcbcfd3b30e1909db388ac9"
   dependencies:
     config "^1.25.1"
     elasticsearch "^15.0.0"
     lodash "^4.17.4"
-    scirichon-cache "^1.0.8"
-    scirichon-common "^1.0.4"
+    scirichon-cache "^1.0.11"
+    scirichon-common "^1.0.7"
     scirichon-json-schema "^1.0.3"
-    scirichon-response-mapper "^1.0.4"
+    scirichon-response-mapper "^1.0.7"
 
-scirichon-token-checker@^1.0.3:
-  version "1.0.3"
-  resolved "https://registry.npmjs.org/scirichon-token-checker/-/scirichon-token-checker-1.0.3.tgz#565ec296452b0514f7a6c7005ba1a0a5e77341c1"
+scirichon-token-checker@^1.0.6:
+  version "1.0.6"
+  resolved "https://registry.npmjs.org/scirichon-token-checker/-/scirichon-token-checker-1.0.6.tgz#06d3ea7a314cb7ebb9445d7413c7a1a9786b93b6"
   dependencies:
     config "^1.25.1"
     lodash "^4.17.4"
     request "^2.81.0"
     request-promise "^4.1.1"
-    scirichon-common "^1.0.4"
+    scirichon-common "^1.0.7"
 
 "semver@2 || 3 || 4 || 5", semver@5.5.0, semver@^5.3.0:
   version "5.5.0"
