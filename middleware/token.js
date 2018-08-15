@@ -9,13 +9,11 @@ const ScirichonError = scirichon_common.ScirichonError
 const TokenExpiration = require('../lib/const').TokenExpiration
 
 const needCheckToken = (ctx)=>{
-    if(ctx.headers[TokenName]===internal_token_id){
+    if(ctx.path.match(/auth\/check/)||ctx.path.match(/auth\/logout/)||ctx.path.match(/api\/.*\/members/)){
+        return true
+    }else{
         return false
     }
-    else if(ctx.path.includes('/no_auth')||(ctx.path.includes('/hidden'))||(!ctx.path.match(/api\/.*\/members/)&&!ctx.path.match(/auth\/check/))){
-        return false
-    }
-    return true
 }
 
 module.exports = function jwt_token(options) {

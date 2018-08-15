@@ -10,94 +10,6 @@
 			"description": null,
 			"item": [
 				{
-					"name": "add superadmin",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "9f9615af-6652-485d-8c19-ae7fa0370ab4",
-								"type": "text/javascript",
-								"exec": [
-									""
-								]
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"name\":\"superadmin\",\n  \"passwd\":\"superadmin\",\n  \"phone\":\"18918911889\"\n}"
-						},
-						"url": {
-							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/register",
-							"protocol": "http",
-							"host": [
-								"{{auth_api_host}}"
-							],
-							"port": "{{auth_api_port}}",
-							"path": [
-								"auth",
-								"register"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "login with superadmin",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"var jsonData = JSON.parse(responseBody);",
-									"var token = jsonData.token||jsonData.data.token;",
-									"tests[\"token found\"] = token;",
-									"if(token){",
-									"   postman.setEnvironmentVariable(\"token\", token); ",
-									"}",
-									""
-								],
-								"id": "e7984c45-e62a-46e8-87cc-3dc96282152c",
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"username\":\"superadmin\",\n  \"password\":\"superadmin\"\n}"
-						},
-						"url": {
-							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/login",
-							"protocol": "http",
-							"host": [
-								"{{auth_api_host}}"
-							],
-							"port": "{{auth_api_port}}",
-							"path": [
-								"auth",
-								"login"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "clean",
 					"request": {
 						"method": "POST",
@@ -105,10 +17,6 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
-							},
-							{
-								"key": "token",
-								"value": "{{token}}"
 							}
 						],
 						"body": {
@@ -2203,7 +2111,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n   \"token\":\"{{token}}\",\n   \"ldapId\":\"cn=test test,ou=users,dc=test,dc=com\"\n}"
+							"raw": "{\n   \"token\":\"{{token}}\",\n   \"ldapId\":\"test test\"\n}"
 						},
 						"url": {
 							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/userinfo/{{auth_user_id}}",
@@ -2434,6 +2342,51 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "logout",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "29bc5acb-3c31-4b80-b153-3a12bb3dc6ea",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "token",
+						"value": "{{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{}"
+				},
+				"url": {
+					"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/logout",
+					"protocol": "http",
+					"host": [
+						"{{auth_api_host}}"
+					],
+					"port": "{{auth_api_port}}",
+					"path": [
+						"auth",
+						"logout"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
