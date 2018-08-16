@@ -2131,7 +2131,7 @@ globby@^7.1.1:
     pify "^3.0.0"
     slash "^1.0.0"
 
-graceful-fs@^4.1.11, graceful-fs@^4.1.2:
+graceful-fs@^4.1.11, graceful-fs@^4.1.2, graceful-fs@^4.1.6:
   version "4.1.11"
   resolved "https://registry.npmjs.org/graceful-fs/-/graceful-fs-4.1.11.tgz#0e8bdfe4d1ddb8854d64e04ea7c00e2a026e5658"
 
@@ -2691,6 +2691,12 @@ json5@0.4.0:
 json5@^0.5.0, json5@^0.5.1:
   version "0.5.1"
   resolved "https://registry.npmjs.org/json5/-/json5-0.5.1.tgz#1eade7acc012034ad84e2396767ead9fa5495821"
+
+jsonfile@^2.4.0:
+  version "2.4.0"
+  resolved "https://registry.npmjs.org/jsonfile/-/jsonfile-2.4.0.tgz#3736a2b428b87bbda0cc83b53fa3d633a35c2ae8"
+  optionalDependencies:
+    graceful-fs "^4.1.6"
 
 jsonpath@^1.0:
   version "1.0.0"
@@ -4437,9 +4443,9 @@ scirichon-common@^1.0.7:
     request "^2.81.0"
     request-promise "^4.1.1"
 
-scirichon-crud-handler@1.0.5-beta.11:
-  version "1.0.5-beta.11"
-  resolved "https://registry.npmjs.org/scirichon-crud-handler/-/scirichon-crud-handler-1.0.5-beta.11.tgz#c2ca8d9c7ba09c90d32784b87c899ea7655f5a0e"
+scirichon-crud-handler@1.0.5-beta.12:
+  version "1.0.5-beta.12"
+  resolved "https://registry.npmjs.org/scirichon-crud-handler/-/scirichon-crud-handler-1.0.5-beta.12.tgz#b1b472f8676f252987969f1aec44bf3e6de13a1f"
   dependencies:
     config "^1.25.1"
     jsonpath "^1.0"
@@ -4456,12 +4462,32 @@ scirichon-crud-handler@1.0.5-beta.11:
     scirichon-acl-checker "^1.0.9"
     scirichon-cache "^1.0.11"
     scirichon-common "^1.0.7"
+    scirichon-json-exp-imp "^1.0.5"
     scirichon-json-schema "^1.0.3"
     scirichon-json-schema-init "^1.0.3"
     scirichon-response-mapper "^1.0.7"
     scirichon-response-wrapper "^1.0.2"
     scirichon-search "^1.0.5"
     scirichon-token-checker "^1.0.7"
+    uuid "^3.0.0"
+    uuid-validate "^0.0.2"
+
+scirichon-json-exp-imp@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.npmjs.org/scirichon-json-exp-imp/-/scirichon-json-exp-imp-1.0.5.tgz#dd83d76903632820f29341ef2f055f8b93df6822"
+  dependencies:
+    config "^1.25.1"
+    jsonfile "^2.4.0"
+    jsonpath "^1.0"
+    lodash "^4.17.4"
+    mkdirp "^0.5.1"
+    moment "^2.13.0"
+    request "^2.81.0"
+    request-promise "^4.1.1"
+    scirichon-cache "^1.0.11"
+    scirichon-common "^1.0.7"
+    scirichon-json-schema "^1.0.3"
+    scirichon-search "^1.0.5"
     uuid "^3.0.0"
     uuid-validate "^0.0.2"
 
