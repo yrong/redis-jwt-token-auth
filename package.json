@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "setenv": "set -a;source ../config/.env;source .env;set +a",
-    "prebuild": "yarn install&&rm -rf build",
+    "prebuild": "yarn install&&rm -rf build&&cp ../wheels/scirichon-crud-handler/app.js .",
     "build": "webpack",
     "init": "initSchema",
     "initES": "INIT_ES=1 initSchema && /bin/sh script/modify_es_schema.sh",
