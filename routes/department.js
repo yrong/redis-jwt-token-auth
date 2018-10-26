@@ -34,11 +34,14 @@ module.exports = (router)=> {
     })
 
     router.get('/api/departments/members',async(ctx,next)=> {
-        let user = ctx.req.session.passport.user,result,params
-        if(user.department){
-            params = _.assign({category:'Department'},{uuid:user.department})
-            result = await handler.getItemWithMembers(params,ctx)
+        let user = ctx.req.session.passport.user,result,params,departments=[]
+        if(user.departments){
+            for(let department of user.departments){
+                params = _.assign({category:'Department'},{uuid:department})
+                result = await handler.getItemWithMembers(params,ctx)
+                departments.push(result)
+            }
         }
-        ctx.body = result||{}
+        ctx.body = departments||{}
     })
 }

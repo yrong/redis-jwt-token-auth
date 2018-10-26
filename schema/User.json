@@ -15,9 +15,9 @@
       "type": "string",
       "schema":"User"
     },
-    "department":{
-      "type": "string",
-      "schema":"Department"
+    "departments":{
+      "type": "array",
+      "items": { "type": "string", "schema":"Department"}
     },
     "roles": {
       "type": "array",

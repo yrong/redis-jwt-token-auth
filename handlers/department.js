@@ -9,6 +9,7 @@ const preProcess = async (params, ctx)=>{
             let parent = await scirichonCache.getItemByCategoryAndID('Department',params.parent)
             params.path = params.fields.path = parent.path.concat(params.uuid)
         }
+        params.staff_cnt = params.fields.staff_cnt = params.staff_cnt||0
     }
     return params
 }

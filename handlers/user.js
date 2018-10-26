@@ -28,11 +28,15 @@ const preProcess = async (params, ctx)=>{
                 throw new ScirichonError('ldap user not found')
             }
         }
-        if (params.department) {
-            result = await scirichonCache.getItemByCategoryAndID('Department',params.department)
-            params.department_path = params.fields.department_path = result.path
+        if (params.departments) {
+            params.department_path = []
+            for(let department of params.departments){
+                result = await scirichonCache.getItemByCategoryAndID('Department',department)
+                params.department_path = _.concat(params.department_path,result.path)
+            }
+            params.department_path = params.fields.department_path = _.uniq(params.department_path)
         }
-        if (params.uuid&&params.oldpwd&&params.newpwd) {
+        if (params.change&&params.change.oldpwd&&params.change.newpwd) {
             result = await db.queryCql(`MATCH (u:User{uuid:{uuid},passwd:{passwd}}) return u`,{uuid:params.uuid,passwd:params.oldpwd})
             if(result == null || result.length != 1) {
                 throw new ScirichonError(`user with id ${params.uuid} and password ${params.oldpwd} not exist!`)
@@ -48,11 +52,55 @@ const revokeUserRoles = async (uuid)=>{
     await acl.removeUserRoles(uuid, roles)
 }
 
+const incrStaffCount = async(category,uuid,delta)=>{
+    await db.queryCql(`match (n:${category}) where n.uuid={uuid} set n.staff_cnt=n.staff_cnt+${delta}`, {uuid})
+    let result = await scirichonCache.getItemByCategoryAndID(category,uuid)
+    if(result){
+        result.staff_cnt = (result.staff_cnt)||0 + delta
+        await scirichonCache.addItem(result)
+    }
+}
+
+const setUserRoles = async(uuid,roles)=>{
+    await revokeUserRoles(uuid)
+    await acl.addUserRoles(uuid, roles)
+}
+
 const postProcess = async (params, ctx)=>{
-    if(ctx.method==='POST'||ctx.method==='PUT'||ctx.method==='PATCH') {
+    if(ctx.method==='POST') {
         if (params.roles) {
-            await revokeUserRoles(params.uuid)
-            await acl.addUserRoles(params.uuid, params.roles)
+            await setUserRoles(params.uuid, params.roles)
+            for(let role of params.roles){
+                await incrStaffCount('Role',role.uuid,1)
+            }
+        }
+        if(params.departments){
+            for(let department of params.department_path){
+                await incrStaffCount('Department',department,1)
+            }
+        }
+    }
+    else if(ctx.method==='PUT'||ctx.method==='PATCH'){
+        if (params.change.roles) {
+            await setUserRoles(params.uuid, params.roles)
+            if (params.fields_old.roles) {
+                for (let role of params.fields_old.roles) {
+                    await incrStaffCount('Role', role, -1)
+                }
+            }
+            for (let role of params.roles) {
+                await incrStaffCount('Role', role, 1)
+            }
+        }
+        if(params.change.departments) {
+            if (params.fields_old.department_path) {
+                for (let department of params.fields_old.department_path) {
+                    await incrStaffCount('Department', department, -1)
+                }
+            }
+            for (let department of params.department_path) {
+                await incrStaffCount('Department', department, 1)
+            }
         }
     }
     else if(ctx.method==='DELETE'){
