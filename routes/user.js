@@ -8,7 +8,11 @@ module.exports = (router)=>{
     router.get('/userinfo', async(ctx, next) => {
         let params = _.merge({category:'User'},ctx.query,ctx.params,ctx.request.body)
         let result = await handler.handleQuery(params,ctx)
-        result = _.map(result,(user)=>_.omit(user,OmitUserFields))
+        if(_.isArray(result)){
+            result = _.map(result,(user)=>_.omit(user,OmitUserFields))
+        }else{
+            result.results = _.map(result.results,(user)=>_.omit(user,OmitUserFields))
+        }
         ctx.body = result||{}
     })
 

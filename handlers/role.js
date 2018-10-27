@@ -7,6 +7,7 @@ const preProcess = async (params, ctx)=>{
     if(ctx.method==='POST'||ctx.method==='PUT'||ctx.method==='PATCH') {
         params.type = params.fields.type = params.fields.type || 'internal'
         params.uuid = params.fields.uuid = params.fields.name
+        params.staff_cnt = params.fields.staff_cnt = params.staff_cnt||0
     }
     else if(ctx.method==='DELETE'){
         let cypher = `MATCH (n:User) where {uuid} in n.roles return n`

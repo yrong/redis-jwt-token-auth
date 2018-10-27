@@ -377,7 +377,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"name\":\"department5\",\n  \"test\":\"hello\"\n}"
+							"raw": "{\n  \"name\":\"department5\",\n  \"test\":\"hello\",\n  \"status\":\"deleted\"\n}"
 						},
 						"url": {
 							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/departments/{{department_5_id}}",
@@ -840,7 +840,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"department\":\"{{department_1_id}}\"\n}"
+							"raw": "{\n  \"departments\":[\"{{department_1_id}}\"]\n}"
 						},
 						"url": {
 							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/userinfo/{{superadmin_id}}",
@@ -853,6 +853,53 @@
 								"auth",
 								"userinfo",
 								"{{superadmin_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login with superadmin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e7984c45-e62a-46e8-87cc-3dc96282152c",
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"var token = jsonData.token||jsonData.data.token;",
+									"tests[\"token found\"] = token;",
+									"if(token){",
+									"   postman.setEnvironmentVariable(\"token\", token); ",
+									"}",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\":\"superadmin\",\n  \"password\":\"superadmin\"\n}"
+						},
+						"url": {
+							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/login",
+							"protocol": "http",
+							"host": [
+								"{{auth_api_host}}"
+							],
+							"port": "{{auth_api_port}}",
+							"path": [
+								"auth",
+								"login"
 							]
 						}
 					},
@@ -1018,7 +1065,12 @@
 					],
 					"request": {
 						"method": "DELETE",
-						"header": [],
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": ""
@@ -1204,7 +1256,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"department\":\"{{department_2_id}}\"\n}"
+							"raw": "{\n  \"departments\":[\"{{department_2_id}}\"]\n}"
 						},
 						"url": {
 							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/userinfo/{{auth_user_id}}",
@@ -1317,14 +1369,14 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5413d127-c9cc-431b-bcad-08e977a34d8f",
+								"id": "90772bc6-79ae-4539-b77c-2ef1e9bd96f1",
 								"type": "text/javascript",
 								"exec": [
 									"tests[\"query ok\"] = responseCode.code == 200;",
 									"",
 									"var jsonData = JSON.parse(responseBody);",
 									"var data = jsonData.data||jsonData",
-									"tests[\"found\"] = data.name==='department2'",
+									"tests[\"found\"] = data.length",
 									""
 								]
 							}
@@ -1393,7 +1445,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"name\":\"test\",\n  \"passwd\":\"test\",\n  \"email\":\"test@email.com\",\n  \"type\":\"external\",\n  \"phone\":\"13613611336\"\n}"
+							"raw": "{\n  \"name\":\"test1\",\n  \"passwd\":\"test\",\n  \"type\":\"external\",\n  \"phone\":\"13613611336\"\n}"
 						},
 						"url": {
 							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/register",
@@ -1405,6 +1457,49 @@
 							"path": [
 								"auth",
 								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "modify test user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "4a10984c-1909-4e24-9ca7-0df0fd9fa9c9",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"user modified\"] = responseCode.code == 200",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n   \"token\":\"{{token}}\",\n  \"avatar\":\"/upload/avatar/ca92d560-05a6-11e7-98ba-e1d08df9a25f\",\n  \"per_page\":90\n}"
+						},
+						"url": {
+							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/userinfo/{{test_user_id}}",
+							"protocol": "http",
+							"host": [
+								"{{auth_api_host}}"
+							],
+							"port": "{{auth_api_port}}",
+							"path": [
+								"auth",
+								"userinfo",
+								"{{test_user_id}}"
 							]
 						}
 					},
@@ -1528,7 +1623,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"department\":\"{{department_3_id}}\"\n}"
+							"raw": "{\n  \"departments\":[\"{{department_4_id}}\"]\n}"
 						},
 						"url": {
 							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/userinfo/{{test_user_id}}",
