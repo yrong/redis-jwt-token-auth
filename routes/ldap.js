@@ -17,6 +17,9 @@ module.exports = (router)=>{
             let passport = ctx.req.session.passport
             let token = await ctx.req.session.create(passport)
             let local_user = await LdapAccount.getLocalByLdap(ldap_user)
+            if(local_user&&(local_user.status==='deleted'||local_user.status==='disabled')){
+                ctx.throw(new ScirichonError(`user deleted or disabled`,401))
+            }
             ctx.body = {token: token,local:local_user,ldap:_.omit(ldap_user,['userPassword'])}
         })(ctx, next)
     });

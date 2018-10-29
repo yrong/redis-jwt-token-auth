@@ -4443,9 +4443,9 @@ scirichon-common@^1.0.7:
     request "^2.81.0"
     request-promise "^4.1.1"
 
-scirichon-crud-handler@1.0.5-beta.14:
-  version "1.0.5-beta.14"
-  resolved "https://registry.npmjs.org/scirichon-crud-handler/-/scirichon-crud-handler-1.0.5-beta.14.tgz#2693ff714510425810505feb5bba2414df83ee64"
+scirichon-crud-handler@1.0.5-beta.16:
+  version "1.0.5-beta.16"
+  resolved "https://registry.npmjs.org/scirichon-crud-handler/-/scirichon-crud-handler-1.0.5-beta.16.tgz#dff2a9cc40880e1c42bdb539e8260d9726fed876"
   dependencies:
     config "^1.25.1"
     jsonpath "^1.0"

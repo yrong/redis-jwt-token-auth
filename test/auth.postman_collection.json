@@ -1364,7 +1364,7 @@
 					"response": []
 				},
 				{
-					"name": "query  root department with members",
+					"name": "query  root department with members by token",
 					"event": [
 						{
 							"listen": "test",
@@ -1416,6 +1416,64 @@
 					"response": []
 				},
 				{
+					"name": "query  root department with members by query params",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "90772bc6-79ae-4539-b77c-2ef1e9bd96f1",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"query ok\"] = responseCode.code == 200;",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"var data = jsonData.data||jsonData",
+									"tests[\"found\"] = data.length",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"category\":\"Department\",\n\t\"root\":true\n}\n"
+						},
+						"url": {
+							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/api/departments/members?roots={{department_1_id}}",
+							"protocol": "http",
+							"host": [
+								"{{auth_api_host}}"
+							],
+							"port": "{{auth_api_port}}",
+							"path": [
+								"auth",
+								"api",
+								"departments",
+								"members"
+							],
+							"query": [
+								{
+									"key": "roots",
+									"value": "{{department_1_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "add test user as external",
 					"event": [
 						{
@@ -1445,7 +1503,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"name\":\"test1\",\n  \"passwd\":\"test\",\n  \"type\":\"external\",\n  \"phone\":\"13613611336\"\n}"
+							"raw": "{\n  \"name\":\"test\",\n  \"passwd\":\"test\",\n  \"type\":\"external\",\n  \"phone\":\"13613611336\"\n}"
 						},
 						"url": {
 							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/register",
@@ -1487,7 +1545,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n   \"token\":\"{{token}}\",\n  \"avatar\":\"/upload/avatar/ca92d560-05a6-11e7-98ba-e1d08df9a25f\",\n  \"per_page\":90\n}"
+							"raw": "{\n   \"token\":\"{{token}}\",\n  \"avatar\":\"/upload/avatar/ca92d560-05a6-11e7-98ba-e1d08df9a25f\",\n  \"per_page\":90,\n  \"status\":\"deleted\"\n}"
 						},
 						"url": {
 							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/userinfo/{{test_user_id}}",
@@ -1738,17 +1796,17 @@
 					"response": []
 				},
 				{
-					"name": "query all user",
+					"name": "query users",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
-								"id": "c18dacf9-bdcd-40be-9cce-691c54e628e9",
+								"id": "d57f6dcb-73e7-4c63-a271-35fe7570984f",
 								"type": "text/javascript",
 								"exec": [
 									"var jsonData = JSON.parse(responseBody);",
 									"var users = jsonData.data||jsonData",
-									"tests[\"at least one user found\"] = users.length >=1"
+									"tests[\"at least one user found\"] = users"
 								]
 							}
 						}
@@ -1766,7 +1824,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/userinfo",
+							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/userinfo?page=1&per_page=1",
 							"protocol": "http",
 							"host": [
 								"{{auth_api_host}}"
@@ -1775,6 +1833,65 @@
 							"path": [
 								"auth",
 								"userinfo"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "per_page",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "query user with status filter",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d57f6dcb-73e7-4c63-a271-35fe7570984f",
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"var users = jsonData.data||jsonData",
+									"tests[\"at least one user found\"] = users"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/userinfo?status_filter=deleted",
+							"protocol": "http",
+							"host": [
+								"{{auth_api_host}}"
+							],
+							"port": "{{auth_api_port}}",
+							"path": [
+								"auth",
+								"userinfo"
+							],
+							"query": [
+								{
+									"key": "status_filter",
+									"value": "deleted"
+								}
 							]
 						}
 					},
@@ -1804,7 +1921,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"username\":\"test\",\n  \"password\":\"test\",\n  \"illegalRoles\":[\"external\"]\n}"
+							"raw": "{\n  \"username\":\"test\",\n  \"password\":\"test\"\n}"
 						},
 						"url": {
 							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/login",

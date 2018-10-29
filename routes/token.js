@@ -30,6 +30,9 @@ module.exports = (router)=>{
                     ctx.throw(new ScirichonError(`user with illegal roles as ${user.roles} can not login`,401))
                 }
             }
+            if(user.status==='deleted'||user.status==='disabled'){
+                ctx.throw(new ScirichonError(`user deleted or disabled`,401))
+            }
             await ctx.login(user)
             console.log(`user before mapping:${JSON.stringify(user)}`)
             try{
