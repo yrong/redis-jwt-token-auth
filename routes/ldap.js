@@ -5,22 +5,24 @@ const ldap_config = config.get('auth.ldap')
 const LdapAccount = require('../handlers/ldap_account')
 const common = require('scirichon-common')
 const ScirichonError = common.ScirichonError
+const user_handler = require('../handlers/user')
+const TokenExpiration = require('../lib/const').TokenExpiration
 
 module.exports = (router)=>{
 
     router.post('/login-ldap', async (ctx, next) => {
-        await passport.authenticate('ldapauth',{session: false},async (err,ldap_user,info) => {
+        let token,local
+        await passport.authenticate('ldapauth',{session: false},async (err,user) => {
             if(err){
                 ctx.throw(new ScirichonError(err.message,401))
             }
-            await ctx.login(ldap_user)
-            let passport = ctx.req.session.passport
-            let token = await ctx.req.session.create(passport)
-            let local_user = await LdapAccount.getLocalByLdap(ldap_user)
-            if(local_user&&(local_user.status==='deleted'||local_user.status==='disabled')){
-                ctx.throw(new ScirichonError(`user deleted or disabled`,401))
+            await ctx.login(user)
+            token = await ctx.req.session.create(ctx.req.session.passport)
+            local = await LdapAccount.getLocalByLdap(user)
+            if(local){
+                await user_handler.checkUser(ctx,local)
             }
-            ctx.body = {token: token,local:local_user,ldap:_.omit(ldap_user,['userPassword'])}
+            ctx.body = {token: token,login_date:new Date().toISOString(),expiration_date:new Date(Date.now()+TokenExpiration*1000).toISOString(),local:local,ldap:_.omit(user,['userPassword'])}
         })(ctx, next)
     });
 
