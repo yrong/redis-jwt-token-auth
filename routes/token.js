@@ -2,45 +2,19 @@ const passport = require('koa-passport')
 const _ = require('lodash')
 const LdapAccount = require('../handlers/ldap_account')
 const ScirichonError = require('scirichon-common').ScirichonError
-const scirichonMapper = require('scirichon-response-mapper')
-const handler = require('../handlers/index')
+const user_handler = require('../handlers/user')
 const TokenExpiration = require('../lib/const').TokenExpiration
-
-const isLdapUser = (user)=>{
-    return user.cn&&user.dn
-}
-
-const getFullUser = async (ctx,user)=>{
-    if(ctx.request.body.requestAll){
-        user = await handler.handleQuery({category:'User',uuid:user.uuid},ctx)
-    }
-    return user
-}
 
 
 module.exports = (router)=>{
     router.post('/login', async(ctx, next) => {
-        let params = ctx.request.body,token
-        await passport.authenticate('local',async(err,user,info) => {
+        let token
+        await passport.authenticate('local',async(err,user) => {
             if(err){
                 ctx.throw(new ScirichonError(err.message,401))
             }
-            if(params.illegalRoles&&user.roles){
-                if(_.intersection(params.illegalRoles,user.roles).length){
-                    ctx.throw(new ScirichonError(`user with illegal roles as ${user.roles} can not login`,401))
-                }
-            }
-            if(user.status==='deleted'||user.status==='disabled'){
-                ctx.throw(new ScirichonError(`user deleted or disabled`,401))
-            }
+            await user_handler.checkUser(ctx,user)
             await ctx.login(user)
-            console.log(`user before mapping:${JSON.stringify(user)}`)
-            try{
-                user = await scirichonMapper.responseMapper(user,_.assign({category:'User'}))
-            }catch(err){
-                console.log(err.stack||err)
-            }
-            console.log(`user after mapping:${JSON.stringify(user)}`)
             token = await ctx.req.session.create(ctx.req.session.passport)
             ctx.body = {token: token,login_date:new Date().toISOString(),expiration_date:new Date(Date.now()+TokenExpiration*1000).toISOString(),local:user}
         })(ctx, next)
@@ -57,11 +31,11 @@ module.exports = (router)=>{
             local_user = passport_user = passport.user,
             token = ctx.request.body.token, result
         if(passport_user){
-            if(isLdapUser(passport_user)){
+            if(user_handler.isLdapUser(passport_user)){
                 local_user = await LdapAccount.getLocalByLdap(passport_user)
-                result = {token: token,local:await getFullUser(ctx,local_user),ldap:passport_user}
+                result = {token: token,local:await user_handler.getFullUser(ctx,local_user),ldap:passport_user}
             }else{
-                result = {token: token,local:await getFullUser(ctx,local_user)}
+                result = {token: token,local:await user_handler.getFullUser(ctx,local_user)}
             }
         }
         ctx.body = result

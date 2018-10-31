@@ -1,7 +1,6 @@
 const _ = require('lodash')
 const search = require('scirichon-search')
 const handler = require('../handlers/index')
-const userHandler = require('../handlers/user')
 const OmitUserFields = require('../lib/const').OmitUserFields
 
 module.exports = (router)=>{

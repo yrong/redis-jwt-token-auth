@@ -2,10 +2,12 @@ const config = require('config')
 const _ = require('lodash')
 const ScirichonError = require('scirichon-common').ScirichonError
 const scirichonCache = require('scirichon-cache')
+const ldapConfig = config.get('auth.ldap')
+const scirichonMapper = require('scirichon-response-mapper')
 const acl = require('../lib/acl')
 const db = require('../lib/db')
 const LdapAccount = require('./ldap_account')
-const ldapConfig = config.get('auth.ldap')
+const handler = require('./index')
 
 const sanitizeInput = function(input) {
     return input
@@ -149,4 +151,37 @@ const clear = async()=>{
     await db.queryCql(`MATCH (n:User) DETACH DELETE n`)
 }
 
-module.exports = {preProcess,postProcess,verify,syncAcl,clear}
+const isLdapUser = (user)=>{
+    return user.cn&&user.dn
+}
+
+const getFullUser = async (ctx,user)=>{
+    if(ctx.request.body.requestAll){
+        user = await handler.handleQuery({category:'User',uuid:user.uuid},ctx)
+    }
+    return user
+}
+
+const checkUser = async(ctx,user)=>{
+    let params = ctx.request.body
+    try{
+        user = await scirichonMapper.responseMapper(user,_.assign({category:'User'}))
+    }catch(err){
+        console.log(err.stack||err)
+    }
+    if(user.status==='deleted'||user.status==='disabled'){
+        ctx.throw(new ScirichonError(`user deleted or disabled`,401))
+    }
+    if(!_.isEmpty(user.roles)){
+        if(_.every(user.roles,(role)=>role.status==='disabled')){
+            ctx.throw(new ScirichonError(`user with all roles disabled`,401))
+        }
+        if(params.illegalRoles){
+            if(_.intersection(params.illegalRoles,user.roles).length){
+                ctx.throw(new ScirichonError(`user with illegal roles as ${user.roles} can not login`,401))
+            }
+        }
+    }
+}
+
+module.exports = {preProcess,postProcess,verify,syncAcl,clear,isLdapUser,getFullUser,checkUser}
