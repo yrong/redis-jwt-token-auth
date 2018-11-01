@@ -73,7 +73,7 @@ const postProcess = async (params, ctx)=>{
         if (params.roles) {
             await setUserRoles(params.uuid, params.roles)
             for(let role of params.roles){
-                await incrStaffCount('Role',role.uuid,1)
+                await incrStaffCount('Role',role,1)
             }
         }
         if(params.departments){
