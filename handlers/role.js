@@ -4,7 +4,7 @@ const db = require('../lib/db')
 const ScirichonError = require('scirichon-common').ScirichonError
 
 const preProcess = async (params, ctx)=>{
-    if(ctx.method==='POST'||ctx.method==='PUT'||ctx.method==='PATCH') {
+    if(ctx.method==='POST') {
         params.type = params.fields.type = params.fields.type || 'internal'
         params.uuid = params.fields.uuid = params.fields.name
         params.staff_cnt = params.fields.staff_cnt = params.staff_cnt||0
