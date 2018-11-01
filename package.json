@@ -14,7 +14,8 @@
     "sync-nextcloud": "SYNC_TYPE=nextcloud node sync.js",
     "sync-ldap": "SYNC_TYPE=ldap node sync.js",
     "sync-roles": "SYNC_TYPE=acl node sync.js",
-    "upgradeUserId2Str": "cat ./cypher/upgradeUserId2Str.cyp | $NEO4J_HOME/bin/cypher-shell -u neo4j -p admin --format plain"
+    "upgradeUserId2Str": "cat ./cypher/upgradeUserId2Str.cyp | $NEO4J_HOME/bin/cypher-shell -u neo4j -p admin --format plain",
+    "addGuestUser": "/bin/sh script/add_guest_user.sh"
   },
   "keywords": [
     "jwt",

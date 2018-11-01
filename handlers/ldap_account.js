@@ -9,13 +9,24 @@ const OmitUserFields = require('../lib/const').OmitUserFields
 const ldapConfig = config.get('auth.ldap')
 
 LdapAccount.getLocalByLdap = async (ldap_user)=>{
-    let bindType = ldapConfig.bindType,ldapId = ldap_user[bindType]
+    let bindType = ldapConfig.bindType,ldapId = ldap_user[bindType],cypher,users,user
     if(!ldapId){
         throw new ScirichonError(`no ${bindType} found in ldap user ${JSON.stringify(ldap_user)}`,401)
     }
-    let cypher = `MATCH (u:User) where u.ldapId={ldapId} return u`
-    let users = await db.queryCql(cypher,{ldapId})
-    return users.length?_.omit(users[0],OmitUserFields):undefined
+    cypher = `MATCH (u:User) where u.name={ldapId} return u`
+    users = await db.queryCql(cypher,{ldapId})
+    if(users.length){
+        user = users[0]
+    }else{
+        cypher = `MATCH (u:User) where u.type='guest' return u`
+        users = await db.queryCql(cypher)
+        if(users.length){
+            user = users[0]
+        }else{
+            throw new ScirichonError(`ldap user missing mapped guest account,create it first`,401)
+        }
+    }
+    return _.omit(user,OmitUserFields)
 }
 
 LdapAccount.searchLdap = async(base,options)=>{

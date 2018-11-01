@@ -163,25 +163,22 @@ const getFullUser = async (ctx,user)=>{
 }
 
 const checkUser = async(ctx,user)=>{
-    let params = ctx.request.body
-    try{
-        user = await scirichonMapper.responseMapper(user,_.assign({category:'User'}))
-    }catch(err){
-        console.log(err.stack||err)
-    }
+    let params = ctx.request.body,mapped_user
     if(user.status==='deleted'||user.status==='disabled'){
         ctx.throw(new ScirichonError(`user deleted or disabled`,401))
     }
-    if(!_.isEmpty(user.roles)){
-        if(_.every(user.roles,(role)=>role.status==='disabled')){
-            ctx.throw(new ScirichonError(`user with all roles disabled`,401))
-        }
-        if(params.illegalRoles){
-            if(_.intersection(params.illegalRoles,user.roles).length){
-                ctx.throw(new ScirichonError(`user with illegal roles as ${user.roles} can not login`,401))
-            }
+    if(user.roles&&params.illegalRoles){
+        if(_.intersection(params.illegalRoles,user.roles).length){
+            ctx.throw(new ScirichonError(`user with illegal roles as ${user.roles}`,401))
         }
     }
+    mapped_user = await scirichonMapper.responseMapper(user,_.assign({category:'User'}))
+    if(mapped_user&&mapped_user.roles){
+        if(_.every(mapped_user.roles,(role)=>role.status==='disabled')){
+            ctx.throw(new ScirichonError(`user with all roles disabled`,401))
+        }
+    }
+    return mapped_user
 }
 
 module.exports = {preProcess,postProcess,verify,syncAcl,clear,isLdapUser,getFullUser,checkUser}

@@ -8,15 +8,15 @@ const TokenExpiration = require('../lib/const').TokenExpiration
 
 module.exports = (router)=>{
     router.post('/login', async(ctx, next) => {
-        let token
+        let token,local
         await passport.authenticate('local',async(err,user) => {
             if(err){
                 ctx.throw(new ScirichonError(err.message,401))
             }
-            await user_handler.checkUser(ctx,user)
+            local = await user_handler.checkUser(ctx,user)
             await ctx.login(user)
             token = await ctx.req.session.create(ctx.req.session.passport)
-            ctx.body = {token: token,login_date:new Date().toISOString(),expiration_date:new Date(Date.now()+TokenExpiration*1000).toISOString(),local:user}
+            ctx.body = {token: token,login_date:new Date().toISOString(),expiration_date:new Date(Date.now()+TokenExpiration*1000).toISOString(),local:local}
         })(ctx, next)
     })
 

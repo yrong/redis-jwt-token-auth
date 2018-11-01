@@ -536,6 +536,50 @@
 					"response": []
 				},
 				{
+					"name": "add one role",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"tests[\"add role success\"] = responseCode.code == 200"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "token",
+								"value": "test"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\t      \"name\":\"viewer1\",\n\t\t     \"allows\":[{\"resources\":\"own\",\"permissions\":[\"READ\"]}],\n\t\t     \"additional\":[\"a\"],\n\t\t     \"currentUserRole\":[]\n\t\t  }\n"
+						},
+						"url": {
+							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/role",
+							"protocol": "http",
+							"host": [
+								"{{auth_api_host}}"
+							],
+							"port": "{{auth_api_port}}",
+							"path": [
+								"auth",
+								"role"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "query role",
 					"event": [
 						{
@@ -2252,6 +2296,53 @@
 			"name": "ldap",
 			"description": null,
 			"item": [
+				{
+					"name": "add guest user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"tests[\"add user success\"] = responseCode.code == 200",
+									"var jsonData = JSON.parse(responseBody);",
+									"jsonData = jsonData.data||jsonData",
+									"var userid = jsonData.uuid",
+									"tests[\"userid found\"] = userid;",
+									"if(userid){",
+									"  postman.setEnvironmentVariable(\"test_user_id\", userid);  ",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\":\"guest\",\n  \"passwd\":\"guest\",\n  \"type\":\"guest\"\n}"
+						},
+						"url": {
+							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/register",
+							"protocol": "http",
+							"host": [
+								"{{auth_api_host}}"
+							],
+							"port": "{{auth_api_port}}",
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
 				{
 					"name": "login-ldap",
 					"event": [

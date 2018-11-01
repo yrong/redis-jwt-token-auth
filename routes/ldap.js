@@ -16,12 +16,10 @@ module.exports = (router)=>{
             if(err){
                 ctx.throw(new ScirichonError(err.message,401))
             }
+            local = await LdapAccount.getLocalByLdap(user)
+            local = await user_handler.checkUser(ctx,local)
             await ctx.login(user)
             token = await ctx.req.session.create(ctx.req.session.passport)
-            local = await LdapAccount.getLocalByLdap(user)
-            if(local){
-                await user_handler.checkUser(ctx,local)
-            }
             ctx.body = {token: token,login_date:new Date().toISOString(),expiration_date:new Date(Date.now()+TokenExpiration*1000).toISOString(),local:local,ldap:_.omit(user,['userPassword'])}
         })(ctx, next)
     });
