@@ -172,7 +172,8 @@ const checkUser = async(ctx,user)=>{
             ctx.throw(new ScirichonError(`user with illegal roles as ${user.roles}`,401))
         }
     }
-    mapped_user = await scirichonMapper.responseMapper(user,_.assign({category:'User'}))
+    mapped_user = _.cloneDeep(user)
+    await scirichonMapper.responseMapper(mapped_user,_.assign({category:'User'}))
     if(mapped_user&&mapped_user.roles){
         if(_.every(mapped_user.roles,(role)=>role.status==='disabled')){
             ctx.throw(new ScirichonError(`user with all roles disabled`,401))
