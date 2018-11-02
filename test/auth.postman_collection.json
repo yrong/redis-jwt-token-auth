@@ -651,7 +651,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"test\":\"test\",\n  \"token\":\"{{token}}\"\n}"
+							"raw": "{\n  \"hello\":\"hello\",\n  \"name\":\"hello\"\n}"
 						},
 						"url": {
 							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/role/contributor",
@@ -1443,7 +1443,7 @@
 							"raw": "{\n\t\"category\":\"Department\",\n\t\"root\":true\n}\n"
 						},
 						"url": {
-							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/api/departments/members",
+							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/api/departments/membersByMyself",
 							"protocol": "http",
 							"host": [
 								"{{auth_api_host}}"
@@ -1453,7 +1453,7 @@
 								"auth",
 								"api",
 								"departments",
-								"members"
+								"membersByMyself"
 							]
 						}
 					},
@@ -1547,7 +1547,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"name\":\"test\",\n  \"passwd\":\"test\",\n  \"type\":\"external\",\n  \"phone\":\"13613611336\"\n}"
+							"raw": "{\n  \"name\":\"test5\",\n  \"passwd\":\"test\",\n  \"type\":\"external\",\n  \"phone\":\"13613611336\",\n  \"roles\":[\"viewer\"]\n}"
 						},
 						"url": {
 							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/register",
@@ -1822,6 +1822,52 @@
 						"body": {
 							"mode": "raw",
 							"raw": "{\n  \"body\":{\n   \"aggs\": {\n          \"department\" : {\n              \"terms\" : { \"field\" : \"department_path\" }\n          }\n      }\n    }\n}"
+						},
+						"url": {
+							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/userinfo/search",
+							"protocol": "http",
+							"host": [
+								"{{auth_api_host}}"
+							],
+							"port": "{{auth_api_port}}",
+							"path": [
+								"auth",
+								"userinfo",
+								"search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "search user by department",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7bbfd19f-a078-4af0-a868-297c5285cb27",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"body\":\n\t  {\n\t      \"query\": {\n\t        \"bool\":{\n\t          \"must\":[\n\t             {\"terms\":{\"departments\":[\"{{department_1_id}}\"]}}\n\t          ]\n\t        }\n\t      }\n\t     \n\t  }\n\t  \n}"
 						},
 						"url": {
 							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/userinfo/search",
@@ -2302,6 +2348,8 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "d5773ac6-0916-430b-9a46-6c1fd391026e",
+								"type": "text/javascript",
 								"exec": [
 									"tests[\"add user success\"] = responseCode.code == 200",
 									"var jsonData = JSON.parse(responseBody);",
@@ -2309,10 +2357,9 @@
 									"var userid = jsonData.uuid",
 									"tests[\"userid found\"] = userid;",
 									"if(userid){",
-									"  postman.setEnvironmentVariable(\"test_user_id\", userid);  ",
+									"  postman.setEnvironmentVariable(\"guest_user_id\", userid);  ",
 									"}"
-								],
-								"type": "text/javascript"
+								]
 							}
 						}
 					],
