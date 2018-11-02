@@ -35,13 +35,26 @@ module.exports = (router)=> {
 
     router.get('/api/departments/members',async(ctx,next)=> {
         let params,departments=[],department,
-            roots = (ctx.query.roots&&ctx.query.roots.split(',')) || (ctx.req.session.passport.user&&ctx.req.session.passport.user.departments)
+            roots = (ctx.query.roots&&ctx.query.roots.split(','))
         if(roots){
             for(department of roots){
                 params = _.assign({category:'Department'},{uuid:department})
                 departments.push(await handler.getItemWithMembers(params,ctx))
             }
+        }else{
+            departments.push(await handler.getItemWithMembers({category:'Department'},ctx))
         }
         ctx.body = departments||{}
+    })
+
+    router.get('/api/departments/membersByMyself',async(ctx,next)=> {
+        let params,department, departments = ctx.req.session.passport.user&&ctx.req.session.passport.user.departments,result=[]
+        if(departments){
+            for(department of departments){
+                params = _.assign({category:'Department'},{uuid:department})
+                result.push(await handler.getItemWithMembers(params,ctx))
+            }
+        }
+        ctx.body = result||{}
     })
 }

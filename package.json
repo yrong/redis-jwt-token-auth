@@ -38,7 +38,7 @@
     "passport-ldapauth-fork": "^1.0.2",
     "passport-local": "^1.0.0",
     "webdav": "^0.9.0",
-    "scirichon-crud-handler": "1.0.5-beta.18"
+    "scirichon-crud-handler": "1.0.5-beta.19"
   },
   "devDependencies": {
     "webpack-builder-advanced": "^1.0.1"
