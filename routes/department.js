@@ -42,7 +42,7 @@ module.exports = (router)=> {
                 departments.push(await handler.getItemWithMembers(params,ctx))
             }
         }else{
-            departments.push(await handler.getItemWithMembers({category:'Department'},ctx))
+            departments = await handler.getItemWithMembers({category:'Department'},ctx)
         }
         ctx.body = departments||{}
     })
