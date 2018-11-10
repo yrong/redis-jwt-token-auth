@@ -955,14 +955,14 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "740fc797-a177-4ae9-a982-df8259b892e2",
+								"id": "4f52d045-d866-46cb-8292-b7bdb083af28",
 								"type": "text/javascript",
 								"exec": [
 									"tests[\"query ok\"] = responseCode.code == 200;",
 									"",
-									"// var jsonData = JSON.parse(responseBody);",
-									"// var data = jsonData.data||jsonData",
-									"// tests[\"found\"] = data[0].name==='department1'",
+									"var jsonData = JSON.parse(responseBody);",
+									"var data = jsonData.data||jsonData",
+									"tests[\"found\"] = data.length==1",
 									""
 								]
 							}
