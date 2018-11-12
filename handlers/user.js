@@ -58,7 +58,7 @@ const incrStaffCount = async(category,uuid,delta)=>{
     await db.queryCql(`match (n:${category}) where n.uuid={uuid} set n.staff_cnt=n.staff_cnt+${delta}`, {uuid})
     let result = await scirichonCache.getItemByCategoryAndID(category,uuid)
     if(result){
-        result.staff_cnt = (result.staff_cnt)||0 + delta
+        result.staff_cnt = ((result.staff_cnt)||0) + delta
         await scirichonCache.addItem(result)
     }
 }
