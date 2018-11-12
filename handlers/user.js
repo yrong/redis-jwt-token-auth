@@ -68,47 +68,67 @@ const setUserRoles = async(uuid,roles)=>{
     await acl.addUserRoles(uuid, roles)
 }
 
+const incrRoleStaffCnt = async (params,ctx)=>{
+    if(params.roles){
+        for(let uuid of params.roles){
+            await incrStaffCount('Role',uuid,1)
+        }
+    }
+}
+
+const decrRoleStaffCnt = async (params,ctx)=>{
+    if (params.fields_old.roles) {
+        for (let uuid of params.fields_old.roles) {
+            await incrStaffCount('Role', uuid, -1)
+        }
+    }
+}
+
+const incrDepartmentStaffCnt = async (params,ctx)=>{
+    if(params.department_path){
+        for(let uuid of params.department_path){
+            await incrStaffCount('Department',uuid,1)
+        }
+    }
+}
+
+const decrDepartmentStaffCnt = async (params,ctx)=>{
+    if (params.fields_old.department_path) {
+        for (let uuid of params.fields_old.department_path) {
+            await incrStaffCount('Department', uuid, -1)
+        }
+    }
+}
+
 const postProcess = async (params, ctx)=>{
     if(ctx.method==='POST') {
         if (params.roles) {
             await setUserRoles(params.uuid, params.roles)
-            for(let role of params.roles){
-                await incrStaffCount('Role',role,1)
-            }
+            await incrRoleStaffCnt(params,ctx)
         }
         if(params.departments){
-            for(let department of params.department_path){
-                await incrStaffCount('Department',department,1)
-            }
+            await incrDepartmentStaffCnt(params,ctx)
         }
     }
     else if(ctx.method==='PUT'||ctx.method==='PATCH'){
         if (params.change.roles) {
             await setUserRoles(params.uuid, params.roles)
-            if (params.fields_old.roles) {
-                for (let role of params.fields_old.roles) {
-                    await incrStaffCount('Role', role, -1)
-                }
-            }
-            for (let role of params.roles) {
-                await incrStaffCount('Role', role, 1)
-            }
+            await decrRoleStaffCnt(params,ctx)
+            await incrRoleStaffCnt(params,ctx)
         }
         if(params.change.departments) {
-            if (params.fields_old.department_path) {
-                for (let department of params.fields_old.department_path) {
-                    await incrStaffCount('Department', department, -1)
-                }
-            }
-            for (let department of params.department_path) {
-                await incrStaffCount('Department', department, 1)
-            }
+            await decrDepartmentStaffCnt(params,ctx)
+            await incrDepartmentStaffCnt(params,ctx)
+        }
+        if(params.change.status==='deleted'){
+            await decrRoleStaffCnt(params,ctx)
+            await decrDepartmentStaffCnt(params,ctx)
         }
     }
     else if(ctx.method==='DELETE'){
-        if (params.roles) {
-            await revokeUserRoles(params.uuid)
-        }
+        await revokeUserRoles(params.uuid)
+        await decrRoleStaffCnt(params,ctx)
+        await decrDepartmentStaffCnt(params,ctx)
     }
     return params
 }

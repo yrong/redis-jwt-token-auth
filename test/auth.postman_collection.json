@@ -471,7 +471,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "[\n\t\t  {\n\t\t      \"name\":\"viewer\",\n\t\t     \"allows\":[{\"resources\":\"own\",\"permissions\":[\"READ\"]}],\n\t\t     \"additional\":[\"a\"],\n\t\t     \"currentUserRole\":[]\n\t\t  },\n\t\t  {\n\t\t      \"name\":\"contributor\",\n\t\t     \"allows\":[{\"resources\":\"own\",\"permissions\":[\"CREATE\",\"UPDATE\",\"DELETE\",\"READ\"]}]\n\t\t  },\n\t\t  {\n\t\t      \"name\":\"superAdmin\",\n\t\t     \"allows\":[{\"resources\":\"*\",\"permissions\":\"*\"}]\n\t\t  },\n\t\t  {\n\t\t      \"name\":\"external\",\n\t\t     \"allows\":[{\"resources\":\"*\",\"permissions\":[\"READ\"]}],\n\t\t     \"type\":\"external\"\n\t\t  }\n\t\t]\n"
+							"raw": "[\n\t\t\n\t\t  {\n\t\t      \"name\":\"contributor\",\n\t\t     \"allows\":[{\"resources\":\"own\",\"permissions\":[\"CREATE\",\"UPDATE\",\"DELETE\",\"READ\"]}]\n\t\t  },\n\t\t  {\n\t\t      \"name\":\"superAdmin\",\n\t\t     \"allows\":[{\"resources\":\"*\",\"permissions\":\"*\"}]\n\t\t  },\n\t\t  {\n\t\t      \"name\":\"external\",\n\t\t     \"allows\":[{\"resources\":\"*\",\"permissions\":[\"READ\"]}],\n\t\t     \"type\":\"external\"\n\t\t  }\n\t\t]\n"
 						},
 						"url": {
 							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/roles?token={{token}}",
@@ -517,7 +517,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"procedure\":{\"ignoreUniqueCheck\":true},\n\t\"data\":{\n\t\t\"category\":\"Role\",\n\t\t\"fields\":\n\t\t\t[\n\t\t\t\t\t  {\n\t\t\t\t\t      \"name\":\"viewer\",\n\t\t\t\t\t     \"allows\":[{\"resources\":\"own\",\"permissions\":[\"READ\"]}],\n\t\t\t\t\t     \"additional\":[\"a\"],\n\t\t\t\t\t     \"currentUserRole\":[]\n\t\t\t\t\t  },\n\t\t\t\t\t  {\n\t\t\t\t\t      \"name\":\"contributor\",\n\t\t\t\t\t     \"allows\":[{\"resources\":\"own\",\"permissions\":[\"CREATE\",\"UPDATE\",\"DELETE\",\"READ\"]}]\n\t\t\t\t\t  },\n\t\t\t\t\t  {\n\t\t\t\t\t      \"name\":\"superAdmin\",\n\t\t\t\t\t     \"allows\":[{\"resources\":\"*\",\"permissions\":\"*\"}]\n\t\t\t\t\t  },\n\t\t\t\t\t  {\n\t\t\t\t\t      \"name\":\"external\",\n\t\t\t\t\t     \"allows\":[{\"resources\":\"*\",\"permissions\":[\"READ\"]}],\n\t\t\t\t\t     \"type\":\"external\"\n\t\t\t\t\t  }\n\t\t\t]\n\t}\n}\n"
+							"raw": "{\n\t\"procedure\":{\"ignoreUniqueCheck\":true},\n\t\"data\":{\n\t\t\"category\":\"Role\",\n\t\t\"fields\":\n\t\t\t[\n\t\t\t\t\t\n\t\t\t\t\t  {\n\t\t\t\t\t      \"name\":\"contributor\",\n\t\t\t\t\t     \"allows\":[{\"resources\":\"own\",\"permissions\":[\"CREATE\",\"UPDATE\",\"DELETE\",\"READ\"]}]\n\t\t\t\t\t  },\n\t\t\t\t\t  {\n\t\t\t\t\t      \"name\":\"superAdmin\",\n\t\t\t\t\t     \"allows\":[{\"resources\":\"*\",\"permissions\":\"*\"}]\n\t\t\t\t\t  },\n\t\t\t\t\t  {\n\t\t\t\t\t      \"name\":\"external\",\n\t\t\t\t\t     \"allows\":[{\"resources\":\"*\",\"permissions\":[\"READ\"]}],\n\t\t\t\t\t     \"type\":\"external\"\n\t\t\t\t\t  }\n\t\t\t]\n\t}\n}\n"
 						},
 						"url": {
 							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/api/roles/batch",
@@ -562,7 +562,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\t      \"name\":\"viewer1\",\n\t\t     \"allows\":[{\"resources\":\"own\",\"permissions\":[\"READ\"]}],\n\t\t     \"additional\":[\"a\"],\n\t\t     \"currentUserRole\":[]\n\t\t  }\n"
+							"raw": "{\n\t\t      \"name\":\"viewer\",\n\t\t     \"allows\":[{\"resources\":\"own\",\"permissions\":[\"READ\"]}],\n\t\t     \"additional\":[\"a\"],\n\t\t     \"currentUserRole\":[]\n\t\t  }\n"
 						},
 						"url": {
 							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/role",
@@ -792,7 +792,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"name\":\"superadmin\",\n  \"passwd\":\"superadmin\",\n  \"phone\":\"18918911889\"\n}"
+							"raw": "{\n  \"name\":\"superadmin\",\n  \"passwd\":\"superadmin\",\n  \"phone\":\"18918911889\",\n  \"roles\":[\"superAdmin\"]\n}"
 						},
 						"url": {
 							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/register",
@@ -1518,7 +1518,7 @@
 					"response": []
 				},
 				{
-					"name": "add test user as external",
+					"name": "add test user as viewer",
 					"event": [
 						{
 							"listen": "test",
@@ -1547,7 +1547,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"name\":\"test5\",\n  \"passwd\":\"test\",\n  \"type\":\"external\",\n  \"phone\":\"13613611336\",\n  \"roles\":[\"viewer\"]\n}"
+							"raw": "{\n  \"name\":\"test\",\n  \"passwd\":\"test\",\n  \"type\":\"external\",\n  \"phone\":\"13613611336\",\n  \"roles\":[\"viewer\"]\n}"
 						},
 						"url": {
 							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/register",
@@ -1565,16 +1565,109 @@
 					"response": []
 				},
 				{
-					"name": "modify test user",
+					"name": "viewer staff cnt",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
-								"id": "4a10984c-1909-4e24-9ca7-0df0fd9fa9c9",
+								"id": "065dac9f-0b03-483f-b964-e23307cf7b6a",
 								"type": "text/javascript",
 								"exec": [
-									"tests[\"user modified\"] = responseCode.code == 200",
-									""
+									"var jsonData = JSON.parse(responseBody);",
+									"var role = jsonData.data||jsonData",
+									"if(role){",
+									"  postman.setEnvironmentVariable(\"view_staff_cnt\", role.staff_cnt);  ",
+									"}"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/role/viewer?token={{token}}",
+							"protocol": "http",
+							"host": [
+								"{{auth_api_host}}"
+							],
+							"port": "{{auth_api_port}}",
+							"path": [
+								"auth",
+								"role",
+								"viewer"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "{{token}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "external staff cnt",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "cfc6d59d-7d0f-4ebd-91a1-1e37c8a86cc9",
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"var role = jsonData.data||jsonData",
+									"if(role){",
+									"  postman.setEnvironmentVariable(\"external_staff_cnt\", role.staff_cnt);  ",
+									"}"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/role/external?token={{token}}",
+							"protocol": "http",
+							"host": [
+								"{{auth_api_host}}"
+							],
+							"port": "{{auth_api_port}}",
+							"path": [
+								"auth",
+								"role",
+								"external"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "{{token}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "bind role as external",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "04139459-e894-475c-8f59-e7aef4c9079c",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"bind role to user success\"] = responseCode.code == 200"
 								]
 							}
 						}
@@ -1589,10 +1682,10 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n   \"token\":\"{{token}}\",\n  \"avatar\":\"/upload/avatar/ca92d560-05a6-11e7-98ba-e1d08df9a25f\",\n  \"per_page\":90,\n  \"status\":\"deleted\"\n}"
+							"raw": "{\n      \"roles\":[\"external\"]\n}"
 						},
 						"url": {
-							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/userinfo/{{test_user_id}}",
+							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/userinfo/{{test_user_id}}?token={{token}}",
 							"protocol": "http",
 							"host": [
 								"{{auth_api_host}}"
@@ -1602,6 +1695,106 @@
 								"auth",
 								"userinfo",
 								"{{test_user_id}}"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "{{token}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "viewer staff cnt --",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "df2990d0-c6ae-492e-b68c-d405a940fe8e",
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"var role = jsonData.data||jsonData",
+									"if(role){",
+									"     tests[\"viewer staff count desc\"] = role.staff_cnt ===  environment.view_staff_cnt-1",
+									"}"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/role/viewer?token={{token}}",
+							"protocol": "http",
+							"host": [
+								"{{auth_api_host}}"
+							],
+							"port": "{{auth_api_port}}",
+							"path": [
+								"auth",
+								"role",
+								"viewer"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "{{token}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "external staff cnt ++",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "83f915e0-0e91-46b5-afc1-3429ef06b1ed",
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"var role = jsonData.data||jsonData",
+									"if(role){",
+									"     tests[\"external staff count incr\"] = role.staff_cnt ===  environment.external_staff_cnt+1",
+									"}"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/role/external?token={{token}}",
+							"protocol": "http",
+							"host": [
+								"{{auth_api_host}}"
+							],
+							"port": "{{auth_api_port}}",
+							"path": [
+								"auth",
+								"role",
+								"external"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "{{token}}"
+								}
 							]
 						}
 					},
@@ -1650,54 +1843,6 @@
 					"response": []
 				},
 				{
-					"name": "bind role",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "04139459-e894-475c-8f59-e7aef4c9079c",
-								"type": "text/javascript",
-								"exec": [
-									"tests[\"bind role to user success\"] = responseCode.code == 200"
-								]
-							}
-						}
-					],
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n      \"roles\":[\"external\"]\n}"
-						},
-						"url": {
-							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/userinfo/{{test_user_id}}?token={{token}}",
-							"protocol": "http",
-							"host": [
-								"{{auth_api_host}}"
-							],
-							"port": "{{auth_api_port}}",
-							"path": [
-								"auth",
-								"userinfo",
-								"{{test_user_id}}"
-							],
-							"query": [
-								{
-									"key": "token",
-									"value": "{{token}}"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "bind department",
 					"event": [
 						{
@@ -1738,6 +1883,96 @@
 								"auth",
 								"userinfo",
 								"{{test_user_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete test user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "4a10984c-1909-4e24-9ca7-0df0fd9fa9c9",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"user modified\"] = responseCode.code == 200",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n   \"token\":\"{{token}}\",\n  \"status\":\"deleted\"\n}"
+						},
+						"url": {
+							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/userinfo/{{test_user_id}}",
+							"protocol": "http",
+							"host": [
+								"{{auth_api_host}}"
+							],
+							"port": "{{auth_api_port}}",
+							"path": [
+								"auth",
+								"userinfo",
+								"{{test_user_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "external staff cnt --",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "cb8fc26f-4021-4e18-a080-1111a6c8dcd6",
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"var role = jsonData.data||jsonData",
+									"if(role){",
+									"     tests[\"external staff count incr\"] = role.staff_cnt ===  environment.external_staff_cnt",
+									"}"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/role/external?token={{token}}",
+							"protocol": "http",
+							"host": [
+								"{{auth_api_host}}"
+							],
+							"port": "{{auth_api_port}}",
+							"path": [
+								"auth",
+								"role",
+								"external"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "{{token}}"
+								}
 							]
 						}
 					},
