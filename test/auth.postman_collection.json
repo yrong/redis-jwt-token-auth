@@ -1547,7 +1547,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"name\":\"test\",\n  \"passwd\":\"test\",\n  \"type\":\"external\",\n  \"phone\":\"13613611336\",\n  \"roles\":[\"viewer\"]\n}"
+							"raw": "{\n  \"name\":\"tes5\",\n  \"passwd\":\"test\",\n  \"type\":\"external\",\n  \"phone\":\"13613611336\",\n  \"roles\":[\"viewer\"]\n}"
 						},
 						"url": {
 							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/register",
@@ -1565,18 +1565,23 @@
 					"response": []
 				},
 				{
-					"name": "viewer staff cnt",
+					"name": "check role staff cnt in neo4j",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
-								"id": "065dac9f-0b03-483f-b964-e23307cf7b6a",
+								"id": "3e53159c-b9d9-45b9-be5d-6f8530e407c5",
 								"type": "text/javascript",
 								"exec": [
 									"var jsonData = JSON.parse(responseBody);",
-									"var role = jsonData.data||jsonData",
-									"if(role){",
-									"  postman.setEnvironmentVariable(\"view_staff_cnt\", role.staff_cnt);  ",
+									"var data = jsonData.data||jsonData",
+									"for(let role of data){",
+									"    if(role.uuid==='viewer'){",
+									"        tests[\"viewer role cnt\"] = role.staff_cnt===1",
+									"    }",
+									"    else if(role.uuid==='external'){",
+									"        tests[\"external role cnt\"] = role.staff_cnt===0",
+									"    }",
 									"}"
 								]
 							}
@@ -1590,7 +1595,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/role/viewer?token={{token}}",
+							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/role?token={{token}}",
 							"protocol": "http",
 							"host": [
 								"{{auth_api_host}}"
@@ -1598,8 +1603,7 @@
 							"port": "{{auth_api_port}}",
 							"path": [
 								"auth",
-								"role",
-								"viewer"
+								"role"
 							],
 							"query": [
 								{
@@ -1612,47 +1616,54 @@
 					"response": []
 				},
 				{
-					"name": "external staff cnt",
+					"name": "check role staff cnt in es",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
-								"id": "cfc6d59d-7d0f-4ebd-91a1-1e37c8a86cc9",
+								"id": "56c77195-ddbc-4eb3-b97d-7e370d081ecd",
 								"type": "text/javascript",
 								"exec": [
 									"var jsonData = JSON.parse(responseBody);",
-									"var role = jsonData.data||jsonData",
-									"if(role){",
-									"  postman.setEnvironmentVariable(\"external_staff_cnt\", role.staff_cnt);  ",
+									"var data = jsonData.data||jsonData",
+									"for(let role of data.results){",
+									"    if(role.uuid==='viewer'){",
+									"        tests[\"viewer role cnt\"] = role.staff_cnt===1",
+									"    }",
+									"    else if(role.uuid==='external'){",
+									"        tests[\"external role cnt\"] = role.staff_cnt===0",
+									"    }",
 									"}"
 								]
 							}
 						}
 					],
 					"request": {
-						"method": "GET",
-						"header": [],
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": ""
+							"raw": "{\n\t\"category\":\"Role\",\n\t\"body\":\n\t  {\n\t      \"query\": {\n\t      }\n\t  }\n}"
 						},
 						"url": {
-							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/role/external?token={{token}}",
+							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/api/searchByEql",
 							"protocol": "http",
 							"host": [
 								"{{auth_api_host}}"
 							],
 							"port": "{{auth_api_port}}",
 							"path": [
-								"auth",
-								"role",
-								"external"
-							],
-							"query": [
-								{
-									"key": "token",
-									"value": "{{token}}"
-								}
+								"api",
+								"searchByEql"
 							]
 						}
 					},
@@ -1707,18 +1718,23 @@
 					"response": []
 				},
 				{
-					"name": "viewer staff cnt --",
+					"name": "check role staff cnt in neo4j",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
-								"id": "df2990d0-c6ae-492e-b68c-d405a940fe8e",
+								"id": "d1acd06e-4b47-424c-b7fe-5ed3ea43da12",
 								"type": "text/javascript",
 								"exec": [
 									"var jsonData = JSON.parse(responseBody);",
-									"var role = jsonData.data||jsonData",
-									"if(role){",
-									"     tests[\"viewer staff count desc\"] = role.staff_cnt ===  environment.view_staff_cnt-1",
+									"var data = jsonData.data||jsonData",
+									"for(let role of data){",
+									"    if(role.uuid==='viewer'){",
+									"        tests[\"viewer role cnt\"] = role.staff_cnt===0",
+									"    }",
+									"    else if(role.uuid==='external'){",
+									"        tests[\"external role cnt\"] = role.staff_cnt===1",
+									"    }",
 									"}"
 								]
 							}
@@ -1732,7 +1748,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/role/viewer?token={{token}}",
+							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/role",
 							"protocol": "http",
 							"host": [
 								"{{auth_api_host}}"
@@ -1740,61 +1756,61 @@
 							"port": "{{auth_api_port}}",
 							"path": [
 								"auth",
-								"role",
-								"viewer"
-							],
-							"query": [
-								{
-									"key": "token",
-									"value": "{{token}}"
-								}
+								"role"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "external staff cnt ++",
+					"name": "check role staff cnt in es",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
-								"id": "83f915e0-0e91-46b5-afc1-3429ef06b1ed",
+								"id": "bbd7baa7-8f12-4b02-9adc-069e4a188d36",
 								"type": "text/javascript",
 								"exec": [
 									"var jsonData = JSON.parse(responseBody);",
-									"var role = jsonData.data||jsonData",
-									"if(role){",
-									"     tests[\"external staff count incr\"] = role.staff_cnt ===  environment.external_staff_cnt+1",
+									"var data = jsonData.data||jsonData",
+									"for(let role of data.results){",
+									"    if(role.uuid==='viewer'){",
+									"        tests[\"viewer role cnt\"] = role.staff_cnt===0",
+									"    }",
+									"    else if(role.uuid==='external'){",
+									"        tests[\"external role cnt\"] = role.staff_cnt===1",
+									"    }",
 									"}"
 								]
 							}
 						}
 					],
 					"request": {
-						"method": "GET",
-						"header": [],
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": ""
+							"raw": "{\n\t\"category\":\"Role\",\n\t\"body\":\n\t  {\n\t      \"query\": {\n\t      }\n\t  }\n}"
 						},
 						"url": {
-							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/role/external?token={{token}}",
+							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/api/searchByEql",
 							"protocol": "http",
 							"host": [
 								"{{auth_api_host}}"
 							],
 							"port": "{{auth_api_port}}",
 							"path": [
-								"auth",
-								"role",
-								"external"
-							],
-							"query": [
-								{
-									"key": "token",
-									"value": "{{token}}"
-								}
+								"api",
+								"searchByEql"
 							]
 						}
 					},
@@ -1932,18 +1948,20 @@
 					"response": []
 				},
 				{
-					"name": "external staff cnt --",
+					"name": "check role staff cnt in neo4j",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
-								"id": "cb8fc26f-4021-4e18-a080-1111a6c8dcd6",
+								"id": "6c8fa4a1-ba45-4fd6-88b8-3ce622f1a865",
 								"type": "text/javascript",
 								"exec": [
 									"var jsonData = JSON.parse(responseBody);",
-									"var role = jsonData.data||jsonData",
-									"if(role){",
-									"     tests[\"external staff count incr\"] = role.staff_cnt ===  environment.external_staff_cnt",
+									"var data = jsonData.data||jsonData",
+									"for(let role of data){",
+									"    if(role.uuid==='external'){",
+									"        tests[\"external role cnt\"] = role.staff_cnt===0",
+									"    }",
 									"}"
 								]
 							}
@@ -1957,7 +1975,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/role/external?token={{token}}",
+							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/role?token={{token}}",
 							"protocol": "http",
 							"host": [
 								"{{auth_api_host}}"
@@ -1965,14 +1983,64 @@
 							"port": "{{auth_api_port}}",
 							"path": [
 								"auth",
-								"role",
-								"external"
+								"role"
 							],
 							"query": [
 								{
 									"key": "token",
 									"value": "{{token}}"
 								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "check role staff cnt in es",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "6cde596d-f17a-4ff8-98b6-aea7da5b099a",
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"var data = jsonData.data||jsonData",
+									"for(let role of data.results){",
+									"    if(role.uuid==='external'){",
+									"        tests[\"external role cnt\"] = role.staff_cnt===0",
+									"    }",
+									"}"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"category\":\"Role\",\n\t\"body\":\n\t  {\n\t      \"query\": {\n\t      }\n\t  }\n}"
+						},
+						"url": {
+							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/api/searchByEql",
+							"protocol": "http",
+							"host": [
+								"{{auth_api_host}}"
+							],
+							"port": "{{auth_api_port}}",
+							"path": [
+								"api",
+								"searchByEql"
 							]
 						}
 					},
@@ -2027,17 +2095,21 @@
 					"response": []
 				},
 				{
-					"name": "user aggs by department",
+					"name": "check department staff cnt in es",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
-								"id": "9bb67f68-7b91-4fd7-8550-0075b632ca29",
+								"id": "b4b8e58c-0d03-403e-80bc-4f14ca24a760",
 								"type": "text/javascript",
 								"exec": [
 									"var jsonData = JSON.parse(responseBody);",
-									"var tree = jsonData.data||jsonData",
-									"tests[\"department found\"] = tree.department"
+									"var data = jsonData.data||jsonData",
+									"for(let department of data.results){",
+									"    if(department.uuid===environment.department_1_id){",
+									"        tests[\"department staff cnt\"] = department.staff_cnt===2",
+									"    }",
+									"}"
 								]
 							}
 						}
@@ -2056,7 +2128,59 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"body\":{\n   \"aggs\": {\n          \"department\" : {\n              \"terms\" : { \"field\" : \"department_path\" }\n          }\n      }\n    }\n}"
+							"raw": "{\n\t\"category\":\"Department\",\n\t\"body\":\n\t  {\n\t      \"query\": {\n\t      }\n\t  }\n}"
+						},
+						"url": {
+							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/api/searchByEql",
+							"protocol": "http",
+							"host": [
+								"{{auth_api_host}}"
+							],
+							"port": "{{auth_api_port}}",
+							"path": [
+								"api",
+								"searchByEql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "check user aggs by department",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "31122935-1ee3-4825-bc51-6423470f6a43",
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"var tree = jsonData.data||jsonData",
+									"for(let department of tree.department.buckets){",
+									"    if(department.key=== environment.department_1_id){",
+									"        tests[\"staff cnt\"] = department.doc_count===2",
+									"    }",
+									"}",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"body\":{\n  \t\"query\": {\n        \"bool\":{\n          \"must_not\":[\n             {\"term\":{\"status\":\"deleted\"}}\n          ]\n        }\n      },\n   \"aggs\": {\n          \"department\" : {\n              \"terms\" : { \"field\" : \"department_path\" }\n          }\n      }\n    }\n}"
 						},
 						"url": {
 							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/userinfo/search",

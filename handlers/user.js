@@ -8,6 +8,8 @@ const acl = require('../lib/acl')
 const db = require('../lib/db')
 const LdapAccount = require('./ldap_account')
 const handler = require('./index')
+const scirichonSchema = require('scirichon-json-schema')
+const scirichonSearch = require('scirichon-search')
 
 const sanitizeInput = function(input) {
     return input
@@ -61,7 +63,12 @@ const incrStaffCount = async(category,uuid,delta)=>{
         result.staff_cnt = ((result.staff_cnt)||0) + delta
         await scirichonCache.addItem(result)
     }
+    let schema = scirichonSchema.getSchema(category)
+    if(schema&&schema.search){
+        await scirichonSearch.batchUpdate(schema.search.index,[uuid],{script:{inline: `ctx._source.staff_cnt+=${delta};`}})
+    }
 }
+
 
 const setUserRoles = async(uuid,roles)=>{
     await revokeUserRoles(uuid)
@@ -120,7 +127,7 @@ const postProcess = async (params, ctx)=>{
             await decrDepartmentStaffCnt(params,ctx)
             await incrDepartmentStaffCnt(params,ctx)
         }
-        if(params.change.status==='deleted'){
+        if(params.change.status==='deleted'&&params.fields_old.status!=='deleted'){
             await decrRoleStaffCnt(params,ctx)
             await decrDepartmentStaffCnt(params,ctx)
         }
@@ -182,7 +189,7 @@ const getFullUser = async (ctx,user)=>{
     return user
 }
 
-const checkUser = async(ctx,user)=>{
+const checkLoginUser = async(ctx, user)=>{
     let params = ctx.request.body,mapped_user
     if(user.status==='deleted'||user.status==='disabled'){
         ctx.throw(new ScirichonError(`user deleted or disabled`,401))
@@ -202,4 +209,4 @@ const checkUser = async(ctx,user)=>{
     return mapped_user
 }
 
-module.exports = {preProcess,postProcess,verify,syncAcl,clear,isLdapUser,getFullUser,checkUser}
+module.exports = {preProcess,postProcess,verify,syncAcl,clear,isLdapUser,getFullUser,checkLoginUser}

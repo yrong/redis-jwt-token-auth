@@ -44,7 +44,7 @@ module.exports = (router) =>{
             if(err){
                 ctx.throw(new ScirichonError(err.message,401))
             }
-            local = await user_handler.checkUser(ctx,user)
+            local = await user_handler.checkLoginUser(ctx,user)
             let roles = local.roles||[];
             for(let i = 0;i<roles.length;i++){
                 if(roles[i].status === 'deleted' || roles[i].status === 'disabled'){
@@ -71,7 +71,7 @@ module.exports = (router) =>{
                 ctx.throw(new ScirichonError(err.message,401))
             }
             local = await LdapAccount.getLocalByLdap(user)
-            local = await user_handler.checkUser(ctx,local)
+            local = await user_handler.checkLoginUser(ctx,local)
             let roles = local.roles||[];
             for(let i = 0;i<roles.length;i++){
                 if(roles[i].status === 'deleted' || roles[i].status === 'disabled'){
