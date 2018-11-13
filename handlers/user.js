@@ -56,7 +56,7 @@ const revokeUserRoles = async (uuid)=>{
     await acl.removeUserRoles(uuid, roles)
 }
 
-const incrStaffCount = async(category,uuid,delta)=>{
+const setStaffCount = async(category,uuid,delta)=>{
     await db.queryCql(`match (n:${category}) where n.uuid={uuid} set n.staff_cnt=n.staff_cnt+${delta}`, {uuid})
     let result = await scirichonCache.getItemByCategoryAndID(category,uuid)
     if(result){
@@ -75,34 +75,34 @@ const setUserRoles = async(uuid,roles)=>{
     await acl.addUserRoles(uuid, roles)
 }
 
-const incrRoleStaffCnt = async (params,ctx)=>{
+const setRoleStaffCntForNew = async (params,ctx,delta)=>{
     if(params.roles){
         for(let uuid of params.roles){
-            await incrStaffCount('Role',uuid,1)
+            await setStaffCount('Role',uuid,delta)
         }
     }
 }
 
-const decrRoleStaffCnt = async (params,ctx)=>{
+const setRoleStaffCntForOld = async (params,ctx,delta)=>{
     if (params.fields_old.roles) {
         for (let uuid of params.fields_old.roles) {
-            await incrStaffCount('Role', uuid, -1)
+            await setStaffCount('Role', uuid, delta)
         }
     }
 }
 
-const incrDepartmentStaffCnt = async (params,ctx)=>{
+const setDepartmentStaffCntForNew = async (params,ctx,delta)=>{
     if(params.department_path){
         for(let uuid of params.department_path){
-            await incrStaffCount('Department',uuid,1)
+            await setStaffCount('Department',uuid,delta)
         }
     }
 }
 
-const decrDepartmentStaffCnt = async (params,ctx)=>{
+const setDepartmentStaffCntForOld = async (params,ctx,delta)=>{
     if (params.fields_old.department_path) {
         for (let uuid of params.fields_old.department_path) {
-            await incrStaffCount('Department', uuid, -1)
+            await setStaffCount('Department', uuid, delta)
         }
     }
 }
@@ -111,31 +111,38 @@ const postProcess = async (params, ctx)=>{
     if(ctx.method==='POST') {
         if (params.roles) {
             await setUserRoles(params.uuid, params.roles)
-            await incrRoleStaffCnt(params,ctx)
+            await setRoleStaffCntForNew(params,ctx,1)
         }
         if(params.departments){
-            await incrDepartmentStaffCnt(params,ctx)
+            await setDepartmentStaffCntForNew(params,ctx,1)
         }
     }
     else if(ctx.method==='PUT'||ctx.method==='PATCH'){
         if (params.change.roles) {
             await setUserRoles(params.uuid, params.roles)
-            await decrRoleStaffCnt(params,ctx)
-            await incrRoleStaffCnt(params,ctx)
+            await setRoleStaffCntForOld(params,ctx,-1)
+            await setRoleStaffCntForNew(params,ctx,1)
         }
         if(params.change.departments) {
-            await decrDepartmentStaffCnt(params,ctx)
-            await incrDepartmentStaffCnt(params,ctx)
+            await setDepartmentStaffCntForOld(params,ctx,-1)
+            await setDepartmentStaffCntForNew(params,ctx,1)
         }
         if(params.change.status==='deleted'&&params.fields_old.status!=='deleted'){
-            await decrRoleStaffCnt(params,ctx)
-            await decrDepartmentStaffCnt(params,ctx)
+            await setRoleStaffCntForOld(params,ctx,-1)
+            await setDepartmentStaffCntForOld(params,ctx,-1)
+        }
+        if(params.change.status!=='deleted'&&params.fields_old.status==='deleted'){
+            if(params.change.roles||params.change.departments){
+                throw new ScirichonError(`change role or department not allowed when in deleted status`)
+            }
+            await setRoleStaffCntForOld(params,ctx,1)
+            await setDepartmentStaffCntForOld(params,ctx,1)
         }
     }
     else if(ctx.method==='DELETE'){
         await revokeUserRoles(params.uuid)
-        await decrRoleStaffCnt(params,ctx)
-        await decrDepartmentStaffCnt(params,ctx)
+        await setRoleStaffCntForOld(params,ctx,-1)
+        await setDepartmentStaffCntForOld(params,ctx,-1)
     }
     return params
 }
