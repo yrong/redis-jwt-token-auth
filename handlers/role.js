@@ -13,7 +13,7 @@ const preProcess = async (params, ctx)=>{
         let cypher = `MATCH (n:User) where {uuid} in n.roles return n`
         let result = await db.queryCql(cypher,{uuid:params.uuid})
         if(result&&result.length){
-            throw new ScirichonError(`已绑定用户:${result[0].uuid}`)
+            throw new ScirichonError(`存在已绑定该角色的用户:${result[0].uuid}`)
         }
     }
     return params

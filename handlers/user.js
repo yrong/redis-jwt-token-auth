@@ -150,10 +150,10 @@ const postProcess = async (params, ctx)=>{
 const verify = async function(username, password) {
     return db.queryCql(`MATCH (u:User{name:{name}}) return u`,{name:username}).then((account)=>{
         if(_.isEmpty(account)) {
-            throw new ScirichonError(`user with name ${username} not exist!`)
+            throw new ScirichonError(`用户名${username}不存在`)
         } else{
             if(password !== account[0].passwd){
-                throw new ScirichonError("user password not match!");
+                throw new ScirichonError("用户密码不匹配");
             }else {
                 return account[0];
             }

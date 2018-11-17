@@ -23,7 +23,7 @@ LdapAccount.getLocalByLdap = async (ldap_user)=>{
         if(users.length){
             user = users[0]
         }else{
-            throw new ScirichonError(`ldap user missing mapped guest account,create it first`,401)
+            throw new ScirichonError(`缺省绑定到guest账号,请预先创建!`,401)
         }
     }
     return _.omit(user,OmitUserFields)
