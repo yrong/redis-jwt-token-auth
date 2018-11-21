@@ -199,7 +199,7 @@ const getFullUser = async (ctx,user)=>{
 const checkLoginUser = async(ctx, user)=>{
     let params = ctx.request.body,mapped_user
     if(user.status==='deleted'||user.status==='disabled'){
-        ctx.throw(new ScirichonError(`user deleted or disabled`,401))
+        ctx.throw(new ScirichonError(`当前用户状态为${user.status},不允许登录`,401))
     }
     if(user.roles&&params.illegalRoles){
         if(_.intersection(params.illegalRoles,user.roles).length){
@@ -210,7 +210,7 @@ const checkLoginUser = async(ctx, user)=>{
     await scirichonMapper.responseMapper(mapped_user,_.assign({category:'User'}))
     if(mapped_user&&mapped_user.roles){
         if(_.every(mapped_user.roles,(role)=>role.status==='disabled')){
-            ctx.throw(new ScirichonError(`user with all roles disabled`,401))
+            ctx.throw(new ScirichonError(`当前用户关联的角色已禁用,不允许登录`,401))
         }
     }
     return mapped_user

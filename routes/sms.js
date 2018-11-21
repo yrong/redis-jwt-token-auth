@@ -30,7 +30,7 @@ module.exports = (router)=>{
         let params = ctx.request.body,phone=params.phone,code=params.code,token
         let user = await SmsCache.get(phone+":"+code)
         if(_.isEmpty(user)) {
-            throw new ScirichonError(`user with phone ${phone} and code ${code} not exist!`)
+            throw new ScirichonError(`缓存中包含phone:${phone}和code:${code}的用户不存在`,401)
         }else{
             user = _.omit(user,['id','maxAge'])
             await ctx.login(user)
@@ -49,7 +49,7 @@ module.exports = (router)=>{
         let phone=ctx.params.phone,maxAge = parseInt(ctx.request.body.maxAge||config.get('auth.sms.expiration')),code,user,name,uuid,response
         let account = await db.queryCql(`MATCH (u:User{phone:{phone}}) return u`,{phone})
         if(_.isEmpty(account)) {
-            throw new ScirichonError(`user with phone ${phone} not exist!`)
+            throw new ScirichonError(`包含phone:${phone}的用户不存在`,401)
         } else{
             user = _.omit(account[0], OmitUserFields)
             name = user.name
