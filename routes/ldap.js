@@ -16,6 +16,7 @@ module.exports = (router)=>{
             if(err){
                 ctx.throw(new ScirichonError(err.message,401))
             }
+            user[ldap_config.bindType] = ctx.request.body.username
             local = await LdapAccount.getLocalByLdap(user)
             local = await user_handler.checkLoginUser(ctx,local)
             await ctx.login(user)
