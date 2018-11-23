@@ -25,7 +25,7 @@ const preProcess = async (params, ctx)=>{
     let result
     if(ctx.method==='POST'||ctx.method==='PUT'||ctx.method==='PATCH') {
         params.type = params.fields.type = params.fields.type || 'internal'
-        if (params.ldapId) {
+        if (params.ldapId&&ldapConfig.checkExist) {
             let filter = ldapConfig.bindType==='dn'?params.ldapId:(ldapConfig.searchFilter.replace(/{{username}}/g, sanitizeInput(params.ldapId)))
             result = await LdapAccount.searchLdap(ldapConfig.userSearchBase, {filter,attributes: ldapConfig.userAttributes})
             if (_.isEmpty(result)) {
