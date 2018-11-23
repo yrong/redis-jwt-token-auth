@@ -7,7 +7,8 @@
     "prebuild": "yarn install&&rm -rf build&&cp ../wheels/scirichon-crud-handler/app.js .",
     "build": "webpack",
     "init": "initSchema",
-    "initES": "INIT_ES=1 initSchema && /bin/sh script/modify_es_schema.sh",
+    "initES": "INIT_ES=1 initSchema",
+    "initESWithPinyin": "INIT_ES=1 PINYIN=1 initSchema && /bin/sh script/modify_es_schema.sh",
     "start": "scirichon-crud-api",
     "test": "mocha",
     "sync-mysql": "SYNC_TYPE=mysql node sync.js",
@@ -15,7 +16,8 @@
     "sync-ldap": "SYNC_TYPE=ldap node sync.js",
     "sync-roles": "SYNC_TYPE=acl node sync.js",
     "upgradeUserId2Str": "cat ./cypher/upgradeUserId2Str.cyp | $NEO4J_HOME/bin/cypher-shell -u neo4j -p admin --format plain",
-    "addGuestUser": "/bin/sh script/add_guest_user.sh"
+    "addGuestUser": "/bin/sh script/add_guest_user.sh",
+    "modifyEsSchema": "/bin/sh script/modify_es_schema.sh"
   },
   "keywords": [
     "jwt",
@@ -38,7 +40,7 @@
     "passport-ldapauth-fork": "^1.0.2",
     "passport-local": "^1.0.0",
     "webdav": "^0.9.0",
-    "scirichon-crud-handler": "1.0.5-beta.24"
+    "scirichon-crud-handler": "1.0.5-beta.25"
   },
   "devDependencies": {
     "webpack-builder-advanced": "^1.0.1"

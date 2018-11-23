@@ -4443,9 +4443,9 @@ scirichon-common@^1.0.7:
     request "^2.81.0"
     request-promise "^4.1.1"
 
-scirichon-crud-handler@1.0.5-beta.24:
-  version "1.0.5-beta.24"
-  resolved "https://registry.npmjs.org/scirichon-crud-handler/-/scirichon-crud-handler-1.0.5-beta.24.tgz#5b0d15194e6d352640a8764599d0f96a84a00c17"
+scirichon-crud-handler@1.0.5-beta.25:
+  version "1.0.5-beta.25"
+  resolved "https://registry.npmjs.org/scirichon-crud-handler/-/scirichon-crud-handler-1.0.5-beta.25.tgz#83bd0956e1e9e4badfa7a04dcacc0c1df548bcd7"
   dependencies:
     config "^1.25.1"
     jsonpath "^1.0"
@@ -4464,7 +4464,7 @@ scirichon-crud-handler@1.0.5-beta.24:
     scirichon-common "^1.0.7"
     scirichon-json-exp-imp "^1.0.5"
     scirichon-json-schema "^1.0.3"
-    scirichon-json-schema-init "^1.0.3"
+    scirichon-json-schema-init "^1.0.4"
     scirichon-response-mapper "^1.0.7"
     scirichon-response-wrapper "^1.0.2"
     scirichon-search "^1.0.5"
@@ -4491,9 +4491,9 @@ scirichon-json-exp-imp@^1.0.5:
     uuid "^3.0.0"
     uuid-validate "^0.0.2"
 
-scirichon-json-schema-init@^1.0.3:
-  version "1.0.3"
-  resolved "https://registry.npmjs.org/scirichon-json-schema-init/-/scirichon-json-schema-init-1.0.3.tgz#4bacf426985a27314f74be3805165abdea379c9b"
+scirichon-json-schema-init@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.npmjs.org/scirichon-json-schema-init/-/scirichon-json-schema-init-1.0.4.tgz#0caee8e5ce41b2cdf66a650de7ae2591f575fe61"
   dependencies:
     config "^1.25.1"
     elasticsearch "^15.0.0"
