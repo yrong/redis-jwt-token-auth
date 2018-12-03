@@ -2775,6 +2775,47 @@
 					"response": []
 				},
 				{
+					"name": "login with user not exist without name",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"tests[\"login failed\"] = responseCode.code != 200",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\":\"wronguser\",\n  \"password\":\"test\"\n}"
+						},
+						"url": {
+							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/login",
+							"protocol": "http",
+							"host": [
+								"{{auth_api_host}}"
+							],
+							"port": "{{auth_api_port}}",
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "login with wrong passwd",
 					"event": [
 						{

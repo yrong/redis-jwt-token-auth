@@ -13,6 +13,9 @@ module.exports = (router)=>{
             if(err){
                 ctx.throw(new ScirichonError(err.message,401))
             }
+            if(!user){
+                ctx.throw(new ScirichonError("认证需包含username和password字段",401))
+            }
             local = await user_handler.checkLoginUser(ctx,user)
             await ctx.login(user)
             token = await ctx.req.session.create(ctx.req.session.passport)
