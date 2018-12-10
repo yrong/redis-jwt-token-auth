@@ -4443,9 +4443,9 @@ scirichon-common@^1.0.7:
     request "^2.81.0"
     request-promise "^4.1.1"
 
-scirichon-crud-handler@1.0.5-beta.25:
-  version "1.0.5-beta.25"
-  resolved "https://registry.npmjs.org/scirichon-crud-handler/-/scirichon-crud-handler-1.0.5-beta.25.tgz#83bd0956e1e9e4badfa7a04dcacc0c1df548bcd7"
+scirichon-crud-handler@1.0.5-beta.28:
+  version "1.0.5-beta.28"
+  resolved "https://registry.npmjs.org/scirichon-crud-handler/-/scirichon-crud-handler-1.0.5-beta.28.tgz#9804849af759e96f30e7cdb25b192788983e019b"
   dependencies:
     config "^1.25.1"
     jsonpath "^1.0"
@@ -4464,10 +4464,10 @@ scirichon-crud-handler@1.0.5-beta.25:
     scirichon-common "^1.0.7"
     scirichon-json-exp-imp "^1.0.5"
     scirichon-json-schema "^1.0.3"
-    scirichon-json-schema-init "^1.0.4"
+    scirichon-json-schema-init "^1.0.5"
     scirichon-response-mapper "^1.0.7"
     scirichon-response-wrapper "^1.0.2"
-    scirichon-search "^1.0.5"
+    scirichon-search "^1.0.6"
     scirichon-token-checker "^1.0.7"
     uuid "^3.0.0"
     uuid-validate "^0.0.2"
@@ -4491,9 +4491,9 @@ scirichon-json-exp-imp@^1.0.5:
     uuid "^3.0.0"
     uuid-validate "^0.0.2"
 
-scirichon-json-schema-init@^1.0.4:
-  version "1.0.4"
-  resolved "https://registry.npmjs.org/scirichon-json-schema-init/-/scirichon-json-schema-init-1.0.4.tgz#0caee8e5ce41b2cdf66a650de7ae2591f575fe61"
+scirichon-json-schema-init@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.npmjs.org/scirichon-json-schema-init/-/scirichon-json-schema-init-1.0.5.tgz#1f8c5db9234ab58cc5d198bb3691bd5b59426278"
   dependencies:
     config "^1.25.1"
     elasticsearch "^15.0.0"
@@ -4530,6 +4530,18 @@ scirichon-response-wrapper@^1.0.2:
 scirichon-search@^1.0.5:
   version "1.0.5"
   resolved "https://registry.npmjs.org/scirichon-search/-/scirichon-search-1.0.5.tgz#cb680db264c67644ebcbcfd3b30e1909db388ac9"
+  dependencies:
+    config "^1.25.1"
+    elasticsearch "^15.0.0"
+    lodash "^4.17.4"
+    scirichon-cache "^1.0.11"
+    scirichon-common "^1.0.7"
+    scirichon-json-schema "^1.0.3"
+    scirichon-response-mapper "^1.0.7"
+
+scirichon-search@^1.0.6:
+  version "1.0.6"
+  resolved "https://registry.npmjs.org/scirichon-search/-/scirichon-search-1.0.6.tgz#55bc43af5844d53d4e1059432caf873cd3cb0ede"
   dependencies:
     config "^1.25.1"
     elasticsearch "^15.0.0"

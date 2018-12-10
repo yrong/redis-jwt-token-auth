@@ -8,7 +8,7 @@
     "build": "webpack",
     "init": "initSchema",
     "initES": "INIT_ES=1 initSchema",
-    "initESWithPinyin": "INIT_ES=1 PINYIN=1 initSchema && /bin/sh script/modify_es_schema.sh",
+    "initESWithPinyin": "INIT_ES=1 PINYIN=1 initSchema",
     "start": "scirichon-crud-api",
     "test": "mocha",
     "sync-mysql": "SYNC_TYPE=mysql node sync.js",
@@ -40,7 +40,7 @@
     "passport-ldapauth-fork": "^1.0.2",
     "passport-local": "^1.0.0",
     "webdav": "^0.9.0",
-    "scirichon-crud-handler": "1.0.5-beta.25"
+    "scirichon-crud-handler": "1.0.5-beta.28"
   },
   "devDependencies": {
     "webpack-builder-advanced": "^1.0.1"

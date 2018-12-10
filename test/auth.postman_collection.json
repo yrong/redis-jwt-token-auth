@@ -1273,6 +1273,53 @@
 					"response": []
 				},
 				{
+					"name": "modify user info with api",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "4a10984c-1909-4e24-9ca7-0df0fd9fa9c9",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"user modified\"] = responseCode.code == 200",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "token",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"data\":{\n    \"category\":\"User\",\n    \"fields\":{\n      \"avatar\":\"/upload/avatar/ca92d560-05a6-11e7-98ba-e1d08df9a25f\",\n       \"per_page\":90\n    }\n  }\n  \n}"
+						},
+						"url": {
+							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/api/users/{{auth_user_id}}",
+							"protocol": "http",
+							"host": [
+								"{{auth_api_host}}"
+							],
+							"port": "{{auth_api_port}}",
+							"path": [
+								"api",
+								"users",
+								"{{auth_user_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "bind department",
 					"event": [
 						{
@@ -2400,7 +2447,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "2dc4f29d-18ae-437c-8524-e8c777efaf32",
+								"id": "45872e74-7270-4a6c-92bb-05a27a38bdcd",
 								"type": "text/javascript",
 								"exec": [
 									"tests[\"add user success\"] = responseCode.code == 200",
@@ -2408,6 +2455,7 @@
 									"jsonData = jsonData.data||jsonData",
 									"var userid = jsonData.uuid",
 									"tests[\"userid found\"] = userid;",
+									"postman.setEnvironmentVariable(\"pinyin_user_id_1\", userid); ",
 									""
 								]
 							}
@@ -2423,7 +2471,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"name\":\"test2\",\n  \"test_pinyin\":\"样子\",\n  \"passwd\":\"test\",\n  \"type\":\"external\",\n  \"phone\":\"13613611336\",\n  \"roles\":[\"viewer\"]\n}"
+							"raw": "{\n  \"name\":\"test21\",\n  \"test_pinyin\":\"样子\",\n  \"passwd\":\"test\",\n  \"type\":\"external\",\n  \"phone\":\"13613611336\",\n  \"roles\":[\"viewer\"]\n}"
 						},
 						"url": {
 							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/register",
@@ -2446,7 +2494,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "2dc4f29d-18ae-437c-8524-e8c777efaf32",
+								"id": "ee49458b-fb54-4f2f-8163-03b5470247ea",
 								"type": "text/javascript",
 								"exec": [
 									"tests[\"add user success\"] = responseCode.code == 200",
@@ -2454,6 +2502,7 @@
 									"jsonData = jsonData.data||jsonData",
 									"var userid = jsonData.uuid",
 									"tests[\"userid found\"] = userid;",
+									"postman.setEnvironmentVariable(\"pinyin_user_id_2\", userid); ",
 									""
 								]
 							}
@@ -2469,7 +2518,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"name\":\"test3\",\n  \"test_pinyin\":\"德华\",\n  \"passwd\":\"test\",\n  \"type\":\"external\",\n  \"phone\":\"13613611336\",\n  \"roles\":[\"viewer\"]\n}"
+							"raw": "{\n  \"name\":\"test311\",\n  \"test_pinyin\":\"德华\",\n  \"passwd\":\"test\",\n  \"type\":\"external\",\n  \"phone\":\"13613611336\",\n  \"roles\":[\"viewer\"]\n}"
 						},
 						"url": {
 							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/register",
@@ -2492,7 +2541,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "2dc4f29d-18ae-437c-8524-e8c777efaf32",
+								"id": "4f1043e4-2a63-4135-a015-480620e19d26",
 								"type": "text/javascript",
 								"exec": [
 									"tests[\"add user success\"] = responseCode.code == 200",
@@ -2500,6 +2549,7 @@
 									"jsonData = jsonData.data||jsonData",
 									"var userid = jsonData.uuid",
 									"tests[\"userid found\"] = userid;",
+									"postman.setEnvironmentVariable(\"pinyin_user_id_3\", userid); ",
 									""
 								]
 							}
@@ -2515,7 +2565,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"name\":\"test4\",\n  \"test_pinyin\":\"阿炳\",\n  \"passwd\":\"test\",\n  \"type\":\"external\",\n  \"phone\":\"13613611336\",\n  \"roles\":[\"viewer\"]\n}"
+							"raw": "{\n  \"name\":\"test411\",\n  \"test_pinyin\":\"阿炳\",\n  \"passwd\":\"test\",\n  \"type\":\"external\",\n  \"phone\":\"13613611336\",\n  \"roles\":[\"viewer\"]\n}"
 						},
 						"url": {
 							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/register",
@@ -2538,7 +2588,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "e0bf6f35-475d-46dc-b3ab-b606a9336c92",
+								"id": "203ebb37-9225-4f66-bb6f-8be1743c9857",
 								"type": "text/javascript",
 								"exec": [
 									"var jsonData = JSON.parse(responseBody);",
@@ -2546,7 +2596,7 @@
 									"tests[\"at least one user found\"] = users.count >=1",
 									"",
 									"var user1 = users.results[0]",
-									"tests[\"user1 name as 阿炳\"] = user1.test_pinyin===\"阿炳\"",
+									"tests[\"user sort by name then 阿炳 should be first\"] = user1.test_pinyin===\"阿炳\"",
 									""
 								]
 							}
@@ -2579,6 +2629,100 @@
 								"auth",
 								"userinfo",
 								"search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete one pinyin user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "36174ab9-fe02-4705-9a40-eec46553f599",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"user deleted\"] = responseCode.code == 200",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/api/users/{{pinyin_user_id_1}}",
+							"protocol": "http",
+							"host": [
+								"{{auth_api_host}}"
+							],
+							"port": "{{auth_api_port}}",
+							"path": [
+								"api",
+								"users",
+								"{{pinyin_user_id_1}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "batch delete pinyin users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5c0a67dd-4efb-4a9d-a6da-e6a35c2b80a6",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"users deleted\"] = responseCode.code == 200",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"data\":{\n\t\t\"category\":\"User\",\n\t\t\"uuids\":[\"{{pinyin_user_id_2}}\",\"{{pinyin_user_id_3}}\"]\n\t}\n}"
+						},
+						"url": {
+							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/batch/api/users",
+							"protocol": "http",
+							"host": [
+								"{{auth_api_host}}"
+							],
+							"port": "{{auth_api_port}}",
+							"path": [
+								"batch",
+								"api",
+								"users"
 							]
 						}
 					},
