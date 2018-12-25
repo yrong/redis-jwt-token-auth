@@ -1,14 +1,12 @@
 const _ = require('lodash')
 const scirichonCrudHandler = require('scirichon-crud-handler')
 const getItemWithMembers = scirichonCrudHandler.hooks.getItemWithMembers
-const requestHandler = scirichonCrudHandler.hooks.requestHandler
 const scirichonSchema = require('scirichon-json-schema')
 
-const handleRequest = async (params, ctx)=>{
+const handleRequest = async (params_, ctx)=>{
     if(ctx.method==='POST')
-        scirichonSchema.checkObject(params.category,params)
-    params = _.omit(params,['token'])
-    requestHandler.fieldsChecker(params)
+        scirichonSchema.checkObject(params_.category,params_)
+    let params = {token:params_.token,uuid:params_.uuid,category:params_.category,data:{category:params_.category,fields:_.clone(_.omit(params_,['token']))}}
     params = await scirichonCrudHandler.hooks.cudItem_preProcess(params,ctx)
     let result = []
     if(_.isArray(params.cypher)){

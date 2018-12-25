@@ -24,28 +24,30 @@ const sanitizeInput = function(input) {
 const preProcess = async (params, ctx)=>{
     let result
     if(ctx.method==='POST'||ctx.method==='PUT'||ctx.method==='PATCH') {
-        params.type = params.fields.type = params.fields.type || 'internal'
-        if (params.ldapId&&ldapConfig.checkExist) {
+        params.fields.type = params.fields.type || 'internal'
+        if (params.fields.ldapId&&ldapConfig.checkExist) {
             let filter = ldapConfig.bindType==='dn'?params.ldapId:(ldapConfig.searchFilter.replace(/{{username}}/g, sanitizeInput(params.ldapId)))
             result = await LdapAccount.searchLdap(ldapConfig.userSearchBase, {filter,attributes: ldapConfig.userAttributes})
             if (_.isEmpty(result)) {
                 throw new ScirichonError('ldap user not found')
             }
         }
-        if (params.departments) {
-            params.department_path = []
-            for(let department of params.departments){
+        if (params.fields.departments) {
+            params.fields.department_path = []
+            for(let department of params.fields.departments){
                 result = await scirichonCache.getItemByCategoryAndID('Department',department)
-                params.department_path = _.concat(params.department_path,result.path)
+                if(result&&result.path){
+                    params.fields.department_path = _.concat(result.path,params.fields.department_path)
+                }
             }
-            params.department_path = params.fields.department_path = _.uniq(params.department_path)
+            params.fields.department_path = _.uniq(params.fields.department_path)
         }
         if (params.change&&params.change.oldpwd&&params.change.newpwd) {
-            result = await db.queryCql(`MATCH (u:User{uuid:{uuid},passwd:{passwd}}) return u`,{uuid:params.uuid,passwd:params.oldpwd})
+            result = await db.queryCql(`MATCH (u:User{uuid:{uuid},passwd:{passwd}}) return u`,{uuid:params.uuid,passwd:params.change.oldpwd})
             if(result == null || result.length != 1) {
                 throw new ScirichonError(`user with id ${params.uuid} and password ${params.oldpwd} not exist!`)
             }
-            params.passwd = params.fields.passwd = params.newpwd
+            params.fields.passwd = params.change.newpwd
         }
     }
     return params
@@ -76,8 +78,8 @@ const setUserRoles = async(uuid,roles)=>{
 }
 
 const setRoleStaffCntForNew = async (params,ctx,delta)=>{
-    if(params.roles){
-        for(let uuid of params.roles){
+    if(params.fields.roles){
+        for(let uuid of params.fields.roles){
             await setStaffCount('Role',uuid,delta)
         }
     }
@@ -92,8 +94,8 @@ const setRoleStaffCntForOld = async (params,ctx,delta)=>{
 }
 
 const setDepartmentStaffCntForNew = async (params,ctx,delta)=>{
-    if(params.department_path){
-        for(let uuid of params.department_path){
+    if(params.fields.department_path){
+        for(let uuid of params.fields.department_path){
             await setStaffCount('Department',uuid,delta)
         }
     }
@@ -109,11 +111,11 @@ const setDepartmentStaffCntForOld = async (params,ctx,delta)=>{
 
 const postProcess = async (params, ctx)=>{
     if(ctx.method==='POST') {
-        if (params.roles) {
-            await setUserRoles(params.uuid, params.roles)
+        if (params.fields.roles) {
+            await setUserRoles(params.uuid, params.fields.roles)
             await setRoleStaffCntForNew(params,ctx,1)
         }
-        if(params.departments){
+        if(params.fields.departments){
             await setDepartmentStaffCntForNew(params,ctx,1)
         }
     }

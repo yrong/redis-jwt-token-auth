@@ -3,13 +3,15 @@ const scirichonCache = require('scirichon-cache')
 
 const preProcess = async (params, ctx)=>{
     if(ctx.method==='POST'||ctx.method==='PUT'||ctx.method==='PATCH') {
-        if (!params.parent) {
-            params.path = params.fields.path = [params.uuid]
+        if (!params.fields.parent) {
+            params.fields.path = [params.uuid]
         } else {
-            let parent = await scirichonCache.getItemByCategoryAndID('Department',params.parent)
-            params.path = params.fields.path = parent.path.concat(params.uuid)
+            let parent = await scirichonCache.getItemByCategoryAndID('Department',params.fields.parent)
+            if(parent&&parent.path){
+                params.fields.path = parent.path.concat(params.uuid)
+            }
         }
-        params.staff_cnt = params.fields.staff_cnt = params.staff_cnt||0
+        params.fields.staff_cnt = params.fields.staff_cnt||0
     }
     return params
 }

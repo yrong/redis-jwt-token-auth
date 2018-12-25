@@ -5,9 +5,9 @@ const ScirichonError = require('scirichon-common').ScirichonError
 
 const preProcess = async (params, ctx)=>{
     if(ctx.method==='POST') {
-        params.type = params.fields.type = params.fields.type || 'internal'
-        params.uuid = params.fields.uuid = params.fields.name
-        params.staff_cnt = params.fields.staff_cnt = params.staff_cnt||0
+        params.uuid = params.fields.uuid = params.fields.name||params.fields.uuid
+        params.fields.type = params.fields.type || 'internal'
+        params.fields.staff_cnt = params.fields.staff_cnt||0
     }
     else if(ctx.method==='DELETE'){
         let cypher = `MATCH (n:User) where {uuid} in n.roles return n`
@@ -22,11 +22,11 @@ const preProcess = async (params, ctx)=>{
 const postProcess = async (params, ctx)=>{
     if(ctx.method==='POST'||ctx.method==='PUT'||ctx.method==='PATCH') {
         await acl.removeRole(params.uuid)
-        for (let allow of params.allows) {
+        for (let allow of params.fields.allows) {
             await acl.allow(params.uuid, allow.resources, allow.permissions)
         }
-        if (params.inherits)
-            await acl.addRoleParents(params.uuid, params.inherits)
+        if (params.fields.inherits)
+            await acl.addRoleParents(params.uuid, params.fields.inherits)
     }
     else if(ctx.method==='DELETE'){
         await acl.removeRole(params.uuid)
