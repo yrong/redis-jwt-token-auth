@@ -121,7 +121,7 @@ const postProcess = async (params, ctx)=>{
     }
     else if(ctx.method==='PUT'||ctx.method==='PATCH'){
         if (params.change.roles) {
-            await setUserRoles(params.uuid, params.roles)
+            await setUserRoles(params.uuid, params.change.roles)
             await setRoleStaffCntForOld(params,ctx,-1)
             await setRoleStaffCntForNew(params,ctx,1)
         }
