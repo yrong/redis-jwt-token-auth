@@ -520,16 +520,16 @@
 							"raw": "{\n\t\"procedure\":{\"ignoreUniqueCheck\":true},\n\t\"data\":{\n\t\t\"category\":\"Role\",\n\t\t\"fields\":\n\t\t\t[\n\t\t\t\t\t\n\t\t\t\t\t  {\n\t\t\t\t\t      \"name\":\"contributor\",\n\t\t\t\t\t     \"allows\":[{\"resources\":\"own\",\"permissions\":[\"CREATE\",\"UPDATE\",\"DELETE\",\"READ\"]}]\n\t\t\t\t\t  },\n\t\t\t\t\t  {\n\t\t\t\t\t      \"name\":\"superAdmin\",\n\t\t\t\t\t     \"allows\":[{\"resources\":\"*\",\"permissions\":\"*\"}]\n\t\t\t\t\t  },\n\t\t\t\t\t  {\n\t\t\t\t\t      \"name\":\"external\",\n\t\t\t\t\t     \"allows\":[{\"resources\":\"*\",\"permissions\":[\"READ\"]}],\n\t\t\t\t\t     \"type\":\"external\"\n\t\t\t\t\t  }\n\t\t\t]\n\t}\n}\n"
 						},
 						"url": {
-							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/api/roles/batch",
+							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/batch/api/roles",
 							"protocol": "http",
 							"host": [
 								"{{auth_api_host}}"
 							],
 							"port": "{{auth_api_port}}",
 							"path": [
+								"batch",
 								"api",
-								"roles",
-								"batch"
+								"roles"
 							]
 						}
 					},
