@@ -2348,12 +2348,13 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "f341c5e1-c20c-43bd-aa6f-49fb9b49fa18",
+								"id": "ae78f91b-3e5c-42cc-a7df-0e3ee1a1af5f",
 								"type": "text/javascript",
 								"exec": [
 									"var jsonData = JSON.parse(responseBody);",
 									"var tree = jsonData.data||jsonData",
-									"for(let department of tree.department.buckets){",
+									"var departments = tree.department.buckets",
+									"for(let department of departments){",
 									"    if(department.key=== environment.department_1_id){",
 									"        tests[\"staff cnt\"] = department.doc_count===3",
 									"    }",
