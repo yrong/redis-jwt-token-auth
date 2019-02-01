@@ -9,10 +9,10 @@ const ScirichonError = scirichon_common.ScirichonError
 const TokenExpiration = require('../lib/const').TokenExpiration
 
 const needCheckToken = (ctx)=>{
-    if(ctx.path.match(/auth\/check/)||ctx.path.match(/auth\/logout/)||ctx.path.match(/api\/.*\/members/)||ctx.path.match(/auth\/changepwd/)){
-        return true
-    }else{
+    if(ctx.path.match(/login/i)||ctx.path.match(/hidden/i)||ctx.path.match(/\/smsGenerateCode/)){
         return false
+    }else{
+        return true
     }
 }
 

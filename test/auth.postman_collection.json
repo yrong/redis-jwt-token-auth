@@ -38,6 +38,103 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "add superadmin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "79e8480b-a6be-439c-b9df-b87cfbcbe692",
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"var uuid = jsonData.uuid||jsonData.data.uuid;",
+									"if(uuid){",
+									"   postman.setEnvironmentVariable(\"superadmin_id\", uuid); ",
+									"}",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "token",
+								"value": "qwe!@#"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\":\"superadmin\",\n  \"passwd\":\"superadmin\",\n  \"phone\":\"18918911889\"\n}"
+						},
+						"url": {
+							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/register",
+							"protocol": "http",
+							"host": [
+								"{{auth_api_host}}"
+							],
+							"port": "{{auth_api_port}}",
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login with superadmin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e7984c45-e62a-46e8-87cc-3dc96282152c",
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"var token = jsonData.token||jsonData.data.token;",
+									"tests[\"token found\"] = token;",
+									"if(token){",
+									"   postman.setEnvironmentVariable(\"token\", token); ",
+									"}",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\":\"superadmin\",\n  \"password\":\"superadmin\"\n}"
+						},
+						"url": {
+							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/login",
+							"protocol": "http",
+							"host": [
+								"{{auth_api_host}}"
+							],
+							"port": "{{auth_api_port}}",
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -467,6 +564,10 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
+							},
+							{
+								"key": "token",
+								"value": "{{token}}"
 							}
 						],
 						"body": {
@@ -513,6 +614,10 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
+							},
+							{
+								"key": "token",
+								"value": "{{token}}"
 							}
 						],
 						"body": {
@@ -557,7 +662,7 @@
 							},
 							{
 								"key": "token",
-								"value": "test"
+								"value": "{{token}}"
 							}
 						],
 						"body": {
@@ -764,99 +869,6 @@
 					"response": []
 				},
 				{
-					"name": "add superadmin",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "79e8480b-a6be-439c-b9df-b87cfbcbe692",
-								"type": "text/javascript",
-								"exec": [
-									"var jsonData = JSON.parse(responseBody);",
-									"var uuid = jsonData.uuid||jsonData.data.uuid;",
-									"if(uuid){",
-									"   postman.setEnvironmentVariable(\"superadmin_id\", uuid); ",
-									"}",
-									""
-								]
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"name\":\"superadmin\",\n  \"passwd\":\"superadmin\",\n  \"phone\":\"18918911889\",\n  \"roles\":[\"superAdmin\"]\n}"
-						},
-						"url": {
-							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/register",
-							"protocol": "http",
-							"host": [
-								"{{auth_api_host}}"
-							],
-							"port": "{{auth_api_port}}",
-							"path": [
-								"auth",
-								"register"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "login with superadmin",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "e7984c45-e62a-46e8-87cc-3dc96282152c",
-								"type": "text/javascript",
-								"exec": [
-									"var jsonData = JSON.parse(responseBody);",
-									"var token = jsonData.token||jsonData.data.token;",
-									"tests[\"token found\"] = token;",
-									"if(token){",
-									"   postman.setEnvironmentVariable(\"token\", token); ",
-									"}",
-									""
-								]
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"username\":\"superadmin\",\n  \"password\":\"superadmin\"\n}"
-						},
-						"url": {
-							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/login",
-							"protocol": "http",
-							"host": [
-								"{{auth_api_host}}"
-							],
-							"port": "{{auth_api_port}}",
-							"path": [
-								"auth",
-								"login"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "bind department",
 					"event": [
 						{
@@ -1026,6 +1038,10 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
+							},
+							{
+								"key": "token",
+								"value": "{{token}}"
 							}
 						],
 						"body": {
@@ -1066,6 +1082,10 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
+							},
+							{
+								"key": "token",
+								"value": "{{token}}"
 							}
 						],
 						"body": {
@@ -1250,6 +1270,10 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
+							},
+							{
+								"key": "token",
+								"value": "{{token}}"
 							}
 						],
 						"body": {
@@ -1590,6 +1614,10 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
+							},
+							{
+								"key": "token",
+								"value": "{{token}}"
 							}
 						],
 						"body": {
@@ -1789,7 +1817,12 @@
 					],
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": ""
@@ -2468,6 +2501,10 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
+							},
+							{
+								"key": "token",
+								"value": "{{token}}"
 							}
 						],
 						"body": {
@@ -2515,6 +2552,10 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
+							},
+							{
+								"key": "token",
+								"value": "{{token}}"
 							}
 						],
 						"body": {
@@ -2562,6 +2603,10 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
+							},
+							{
+								"key": "token",
+								"value": "{{token}}"
 							}
 						],
 						"body": {
@@ -3152,6 +3197,10 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
+							},
+							{
+								"key": "token",
+								"value": "{{token}}"
 							}
 						],
 						"body": {
@@ -3254,6 +3303,10 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
+							},
+							{
+								"key": "token",
+								"value": "{{token}}"
 							}
 						],
 						"body": {
