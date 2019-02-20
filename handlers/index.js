@@ -9,6 +9,7 @@ const handleRequest = async (params_, ctx)=>{
     let params = {token:params_.token,uuid:params_.uuid,category:params_.category,data:{category:params_.category,fields:_.clone(_.omit(params_,['token']))}}
     params = await scirichonCrudHandler.hooks.cudItem_preProcess(params,ctx)
     let result = []
+    let a =0;
     if(_.isArray(params.cypher)){
         for(let cypher of params.cypher){
             result.push(await scirichonCrudHandler.cypherInvoker.executeCypher(ctx,cypher,params))
