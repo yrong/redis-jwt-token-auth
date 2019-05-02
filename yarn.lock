@@ -4439,9 +4439,9 @@ scirichon-common@1.0.7-beta.2:
     request "^2.81.0"
     request-promise "^4.1.1"
 
-scirichon-crud-handler@1.0.5-beta.39:
-  version "1.0.5-beta.39"
-  resolved "https://registry.npmjs.org/scirichon-crud-handler/-/scirichon-crud-handler-1.0.5-beta.39.tgz#1ddda03bc5bea3504f1ca0d9388ff746c70cae48"
+scirichon-crud-handler@1.0.5-beta.42:
+  version "1.0.5-beta.42"
+  resolved "https://registry.npmjs.org/scirichon-crud-handler/-/scirichon-crud-handler-1.0.5-beta.42.tgz#d2fa6651a30cbbd59a869fdd9a5b123a399b6137"
   dependencies:
     config "^1.25.1"
     jsonpath "^1.0"
@@ -4458,19 +4458,19 @@ scirichon-crud-handler@1.0.5-beta.39:
     scirichon-acl-checker "1.0.9-beta.2"
     scirichon-cache "1.0.11-beta.3"
     scirichon-common "1.0.7-beta.2"
-    scirichon-json-exp-imp "1.0.5-beta.7"
+    scirichon-json-exp-imp "1.0.5-beta.8"
     scirichon-json-schema "1.0.3-beta.1"
     scirichon-json-schema-init "1.0.5-beta.1"
     scirichon-response-mapper "1.0.7-beta.4"
     scirichon-response-wrapper "1.0.2-beta.1"
-    scirichon-search "1.0.6-beta.6"
+    scirichon-search "1.0.6-beta.7"
     scirichon-token-checker "1.0.7-beta.2"
     uuid "^3.0.0"
     uuid-validate "^0.0.2"
 
-scirichon-json-exp-imp@1.0.5-beta.7:
-  version "1.0.5-beta.7"
-  resolved "https://registry.npmjs.org/scirichon-json-exp-imp/-/scirichon-json-exp-imp-1.0.5-beta.7.tgz#8420ea147edefdda22c73818ce36d9c3a602017a"
+scirichon-json-exp-imp@1.0.5-beta.8:
+  version "1.0.5-beta.8"
+  resolved "https://registry.npmjs.org/scirichon-json-exp-imp/-/scirichon-json-exp-imp-1.0.5-beta.8.tgz#547bf1fe9e53ba357671c9866aee9e5d44b15fc4"
   dependencies:
     config "^1.25.1"
     jsonfile "^2.4.0"
@@ -4483,7 +4483,7 @@ scirichon-json-exp-imp@1.0.5-beta.7:
     scirichon-cache "1.0.11-beta.3"
     scirichon-common "1.0.7-beta.2"
     scirichon-json-schema "1.0.3-beta.1"
-    scirichon-search "1.0.6-beta.6"
+    scirichon-search "1.0.6-beta.7"
     uuid "^3.0.0"
     uuid-validate "^0.0.2"
 
@@ -4523,9 +4523,9 @@ scirichon-response-wrapper@1.0.2-beta.1:
     lodash "^4.17.4"
     log4js-wrapper-advanced "^1.0.4"
 
-scirichon-search@1.0.6-beta.6:
-  version "1.0.6-beta.6"
-  resolved "https://registry.npmjs.org/scirichon-search/-/scirichon-search-1.0.6-beta.6.tgz#a0000b87ff8f248cf5fda80c68c634cf05162ea7"
+scirichon-search@1.0.6-beta.7:
+  version "1.0.6-beta.7"
+  resolved "https://registry.npmjs.org/scirichon-search/-/scirichon-search-1.0.6-beta.7.tgz#59fb105e413590c7844607baaa0aabffd9192338"
   dependencies:
     config "^1.25.1"
     elasticsearch "^15.0.0"

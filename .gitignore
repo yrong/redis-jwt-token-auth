@@ -149,7 +149,7 @@ fabric.properties
 
 # *.iml
 # modules.xml
-# .idea/misc.xml 
+# .idea/misc.xml
 # *.ipr
 vendor.bundle.js
 
@@ -162,4 +162,4 @@ config
 auth.lic
 license.json
 app.js
-
+package-lock.json
