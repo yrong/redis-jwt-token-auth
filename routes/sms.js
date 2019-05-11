@@ -4,8 +4,8 @@ const common = require('scirichon-common')
 const ScirichonError = common.ScirichonError
 const Redis = require('redis')
 const Model = require('redis-crud-fork')
-const SmsCache = Model(Redis.createClient({db:4,host:`${process.env['REDIS_HOST']||config.get('redis.host')}`,
-    port:config.get('redis.port')}),'Sms')
+Object.assign({db:4},config.get('redis'))
+const SmsCache = Model(Redis.createClient(Object.assign({db:4},config.get('redis'))),'Sms')
 const scirichonMapper = require('scirichon-response-mapper')
 const db = require('../lib/db')
 const qs = require("querystring")

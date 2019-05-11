@@ -10,7 +10,7 @@ const session = require('koa-session')
 
 module.exports = {
     load:(app)=>{
-        const redisOption = {host:`${process.env['REDIS_HOST']||config.get('redis.host')}`,port:config.get('redis.port')}
+        const redisOption = config.get('redis')
         const redis_client = Redis.createClient(Object.assign({db:0},redisOption))
         const secret = config.get('auth.secret')
         app.use(compose([
