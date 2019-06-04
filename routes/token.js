@@ -31,7 +31,8 @@ module.exports = (router)=>{
 
     router.post('/check', async(ctx, next) => {
         let passport = (await ctx.req.session.reload()).passport,
-            local_user = passport_user = passport.user,
+            passport_user = passport.user,
+            local_user = passport.user,
             token = ctx.request.body.token, result
         if(passport_user){
             if(user_handler.isLdapUser(passport_user)){
