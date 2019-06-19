@@ -9,3 +9,12 @@ curl -H "Content-Type: application/json" -XPOST localhost:3002/auth/register -d 
 '
 
 echo '\nadd guest user success!'
+
+curl -H "Content-Type: application/json" -XPOST localhost:3002/auth/register -d '
+    {
+            "name":"superadmin",
+            "passwd":"superadmin"
+    }
+'
+
+echo '\nadd guest user success!'

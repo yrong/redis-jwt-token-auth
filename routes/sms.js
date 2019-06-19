@@ -9,7 +9,7 @@ const SmsCache = Model(Redis.createClient(Object.assign({db:4},config.get('redis
 const scirichonMapper = require('scirichon-response-mapper')
 const db = require('../lib/db')
 const qs = require("querystring")
-const rp = require('request-promise')
+const request = require('axios')
 const OmitUserFields = require('../lib/const').OmitUserFields
 const TokenExpiration = require('../lib/const').TokenExpiration
 
@@ -17,11 +17,11 @@ const sendSms = async (phone,code,maxAge)=>{
     const sms_uri = "http://cowsms.market.alicloudapi.com/intf/smsapi",tpid='009',sign='消息通',appcode=config.get('auth.sms.AppCode')
     let options = {
         method: 'GET',
-        uri: sms_uri + '?' + qs.stringify({mobile:phone,sign,tpid,paras:`${code},${maxAge}`}),
-        headers: {Authorization:"APPCODE "+appcode},
-        json: true
+        url: sms_uri + '?' + qs.stringify({mobile:phone,sign,tpid,paras:`${code},${maxAge}`}),
+        headers: {Authorization:"APPCODE "+appcode}
     }
-    return await rp(options)
+    let response = await request(options)
+    return response&&response.data
 }
 
 module.exports = (router)=>{

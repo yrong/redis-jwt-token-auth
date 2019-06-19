@@ -10,9 +10,7 @@ const handleRequest = async (params_, ctx)=>{
     params = await scirichonCrudHandler.hooks.cudItem_preProcess(params,ctx)
     let result = []
     if(_.isArray(params.cypher)){
-        for(let cypher of params.cypher){
-            result.push(await scirichonCrudHandler.cypherInvoker.executeCypher(ctx,cypher,params))
-        }
+        result = await scirichonCrudHandler.cypherInvoker.batchExecuteCypher(ctx,params.cypher,params)
     }else if(_.isString(params.cypher)){
         result = await scirichonCrudHandler.cypherInvoker.executeCypher(ctx,params.cypher,params)
     }

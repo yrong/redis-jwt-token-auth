@@ -72,7 +72,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"name\":\"superadmin\",\n  \"passwd\":\"superadmin\",\n  \"phone\":\"18918911889\"\n}"
+							"raw": "{\n  \"name\":\"superadmin\",\n  \"passwd\":\"superadmin\",\n  \"phone\":\"18918911889\"\n\n}"
 						},
 						"url": {
 							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/register",
@@ -235,6 +235,55 @@
 							"port": "{{auth_api_port}}",
 							"path": [
 								"auth",
+								"departments",
+								"{{department_1_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get department 1 legacy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ca2f6a6e-7d72-4ef1-a497-2ca9de782873",
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"jsonData = jsonData.data||jsonData;",
+									"tests[\"uuid found\"] = jsonData.uuid;",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "token",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\":\"department4\",\n      \"parent\":\"{{department_3_id}}\"\n}"
+						},
+						"url": {
+							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/api/departments/{{department_1_id}}",
+							"protocol": "http",
+							"host": [
+								"{{auth_api_host}}"
+							],
+							"port": "{{auth_api_port}}",
+							"path": [
+								"api",
 								"departments",
 								"{{department_1_id}}"
 							]
@@ -493,6 +542,52 @@
 					"response": []
 				},
 				{
+					"name": "patch department 5 api",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "522da7f2-fd6f-471b-b3dd-500aca4dd191",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"success\"] = responseCode.code == 200"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "token",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"data\":{\n\t  \"category\":\"Department\",\n\t  \"fields\":{\n\t\t  \"name\":\"department5\",\n\t\t  \"test\":\"hello2\",\n\t\t  \"status\":\"deleted\"\n\t  }\n  }\n}"
+						},
+						"url": {
+							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/api/departments/{{department_5_id}}",
+							"protocol": "http",
+							"host": [
+								"{{auth_api_host}}"
+							],
+							"port": "{{auth_api_port}}",
+							"path": [
+								"api",
+								"departments",
+								"{{department_5_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "get departments",
 					"event": [
 						{
@@ -622,7 +717,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"procedure\":{\"ignoreUniqueCheck\":true},\n\t\"data\":{\n\t\t\"category\":\"Role\",\n\t\t\"fields\":\n\t\t\t[\n\t\t\t\t\t\n\t\t\t\t\t  {\n\t\t\t\t\t      \"name\":\"contributor\",\n\t\t\t\t\t     \"allows\":[{\"resources\":\"own\",\"permissions\":[\"CREATE\",\"UPDATE\",\"DELETE\",\"READ\"]}]\n\t\t\t\t\t  },\n\t\t\t\t\t  {\n\t\t\t\t\t      \"name\":\"superAdmin\",\n\t\t\t\t\t     \"allows\":[{\"resources\":\"*\",\"permissions\":\"*\"}]\n\t\t\t\t\t  },\n\t\t\t\t\t  {\n\t\t\t\t\t      \"name\":\"external\",\n\t\t\t\t\t     \"allows\":[{\"resources\":\"*\",\"permissions\":[\"READ\"]}],\n\t\t\t\t\t     \"type\":\"external\"\n\t\t\t\t\t  }\n\t\t\t]\n\t}\n}\n"
+							"raw": "{\n\t\"data\":{\n\t\t\"category\":\"Role\",\n\t\t\"fields\":\n\t\t\t[\n\t\t\t\t\t\n\t\t\t\t\t  {\n\t\t\t\t\t      \"name\":\"contributor1\",\n\t\t\t\t\t     \"allows\":[{\"resources\":\"own\",\"permissions\":[\"CREATE\",\"UPDATE\",\"DELETE\",\"READ\"]}]\n\t\t\t\t\t  },\n\t\t\t\t\t  {\n\t\t\t\t\t      \"name\":\"superAdmin1\",\n\t\t\t\t\t     \"allows\":[{\"resources\":\"*\",\"permissions\":\"*\"}]\n\t\t\t\t\t  },\n\t\t\t\t\t  {\n\t\t\t\t\t      \"name\":\"external1\",\n\t\t\t\t\t     \"allows\":[{\"resources\":\"*\",\"permissions\":[\"READ\"]}],\n\t\t\t\t\t     \"type\":\"external\"\n\t\t\t\t\t  }\n\t\t\t]\n\t}\n}\n"
 						},
 						"url": {
 							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/batch/api/roles",
@@ -633,6 +728,235 @@
 							"port": "{{auth_api_port}}",
 							"path": [
 								"batch",
+								"api",
+								"roles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "batch update roles",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7c3e41d9-3d9e-48c3-93c7-c3518a3bc68a",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"update role success\"] = responseCode.code == 200"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "token",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"data\":{\n\t\t\"category\":\"Role\",\n\t\t\"uuids\":[\"contributor1\",\"superAdmin1\"],\n\t\t\"fields\":{\n\t\t\t\"allows\":[{\"resources\":\"own\",\"permissions\":[\"CREATE\",\"UPDATE\",\"DELETE\",\"READ\"]}]\n\t\t}\n\t}\n}\n"
+						},
+						"url": {
+							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/batch/api/roles",
+							"protocol": "http",
+							"host": [
+								"{{auth_api_host}}"
+							],
+							"port": "{{auth_api_port}}",
+							"path": [
+								"batch",
+								"api",
+								"roles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "batch delete roles",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7c3e41d9-3d9e-48c3-93c7-c3518a3bc68a",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"update role success\"] = responseCode.code == 200"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "token",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"data\":{\n\t\t\"category\":\"Role\",\n\t\t\"uuids\":[\"contributor1\",\"superAdmin1\"]\n\t}\n}\n"
+						},
+						"url": {
+							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/batch/api/roles",
+							"protocol": "http",
+							"host": [
+								"{{auth_api_host}}"
+							],
+							"port": "{{auth_api_port}}",
+							"path": [
+								"batch",
+								"api",
+								"roles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "loop add roles",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"tests[\"add role success\"] = responseCode.code == 200"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "token",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"data\":{\n\t\t\"category\":\"Role\",\n\t\t\"fields\":\n\t\t\t[\n\t\t\t\t\t\n\t\t\t\t\t  {\n\t\t\t\t\t      \"name\":\"contributor2\",\n\t\t\t\t\t     \"allows\":[{\"resources\":\"own\",\"permissions\":[\"CREATE\",\"UPDATE\",\"DELETE\",\"READ\"]}]\n\t\t\t\t\t  },\n\t\t\t\t\t  {\n\t\t\t\t\t      \"name\":\"superAdmin2\",\n\t\t\t\t\t     \"allows\":[{\"resources\":\"*\",\"permissions\":\"*\"}]\n\t\t\t\t\t  }\n\t\t\t]\n\t}\n}\n"
+						},
+						"url": {
+							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/loop/api/roles",
+							"protocol": "http",
+							"host": [
+								"{{auth_api_host}}"
+							],
+							"port": "{{auth_api_port}}",
+							"path": [
+								"loop",
+								"api",
+								"roles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "loop update roles",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "831575d2-70c8-4d4a-adcf-4a5df5717db8",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"update role success\"] = responseCode.code == 200"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "token",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"data\":{\n\t\t\"category\":\"Role\",\n\t\t\"uuids\":[\"contributor2\",\"superAdmin2\"],\n\t\t\"fields\":{\n\t\t\t\"allows\":[{\"resources\":\"own\",\"permissions\":[\"CREATE\",\"UPDATE\",\"DELETE\",\"READ\"]}]\n\t\t}\n\t}\n}\n"
+						},
+						"url": {
+							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/loop/api/roles",
+							"protocol": "http",
+							"host": [
+								"{{auth_api_host}}"
+							],
+							"port": "{{auth_api_port}}",
+							"path": [
+								"loop",
+								"api",
+								"roles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "loop delete roles",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c3073d84-e6d9-4520-8d89-8d4d9ca3f6b1",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"delete role success\"] = responseCode.code == 200"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "token",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"data\":{\n\t\t\"category\":\"Role\",\n\t\t\"uuids\":[\"contributor2\",\"superAdmin2\"]\n\t}\n}\n"
+						},
+						"url": {
+							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/loop/api/roles",
+							"protocol": "http",
+							"host": [
+								"{{auth_api_host}}"
+							],
+							"port": "{{auth_api_port}}",
+							"path": [
+								"loop",
 								"api",
 								"roles"
 							]
@@ -915,53 +1239,6 @@
 					"response": []
 				},
 				{
-					"name": "login with superadmin",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "e7984c45-e62a-46e8-87cc-3dc96282152c",
-								"type": "text/javascript",
-								"exec": [
-									"var jsonData = JSON.parse(responseBody);",
-									"var token = jsonData.token||jsonData.data.token;",
-									"tests[\"token found\"] = token;",
-									"if(token){",
-									"   postman.setEnvironmentVariable(\"token\", token); ",
-									"}",
-									""
-								]
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"username\":\"superadmin\",\n  \"password\":\"superadmin\"\n}"
-						},
-						"url": {
-							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/login",
-							"protocol": "http",
-							"host": [
-								"{{auth_api_host}}"
-							],
-							"port": "{{auth_api_port}}",
-							"path": [
-								"auth",
-								"login"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "query  root department with members",
 					"event": [
 						{
@@ -1014,7 +1291,7 @@
 					"response": []
 				},
 				{
-					"name": "add demo user",
+					"name": "add admin user",
 					"event": [
 						{
 							"listen": "test",
@@ -1058,6 +1335,53 @@
 							"path": [
 								"auth",
 								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login with admin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e7984c45-e62a-46e8-87cc-3dc96282152c",
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"var token = jsonData.token||jsonData.data.token;",
+									"tests[\"token found\"] = token;",
+									"if(token){",
+									"   postman.setEnvironmentVariable(\"token\", token); ",
+									"}",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\":\"superadmin\",\n  \"password\":\"superadmin\"\n}"
+						},
+						"url": {
+							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/login",
+							"protocol": "http",
+							"host": [
+								"{{auth_api_host}}"
+							],
+							"port": "{{auth_api_port}}",
+							"path": [
+								"auth",
+								"login"
 							]
 						}
 					},
@@ -1390,7 +1714,7 @@
 					"response": []
 				},
 				{
-					"name": "login with demo user",
+					"name": "login with admin user",
 					"event": [
 						{
 							"listen": "test",
@@ -1589,7 +1913,7 @@
 					"response": []
 				},
 				{
-					"name": "add test user as viewer",
+					"name": "add readonly user as viewer",
 					"event": [
 						{
 							"listen": "test",
@@ -1622,7 +1946,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"name\":\"test\",\n  \"passwd\":\"test\",\n  \"type\":\"external\",\n  \"phone\":\"13613611336\",\n  \"roles\":[\"viewer\"]\n}"
+							"raw": "{\n  \"name\":\"readonly\",\n  \"passwd\":\"readonly\",\n  \"type\":\"external\",\n  \"phone\":\"13613611336\",\n  \"roles\":[\"viewer\"]\n}"
 						},
 						"url": {
 							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/register",
@@ -1897,7 +2221,7 @@
 					"response": []
 				},
 				{
-					"name": "bind internal user",
+					"name": "bind to internal user",
 					"event": [
 						{
 							"listen": "test",
@@ -1985,7 +2309,7 @@
 					"response": []
 				},
 				{
-					"name": "delete test user",
+					"name": "mark  readonly user as deleted",
 					"event": [
 						{
 							"listen": "test",
@@ -2131,7 +2455,7 @@
 					"response": []
 				},
 				{
-					"name": "undelete test user",
+					"name": "undelete readonly user",
 					"event": [
 						{
 							"listen": "test",
@@ -2381,12 +2705,12 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "ae78f91b-3e5c-42cc-a7df-0e3ee1a1af5f",
+								"id": "25f008c1-6172-4725-8539-a93584f6e0c1",
 								"type": "text/javascript",
 								"exec": [
 									"var jsonData = JSON.parse(responseBody);",
 									"var tree = jsonData.data||jsonData",
-									"var departments = tree.department.buckets",
+									"var departments = tree.departments.buckets",
 									"for(let department of departments){",
 									"    if(department.key=== environment.department_1_id){",
 									"        tests[\"staff cnt\"] = department.doc_count===3",
@@ -2411,7 +2735,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"body\":{\n  \t\"query\": {\n        \"bool\":{\n          \"must_not\":[\n             {\"term\":{\"status\":\"deleted\"}}\n          ]\n        }\n      },\n   \"aggs\": {\n          \"department\" : {\n              \"terms\" : { \"field\" : \"department_path\" }\n          }\n      }\n    }\n}"
+							"raw": "{\n  \"body\":{\n  \t\"query\": {\n        \"bool\":{\n          \"must_not\":[\n             {\"term\":{\"status\":\"deleted\"}}\n          ]\n        }\n      },\n   \"aggs\": {\n          \"departments\" : {\n              \"terms\" : { \"field\" : \"department_path\" }\n          }\n      }\n    }\n}"
 						},
 						"url": {
 							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/userinfo/search",
@@ -2509,7 +2833,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"name\":\"test21\",\n  \"test_pinyin\":\"样子\",\n  \"passwd\":\"test\",\n  \"type\":\"external\",\n  \"phone\":\"13613611336\",\n  \"roles\":[\"viewer\"]\n}"
+							"raw": "{\n  \"name\":\"emptyrole\",\n  \"test_pinyin\":\"样子\",\n  \"passwd\":\"emptyrole\",\n  \"type\":\"external\",\n  \"phone\":\"13613611336\",\n  \"roles\":[\"viewer\"]\n}"
 						},
 						"url": {
 							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/register",
@@ -2681,53 +3005,6 @@
 					"response": []
 				},
 				{
-					"name": "delete one pinyin user",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "36174ab9-fe02-4705-9a40-eec46553f599",
-								"type": "text/javascript",
-								"exec": [
-									"tests[\"user deleted\"] = responseCode.code == 200",
-									""
-								]
-							}
-						}
-					],
-					"request": {
-						"method": "DELETE",
-						"header": [
-							{
-								"key": "token",
-								"value": "{{token}}"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/api/users/{{pinyin_user_id_1}}",
-							"protocol": "http",
-							"host": [
-								"{{auth_api_host}}"
-							],
-							"port": "{{auth_api_port}}",
-							"path": [
-								"api",
-								"users",
-								"{{pinyin_user_id_1}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "batch delete pinyin users",
 					"event": [
 						{
@@ -2803,7 +3080,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/userinfo?page=1&per_page=1",
+							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/userinfo?page=1&per_page=10",
 							"protocol": "http",
 							"host": [
 								"{{auth_api_host}}"
@@ -2820,7 +3097,7 @@
 								},
 								{
 									"key": "per_page",
-									"value": "1"
+									"value": "10"
 								}
 							]
 						}
@@ -3269,6 +3546,51 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "logout",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "29bc5acb-3c31-4b80-b153-3a12bb3dc6ea",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "token",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}"
+						},
+						"url": {
+							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/logout",
+							"protocol": "http",
+							"host": [
+								"{{auth_api_host}}"
+							],
+							"port": "{{auth_api_port}}",
+							"path": [
+								"auth",
+								"logout"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -3276,6 +3598,53 @@
 			"name": "ldap",
 			"description": null,
 			"item": [
+				{
+					"name": "login with superadmin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e7984c45-e62a-46e8-87cc-3dc96282152c",
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"var token = jsonData.token||jsonData.data.token;",
+									"tests[\"token found\"] = token;",
+									"if(token){",
+									"   postman.setEnvironmentVariable(\"token\", token); ",
+									"}",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\":\"superadmin\",\n  \"password\":\"superadmin\"\n}"
+						},
+						"url": {
+							"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/login",
+							"protocol": "http",
+							"host": [
+								"{{auth_api_host}}"
+							],
+							"port": "{{auth_api_port}}",
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
 				{
 					"name": "add guest user",
 					"event": [
@@ -3630,51 +3999,6 @@
 					"response": []
 				}
 			]
-		},
-		{
-			"name": "logout",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "29bc5acb-3c31-4b80-b153-3a12bb3dc6ea",
-						"type": "text/javascript",
-						"exec": [
-							""
-						]
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json"
-					},
-					{
-						"key": "token",
-						"value": "{{token}}"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{}"
-				},
-				"url": {
-					"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/logout",
-					"protocol": "http",
-					"host": [
-						"{{auth_api_host}}"
-					],
-					"port": "{{auth_api_port}}",
-					"path": [
-						"auth",
-						"logout"
-					]
-				}
-			},
-			"response": []
 		}
 	]
 }

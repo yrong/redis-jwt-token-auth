@@ -2,9 +2,9 @@ const _ = require('lodash')
 const jwt = require('jsonwebtoken')
 const utils = require('../lib/sessionUtils')
 const scirichon_common = require('scirichon-common')
-const TokenName = scirichon_common.TokenName
-const TokenUserName = scirichon_common.TokenUserName
-const internal_token_id = scirichon_common.InternalTokenId
+const TokenName = scirichon_common.getConfigWithDefaultValue('auth.tokenFieldName')
+const TokenUserName = scirichon_common.getConfigWithDefaultValue('auth.userFieldName')
+const internal_token_id = scirichon_common.getConfigWithDefaultValue('auth.internalUsedToken')
 const ScirichonError = scirichon_common.ScirichonError
 const TokenExpiration = require('../lib/const').TokenExpiration
 
