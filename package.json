@@ -4,12 +4,10 @@
   "description": "",
   "scripts": {
     "setenv": "set -a;source ../config/.env;source .env;set +a",
-    "prebuild": "yarn install&&rm -rf build&&cp ../wheels/scirichon-crud-handler/app.js .",
-    "build": "webpack",
     "init": "initSchema",
     "initESWithPinyin": "PINYIN=1 initSchema",
     "dev": "node_modules/.bin/nodemon -r @babel/register node_modules/.bin/scirichon-crud-api",
-    "test": "mocha",
+    "test": "cp -rf ../config/test .&&mocha",
     "sync-mysql": "SYNC_TYPE=mysql node sync.js",
     "sync-nextcloud": "SYNC_TYPE=nextcloud node sync.js",
     "sync-ldap": "SYNC_TYPE=ldap node sync.js",
@@ -34,12 +32,14 @@
     "koa-session": "^5.0",
     "mysql": "^2.12.0",
     "passport-ldapauth-fork": "^1.0.2",
-    "scirichon-crud-handler": "^1.0.8",
+    "scirichon-crud-handler": "1.1.0-beta.1",
     "webdav": "^0.9.0"
   },
   "devDependencies": {
     "@babel/core": "^7.4.5",
     "@babel/preset-env": "^7.4.5",
-    "@babel/register": "^7.4.4"
+    "@babel/register": "^7.4.4",
+    "mocha": "^6.1.4",
+    "newman": "^4.5.1"
   }
 }
