@@ -163,5 +163,5 @@ auth.lic
 license.json
 app.js
 package-lock.json
-/test/*
-!/test/auth.postman_collection.json
+/test/index.js
+/test/postman_globals.json
