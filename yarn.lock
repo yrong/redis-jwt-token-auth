@@ -2867,9 +2867,9 @@ scirichon-common@1.0.7-beta.6:
     config "^3.1.0"
     lodash "^4.17.11"
 
-scirichon-crud-handler@1.1.0-beta.1:
-  version "1.1.0-beta.1"
-  resolved "https://registry.npmjs.org/scirichon-crud-handler/-/scirichon-crud-handler-1.1.0-beta.1.tgz#c30c9f06dc2a7f7fdc852aafd00a4463bfed86c4"
+scirichon-crud-handler@1.1.0-beta.2:
+  version "1.1.0-beta.2"
+  resolved "https://registry.npmjs.org/scirichon-crud-handler/-/scirichon-crud-handler-1.1.0-beta.2.tgz#c6a1199c510b47575c44078a8f06baa8af6ace33"
   dependencies:
     config "^3.1.0"
     jsonpath "^1.0.2"
