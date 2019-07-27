@@ -1,8 +1,8 @@
-const compose = require('koa-compose')
 const scirichonCrudHandler = require('scirichon-crud-handler')
 
 module.exports = {
     load: (app) => {
+
         require('./auth')(app.router)
         app.router.use('/auth', app.router.routes(), app.router.allowedMethods())
 
@@ -13,11 +13,7 @@ module.exports = {
         })
         scirichonCrudHandler.route(app)
 
-        app.use(compose(
-            [
-                app.router.routes(),
-                app.router.allowedMethods()
-            ]))
+
     }
 }
 
