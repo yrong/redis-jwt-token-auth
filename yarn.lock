@@ -2895,16 +2895,16 @@ scirichon-authenticator@1.0.0-beta.3:
     redis "^2.8.0"
     scirichon-common "1.0.7-beta.6"
 
-scirichon-cache@1.0.11-beta.7:
-  version "1.0.11-beta.7"
-  resolved "https://registry.npmjs.org/scirichon-cache/-/scirichon-cache-1.0.11-beta.7.tgz#f0d286f1375c71fe0091f635baad000884815242"
+scirichon-cache@1.0.11-beta.8:
+  version "1.0.11-beta.8"
+  resolved "https://registry.npmjs.org/scirichon-cache/-/scirichon-cache-1.0.11-beta.8.tgz#a9381ce0642dec964395c0ed1fc7ac46a27866af"
+  integrity sha512-l76li3VQgVGvDoyOiLpBtfa3ITVpLqXzLy6BgxS4qpt3kqLlnSgU0HCl8ZXVbtSiBPcmPXTHDfN6SuUKn4fGyA==
   dependencies:
     config "^3.1.0"
     lodash "^4.17.11"
     node-cache-redis "^2.9.0"
     scirichon-common "1.0.7-beta.6"
     scirichon-json-schema "1.0.3-beta.4"
-    uuid-validate "^0.0.3"
 
 scirichon-common@1.0.7-beta.6:
   version "1.0.7-beta.6"
@@ -2914,10 +2914,10 @@ scirichon-common@1.0.7-beta.6:
     config "^3.1.0"
     lodash "^4.17.11"
 
-scirichon-crud-handler@1.1.0-beta.8:
-  version "1.1.0-beta.8"
-  resolved "https://registry.npmjs.org/scirichon-crud-handler/-/scirichon-crud-handler-1.1.0-beta.8.tgz#2d3e4f404f8cc02a2c4dfdc1956c799bbb9b8332"
-  integrity sha512-o3WMw47IwPP1AA7iMxog5Gm5HCpDpQ9Ak6dIMsQNYOC84Padkgdmpo8ztr8rRBND2AVusWU8lOZOt/hfKUuVnQ==
+scirichon-crud-handler@1.1.0-beta.11:
+  version "1.1.0-beta.11"
+  resolved "https://registry.npmjs.org/scirichon-crud-handler/-/scirichon-crud-handler-1.1.0-beta.11.tgz#b119dd281bf19ec3bf34d8e4f18c70e5e3d3459a"
+  integrity sha512-mHt6EHo3q/FqEUV8yoiXfLbC7F9gvKTtrbvlUIQ4I/bNj4lz7WXK/4sNazCg4se5aZ43UpzNjunll60GFfC8Og==
   dependencies:
     config "^3.1.0"
     jsonpath "^1.0.2"
@@ -2931,21 +2931,20 @@ scirichon-crud-handler@1.1.0-beta.8:
     mkdirp "^0.5.1"
     moment "^2.24.0"
     scirichon-authenticator "1.0.0-beta.3"
-    scirichon-cache "1.0.11-beta.7"
+    scirichon-cache "1.0.11-beta.8"
     scirichon-common "1.0.7-beta.6"
-    scirichon-json-exp-imp "1.0.5-beta.19"
+    scirichon-json-exp-imp "1.0.5-beta.21"
     scirichon-json-schema "1.0.3-beta.4"
-    scirichon-json-schema-init "1.0.5-beta.12"
-    scirichon-response-mapper "1.0.7-beta.8"
+    scirichon-json-schema-init "1.0.5-beta.13"
+    scirichon-response-mapper "1.0.7-beta.9"
     scirichon-response-wrapper "1.0.2-beta.3"
-    scirichon-search "1.0.6-beta.12"
+    scirichon-search "1.0.6-beta.13"
     uuid "^3.3.2"
-    uuid-validate "^0.0.3"
 
-scirichon-json-exp-imp@1.0.5-beta.19:
-  version "1.0.5-beta.19"
-  resolved "https://registry.npmjs.org/scirichon-json-exp-imp/-/scirichon-json-exp-imp-1.0.5-beta.19.tgz#3bfe59cfaae1a3041103d159c6ee03eaa61a7698"
-  integrity sha512-Sd3l3D5odHx5KUwgkALv77TmQkS3/HQqWaTOW3wR2tl+v9FalsnVE5cFwZ0t1qlM8r6z77iollq41lYfGh23sw==
+scirichon-json-exp-imp@1.0.5-beta.21:
+  version "1.0.5-beta.21"
+  resolved "https://registry.npmjs.org/scirichon-json-exp-imp/-/scirichon-json-exp-imp-1.0.5-beta.21.tgz#82902453e86d22c5d8c7c493033a4efc2ac93e37"
+  integrity sha512-gA0pecfTGC/aN8sKqdHBusm3oNRDOiToutsdPtL2kH+3YhXkX5o5rgLzoAVTgmVsLq6zkV0LzXx+/3gwkW/dmg==
   dependencies:
     config "^3.1.0"
     jsonfile "^2.4.0"
@@ -2953,17 +2952,16 @@ scirichon-json-exp-imp@1.0.5-beta.19:
     lodash "^4.17.11"
     mkdirp "^0.5.1"
     moment "^2.24.0"
-    scirichon-cache "1.0.11-beta.7"
+    scirichon-cache "1.0.11-beta.8"
     scirichon-common "1.0.7-beta.6"
     scirichon-json-schema "1.0.3-beta.4"
-    scirichon-search "1.0.6-beta.12"
+    scirichon-search "1.0.6-beta.13"
     uuid "^3.3.2"
-    uuid-validate "^0.0.3"
 
-scirichon-json-schema-init@1.0.5-beta.12:
-  version "1.0.5-beta.12"
-  resolved "https://registry.npmjs.org/scirichon-json-schema-init/-/scirichon-json-schema-init-1.0.5-beta.12.tgz#dc9bd9df53d3dd74f1b037f579b3ca4cc350340a"
-  integrity sha512-LpbFQXLvqlx1RhC/+vK6odeFrJ9/2rldviy+XcJ/VMcnmhLL4ci32L6liBXyYsaRjr9i3JOPs56mKVSKyh+zww==
+scirichon-json-schema-init@1.0.5-beta.13:
+  version "1.0.5-beta.13"
+  resolved "https://registry.npmjs.org/scirichon-json-schema-init/-/scirichon-json-schema-init-1.0.5-beta.13.tgz#87e9106e8b9f2f0d9d9cb5eac6142606831ac2fd"
+  integrity sha512-guPG5z9ksK1T1w6uscZkuIJw4PTuTfj5eZtWuB9RGvDt+XFJt2YdwDjM+ICMUdTPZkWXLDQ0tFmbVNUNLVPChg==
   dependencies:
     config "^3.1.0"
     elasticsearch "^16.1.1"
@@ -2981,12 +2979,13 @@ scirichon-json-schema@1.0.3-beta.4:
     redis "^2.8.0"
     redis-crud-fork "^1.0.2"
 
-scirichon-response-mapper@1.0.7-beta.8:
-  version "1.0.7-beta.8"
-  resolved "https://registry.npmjs.org/scirichon-response-mapper/-/scirichon-response-mapper-1.0.7-beta.8.tgz#e4ca98f4ef04a53fb4dfdb25964504e3eca3160f"
+scirichon-response-mapper@1.0.7-beta.9:
+  version "1.0.7-beta.9"
+  resolved "https://registry.npmjs.org/scirichon-response-mapper/-/scirichon-response-mapper-1.0.7-beta.9.tgz#43e7d34659d0e395b488b9ff2216f8acc516195b"
+  integrity sha512-5qPDYBg7Mqb1GyHtCaEL9PM13hHLqOrJs91icK3WmhYivDSJzkUFxd16ilxJMENB+Pr9QllGbSbcKcywKQyWHQ==
   dependencies:
     lodash "^4.17.11"
-    scirichon-cache "1.0.11-beta.7"
+    scirichon-cache "1.0.11-beta.8"
     scirichon-common "1.0.7-beta.6"
     scirichon-json-schema "1.0.3-beta.4"
 
@@ -2997,17 +2996,18 @@ scirichon-response-wrapper@1.0.2-beta.3:
     lodash "^4.17.11"
     log4js-wrapper-advanced "^1.0.5"
 
-scirichon-search@1.0.6-beta.12:
-  version "1.0.6-beta.12"
-  resolved "https://registry.npmjs.org/scirichon-search/-/scirichon-search-1.0.6-beta.12.tgz#1bd6f02b5a5710c86ae3b2869aac8a2eb6073479"
+scirichon-search@1.0.6-beta.13:
+  version "1.0.6-beta.13"
+  resolved "https://registry.npmjs.org/scirichon-search/-/scirichon-search-1.0.6-beta.13.tgz#8f176390753743147f3394ed4d13ee93411bdb32"
+  integrity sha512-+CPMtZ59jBwNmu6YPd51lhp2taA0WLutZSlkptJmT8+9sdqfmp28BqiWA5x7kg19r4fmyg97HpJyo6uFSFXnig==
   dependencies:
     config "^3.1.0"
     elasticsearch "^16.1.1"
     lodash "^4.17.11"
-    scirichon-cache "1.0.11-beta.7"
+    scirichon-cache "1.0.11-beta.8"
     scirichon-common "1.0.7-beta.6"
     scirichon-json-schema "1.0.3-beta.4"
-    scirichon-response-mapper "1.0.7-beta.8"
+    scirichon-response-mapper "1.0.7-beta.9"
 
 semver@6.0.0:
   version "6.0.0"
@@ -3361,10 +3361,6 @@ utcstring@~0.1.0:
 util-deprecate@^1.0.1, util-deprecate@~1.0.1:
   version "1.0.2"
   resolved "https://registry.npmjs.org/util-deprecate/-/util-deprecate-1.0.2.tgz#450d4dc9fa70de732762fbd2d4a28981419a0ccf"
-
-uuid-validate@^0.0.3:
-  version "0.0.3"
-  resolved "https://registry.npmjs.org/uuid-validate/-/uuid-validate-0.0.3.tgz#e30617f75dc742a0e4f95012a11540faf9d39ab4"
 
 uuid@3.3.2, uuid@^3.0.0, uuid@^3.3.2:
   version "3.3.2"
