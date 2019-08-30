@@ -5,7 +5,10 @@
   "scripts": {
     "setenv": "set -a;source ../config/.env;source .env;set +a",
     "init": "initSchema",
-    "initESWithPinyin": "PINYIN=1 initSchema",
+    "initESWithPinyin": "ES_PINYIN=1 initSchema",
+    "initESWithCategories": "ES_CATEGORIES=Department initSchema",
+    "exportToJson": "json-export",
+    "exportToJsonWithCategories": "CATEGORIES=Department json-export",
     "dev": "node_modules/.bin/nodemon -r @babel/register node_modules/.bin/scirichon-crud-api",
     "test": "cp -rf ../config/test .&&mocha",
     "sync-mysql": "SYNC_TYPE=mysql node sync.js",
