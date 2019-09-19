@@ -11,6 +11,7 @@ const cors = require('kcors')
 const bodyParser = require('koa-bodyparser')
 const responseWrapper = require('scirichon-response-wrapper')
 
+
 module.exports = {
     load:(app)=>{
         app.use(cors())
@@ -19,6 +20,12 @@ module.exports = {
                 ctx.throw(400, `cannot parse request body, ${JSON.stringify(error)}`);
             }
         }));
+        if (config.get('checkLicense')) {
+            const license_helper = require('license-helper')
+            const lincense_file = `${process.env['LICENSE_PATH']}/${process.env['NODE_NAME']}.lic`
+            const license_middleware = license_helper.license_middleware
+            app.use(license_middleware({ path: lincense_file }))
+        }
         app.use(responseWrapper());
         const redisOption = config.get('redis')
         const redis_client = Redis.createClient(Object.assign({db:0},redisOption))
