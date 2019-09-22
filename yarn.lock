@@ -2967,10 +2967,10 @@ scirichon-common@1.0.7-beta.6:
     config "^3.1.0"
     lodash "^4.17.11"
 
-scirichon-crud-handler@1.1.0-beta.13:
-  version "1.1.0-beta.13"
-  resolved "https://registry.npmjs.org/scirichon-crud-handler/-/scirichon-crud-handler-1.1.0-beta.13.tgz#ed25ecd6a26f352ab9f560d5cceb211526221947"
-  integrity sha512-Qy7nBXft3eFuCiUhaYsv6QCvijFLAwqR+AjCSAQC76zTAMmIcM4feUhkl16W/qjnaUQ7/ct+dAqYFOIzaQpmgQ==
+scirichon-crud-handler@1.1.0-beta.15:
+  version "1.1.0-beta.15"
+  resolved "https://registry.npmjs.org/scirichon-crud-handler/-/scirichon-crud-handler-1.1.0-beta.15.tgz#3a6ed5ca224961a86e91b8fc09a018d179cb995b"
+  integrity sha512-fqXVHEJG3DMkaqzLycz1dTxDxlonnJzQRtUUHVZTYTvhJ+Y4zI7GPCoWMAFpnUgE13zqfieXLwvOHL/mTI3lXA==
   dependencies:
     config "^3.1.0"
     jsonpath "^1.0.2"
@@ -2988,7 +2988,7 @@ scirichon-crud-handler@1.1.0-beta.13:
     scirichon-common "1.0.7-beta.6"
     scirichon-json-exp-imp "1.0.5-beta.22"
     scirichon-json-schema "1.0.3-beta.4"
-    scirichon-json-schema-init "1.0.5-beta.15"
+    scirichon-json-schema-init "1.0.5-beta.16"
     scirichon-response-mapper "1.0.7-beta.9"
     scirichon-response-wrapper "1.0.2-beta.3"
     scirichon-search "1.0.6-beta.14"
@@ -3011,10 +3011,10 @@ scirichon-json-exp-imp@1.0.5-beta.22:
     scirichon-search "1.0.6-beta.14"
     uuid "^3.3.2"
 
-scirichon-json-schema-init@1.0.5-beta.15:
-  version "1.0.5-beta.15"
-  resolved "https://registry.npmjs.org/scirichon-json-schema-init/-/scirichon-json-schema-init-1.0.5-beta.15.tgz#787063fe43685ead61a271341ec6f0bc779f6891"
-  integrity sha512-s5Zc6+9PODDAV1o5yAjxkkhqP6Ac8Qdnsdo4TCoqeb6xTJP2dKIsiP7MW4mabPNvuQZWnQ226KUyXLw9t6sRNw==
+scirichon-json-schema-init@1.0.5-beta.16:
+  version "1.0.5-beta.16"
+  resolved "https://registry.npmjs.org/scirichon-json-schema-init/-/scirichon-json-schema-init-1.0.5-beta.16.tgz#3fa96e81c10ca099159c0d480389a76365294de2"
+  integrity sha512-dwyCXpk9wJ8KvgBasVjMWvQ079iQDtUnjgZLncLMcOmKxe7Evdn6cRYTV7KQ0ni+5XT5fZADj0hEki6KF8qvwQ==
   dependencies:
     config "^3.1.0"
     elasticsearch "^16.1.1"
