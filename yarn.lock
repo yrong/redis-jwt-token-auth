@@ -2967,10 +2967,10 @@ scirichon-common@1.0.7-beta.6:
     config "^3.1.0"
     lodash "^4.17.11"
 
-scirichon-crud-handler@1.1.0-beta.15:
-  version "1.1.0-beta.15"
-  resolved "https://registry.npmjs.org/scirichon-crud-handler/-/scirichon-crud-handler-1.1.0-beta.15.tgz#3a6ed5ca224961a86e91b8fc09a018d179cb995b"
-  integrity sha512-fqXVHEJG3DMkaqzLycz1dTxDxlonnJzQRtUUHVZTYTvhJ+Y4zI7GPCoWMAFpnUgE13zqfieXLwvOHL/mTI3lXA==
+scirichon-crud-handler@1.1.0-beta.18:
+  version "1.1.0-beta.18"
+  resolved "https://registry.npmjs.org/scirichon-crud-handler/-/scirichon-crud-handler-1.1.0-beta.18.tgz#81730bdb5dd1690f8167d133f1aeddd4b69229c2"
+  integrity sha512-qKjXzQvlouNffgFEE4aP0dmkGKB4UB+9Em/A7fpPZPyhPTvXCQsasncgOkW7j3r3rPnw5T/85PmYwNcbOl+Dag==
   dependencies:
     config "^3.1.0"
     jsonpath "^1.0.2"
@@ -2986,18 +2986,18 @@ scirichon-crud-handler@1.1.0-beta.15:
     scirichon-authenticator "1.0.0-beta.3"
     scirichon-cache "1.0.11-beta.8"
     scirichon-common "1.0.7-beta.6"
-    scirichon-json-exp-imp "1.0.5-beta.22"
+    scirichon-json-exp-imp "1.0.5-beta.24"
     scirichon-json-schema "1.0.3-beta.4"
-    scirichon-json-schema-init "1.0.5-beta.16"
+    scirichon-json-schema-init "1.0.5-beta.17"
     scirichon-response-mapper "1.0.7-beta.9"
     scirichon-response-wrapper "1.0.2-beta.3"
-    scirichon-search "1.0.6-beta.14"
+    scirichon-search "1.0.6-beta.15"
     uuid "^3.3.2"
 
-scirichon-json-exp-imp@1.0.5-beta.22:
-  version "1.0.5-beta.22"
-  resolved "https://registry.npmjs.org/scirichon-json-exp-imp/-/scirichon-json-exp-imp-1.0.5-beta.22.tgz#aa6f3aa62bb83f9d1dbc7e79514e16ee316d6b52"
-  integrity sha512-oH0T3WqXCp8XQCXUfuc1jPkdrJxOsp/f67loZR9Ggc12RyMqymFhrvrMss7+2AVuMkh/4CGle7Hwo3EFj2NmSA==
+scirichon-json-exp-imp@1.0.5-beta.24:
+  version "1.0.5-beta.24"
+  resolved "https://registry.npmjs.org/scirichon-json-exp-imp/-/scirichon-json-exp-imp-1.0.5-beta.24.tgz#6ad73db633315eb2651fd5259378a1c8adc34790"
+  integrity sha512-bR58pKeSkdYAgrYneVIlIUbVz8b+ph3fxMDvh3Thrm5aGuyBeN0dpbqGy/9p4L3umP/8p5jytRgyI92bZZvIlA==
   dependencies:
     config "^3.1.0"
     jsonfile "^2.4.0"
@@ -3008,13 +3008,13 @@ scirichon-json-exp-imp@1.0.5-beta.22:
     scirichon-cache "1.0.11-beta.8"
     scirichon-common "1.0.7-beta.6"
     scirichon-json-schema "1.0.3-beta.4"
-    scirichon-search "1.0.6-beta.14"
+    scirichon-search "1.0.6-beta.15"
     uuid "^3.3.2"
 
-scirichon-json-schema-init@1.0.5-beta.16:
-  version "1.0.5-beta.16"
-  resolved "https://registry.npmjs.org/scirichon-json-schema-init/-/scirichon-json-schema-init-1.0.5-beta.16.tgz#3fa96e81c10ca099159c0d480389a76365294de2"
-  integrity sha512-dwyCXpk9wJ8KvgBasVjMWvQ079iQDtUnjgZLncLMcOmKxe7Evdn6cRYTV7KQ0ni+5XT5fZADj0hEki6KF8qvwQ==
+scirichon-json-schema-init@1.0.5-beta.17:
+  version "1.0.5-beta.17"
+  resolved "https://registry.npmjs.org/scirichon-json-schema-init/-/scirichon-json-schema-init-1.0.5-beta.17.tgz#e2de95fb5c2e5af4e605a45097fae1e5d10d9a60"
+  integrity sha512-O/hqkBqktANgXVCGAmBFNL1/tgj9rRCN6M+/WBMgL5V9qAYfjWrWJUSWdjJXpnyEFd5xxpYVibbKQSag9WSI+Q==
   dependencies:
     config "^3.1.0"
     elasticsearch "^16.1.1"
@@ -3049,10 +3049,10 @@ scirichon-response-wrapper@1.0.2-beta.3:
     lodash "^4.17.11"
     log4js-wrapper-advanced "^1.0.5"
 
-scirichon-search@1.0.6-beta.14:
-  version "1.0.6-beta.14"
-  resolved "https://registry.npmjs.org/scirichon-search/-/scirichon-search-1.0.6-beta.14.tgz#86d8d5655aed4ee0f828f2a9cb8f3488f512bbb7"
-  integrity sha512-wnKJz+bURKkAHU/KOt0hu+lFytxeJyk2jSfjidCVT0j+SRXEt54RhZ87+Pbz/mHir91wmeHGzorRXFb2b4B4Xw==
+scirichon-search@1.0.6-beta.15:
+  version "1.0.6-beta.15"
+  resolved "https://registry.npmjs.org/scirichon-search/-/scirichon-search-1.0.6-beta.15.tgz#ec23cfa7b055c8a0ff3e1c68889ed94b1d549279"
+  integrity sha512-9VxC06edRkxm0mFcTkUH2yINMwUJ1WnPRbrAUAW/AbUMU6gXqvHnURlrNpKLL/86ynLMHNMIiwAHzx5tLENEEg==
   dependencies:
     config "^3.1.0"
     elasticsearch "^16.1.1"
